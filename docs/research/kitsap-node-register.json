@@ -1,0 +1,817 @@
+{
+  "title": "Davapprove Kitsap approval dependency node register",
+  "as_of": "2026-11-05",
+  "scope": "Research reference, not parcel-specific authorization",
+  "nodes": [
+    {
+      "id": "J0",
+      "title": "Jurisdiction and tenure",
+      "authority": "County/city; tribe; federal land manager",
+      "trigger": "Every parcel and off-site work area",
+      "evidence": "Boundary, land tenure, road owner, utilities and responsible agencies confirmed",
+      "blocks": "Reliable permit routing",
+      "professional": "Owner can research; written agency confirmation for ambiguity",
+      "sources": [
+        "02",
+        "39",
+        "40",
+        "46"
+      ]
+    },
+    {
+      "id": "L0",
+      "title": "Legal lot and property rights",
+      "authority": "Local planning; title/easement holders",
+      "trigger": "Every new development; uncertain lot or access",
+      "evidence": "Legal lot evidence; recorded access, utility, drainage rights",
+      "blocks": "Feasible layout / affected work",
+      "professional": "Title review recommended; PLS/legal help as needed",
+      "sources": [
+        "02",
+        "08"
+      ]
+    },
+    {
+      "id": "P0",
+      "title": "Use and entitlement path",
+      "authority": "Local planning / hearing body",
+      "trigger": "New use, added units, subdivision, variance or conditional use",
+      "evidence": "Allowed-use determination or applicable entitlement; conditions",
+      "blocks": "Incompatible development approval",
+      "professional": "Owner application possible; planner recommended for discretionary path",
+      "sources": [
+        "01",
+        "45",
+        "57"
+      ]
+    },
+    {
+      "id": "B0",
+      "title": "Common survey and base map",
+      "authority": "Applicant; PLS where regulated surveying is needed",
+      "trigger": "Boundary/topography uncertainty or survey requirement",
+      "evidence": "Versioned boundaries, topography, easements, existing improvements",
+      "blocks": "Dependable discipline layout",
+      "professional": "PLS for regulated survey; not every application needs a new survey",
+      "sources": [
+        "18",
+        "04"
+      ]
+    },
+    {
+      "id": "E0",
+      "title": "Wetland / stream / habitat evidence",
+      "authority": "Qualified specialist → local environmental reviewer",
+      "trigger": "Potential critical areas or affected buffers, including off-site features",
+      "evidence": "Delineation, rating, habitat assessment and review acceptance",
+      "blocks": "Environmental decision and credible layout",
+      "professional": "Qualified specialist when report required",
+      "sources": [
+        "03",
+        "04"
+      ]
+    },
+    {
+      "id": "G0",
+      "title": "Geotechnical / hydrogeological evidence",
+      "authority": "Qualified geologist / geotechnical PE → local reviewers",
+      "trigger": "Slope, soils, groundwater, foundation or drainage concern",
+      "evidence": "Site-specific recommendations for foundation, discharge, grading",
+      "blocks": "Applicable civil and structural acceptance",
+      "professional": "Qualified licensed professional for required specialty report",
+      "sources": [
+        "03",
+        "05"
+      ]
+    },
+    {
+      "id": "W0",
+      "title": "Potable water adequacy",
+      "authority": "Purveyor; KPHD; DOH / Ecology if applicable",
+      "trigger": "Building needs water; changed demand or source",
+      "evidence": "Availability / approved supply; physical and legal adequacy",
+      "blocks": "Applicable building application / approval",
+      "professional": "Owner can seek letter; specialist for source/system design",
+      "sources": [
+        "14",
+        "51"
+      ]
+    },
+    {
+      "id": "S0",
+      "title": "Wastewater branch determination",
+      "authority": "Utility + KPHD / DOH / Ecology",
+      "trigger": "New/changed wastewater demand",
+      "evidence": "Sewer required/available, existing OSS usable, or new OSS; regulator identified",
+      "blocks": "Wastewater design route",
+      "professional": "Owner inquiry; licensed designer for OSS design",
+      "sources": [
+        "12",
+        "13",
+        "48"
+      ]
+    },
+    {
+      "id": "S1",
+      "title": "Sewer service approval",
+      "authority": "Sewer utility / city / district",
+      "trigger": "Sewer branch selected or required",
+      "evidence": "Capacity and connection approval; extension and easements where needed",
+      "blocks": "Building/service and sewer work milestones",
+      "professional": "Civil design when utility requires it",
+      "sources": [
+        "41",
+        "44",
+        "45"
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Septic design / BSA approval",
+      "authority": "KPHD (ordinary small OSS)",
+      "trigger": "New OSS, added demand or redesign beyond clearance",
+      "evidence": "Approved capacity and layout, primary + reserve area",
+      "blocks": "Building approval; later installation permit",
+      "professional": "Licensed OSS designer or qualified PE",
+      "sources": [
+        "12"
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Existing septic building clearance",
+      "authority": "KPHD",
+      "trigger": "Existing system to support proposed project",
+      "evidence": "System record, reserve, maintenance, plan and water compliance accepted",
+      "blocks": "Affected building approval",
+      "professional": "Owner may apply; designer if capacity/layout change requires BSA",
+      "sources": [
+        "13"
+      ]
+    },
+    {
+      "id": "D0",
+      "title": "Coordinated site design",
+      "authority": "Owner’s design coordinator + disciplines",
+      "trigger": "Every site; highest value on constrained parcels",
+      "evidence": "One common revision fits house, septic, stormwater, access and buffers",
+      "blocks": "Internal release to costly detailed design/submittal",
+      "professional": "Recommended coordination gate, not a government permit",
+      "sources": [
+        "04",
+        "06",
+        "08"
+      ]
+    },
+    {
+      "id": "C0",
+      "title": "Civil drainage / grading design",
+      "authority": "Civil designer → development engineering",
+      "trigger": "Stormwater worksheet / site work triggers",
+      "evidence": "Grading, runoff, infiltration/flow control, outfall and erosion plans",
+      "blocks": "Applicable SDAP or building engineering review",
+      "professional": "PE when code/manual/director requires; simpler route may not",
+      "sources": [
+        "06",
+        "07"
+      ]
+    },
+    {
+      "id": "A0",
+      "title": "Access and fire strategy",
+      "authority": "Road authority + fire code official",
+      "trigger": "New/changed access, use, fire demand",
+      "evidence": "Road geometry, turnarounds, access rights, fire flow or accepted alternative",
+      "blocks": "Applicable building/site approval",
+      "professional": "Civil/fire specialist as required; early review recommended",
+      "sources": [
+        "08",
+        "10",
+        "47"
+      ]
+    },
+    {
+      "id": "Q0",
+      "title": "SEPA compliance",
+      "authority": "Designated lead agency",
+      "trigger": "Nonexempt agency action; total proposal evaluated",
+      "evidence": "Exemption basis or environmental review and determination",
+      "blocks": "Nonexempt decisions and construction stormwater coverage",
+      "professional": "Owner checklist possible; technical studies require their specialists",
+      "sources": [
+        "23",
+        "24",
+        "54"
+      ]
+    },
+    {
+      "id": "E1",
+      "title": "Local critical-area decision",
+      "authority": "County/city environmental planning",
+      "trigger": "Regulated critical-area development / buffer change",
+      "evidence": "Compliance decision, mitigation or authorized exception",
+      "blocks": "Affected local permit and regulated work",
+      "professional": "Qualified reports; owner may submit application",
+      "sources": [
+        "04",
+        "03"
+      ]
+    },
+    {
+      "id": "H0",
+      "title": "Local shoreline decision",
+      "authority": "County/city shoreline administrator",
+      "trigger": "Development in shoreline jurisdiction",
+      "evidence": "Compliance and exemption, SDP, CUP and/or variance as applicable",
+      "blocks": "Affected shoreline development",
+      "professional": "Owner application possible; specialists for reports",
+      "sources": [
+        "25"
+      ]
+    },
+    {
+      "id": "H1",
+      "title": "Ecology shoreline decision",
+      "authority": "WA Ecology",
+      "trigger": "Shoreline CUP or variance",
+      "evidence": "Ecology approval / conditions after local action",
+      "blocks": "Effective CUP / variance authorization",
+      "professional": "No generic mandatory permit expediter",
+      "sources": [
+        "25"
+      ]
+    },
+    {
+      "id": "H2",
+      "title": "Shoreline legal release",
+      "authority": "Local authority / Ecology / review body",
+      "trigger": "Permit subject to statutory waiting / review period",
+      "evidence": "Filing date + applicable waiting period and review disposition",
+      "blocks": "Construction under shoreline permit",
+      "professional": "No required consultant; legal help if contested",
+      "sources": [
+        "26"
+      ]
+    },
+    {
+      "id": "F0",
+      "title": "Flood development review",
+      "authority": "Local floodplain administrator",
+      "trigger": "Special flood hazard area development",
+      "evidence": "Accepted elevations, no-rise / floodproofing / V-zone evidence as applicable",
+      "blocks": "Flood-area development",
+      "professional": "Engineer/architect certifications where specified; survey as needed",
+      "sources": [
+        "22"
+      ]
+    },
+    {
+      "id": "U0",
+      "title": "Federal waters / permit applicability",
+      "authority": "USACE Seattle",
+      "trigger": "Potential fill in WOTUS or work in navigable waters",
+      "evidence": "Jurisdiction and general/individual permit route; PCN need",
+      "blocks": "Federal authorization route",
+      "professional": "Wetland/civil specialists recommended; Corps decides jurisdiction",
+      "sources": [
+        "27",
+        "52"
+      ]
+    },
+    {
+      "id": "U1",
+      "title": "Section 401 certification",
+      "authority": "Ecology or competent tribe / EPA",
+      "trigger": "Federal license/permit with potential discharge trigger",
+      "evidence": "Certification, applicable general certification, or lawful waiver",
+      "blocks": "Federal permit issuance when applicable",
+      "professional": "Technical evidence as project requires",
+      "sources": [
+        "28"
+      ]
+    },
+    {
+      "id": "U2",
+      "title": "ESA / EFH review",
+      "authority": "Federal lead + NMFS / USFWS",
+      "trigger": "Federal action with species/habitat effects",
+      "evidence": "Required effect determination, consultation and conditions",
+      "blocks": "Federal decision",
+      "professional": "Biologist generally needed for technical evaluation",
+      "sources": [
+        "31",
+        "52"
+      ]
+    },
+    {
+      "id": "U3",
+      "title": "Section 106 process",
+      "authority": "Federal lead; DAHP/THPO; affected tribes",
+      "trigger": "Federal undertaking with historic-property review",
+      "evidence": "Area of potential effects, findings, consultation and resolution",
+      "blocks": "Federal decision",
+      "professional": "Qualified archaeologist if investigation required",
+      "sources": [
+        "32",
+        "33",
+        "56"
+      ]
+    },
+    {
+      "id": "U4",
+      "title": "Treaty-rights / tribal consultation",
+      "authority": "Federal lead + affected sovereign tribes",
+      "trigger": "Project affects tribal rights/interests in federal review",
+      "evidence": "Consultation record and resolved applicable constraints",
+      "blocks": "Federal decision; may change design",
+      "professional": "Agency-to-agency duty; consultant cannot substitute",
+      "sources": [
+        "32",
+        "40"
+      ]
+    },
+    {
+      "id": "U5",
+      "title": "Coastal consistency",
+      "authority": "Ecology / federal agency",
+      "trigger": "Covered federal action affecting coastal resources",
+      "evidence": "Applicable consistency concurrence / programmatic coverage",
+      "blocks": "Federal authorization as applicable",
+      "professional": "Specialist support recommended",
+      "sources": [
+        "52"
+      ]
+    },
+    {
+      "id": "U6",
+      "title": "Corps authorization",
+      "authority": "USACE Seattle",
+      "trigger": "Section 404 and/or Section 10 applies",
+      "evidence": "Valid applicable authorization, conditions and approved footprint",
+      "blocks": "Federally regulated aquatic work",
+      "professional": "Applicant may apply; technical package often specialist-led",
+      "sources": [
+        "27",
+        "31",
+        "32"
+      ]
+    },
+    {
+      "id": "U7",
+      "title": "State-only wetland authorization",
+      "authority": "Ecology",
+      "trigger": "Wetland impact outside federal waters jurisdiction",
+      "evidence": "State administrative order and mitigation",
+      "blocks": "State-regulated wetland impact",
+      "professional": "Qualified wetland/civil support",
+      "sources": [
+        "29"
+      ]
+    },
+    {
+      "id": "U8",
+      "title": "Hydraulic Project Approval",
+      "authority": "WDFW",
+      "trigger": "Work uses/diverts/obstructs/changes flow or bed of state waters",
+      "evidence": "HPA and conditions / work window, or documented nonapplicability",
+      "blocks": "Hydraulic work",
+      "professional": "Owner application possible; technical design when needed",
+      "sources": [
+        "30"
+      ]
+    },
+    {
+      "id": "U9",
+      "title": "Aquatic property authorization",
+      "authority": "DNR / other aquatic landowner",
+      "trigger": "Work on or over state-owned aquatic lands / other owned bedlands",
+      "evidence": "Executed use authorization or property permission",
+      "blocks": "Occupation/use of aquatic land",
+      "professional": "Owner application possible; early land-manager consult recommended",
+      "sources": [
+        "35"
+      ]
+    },
+    {
+      "id": "K0",
+      "title": "Archaeological alteration approval",
+      "authority": "DAHP / applicable tribal or federal authority",
+      "trigger": "Proposed alteration of protected archaeological site",
+      "evidence": "Required permit and research/mitigation arrangements",
+      "blocks": "Site alteration; discovery may stop affected work",
+      "professional": "Professional archaeologist for required application/investigation",
+      "sources": [
+        "34",
+        "56"
+      ]
+    },
+    {
+      "id": "T0",
+      "title": "Construction stormwater coverage",
+      "authority": "Ecology; EPA routing where applicable",
+      "trigger": "Disturbance/discharge test including common plan and support areas",
+      "evidence": "Permit coverage, SWPPP, required inspection/monitoring arrangements",
+      "blocks": "Regulated land disturbance/discharge",
+      "professional": "Permit-qualified erosion-control personnel where required",
+      "sources": [
+        "37",
+        "38",
+        "54"
+      ]
+    },
+    {
+      "id": "R0",
+      "title": "ROW / highway / road approach permit",
+      "authority": "County PW, city or WSDOT as appropriate",
+      "trigger": "Access connection or work in public ROW",
+      "evidence": "Permit and conditions; preliminary highway letter may support local review",
+      "blocks": "Affected ROW/access construction",
+      "professional": "Civil PE for engineered public improvements",
+      "sources": [
+        "08",
+        "09",
+        "46",
+        "47"
+      ]
+    },
+    {
+      "id": "V0",
+      "title": "Site development / clearing release",
+      "authority": "County DCD or city equivalent",
+      "trigger": "Grading/clearing/impervious and local triggers",
+      "evidence": "SDAP or equivalent; preconstruction conditions satisfied",
+      "blocks": "Covered site work",
+      "professional": "PE per actual review tier",
+      "sources": [
+        "06",
+        "07",
+        "59",
+        "60"
+      ]
+    },
+    {
+      "id": "B1",
+      "title": "Building technical approval",
+      "authority": "Local building + planning + engineering + fire reviewers",
+      "trigger": "Building permit required",
+      "evidence": "Plans, structural/energy compliance, relevant departmental approvals",
+      "blocks": "Building permit issuance",
+      "professional": "Owner prescriptive plans possible; required engineering separately",
+      "sources": [
+        "01",
+        "16",
+        "17",
+        "21",
+        "55"
+      ]
+    },
+    {
+      "id": "B2",
+      "title": "Building permit issued",
+      "authority": "Local building authority",
+      "trigger": "All applicable issuance gates satisfied",
+      "evidence": "Issued permit, approved revision, fees/conditions resolved",
+      "blocks": "Covered building construction",
+      "professional": "No universal architect mandate",
+      "sources": [
+        "01",
+        "45"
+      ]
+    },
+    {
+      "id": "S4",
+      "title": "Septic installation permit",
+      "authority": "KPHD",
+      "trigger": "Construction of approved small OSS",
+      "evidence": "Installation authorization after BSA and building milestone or waiver",
+      "blocks": "Septic construction",
+      "professional": "Certified installer; limited resident-owner installation route",
+      "sources": [
+        "12"
+      ]
+    },
+    {
+      "id": "X0",
+      "title": "Trade permits / utility energization",
+      "authority": "Local trades; L&I or electrical AHJ; utilities",
+      "trigger": "Electrical, plumbing, mechanical, fire-system and service work",
+      "evidence": "Applicable permits, inspections and utility acceptance",
+      "blocks": "Covered trade work / energization / occupancy",
+      "professional": "Owner electrical work possible within rules; hired contractor gets own permit",
+      "sources": [
+        "49",
+        "41"
+      ]
+    },
+    {
+      "id": "I0",
+      "title": "Inspections and certifications",
+      "authority": "Permit agencies + design professionals / special inspectors",
+      "trigger": "Construction milestones and permit conditions",
+      "evidence": "Passed inspections, as-builts, testing and professional certifications",
+      "blocks": "Concealment, next stage, occupancy or closeout",
+      "professional": "Required special inspectors / certifying professionals",
+      "sources": [
+        "01",
+        "21",
+        "06"
+      ]
+    },
+    {
+      "id": "O0",
+      "title": "Occupancy authorization",
+      "authority": "Local building authority with applicable agency releases",
+      "trigger": "Occupied building or change of occupancy",
+      "evidence": "Occupancy approval / CO; temporary CO only if expressly granted",
+      "blocks": "Legal occupancy",
+      "professional": "Owner coordinates releases",
+      "sources": [
+        "01",
+        "45"
+      ]
+    },
+    {
+      "id": "M0",
+      "title": "Long-term conditions and maintenance",
+      "authority": "Owner; agencies / utilities / maintenance entities",
+      "trigger": "Stormwater, septic, habitat mitigation or bonded work",
+      "evidence": "Maintenance, monitoring, final stabilization and bond-release evidence",
+      "blocks": "Final closeout or continuing compliance",
+      "professional": "Qualified service/monitoring providers when conditions require",
+      "sources": [
+        "06",
+        "37",
+        "48"
+      ]
+    },
+    {
+      "id": "Z0",
+      "title": "Subdivision / final plat",
+      "authority": "Local planning, engineering, utilities; recorder",
+      "trigger": "New legal lots / plat alteration",
+      "evidence": "Preliminary conditions; improvements/security; final approval and recording",
+      "blocks": "Creation/use of new lots; downstream building route",
+      "professional": "PLS for survey/plat; engineering as required",
+      "sources": [
+        "02",
+        "42",
+        "44"
+      ]
+    },
+    {
+      "id": "Z1",
+      "title": "Forest conversion / tree clearing",
+      "authority": "Local authority and DNR as applicable",
+      "trigger": "Harvest, conversion, local tree controls or past forest activity",
+      "evidence": "Correct clearing/conversion route; moratorium resolved if applicable",
+      "blocks": "Clearing and possibly development approvals",
+      "professional": "Forester/arborist where required; land-use help recommended",
+      "sources": [
+        "50",
+        "05"
+      ]
+    }
+  ],
+  "sources": {
+    "01": [
+      "Kitsap • Permit services and revisions",
+      "https://www.kitsap.gov/dcd/Pages/Permit.aspx"
+    ],
+    "02": [
+      "Kitsap • Before you buy or build / legal lot",
+      "https://www.kitsap.gov/dcd/Pages/Before-You-Buy-or-Build.aspx"
+    ],
+    "03": [
+      "Kitsap • Critical areas guidance, revised February 2026",
+      "https://www.kitsap.gov/dcd/FormsandBrochures/Critical%20Areas.pdf"
+    ],
+    "04": [
+      "KCC 19.200.215 • Wetland review procedures",
+      "https://ecode360.com/49527502"
+    ],
+    "05": [
+      "Kitsap • Shoreline and steep-slope guidance",
+      "https://www.kitsap.gov/dcd/Pages/Building-My-House-on-Shoreline-or-Steep-Slope.aspx"
+    ],
+    "06": [
+      "Kitsap • Stormwater plans and worksheets",
+      "https://www.kitsap.gov/dcd/Pages/My-Stormwater-Plans.aspx"
+    ],
+    "07": [
+      "KCC 12.10 • SDAP and professional engineering",
+      "https://ecode360.com/49506095"
+    ],
+    "08": [
+      "Kitsap • Road and driveway approvals",
+      "https://www.kitsap.gov/dcd/Pages/Build-or-Modify-My-Road-or-Driveway.aspx"
+    ],
+    "09": [
+      "Kitsap • Right-of-way permits",
+      "https://www.kitsap.gov/how-do-i/apply-for/right-of-way-permits"
+    ],
+    "10": [
+      "Kitsap • Fire code requirements for development",
+      "https://kitsap.gov/dcd/FormsandBrochures/Fire%20Code%20Requirements%20for%20Development.pdf"
+    ],
+    "11": [
+      "KPHD • Ordinance 2025-01, especially §§6.K and 12.B",
+      "https://www.kitsappublichealth.org/_files/ugd/0f8b3b_b8efed6c1293475eb0b79ad3971cb7ad.pdf"
+    ],
+    "12": [
+      "KPHD • New septic design and installation sequence",
+      "https://www.kitsappublichealth.org/dwos/septicinfo"
+    ],
+    "13": [
+      "KPHD • Existing-system building clearances",
+      "https://www.kitsappublichealth.org/dwos/bc"
+    ],
+    "14": [
+      "KPHD • Private wells",
+      "https://www.kitsappublichealth.org/dwos/privatewells"
+    ],
+    "15": [
+      "WAC 246-272A • OSS, especially 0230",
+      "https://apps.leg.wa.gov/wac/default.aspx?cite=246-272A&full=true"
+    ],
+    "16": [
+      "RCW 18.08.410 • Architectural design exemptions",
+      "https://app.leg.wa.gov/rcw/default.aspx?cite=18.08.410"
+    ],
+    "17": [
+      "RCW 18.43.130 • Engineering exceptions",
+      "https://apps.leg.wa.gov/rcw/default.aspx?cite=18.43.130"
+    ],
+    "18": [
+      "RCW 18.43.020 • Engineering, surveying and significant structures",
+      "https://app.leg.wa.gov/rcw/default.aspx?cite=18.43.020"
+    ],
+    "19": [
+      "WA DOL • Architects FAQ and changes to sealed plans",
+      "https://dol.wa.gov/professional-licenses/architects/frequently-asked-questions-architects"
+    ],
+    "20": [
+      "Bremerton • Engineering versus prescriptive design (2007; historical illustration only)",
+      "https://www.bremertonwa.gov/DocumentCenter/View/1760/Does-My-Building-Need-an-Engineer-PDF"
+    ],
+    "21": [
+      "Kitsap • Special inspection statement, effective July 20, 2026",
+      "https://content.govdelivery.com/accounts/WAKITSAP/bulletins/421fdee"
+    ],
+    "22": [
+      "KCC 15.12 • Flood hazard development requirements",
+      "https://ecode360.com/49511030"
+    ],
+    "23": [
+      "Ecology • SEPA applicability and whole proposal",
+      "https://ecology.wa.gov/regulations-permits/sepa/environmental-review/sepa-guidance/guide-for-lead-agencies/determining-if-sepa-is-required"
+    ],
+    "24": [
+      "Ecology • SEPA lead agency responsibilities",
+      "https://ecology.wa.gov/regulations-permits/sepa/environmental-review/sepa-guidance/guide-for-lead-agencies/lead-agency-determination-and-responsibilities"
+    ],
+    "25": [
+      "Ecology • Shoreline permits",
+      "https://ecology.wa.gov/regulations-permits/permits-certifications/shoreline-permits-enforcement"
+    ],
+    "26": [
+      "WAC 173-27-190 • Shoreline construction waiting period",
+      "https://app.leg.wa.gov/wac/default.aspx?cite=173-27-190"
+    ],
+    "27": [
+      "USACE • Regulatory permit jurisdiction and application",
+      "https://rrs.usace.army.mil/rrs/home/permitting"
+    ],
+    "28": [
+      "Ecology • Section 401 certification",
+      "https://www.ecology.wa.gov/regulations-permits/permits-certifications/401-water-quality-certification"
+    ],
+    "29": [
+      "Ecology • State wetland authority and administrative orders",
+      "https://ecology.wa.gov/water-shorelines/wetlands/regulations/state-wetland-regulations"
+    ],
+    "30": [
+      "WDFW • Hydraulic Project Approval triggers",
+      "https://wdfw.wa.gov/licenses/environmental/hpa/about"
+    ],
+    "31": [
+      "USACE Seattle • Endangered species consultation",
+      "https://www.nws.usace.army.mil/Missions/Civil-Works/Regulatory/Permit-Guidebook/Endangered-Species/"
+    ],
+    "32": [
+      "USACE Seattle • Cultural resources and treaty consultation",
+      "https://www.nws.usace.army.mil/Missions/Civil-Works/Regulatory/Permit-Guidebook/Cultural-Resources/"
+    ],
+    "33": [
+      "DAHP • Section 106 review workflow",
+      "https://dahp.wa.gov/project-review"
+    ],
+    "34": [
+      "DAHP • Archaeological alteration permits",
+      "https://dahp.wa.gov/archaeology/archaeological-permitting"
+    ],
+    "35": [
+      "DNR • Aquatic land use authorizations",
+      "https://dnr.wa.gov/aquatics/aquatic-leasing-licensing-and-transactions"
+    ],
+    "36": [
+      "ORIA • JARPA participating approvals",
+      "https://www.oria.wa.gov/desktopmodules/guidancehelp/View.aspx?node=471"
+    ],
+    "37": [
+      "Ecology • 2026 Construction Stormwater General Permit",
+      "https://www.ecology.wa.gov/regulations-permits/permits-certifications/stormwater-general-permits/construction-stormwater-permit"
+    ],
+    "38": [
+      "WSDOT • Stormwater and Indian Country EPA routing",
+      "https://wsdot.wa.gov/engineering-standards/environmental-guidance/stormwater-water-quality"
+    ],
+    "39": [
+      "Suquamish Tribe • Land tenure and permitting FAQ",
+      "https://suquamish.nsn.us/home/departments/community-development1/community-development-faqs/"
+    ],
+    "40": [
+      "Port Gamble S’Klallam Tribe • Environmental program",
+      "https://pgst.nsn.us/environmental/"
+    ],
+    "41": [
+      "Bainbridge Island • Residential permitting dependencies",
+      "https://www.bainbridgewa.gov/158/Residential-Building-Projects"
+    ],
+    "42": [
+      "Bremerton • Departmental review and resubmittals",
+      "https://bremertonwa.gov/307/Online-Permitting-Inspection"
+    ],
+    "43": [
+      "Poulsbo • Building permits",
+      "https://poulsbo.gov/building-department/"
+    ],
+    "44": [
+      "Poulsbo • Engineering review",
+      "https://poulsbo.gov/engineering/"
+    ],
+    "45": [
+      "Port Orchard • Permit Center routing",
+      "https://www.portorchardwa.gov/651/Permit-Center"
+    ],
+    "46": [
+      "WSDOT • Development access permits",
+      "https://wsdot.wa.gov/business-wsdot/development-services-and-access"
+    ],
+    "47": [
+      "WAC 468-51-030 • Highway connection approval / letter of intent",
+      "https://apps.leg.wa.gov/wac/default.aspx?cite=468-51-030"
+    ],
+    "48": [
+      "WA DOH • Wastewater jurisdiction thresholds",
+      "https://doh.wa.gov/community-and-environment/wastewater-management/regulatory-jurisdiction"
+    ],
+    "49": [
+      "L&I • Electrical permits and inspections",
+      "https://www.lni.wa.gov/Licensing-Permits/Electrical/Electrical-Permits-Fees-and-Inspections/"
+    ],
+    "50": [
+      "RCW 76.09 • Forest conversion, §§460–470",
+      "https://app.leg.wa.gov/rcw/default.aspx?cite=76.09&full=true"
+    ],
+    "51": [
+      "RCW 19.27 • Water adequacy, §097",
+      "https://app6.leg.wa.gov/rcw/default.aspx?Cite=19.27&full=true"
+    ],
+    "52": [
+      "WSDOT • Federal waters and coastal consistency routing",
+      "https://apps.wsdot.wa.gov/engineering-standards/environmental-guidance/wetlands-other-waters"
+    ],
+    "53": [
+      "Ecology • SEPA FAQ, reuse and changes",
+      "https://ecology.wa.gov/regulations-permits/sepa/environmental-review/sepa-guidance/sepa-faq"
+    ],
+    "54": [
+      "Ecology • Construction stormwater NOI / SEPA dependency",
+      "https://apps.ecology.wa.gov/publications/documents/ecy070558.pdf"
+    ],
+    "55": [
+      "KCC • Residential amendments and basic plans",
+      "https://ecode360.com/49509005"
+    ],
+    "56": [
+      "DAHP • Qualified archaeological professionals",
+      "https://dahp.wa.gov/project-review/project-review-archaeology"
+    ],
+    "57": [
+      "Kitsap • Review-team disciplines",
+      "https://www.kitsap.gov/dcd/Pages/DCD-Review-Team-Meetings.aspx"
+    ],
+    "58": [
+      "Kitsap • Suquamish Rural Village special provisions",
+      "https://kitsap.gov/dcd/Pages/Suquamish_Rural_Village.aspx"
+    ],
+    "59": [
+      "Port Orchard • Online permits / land disturbance",
+      "https://www.portorchardwa.gov/372/Online-Permitting"
+    ],
+    "60": [
+      "Kitsap • SDAP guidance",
+      "https://www.kitsap.gov/dcd/FormsandBrochures/SDAP.pdf"
+    ]
+  }
+}
