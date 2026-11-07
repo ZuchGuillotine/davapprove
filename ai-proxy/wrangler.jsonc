@@ -1,0 +1,11 @@
+{
+  "$schema":"node_modules/wrangler/config-schema.json",
+  "name":"davapprove-ai-proxy",
+  "account_id":"0a62cf3c87f54de05ca4ff2f7ba149f7",
+  "main":"src/index.ts",
+  "compatibility_date":"2026-11-07",
+  "workers_dev":true,
+  "ai":{"binding":"AI"},
+  "secrets":{"required":["AI_PROXY_SECRET"]},
+  "observability":{"enabled":true,"head_sampling_rate":1,"logs":{"enabled":true,"invocation_logs":false},"traces":{"enabled":true,"head_sampling_rate":0.1}}
+}

@@ -1,0 +1,192 @@
+{
+  "version": "2026-11-07.1",
+  "stage": "feasibility",
+  "supported_project_types": [
+    "new_house",
+    "addition",
+    "adu"
+  ],
+  "numeric_rules": [],
+  "numeric_rule_status": "not_validated",
+  "nodes": [
+    {
+      "id": "J0",
+      "title": "Confirm jurisdiction",
+      "discipline": "Project team"
+    },
+    {
+      "id": "L0",
+      "title": "Confirm legal lot and access rights",
+      "discipline": "Planner / title professional"
+    },
+    {
+      "id": "B0",
+      "title": "Establish survey and base map",
+      "discipline": "Surveyor"
+    },
+    {
+      "id": "E0",
+      "title": "Verify environmental constraints",
+      "discipline": "Environmental specialist"
+    },
+    {
+      "id": "G0",
+      "title": "Review ground and slope conditions",
+      "discipline": "Geotechnical professional"
+    },
+    {
+      "id": "W0",
+      "title": "Confirm water availability",
+      "discipline": "Water provider"
+    },
+    {
+      "id": "S0",
+      "title": "Confirm wastewater route",
+      "discipline": "Septic designer / sewer provider"
+    },
+    {
+      "id": "D0",
+      "title": "Coordinate the site layout",
+      "discipline": "Architect / design team"
+    },
+    {
+      "id": "C0",
+      "title": "Review civil and access requirements",
+      "discipline": "Civil engineer"
+    },
+    {
+      "id": "B1",
+      "title": "Prepare building intake",
+      "discipline": "Architect / applicant"
+    }
+  ],
+  "edges": [
+    {
+      "source": "J0",
+      "target": "L0",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Identify the responsible authority before interpreting legal-lot requirements.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "J0",
+      "target": "B1",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Route intake to the correct authority.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "B0",
+      "target": "D0",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Use a common base map when coordinating discipline layouts.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "E0",
+      "target": "D0",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Resolve environmental geometry before relying on the affected layout.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "G0",
+      "target": "D0",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Review site-specific ground constraints when applicable.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "W0",
+      "target": "D0",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Coordinate proposed demand with available water evidence.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "S0",
+      "target": "D0",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Coordinate sewer or septic primary/reserve requirements.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "D0",
+      "target": "C0",
+      "type": "RECOMMENDED",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Agree common layout assumptions before detailed civil coordination.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    },
+    {
+      "source": "C0",
+      "target": "B1",
+      "type": "INPUT",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Check applicable civil inputs for building intake.",
+      "source_url": "https://poulsbo.gov/codes-amendments-maps/"
+    }
+  ],
+  "change_impacts": {
+    "bedrooms": [
+      "S0",
+      "W0",
+      "D0",
+      "C0",
+      "B1"
+    ],
+    "units": [
+      "S0",
+      "W0",
+      "D0",
+      "C0",
+      "B1"
+    ],
+    "project_type": [
+      "L0",
+      "E0",
+      "S0",
+      "D0",
+      "C0",
+      "B1"
+    ],
+    "geometry": [
+      "D0",
+      "C0",
+      "B1"
+    ],
+    "constraints": [
+      "E0",
+      "S0",
+      "D0",
+      "C0",
+      "B1"
+    ],
+    "accepted_facts": [
+      "D0",
+      "C0",
+      "B1"
+    ]
+  },
+  "jurisdiction": "poulsbo",
+  "name": "City of Poulsbo",
+  "source_url": "https://poulsbo.gov/codes-amendments-maps/",
+  "reviewed_at": "2026-11-07",
+  "coverage": "Research coordination only; no numeric code rules activated."
+}
