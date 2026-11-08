@@ -32,3 +32,27 @@ def test_invalid_citations_rejected_and_cost_reconciled(tmp_path,monkeypatch):
     facts,warning=extract(settings,db,{'id':'d'},[{'page':1,'text':'REAL text'}])
     assert len(facts)==1 and facts[0]['quote']=='REAL' and not warning
     assert db.db.execute('select amount from ai_usage').fetchone()[0]==300
+
+
+def test_serialized_prompt_stays_within_proxy_byte_limit(tmp_path,monkeypatch):
+    import json
+    from app import ai
+    seen=[]
+    class Response:
+        def raise_for_status(self):pass
+        def json(self):return {'choices':[{'message':{'content':'{"facts":[]}'}}]}
+    class Client:
+        def __init__(self,**kwargs):pass
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def post(self,*args,**kwargs):
+            prompt=kwargs['json']['messages'][0]['content'];seen.append(prompt)
+            assert len(prompt.encode('utf-8'))<=21000
+            return Response()
+    monkeypatch.setattr(ai.httpx,'Client',Client)
+    settings=Settings(mode='demo',ai_api_key='test',ai_model='fixture',ai_input_per_million=1,ai_output_per_million=2)
+    db=SQLiteStore(tmp_path/'test.db')
+    for i,text in enumerate(['漢字\n"\\'*10000,'x'*20000]):
+        facts,warning=extract(settings,db,{'id':str(i)},[{'page':1,'text':text},{'page':2,'text':text}])
+        assert warning is None
+    assert len(seen)==2
