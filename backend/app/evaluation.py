@@ -1,5 +1,6 @@
 """Pure, conservative feasibility evaluation; no result authorizes construction."""
 import json
+import re
 from datetime import date
 from pathlib import Path
 from shapely.geometry import shape, mapping
@@ -42,7 +43,7 @@ def revision_impact(old, changes):
     for key, value in changes.get('intent', {}).items():
         if old.get('intent', {}).get(key) != value:
             impacted.update(pack.get('change_impacts', {}).get(key, ['D0', 'B1']))
-    for key in ('geometry', 'constraints', 'setbacks', 'accepted_facts'):
+    for key in ('geometry', 'constraints', 'setbacks', 'accepted_facts', 'alignment'):
         if key in changes and old.get(key) != changes[key]:
             impacted.update(pack.get('change_impacts', {}).get(key, ['D0', 'C0', 'B1']))
     # Propagate impact without assuming the full relationship graph is acyclic.
@@ -62,10 +63,59 @@ def polygon(value):
         raise ValueError('Geometry must use longitude/latitude coordinates')
     return geom
 
-def envelope(project):
+def site_layers(project, facts=()):
+    """Explicit geometry only. Text or visual observations never imply coordinates."""
+    layers = []
+    for i, item in enumerate(project.get('constraints', [])):
+        layers.append({**item, 'id': item.get('id', f'constraint-{i}'),
+                       'role': item.get('role', 'exclusion'),
+                       'discipline': item.get('discipline', 'unassigned')})
+    for fact in facts:
+        review = project.get('accepted_facts', {}).get(fact['id'], {})
+        value = review.get('value', fact.get('value'))
+        if fact.get('key') != 'site_geometry' or not isinstance(value, dict):
+            continue
+        layers.append({**value, 'id': 'fact-' + fact['id'],
+                       'review_status': review.get('review_status', 'proposed'),
+                       'document_id': fact.get('document_id'), 'page': fact.get('page'),
+                       'reviewer': review.get('reviewer'), 'reviewed_at': review.get('reviewed_at'),
+                       'fact_id': fact['id']})
+    return layers
+
+def envelope(project, facts=(), documents=()):
     out = {'status': 'cannot_determine', 'geometry': None, 'area_sqft': None,
            'assumptions': [], 'gaps': [], 'conflicts': [], 'constraints': [],
-           'code_checked': False}
+           'code_checked': False, 'layers': [], 'spatial_conflicts': [], 'drawing_previews': [], 'reconciliation': []}
+    out['document_geometry'] = [{'document_id':d['id'], 'title':d.get('title','Source document'),
+        'geometry_facts':sum(1 for f in facts if f.get('document_id')==d['id'] and f.get('key')=='site_geometry'),
+        'processing_warning':d.get('ai_warning'),
+        'reason':'Reviewing text facts does not create drawing geometry. Reprocessing, extraction or sheet registration may still be needed.'}
+        for d in documents]
+    from .drawings import reconcile
+    from .alignment import alignment_state, registered_layers
+    try:
+        alignment=alignment_state(project.get('alignment'),documents)
+    except (ValueError,TypeError,KeyError):
+        alignment={'reference':None,'registrations':[]}
+        out['gaps'].append('Shared reference is invalid or its source changed; registered geometry needs review.')
+    out['alignment']=alignment
+    observations = registered_layers([l for l in site_layers(project, facts) if l.get('review_status') != 'rejected'],alignment)
+    if project.get('alignment') and not alignment.get('reference'):
+        observations=[{**l,'geometry':None} if l.get('sheet_geometry') else l for l in observations]
+    from .provisional_geometry import propose_placements, sheet_groups
+    manual_pages={(r.get('document_id'),r.get('page')) for r in alignment.get('registrations',[])}
+    if project.get('alignment') and not alignment.get('reference'):
+        manual_pages.update((l.get('document_id'),l.get('page')) for l in observations)
+    observations,placements=propose_placements(project,observations,documents,manual_pages)
+    out['automatic_placements']=placements
+    out['drawing_sheets']=sheet_groups(observations,documents)
+    # Approximate GIS fits cannot establish foot-level disagreement between sources.
+    out['reconciliation'] = reconcile([{**l,'geometry':None} if l.get('calibration')=='gis_proposal' else l for l in observations])
+    out['conflicts'].extend(i['message'] for i in out['reconciliation'])
+    out['drawing_previews'] = [l for l in observations if l.get('sheet_geometry')]
+    out['rendering_summary']={'sheet_features':len(out['drawing_previews']),'sheets':len(out['drawing_sheets']),
+        'provisional_site_features':sum(l.get('calibration')=='gis_proposal' for l in observations),
+        'located_features':sum(bool(l.get('geometry')) for l in observations)}
     parcel = project.get('parcel', {}).get('geometry')
     if not parcel:
         out['gaps'].append('Parcel boundary unavailable.'); return out
@@ -74,14 +124,61 @@ def envelope(project):
         boundary = polygon(parcel)
         projected = transform(TO_LOCAL, boundary)
         excluded = []
-        for item in project.get('constraints', []):
-            if item.get('review_status') != 'accepted':
-                out['gaps'].append(f"Review constraint: {item.get('label', 'unnamed constraint')}"); continue
+        spatial = []
+        unlocated_sheets = set()
+        unlocated_features = 0
+        for item in observations:
+            if item.get('review_status') == 'rejected':
+                continue
+            label = item.get('label', 'Unnamed site feature')
             if not item.get('geometry'):
-                out['gaps'].append(f"Missing geometry: {item.get('label', 'constraint')}"); continue
-            geom = polygon(item['geometry'])
-            excluded.append(transform(TO_LOCAL, geom))
-            out['constraints'].append(item)
+                if item.get('sheet_geometry'):
+                    unlocated_features += 1
+                    unlocated_sheets.add((item.get('document_id'),item.get('page')))
+                else:
+                    out['gaps'].append(f'Missing geometry: {label}')
+                continue
+            try:
+                raw=shape(item['geometry'])
+                if raw.geom_type not in ('Polygon','MultiPolygon','LineString','MultiLineString','Point','MultiPoint') or raw.is_empty or not raw.is_valid:
+                    raise ValueError('Invalid site feature')
+                if not (-180 <= raw.bounds[0] <= raw.bounds[2] <= 180 and -90 <= raw.bounds[1] <= raw.bounds[3] <= 90):
+                    raise ValueError('Invalid longitude/latitude')
+                geom = transform(TO_LOCAL, raw)
+            except (ValueError, TypeError, KeyError):
+                out['gaps'].append(f'Invalid geometry: {label}'); continue
+            # Extracted geometry requires explicit calibration and source provenance.
+            calibrated = not item.get('fact_id') or (
+                item.get('crs') == 'EPSG:4326' and item.get('calibration') in ('reviewer_confirmed', 'automatic_control_fit', 'registered_proposal', 'gis_proposal')
+                and item.get('document_id') and item.get('page'))
+            if not calibrated:
+                out['gaps'].append(f'Location needs source calibration: {label}'); continue
+            accepted = item.get('review_status') == 'accepted' and (not item.get('fact_id') or item.get('calibration') == 'reviewer_confirmed')
+            layer = {**item, 'discipline': item.get('discipline', 'unassigned'),
+                     'role': item.get('role', 'reference'), 'label': label,
+                     'review_status': 'accepted' if accepted else 'proposed'}
+            out['layers'].append(layer)
+            spatial.append((layer, geom))
+            if not accepted:
+                out['gaps'].append(f'Review proposed geometry: {label}')
+            if accepted and layer['role'] == 'exclusion' and geom.geom_type in ('Polygon','MultiPolygon'):
+                excluded.append(geom)
+                out['constraints'].append(layer)
+        if unlocated_features:
+            out['gaps'].append(f'{unlocated_features} features on {len(unlocated_sheets)} source pages render in drawing coordinates; site alignment remains unresolved. Review their shared drawing frames rather than locating each feature separately.')
+        for i, (left, lg) in enumerate(spatial):
+            for right, rg in spatial[i + 1:]:
+                # Exclusions may legitimately overlap one another. Check design vs exclusion.
+                if {left['role'], right['role']} != {'design', 'exclusion'}:
+                    continue
+                overlap = lg.intersection(rg)
+                if not overlap.is_empty and (overlap.area > 0.01 or lg.geom_type not in ('Polygon','MultiPolygon') or rg.geom_type not in ('Polygon','MultiPolygon')):
+                    message = f"{left['label']} overlaps {right['label']}; coordination review required."
+                    out['conflicts'].append(message)
+                    out['spatial_conflicts'].append({'id': f"{left['id']}:{right['id']}",
+                        'layer_ids': [left['id'], right['id']], 'message': message,
+                        'geometry': mapping(transform(TO_WEB, overlap)),
+                        'status': 'coordination_review', 'area_sqft': round(overlap.area, 1)})
         for setback in project.get('setbacks', []):
             if setback.get('review_status') != 'accepted':
                 out['gaps'].append('Parcel-edge setback awaits review.'); continue
@@ -125,16 +222,23 @@ def assess(project, documents, facts, coverage, as_of=None):
     date.fromisoformat(as_of)
     pack = load_pack(project.get('jurisdiction'))
     reviewed = project.get('accepted_facts', {})
+    from .classification import classify_review
+    classified=classify_review(project,facts,documents)
+    active_ids={f['id'] for f in classified if f['classification']['bucket']!='history'}
+    machine_ids={f['id'] for f in classified if f['id'] in active_ids and f.get('machine_validation',{}).get('status')=='validated' and not f['classification']['conflict'] and f.get('review_status')!='rejected'}
+    facts=[f for f in facts if f['id'] in active_ids]
     nodes = []
     impacts = set(project.get('review_required_nodes', []))
     for definition in ordered_nodes(pack):
         node_id = definition['id']
+        related = [f for f in facts if f.get('node_id') == node_id or (node_id == 'X0' and re.search(r'\b(pse|puget sound energy|electrical|electric service|power lines?|energization)\b', json.dumps([f.get('value'), f.get('quote'), f.get('source_quote')]), re.I))]
         accepted = [f for f in facts if f.get('node_id') == node_id and reviewed.get(f['id'], {}).get('review_status') == 'accepted']
         review = project.get('node_reviews', {}).get(node_id, {})
         applicability = review.get('applicability', 'unknown')
         if applicability not in ('required', 'not_applicable') or not review.get('source_url'):
             applicability = 'unknown'
-        status = 'evidence_available' if accepted else 'unknown'
+        automated=[f for f in related if f['id'] in machine_ids]
+        status = 'evidence_available' if accepted or automated else 'unknown'
         if node_id == 'J0': status = 'identified'
         if applicability == 'not_applicable': status = 'not_applicable'
         if node_id in impacts: status = 'review_required'
@@ -143,12 +247,15 @@ def assess(project, documents, facts, coverage, as_of=None):
         if expired: status = 'review_required'
         blockers = [e['source'] for e in pack['edges'] if e['target'] == node_id and e['type'] == 'HARD' and next((n['status'] for n in nodes if n['id'] == e['source']), 'unknown') != 'not_applicable']
         reason = 'Evidence or applicability still needs review.'
+        if automated: reason='Source-supported evidence extracted and checked automatically; applicability and agency decisions remain separate.'
         if accepted: reason = 'Accepted transcription is available; confirm its relevance and agency acceptance for this proposal.'
         if status == 'review_required': reason = 'Changed inputs or an explicitly reviewed expiry date require impact review; historical agency decisions remain unchanged.'
         if status == 'not_applicable': reason = 'Reviewer-recorded non-applicability with supporting source; not an agency decision.'
         nodes.append({**definition, 'status': status, 'applicability': applicability,
                       'decision': 'unknown', 'freshness': 'revalidation_required' if status == 'review_required' else 'unknown',
-                      'stage': 'feasibility', 'evidence_ids': [f['id'] for f in accepted],
+                      'stage': 'feasibility', 'evidence_ids': sorted({f['id'] for f in accepted+automated}), 'machine_evidence_ids':[f['id'] for f in automated],
+                      'related_evidence_ids': [f['id'] for f in related],
+                      'document_ids': sorted({f['document_id'] for f in related if f.get('document_id')}),
                       'source_url': review.get('source_url') or pack['source_url'], 'reason': reason,
                       'blockers': blockers, 'evidence_class': 'model'})
     edges = [{**e, 'id': f"{e['source']}-{e['target']}-{e['type']}"} for e in pack['edges']]
@@ -161,6 +268,6 @@ def assess(project, documents, facts, coverage, as_of=None):
                 'dependencies': [e['source'] for e in edges if e['target'] == n['id'] and e['type'] != 'INVALIDATES']}
                for i, n in enumerate(nodes) if n['status'] not in ('identified', 'not_applicable')]
     return {'revision': project['current_revision'], 'rule_version': pack['version'], 'as_of': as_of,
-            'nodes': nodes, 'edges': edges, 'actions': actions, 'envelope': envelope(project),
+            'nodes': nodes, 'edges': edges, 'actions': actions, 'envelope': envelope(project, facts, documents),
             'coverage_gaps': gaps, 'summary': 'Preliminary research and coordination only. Numeric code rules are not yet activated; unknown requirements remain unresolved. No result authorizes construction.',
             'documents_imported': len(documents)}

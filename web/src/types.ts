@@ -32,6 +32,9 @@ export type AiProcessing = {
   total_pages?: number;
   processed_pages?: number;
   partial_pages?: number;
+  machine_validated_facts?: number;
+  verification_pending_facts?: number;
+  exception_facts?: number;
   unreadable_pages?: number;
   pending_pages?: number;
   total_chunks?: number;
@@ -45,6 +48,8 @@ export type AiProcessing = {
     status: string;
     text_chunks?: number;
     completed_text_chunks?: number;
+    route?: string;
+    coverage_incomplete?: boolean;
     vision_required?: boolean;
     vision_status?: string;
     issues?: string[];
@@ -63,6 +68,8 @@ export type DocumentRecord = {
   [key: string]: any;
 };
 export type Fact = {
+  machine_validation?: { status?: string; policy?: string; verdict?: { reason?: string } };
+  verification_exception?: { policy?: string; reason?: string };
   id: string;
   key?: string;
   name?: string;

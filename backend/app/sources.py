@@ -27,7 +27,7 @@ KPHD_BASE = "https://secure.kitsappublichealth.org/WebLink/"
 PREP_URL = "https://experience.arcgis.com/experience/29469422ff88417c9cc729e235c3bca0/"
 KPHD_SOURCE = "KPHD scanned records"
 HEADERS = {"User-Agent": "Davapprove/0.1 (bounded public parcel research)", "Accept": "application/json,text/html"}
-ALLOWED_HOSTS = frozenset({"utility.arcgis.com", "services6.arcgis.com", "services9.arcgis.com", "secure.kitsappublichealth.org"})
+ALLOWED_HOSTS = frozenset({"utility.arcgis.com", "services6.arcgis.com", "services9.arcgis.com", "secure.kitsappublichealth.org", "co-kitsap-wa.smartgovcommunity.com", "paladin-sg-prod-blobs.s3.amazonaws.com"})
 MAX_METADATA_BYTES = 8 * 1024 * 1024
 MAX_DOCUMENT_BYTES = 250 * 1024 * 1024
 MAX_PAGES = 500
@@ -60,6 +60,8 @@ async def _validate_url(url: str) -> None:
     parsed = urlparse(url)
     if parsed.scheme != "https" or parsed.hostname not in ALLOWED_HOSTS or parsed.port not in (None, 443) or parsed.username:
         raise SourceError("Source URL is not an approved public HTTPS endpoint.")
+    if parsed.hostname == 'paladin-sg-prod-blobs.s3.amazonaws.com' and not re.fullmatch(r'/jur-blobs/co-kitsap-wa/Note/[0-9a-fA-F-]{36}', parsed.path):
+        raise SourceError('County storage redirect is outside the verified attachment path.')
     try:
         addresses = await asyncio.to_thread(socket.getaddrinfo, parsed.hostname, 443, 0, socket.SOCK_STREAM)
     except OSError as exc:
@@ -338,6 +340,33 @@ async def _discover_zoning(parcel):
             "Published map designations only; adopted code, amendments and project-specific conditions require review.", layer)
 
 
+async def _discover_county(parcel):
+    from .county_records import BASE, SOURCE, parcel_ids, attachments
+    number = normalize_parcel(parcel['parcel_number'])
+    url = BASE + '/Parcels/ParcelSearch?' + urlencode({'query': _formatted_tax_id(number), '_conv': 1})
+    found=[]
+    async with httpx.AsyncClient(timeout=30, headers=HEADERS) as client:
+        content,_ = await _request(client, 'GET', url)
+        html=content.decode('utf-8', errors='replace')
+        ids=parcel_ids(html)
+        if not ids and 'No results found' not in html:
+            raise SourceError('County search response could not be interpreted; portal review required.')
+        for ident in ids[:5]:
+            detail=BASE+'/Parcels/ParcelDetail/Index/'+ident
+            content,_=await _request(client,'GET',detail)
+            html=content.decode('utf-8',errors='replace')
+            if _formatted_tax_id(number) not in html:
+                raise SourceError('County parcel detail did not confirm the requested tax ID.')
+            found.extend(attachments(html,number,detail))
+    unique={}
+    for c in found:
+        unique.setdefault(c['external_id'],{**c,'retrieved_at':_now()})
+    return list(unique.values()), _coverage(SOURCE, 'partial',
+        f"Found {len(unique)} public PDF attachments across {min(len(ids),5)} parcel records. "
+        "Metadata only; revisions may coexist. Unpublished attachments, historical records and auditor records remain outside this search.",
+        url, query_scope='Exact formatted current tax ID; up to 5 public parcel detail records')
+
+
 async def discover_records(parcel: dict) -> dict:
     coverage, candidates, screening = [], [], {}
     try:
@@ -361,11 +390,17 @@ async def discover_records(parcel: dict) -> dict:
             coverage.append(status)
         except (SourceError, ValueError) as exc:
             coverage.append(_coverage("Zoning", "unavailable", str(exc), "https://poulsbo.gov/codes-amendments-maps/" if parcel.get("jurisdiction") == "poulsbo" else PREP_URL))
+    if parcel.get('jurisdiction') == 'kitsap_county':
+        try:
+            found,status=await _discover_county(parcel)
+            candidates.extend(found);coverage.append(status)
+        except (SourceError,ValueError,KeyError) as exc:
+            coverage.append(_coverage('Kitsap county permit attachments','unavailable',str(exc),'https://co-kitsap-wa.smartgovcommunity.com/Public/Home'))
     number = parcel["parcel_number"]
     permit_url = ("https://ci-poulsbo-wa.smartgovcommunity.com/Public/Home" if parcel.get("jurisdiction") == "poulsbo"
-                  else "https://co-kitsap-wa.smartgovcommunity.com/Parcels/ParcelHome/?" + urlencode({"parcelSearch": number}))
+                  else "https://co-kitsap-wa.smartgovcommunity.com/Parcels/ParcelHome/?" + urlencode({"parcelSearch": _formatted_tax_id(number)}))
     coverage.extend([
-        _coverage("Permit history", "manual-access", "Open the permit portal to review decisions and attachments; upload selected records. Automated attachment retrieval is not yet verified.", permit_url),
+        _coverage("Permit history", "manual-access", "Review portal decisions and any records absent from attachment discovery. Search the formatted tax ID; missing public attachments do not establish absence.", permit_url),
         _coverage("Recorded surveys and easements", "manual-access", "Search tax parcel and legal description. An empty index is not a title clearance; upload selected records.", "https://kcwaimg.kitsap.gov/recorder/web/"),
         _coverage("Water and sewer availability", "manual-access", "Obtain site-specific availability/capacity evidence from the responsible provider.", "https://poulsbo.gov/engineering/" if parcel.get("jurisdiction") == "poulsbo" else "https://www.kitsappublichealth.org/dwos/privatewells"),
     ])
@@ -391,6 +426,18 @@ async def _fetch_selected(candidate: dict, max_bytes: int = MAX_DOCUMENT_BYTES) 
     Download a user-selected scanned record through the portal's published PDF export.
     Export is bounded and session-specific; document URLs must not be supplied by callers.
     """
+    from .county_records import BASE, SOURCE, UUID
+    if candidate.get('source') == SOURCE and candidate.get('retrieval_method') == 'county_blob':
+        ident=str(candidate.get('external_id',''))
+        if candidate.get('access') != 'automated' or not re.fullmatch(UUID,ident):
+            raise SourceError('Invalid county attachment identifier.')
+        url=BASE+'/Blob/'+ident
+        async with httpx.AsyncClient(timeout=30,headers=HEADERS) as client:
+            data,_=await _request(client,'GET',url,max_bytes=min(max_bytes,MAX_DOCUMENT_BYTES))
+        if not data.startswith(b'%PDF-'):
+            raise SourceError('County attachment did not return a PDF; review public access in the portal.')
+        return {'content':data,'filename':'county-'+ident+'.pdf','content_type':'application/pdf',
+                'source_url':url,'sha256':hashlib.sha256(data).hexdigest(),'retrieved_at':_now()}
     record_id = str(candidate.get("external_id", ""))
     if candidate.get("source") != KPHD_SOURCE or candidate.get("retrieval_method") != "laserfiche_pdf" or not record_id.isdigit():
         raise SourceError("This record requires manual portal download and upload.")

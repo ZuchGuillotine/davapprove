@@ -75,3 +75,80 @@ The platform credential is `OPENAI_API_KEY` in protected `deploy/.env`; it is pa
 OpenAI requests use `store:false`, no external tools and bounded text/image inputs. This setting is not a claim of zero provider retention. Originals remain in private Supabase Storage; rendered images are temporary worker files. Model proposals, source pages and processing checkpoints are project-scoped data.
 
 Resume processing uses `POST /api/v1/projects/{project_id}/documents/{document_id}/process` as an owner/editor. Completed chunks are reused; unresolved possibly-billed requests are not blindly resent. An incomplete run remains visibly partial. Reprocessing adds versioned proposals and preserves prior accepted evidence. Model interpretation alone does not supply calibrated geometry.
+
+
+## November 7 site-envelope v1 release
+
+Deployed frontend version `fa3e16de-2de5-48cb-be81-fa6eba9dec75` and updated API/worker with drawing calibration and reconciliation. Previous frontend version: `a4c6dc2a-96f0-4981-ac76-ae5a9f3ba622`. Backend rollback source archive and image IDs: `/opt/davapprove-releases/site-viewer-v1-before/`; retained image tags: `davapprove-api:before-site-viewer-v1`, `davapprove-worker:before-site-viewer-v1`. No database migration or infrastructure change. Tunnel preserved.
+
+Verified live frontend asset hashes against the release build, public API health and synthetic calibration inside the deployed worker. Predeployment checks passed: 69 backend tests, 14 frontend tests, build and Wrangler dry-run. Real-document extraction accuracy remains for beta benchmarking. Prompt version: `facts-drawings-2026-11-07-v3`; explicitly reprocess existing documents to generate new proposals. See [viewer behavior and limits](SITE_ENVELOPE_VIEWER.md).
+
+## November 7 workflow evidence release
+
+Deployed frontend version `d1f8f187-0310-4a9d-aa57-ebf5360f78cb` with status highlighting, node evidence inspection and electrical utility coverage. Previous version: `fa3e16de-2de5-48cb-be81-fa6eba9dec75`. Updated API/worker include X0 extraction and the current checked-in-workspace drawing/classification support. Backend rollback source and image IDs: `/opt/davapprove-releases/workflow-evidence-before/`; tags `davapprove-api:before-workflow-evidence` and `davapprove-worker:before-workflow-evidence`. Tunnel preserved; no schema migration or document reprocessing queued. Validated 75 backend tests, 20 frontend tests, production build, research checks, Wrangler dry-run, public API health and deployed utility evaluation smoke check.
+
+## November 7 fact-classification release
+
+Deployed the review classifier API and current frontend build as Cloudflare version `6368a82a-940e-4e34-8062-93f896c7c4d9`. The previous observed frontend version was `fa3e16de-2de5-48cb-be81-fa6eba9dec75`. API rollback source and image ID are in `/opt/davapprove-releases/fact-classification-v1-before/`, with retained image tag `davapprove-api:before-fact-classification-v1`. No database migration; tunnel preserved.
+
+Checks: 75 backend tests, 20 frontend tests, production build and Wrangler dry run passed. Public API health and a classifier smoke test inside the deployed API passed. See [classification behavior and remaining verification UI](FACT_CLASSIFICATION.md).
+
+Retroactive review UI follow-up: frontend version `a3f20190-0c48-496a-b77a-674684621ec0` adds Reclassify existing facts, queue counts and direct/uncertain relevance filters. Previous version `6368a82a-940e-4e34-8062-93f896c7c4d9`. Existing API already classifies historical imports on read; no backend deployment or data migration required. Verified 17 API/classifier tests (including 540 legacy facts), 20 frontend tests, build and dry run.
+
+
+## November 7 project UX release
+
+Applied hosted `rename_project` migration and deployed editable names and in-place fact review as frontend version `227a5d74-3f68-482b-8631-bed2504e3f7a` (previous `a3f20190-0c48-496a-b77a-674684621ec0`). Updated only API `main.py` and `store.py` after comparing host copies; worker and tunnel preserved. API rollback archive and image ID: `/opt/davapprove-releases/project-ux-before/`; retained tag `davapprove-api:before-project-ux`.
+
+Verified 77 backend tests, 21 frontend tests, build and Wrangler dry run; live API health, rename endpoint and frontend asset hashes. Hosted rename smoke check used a rolled-back transaction and preserved the design revision. Security advisor reports leaked-password protection disabled; Auth configuration was unchanged. Remediation: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection.
+
+
+Project rename CORS hotfix: the first UX deployment omitted PATCH from allowed CORS methods, causing browsers to report Failed to fetch despite the installed migration. Added PATCH, verified 14 API tests including browser preflight regression, redeployed only API, and verified the hosted OPTIONS request returns 200 with PATCH and the frontend origin allowed. Prior API retained as `davapprove-api:before-rename-cors`; source backup `/opt/davapprove-releases/rename-cors-before/`.
+
+## November 7 county discovery / draft geometry correction
+
+Frontend version `95b1571f-402f-4d20-89a4-76421ff36beb`; API/worker updated with `county_records.py`, the corrected formatted-parcel search and selected county PDF import, draft line/point support and document geometry diagnostics. Backend rollback retained under `/opt/davapprove-releases/discovery-drafts-before/` and image tags `before-discovery-drafts`. 83 backend tests and 21 frontend tests passed, plus build/dry-run. Added 115 unselected county attachment candidates to the test project; no model processing was queued. Original evidence and accepted facts were preserved. Automatic drawing alignment is still limited to supported control fits.
+
+## November 8 shared survey alignment release
+
+Applied hosted `sheet_alignment` migration and deployed frontend version `bbec51ba-37b5-4098-9eab-e6592364f0a2` (previous `95b1571f-402f-4d20-89a4-76421ff36beb`). API now supports deterministic per-sheet registration and authenticated cached page previews. Updated only `main.py`, `evaluation.py`, `alignment.py` and `page_preview.py` on the host after comparing its existing files. Worker and tunnel were preserved. API rollback source/image ID: `/opt/davapprove-releases/sheet-alignment-before/`; retained tag `davapprove-api:before-sheet-alignment`.
+
+Validation: 95 backend tests, 23 frontend tests, production build, Wrangler dry-run, research/report checks, public API health, installed alignment routes and Poppler, and a rolled-back hosted revision-RPC save. Synthetic browser QA verified source-page selection, control matching controls, residual display and raster overlay preview. Real survey registration accuracy remains unbenchmarked. No survey controls or accepted facts were written to the test parcel; no source imports or model jobs were queued. Local database RLS suite was not run because the local PostgreSQL instance requires credentials; hosted RPC smoke validation preserved project state.
+
+
+## $25 test AI budget and model plan — November 7 follow-up
+
+Authorized cap: $25 shared per UTC calendar month across the hosted test projects, including existing usage/reservations. Local settings, OpenAI admission and SQLite reservation guard now support that cap; lower configured limits remain enforceable. Applied hosted migration `raise_test_ai_budget` (local file `20261108075249_raise_test_ai_budget.sql`) changes the worker-only database hard ceiling to $25 without resetting the ledger. Rollback-only SQL checks verified $6 + $19 reservations succeed and an additional microdollar or oversized limit fails. All 97 backend tests passed.
+
+**Historical activation status (superseded by the cascade release below):** hosted source files and protected `deploy/.env` are staged for $25, but the running worker still has its prior $5 configuration. One active import and ten queued imports were present at the deployment check, so the worker was not restarted mid-parse. The budget increase is not fully effective until the worker is recreated at a safe job boundary. Do not describe this as a live $25 worker limit yet. No new imports or reprocessing jobs were queued by this change.
+
+Only narrow replacements were applied to host `config.py`, `openai_processing.py`, `store.py` and Compose; existing host work was retained. Rollback files (including a protected environment backup) are under `/opt/davapprove-releases/test-budget-25-before`; previous worker image is tagged `davapprove-worker:before-test-budget-25`. When active processing has drained, recreate only the worker using the existing Compose deployment, preserving API and tunnel. Verify `Settings().ai_monthly_usd == 25` inside the new worker and confirm API health. Do not print credentials. The database accepts lower runtime caps, so leaving the old worker temporarily running does not break reservation calls.
+
+Jev + GPT-6.1 Sol low is the revised architecture target, not deployed routing. See `AUTOMATED_PRECHECK_PIPELINE.md` for evaluation and funding decisions. No private documents were sent to Jev and no paid model benchmark ran during this planning/budget change. The security advisor reported an existing leaked-password-protection warning; no database privilege warning was reported for this migration. No authentication settings were changed.
+
+
+## Jev / Sol cascade — November 8, 2026
+
+The previous import queue drained before deployment (51 completed jobs and one previously failed job; no active queued/running jobs). The fixed reprocessing manifest contains 44 existing originals / 774 pages for test parcel 04260110252000; no new source discovery is part of this run.
+
+Deployed `AI_PROVIDER=cascade`, `AI_MODEL=gpt-6.1-sol`, `AI_MONTHLY_USD=25`; confirmed both provider credentials are present only in the worker. The Jev key is passed as `TYPESAFE_API_KEY`. The OpenAI and TypeSafe ledger uses shared reservations, actual usage reconciliation, and retained uncertain reservations. Reprocessing and comparisons share this cap. The running Cloudflare frontend is `3ba29129-9d65-4d2f-9d6b-96e824c59a48`; public asset hashes match the release build. The API health endpoint returned 200. The existing tunnel was preserved.
+
+See [cascade release](CASCADE_RELEASE.md) for implemented behavior, comparisons and remaining geometry/code-check limits. Source/image extraction uses `precheck-cascade-2026-11-08-v2`, with `source-verification-2026-11-08-v3` for ambiguous source checks. Request hashes include the full prompts/schema, so verification refinements cannot silently reuse an incompatible answer. Paid responses are retained separately from published facts.
+
+Reprocessing: `scripts/reprocess_cascade.py PROJECT_ID /data/cascade-v2-manifest.json` on the protected worker. Supplemental verification: `scripts/verify_cascade.py PROJECT_ID`. Existing document/fact identities, immutable originals and human overlays are retained. Do not clear ledger entries or request caches to force a rerun. Inspect uncertain requests before any retry; source-equivalent cached responses may be reused only after checking the complete request identity. Never restart the worker while either explicit runner is active.
+
+Rollback copies are `/opt/davapprove-releases/cascade-before/source.tgz` and protected `env`; retained image tags are `davapprove-api:before-cascade` and `davapprove-worker:before-cascade`. Recreating only API/worker preserves the tunnel and data volume. Rollback must not erase new evidence or accounting rows. The run is stopped with no active paid requests. See [final corpus results and exact costs](CASCADE_RUN_RESULTS.md): $22.383749 metered corpus processing; $24.929126 shared-ledger total including earlier work, tests and the held uncertain reservation. All 774 pages were extracted; 240 page verification requests await a budget decision. The $25 cap remains unchanged.
+
+
+### Authorized verification continuation: $35 cap
+
+The user explicitly authorized raising the shared test cap to $35 after the first run stopped at $24.929126. Migration `20261108201906_raise_test_ai_budget_35.sql` preserves the atomic ledger and service-role-only grants while raising the database ceiling. Runtime configuration and its upper bound are updated; the default remains $25 unless configured. The verification/reprocessing runners now read the configured allowance rather than hardcoding $25. Existing usage and uncertain reservations were retained. Thirty-five targeted budget/processing tests passed. Only the idle worker was rebuilt/recreated; API, frontend and tunnel remain unchanged. Pending verification resumes from existing source/fact records and request caches; it does not rerun document extraction.
+
+
+The $35 continuation finished: all 240 formerly paused source-verification requests completed, all 1,692 blocked observations were checked, and no processing backlog or active requests remain. Incremental model cost was $3.844441. Corpus cost is $26.228190; shared ledger total is $28.773567 / $35, including the unchanged $0.228185 uncertain timeout reservation. All 35 targeted tests passed and API health returned 200. Final snapshot event: `7478141a-8188-4b60-b7b1-d6627f9a9ea4`. See [completed run results](CASCADE_RUN_RESULTS.md). The snapshot writer now stores compact source/validation references and uses an insert with `return=minimal`; larger upsert/returned snapshot writes hit database statement timeouts. Original evidence and provider responses remain retained.
+
+## Provisional drawing rendering — November 8, 2026
+
+Frontend version `17755608-ff96-4190-8523-b56321288372` and API now render grouped native-sheet outlines before review and propose conservative GIS parcel-shape registration. Live corpus: 328 outlines / 133 pages; 22 provisional geographic features. Geometry remains excluded from calculations until the existing reviewed-control requirements are met. Authenticated browser verification showed the original approved site-plan page with five extracted overlays and the geographic barn/access layers. No document reprocessing, paid model calls, database migration or fact-status changes were required. API corpus computation took 0.52 seconds; health returned 200. Production assets match the build (`index-B6LnRMv1.js`, `index-DdZ-Xt37.css`).
+
+Validation: 121 backend tests and 25 frontend tests passed before the final warning-grouping adjustment; 37 targeted geometry/evaluation tests passed after that adjustment. TypeScript/production build, Wrangler dry-run, report regressions and diff checks passed. API rollback image: `davapprove-api:before-provisional-viewer`; prior evaluation module saved under `/opt/davapprove-releases/provisional-viewer-before/`. Worker and tunnel were not restarted. See `SITE_ENVELOPE_VIEWER.md` for remaining registration limitations.

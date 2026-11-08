@@ -46,6 +46,19 @@ async function openSample() {
   return user;
 }
 describe("project workspace", () => {
+  it("renames the project without changing its design revision", async () => {
+    const user = await openSample();
+    await user.click(screen.getByRole("button", { name: "Edit project name" }));
+    const input = screen.getByRole("textbox", { name: "Project name" });
+    await user.clear(input);
+    expect(screen.getByRole("button", { name: "Save name" })).toBeDisabled();
+    await user.type(input, "Smith residence");
+    await user.click(screen.getByRole("button", { name: "Save name" }));
+    await screen.findByRole("heading", { name: "Smith residence" });
+    expect(screen.getByText("Revision 1")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Refresh project" }));
+    await screen.findByRole("heading", { name: "Smith residence" });
+  });
   it("keeps discovery separate from import and imports only explicitly selected records", async () => {
     const user = await openSample();
     await user.click(screen.getAllByRole("button", { name: "Find records" })[0]);
@@ -76,6 +89,15 @@ describe("project workspace", () => {
       }),
     ).not.toBeInTheDocument();
     expect(screen.getByText("1 imported")).toBeInTheDocument();
+    const reviewFocus = screen.getByRole("combobox", { name: "Review focus" });
+    await user.selectOptions(reviewFocus, "all");
+    const accept = await screen.findAllByRole("button", { name: "Accept" });
+    await user.click(accept[0]);
+    await screen.findByText("Revision 2");
+    expect(screen.getByRole("combobox", { name: "Review focus" })).toBe(reviewFocus);
+    expect(screen.queryByText("OPENING PROJECT WORKSPACE")).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole("button", { name: "Refresh project" })).toBeEnabled());
+    expect(screen.getByRole("combobox", { name: "Review focus" })).toHaveValue("all");
   }, 15000);
   it("creates a design revision and attaches feedback to that revision", async () => {
     const user = await openSample();
@@ -284,4 +306,12 @@ describe("project workspace", () => {
       ).toBeEnabled(),
     );
   });
+});
+
+it("lets users inspect a workflow item below the graph", async () => {
+  const user = await openSample();
+  await user.click(screen.getByRole("tab", {name:"Workflow"}));
+  await user.click(screen.getByRole("button", {name:"Electrical service & trade permits"}));
+  expect(screen.getByRole("heading", {name:"X0 · Electrical service & trade permits"})).toBeInTheDocument();
+  expect(screen.getByText(/No supporting documents or excerpts/)).toBeInTheDocument();
 });

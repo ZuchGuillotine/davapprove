@@ -37,6 +37,7 @@ import {
   documentUrl,
 } from "./api";
 import { Upload as TusUpload } from "tus-js-client";
+import WorkflowEvidence, { statusTone } from "./WorkflowEvidence";
 import DocumentCoverage from "./DocumentCoverage";
 import FactEvidence from "./FactEvidence";
 import type {
@@ -48,6 +49,7 @@ import type {
   Json,
   Project,
 } from "./types";
+const SheetAlignment = lazy(() => import("./SheetAlignment"));
 const ParcelMap = lazy(() => import("./ParcelMap"));
 const WorkflowGraph = lazy(() => import("./WorkflowGraph"));
 const tabs = [
@@ -119,6 +121,8 @@ export default function App() {
     [jobs, setJobs] = useState<Job[]>([]),
     [selected, setSelected] = useState<Set<string>>(new Set()),
     [comment, setComment] = useState("");
+  const [editingName, setEditingName] = useState(false);
+  const [projectName, setProjectName] = useState("");
   const [editIntent, setEditIntent] = useState(false),
     [bedrooms, setBedrooms] = useState(3),
     [viewDoc, setViewDoc] = useState<{ title: string; url: string } | null>(
@@ -222,7 +226,9 @@ export default function App() {
       setProjectLoading(false);
     }
   }
+  const [selectedWorkflowNode, setSelectedWorkflowNode] = useState<string>();
   async function loadProject(p: Project) {
+    if (p.id !== project?.id) { setSelectedWorkflowNode(undefined); setEditingName(false); }
     setProjectLoading(true);
     setLoadingProjectName(p.name);
     setSelected(new Set());
@@ -343,6 +349,15 @@ export default function App() {
       await poll(project, r.jobs || []);
     });
   }
+  async function reclassifyFacts() {
+    if (!project || sample) return;
+    await run("Classifying existing facts", async () => {
+      const result = await request(`/projects/${project.id}/review`);
+      const updated: Fact[] = result.facts || [];
+      setFacts(updated);
+      setNotice(`Reclassified ${updated.length} retained facts using current rules. No documents reprocessed and no review decisions changed.`);
+    });
+  }
   async function reviewFact(f: Fact, status: string) {
     if (!project) return;
     await run("Saving evidence review", async () => {
@@ -351,7 +366,27 @@ export default function App() {
         facts: [{ id: f.id, value: f.value, review_status: status }],
         notes: `${status}: ${f.key || f.name}`,
       });
-      await loadProject(p);
+      // Keep the workspace mounted while refreshing only affected evidence.
+      setProject(p);
+      setProjects(items => items.map(item => item.id === p.id ? p : item));
+      setFacts(items => items.map(item => item.id === f.id ? { ...item, review_status: status } : item));
+      setAssessment(null);
+      const [review, nextAssessment] = await Promise.all([
+        request(`/projects/${p.id}/review`),
+        request(`/projects/${p.id}/assessment`),
+      ]);
+      setFacts(review.facts || []);
+      setAssessment(nextAssessment);
+    });
+  }
+  async function saveProjectName(e: FormEvent) {
+    e.preventDefault();
+    if (!project || !projectName.trim()) return;
+    await run("Saving project name", async () => {
+      const updated = await request<Project>(`/projects/${project.id}`, "PATCH", { name: projectName.trim() });
+      setProject(updated);
+      setProjects(items => items.map(item => item.id === updated.id ? updated : item));
+      setEditingName(false);
     });
   }
   async function upload(file: File) {
@@ -455,8 +490,17 @@ export default function App() {
   const knownBytes = candidates
     .filter((c) => selected.has(c.id))
     .reduce((n, c) => n + (c.size_bytes || 0), 0);
+  const [reviewView, setReviewView] = useState("review_now");
+  const reviewBucket = (f: Fact) => f.classification?.bucket || (!["accepted", "rejected"].includes(f.review_status || "") ? "review_now" : "resolved");
+  const visibleFacts = facts.filter(f => reviewView === "all" ||
+    (["direct", "unknown"].includes(reviewView)
+      ? reviewBucket(f) === "review_now" && (f.classification?.relevance || "unknown") === reviewView
+      : reviewBucket(f) === reviewView));
+  const reviewCount = (bucket: string) => facts.filter(f => reviewBucket(f) === bucket).length;
+  const directCount = facts.filter(f => reviewBucket(f) === "review_now" && f.classification?.relevance === "direct").length;
+  const unknownCount = facts.filter(f => reviewBucket(f) === "review_now" && (!f.classification || f.classification.relevance === "unknown")).length;
   const unreviewed = facts.filter(
-    (f) => f.review_status !== "accepted" && f.review_status !== "rejected",
+    (f) => f.review_status !== "accepted" && f.review_status !== "rejected" && (!f.classification || f.classification.bucket === "review_now"),
   );
   if (!entered)
     return (
@@ -700,7 +744,20 @@ export default function App() {
                     <MapPin size={14} />
                     {labelJurisdiction(project.jurisdiction)}
                   </div>
-                  <h1>{project.name}</h1>
+                  {editingName ? (
+                    <form onSubmit={saveProjectName} className="project-name-editor">
+                      <label>Project name
+                        <input autoFocus required maxLength={160} value={projectName} onChange={e => setProjectName(e.target.value)} onKeyDown={e => { if (e.key === "Escape") setEditingName(false); }} placeholder="Address, client or builder name" />
+                      </label>
+                      <button className="primary" disabled={!!busy || !projectName.trim()}>Save name</button>
+                      <button type="button" className="secondary" disabled={!!busy} onClick={() => setEditingName(false)}>Cancel</button>
+                    </form>
+                  ) : (
+                    <>
+                      <h1>{project.name}</h1>
+                      <button className="text-button" disabled={!!busy} onClick={() => { setProjectName(project.name); setEditingName(true); }}>Edit project name</button>
+                    </>
+                  )}
                   <div className="project-meta">
                     <span>Parcel {project.parcel_number}</span>
                     <i />{" "}
@@ -862,6 +919,7 @@ export default function App() {
                       </div>
                       <Suspense fallback={loading}>
                         <ParcelMap
+                          projectId={project.id}
                           parcel={project.parcel}
                           envelope={assessment?.envelope}
                           sample={sample}
@@ -1204,23 +1262,31 @@ export default function App() {
                       </section>
                       <section className="panel">
                         <div className="panel-heading">
-                          <h2>Evidence review</h2>
+                          <h2>Evidence exceptions</h2>
                           <Badge tone="amber">
                             {unreviewed.length} pending
                           </Badge>
                         </div>
+                        <button className="secondary" disabled={!!busy || sample || !facts.length} onClick={reclassifyFacts}>Reclassify existing facts</button>
+                        <p className="muted">Classification runs automatically on all stored facts when this project loads. Rerun it here without reimporting files or using AI processing allowance.</p>
+                        <p className="muted">{facts.length} retained · {directCount} direct envelope · {unknownCount} uncertain relevance · {reviewCount("later")} later-stage · {reviewCount("history")} historical · {reviewCount("resolved")} resolved · {reviewCount("processing_pending")} awaiting automated verification. Conflicts stay in Resolve now.</p>
+                        <label>Review focus <select aria-label="Review focus" value={reviewView} onChange={e => setReviewView(e.target.value)}><option value="review_now">Resolve now · site envelope</option><option value="direct">Direct envelope evidence</option><option value="unknown">Uncertain relevance</option><option value="later">Later stages</option><option value="history">Earlier evidence</option><option value="resolved">Resolved evidence</option><option value="processing_pending">Awaiting automated verification</option><option value="all">All retained facts</option></select></label>
+                        <p className="muted">{visibleFacts.length} shown. Source-supported extractions can be resolved automatically. Geometry, applicability and agency decisions remain separate.</p>
                         {!facts.length ? (
                           <p className="muted pad">
                             Extracted facts appear after documents are imported
                             and processed.
                           </p>
                         ) : (
-                          facts.map((f) => (
+                          visibleFacts.map((f) => (
                             <div className="fact" key={f.id}>
                               <strong>
                                 {human(f.key || f.name || "Extracted fact")}
                               </strong>
                               <div className="fact-value">{human(f.value)}</div>
+                              {f.classification && <p className="muted">{f.classification.reason} {f.classification.authority === "agency_approved_scope" && "Agency approval recorded for a specific scope; extraction and current applicability still require review."}</p>}
+                              {f.machine_validation?.verdict?.reason && <p className="muted">Source check: {f.machine_validation.verdict.reason}</p>}
+                              {f.verification_exception?.reason && <p className="muted">Processing exception: {f.verification_exception.reason}</p>}
                               <FactEvidence
                                 fact={f}
                                 document={documents.find(
@@ -1297,6 +1363,7 @@ export default function App() {
                     <section className="panel large-map">
                       <Suspense fallback={loading}>
                         <ParcelMap
+                          projectId={project.id}
                           parcel={project.parcel}
                           envelope={assessment?.envelope}
                           sample={sample}
@@ -1347,6 +1414,7 @@ export default function App() {
                       </div>
                     </section>
                   </div>
+                  {!sample && <Suspense fallback={loading}><SheetAlignment key={project.id} project={project} documents={documents} onSaved={async p=>{await loadProject(p);setNotice("Sheet alignment saved in a new revision.");}} /></Suspense>}
                 </>
               )}
               {tab === "Workflow" && (
@@ -1365,7 +1433,7 @@ export default function App() {
                     <section className="panel">
                       {assessment && (
                         <Suspense fallback={loading}>
-                          <WorkflowGraph assessment={assessment} />
+                          <WorkflowGraph assessment={assessment} selectedId={selectedWorkflowNode} onSelect={setSelectedWorkflowNode} />
                         </Suspense>
                       )}
                       <div className="coverage-note">
@@ -1380,12 +1448,14 @@ export default function App() {
                       <Actions items={assessment?.actions || []} />
                     </section>
                   </div>
+                  <div className="workflow-legend"><span className="status-red">Red: blocked / conflict</span><span className="status-yellow">Yellow: unknown / pending / review</span><span className="status-green">Green: identified / complete / not applicable</span></div>
+                  <WorkflowEvidence node={assessment?.nodes.find(n => n.id === selectedWorkflowNode)} facts={facts} documents={documents} candidates={candidates} revision={assessment?.revision || project.current_revision} onOpen={openDocument} onRecords={() => setTab("Records")} />
                   <section className="panel node-list">
                     {assessment?.nodes.map((n) => (
-                      <div key={n.id}>
+                      <div key={n.id} className={`status-${statusTone(n.state || n.status || "unknown")}`}>
                         <span className="node-id">{n.id}</span>
                         <div>
-                          <strong>{n.title || n.label}</strong>
+                          <button className="text-button" onClick={() => setSelectedWorkflowNode(n.id)}>{n.title || n.label}</button>
                           <p>{n.reason || n.description}</p>
                         </div>
                         <Badge
@@ -1855,6 +1925,10 @@ function GeometryEditor({
   onSaved: (p: Project) => Promise<void>;
 }) {
   const [kind, setKind] = useState("constraint"),
+    [discipline, setDiscipline] = useState("septic"),
+    [designRevision, setDesignRevision] = useState(""),
+    [sheet, setSheet] = useState(""),
+    [installation, setInstallation] = useState("unknown"),
     [label, setLabel] = useState(""),
     [source, setSource] = useState(""),
     [geometry, setGeometry] = useState(""),
@@ -1883,10 +1957,17 @@ function GeometryEditor({
         changes.constraints = [
           ...((project as any).constraints || []),
           {
+            id: crypto.randomUUID(),
             label,
+            discipline,
+            role: kind === "design" ? "design" : kind === "reference" ? "reference" : "exclusion",
+            design_revision: designRevision,
+            sheet,
+            installation_status: installation,
+            work_stage: "design_coordination",
             geometry: value,
             source_url: source,
-            review_status: "accepted",
+            review_status: kind === "design" ? "proposed" : "accepted",
             accuracy: "reviewer_supplied",
             review_note: "User confirmed source and coordinate system",
           },
@@ -1926,10 +2007,16 @@ function GeometryEditor({
           <label>
             Geometry purpose
             <select value={kind} onChange={(e) => setKind(e.target.value)}>
-              <option value="constraint">Known exclusion area</option>
+              <option value="constraint">Known exclusion area / documented buffer</option>
+              <option value="design">Proposed discipline design</option>
+              <option value="reference">Located reference feature</option>
               <option value="sketch">Proposed footprint sketch</option>
             </select>
           </label>
+          <label>Discipline<select value={discipline} onChange={e => setDiscipline(e.target.value)}>{["septic", "ecology", "civil", "utilities", "architecture", "survey"].map(d => <option key={d}>{d}</option>)}</select></label>
+          <label>Source design revision<input required value={designRevision} onChange={e => setDesignRevision(e.target.value)} /></label>
+          <label>Source sheet / page<input required value={sheet} onChange={e => setSheet(e.target.value)} /></label>
+          <label>Installation evidence<select value={installation} onChange={e => setInstallation(e.target.value)}><option value="unknown">Unknown / not applicable</option><option value="design_only">Design only</option><option value="record_drawing">Installed — supported by record drawing</option></select></label>
           <label>
             Description
             <input
@@ -1993,6 +2080,7 @@ function FactEditor({
   const [value, setValue] = useState(
       typeof fact.value === "string" ? fact.value : JSON.stringify(fact.value),
     ),
+    [calibrationConfirmed, setCalibrationConfirmed] = useState(false),
     [error, setError] = useState(""),
     [saving, setSaving] = useState(false);
   return (
@@ -2023,6 +2111,10 @@ function FactEditor({
             try {
               let parsed: any = value;
               if (typeof fact.value !== "string") parsed = JSON.parse(value);
+              if (fact.key === "site_geometry" && calibrationConfirmed) {
+                if (!parsed.geometry || parsed.calibration !== "automatic_control_fit") throw Error("A successful control fit is required before confirming placement.");
+                parsed = { ...parsed, calibration: "reviewer_confirmed" };
+              }
               await onSave({ ...fact, value: parsed });
             } catch (e) {
               setError((e as Error).message);
@@ -2039,6 +2131,7 @@ function FactEditor({
               onChange={(e) => setValue(e.target.value)}
             />
           </label>
+          {fact.key === "site_geometry" && <label className="check-label"><input type="checkbox" checked={calibrationConfirmed} onChange={e => setCalibrationConfirmed(e.target.checked)} />I checked the original drawing, control coordinates, dimensions and site placement. Confirm the automatic calibration for envelope calculations.</label>}
           <FactEvidence fact={fact} />
           {error && (
             <p role="alert" className="error">

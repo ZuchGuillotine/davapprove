@@ -172,26 +172,41 @@ class Worker:
             num,text=entry['page'],entry['text']
             # Deterministic candidate facts, every value remains unreviewed.
             lowered=text.lower();node='E0' if 'wetland' in lowered else 'S0' if any(s in lowered for s in ('septic','drainfield','sewage')) else 'B0' if 'survey' in lowered else 'C0' if 'stormwater' in lowered else 'L0'
-            for match in re.finditer(r'\b(?:approved|permit|expiration|expires|wetland|septic|drainfield|survey|setback)[^\n]{0,160}',text,re.I):
+            for match in re.finditer(r'\b(?:approved|permit|expiration|expires|wetland|septic|drainfield|survey|setback|PSE|Puget Sound Energy|electrical|energization)[^\n]{0,160}',text,re.I):
                 if excerpt_count>=100:break
                 excerpt_count+=1
                 quote=match.group(0).strip()
                 fid=stable_id(d['project_id'],d['id']+':'+str(num),quote)
                 if fid in existing_fact_ids:continue
-                self.db.save('fact',{'id':fid,'project_id':d['project_id'],'document_id':d['id'],'page':num,'field':'document_excerpt','value':quote,'quote':quote,'node_id':node,'review_status':'proposed','extractor':'text-pattern-v1','confidence':None,'created_at':now()})
-        if self.settings.ai_provider=='openai':
+                self.db.save('fact',{'id':fid,'project_id':d['project_id'],'document_id':d['id'],'page':num,'field':'document_excerpt','value':quote,'quote':quote,'node_id':'X0' if re.search(r'\b(pse|puget sound energy|electrical|energization)\b', quote, re.I) else node,'review_status':'proposed','extractor':'text-pattern-v1','confidence':None,'created_at':now()})
+        if self.settings.ai_provider=='cascade':
+            from .cascade import extract_cascade
+            ai_facts,ai_warning=extract_cascade(self.settings,self.db,d,pages,content,is_active=is_active)
+        elif self.settings.ai_provider=='openai':
             from .openai_processing import extract_openai
             ai_facts,ai_warning=extract_openai(self.settings,self.db,d,pages,content=content,is_active=is_active)
         else:
             from .ai import extract
             ai_facts,ai_warning=extract(self.settings,self.db,d,pages)
+        from .drawings import scale_notations
+        for page in pages:
+            for notation in scale_notations(page['text']):
+                ai_facts.append({'page':page['page'], 'quote':notation['quote'],
+                    'value':{**notation, 'status':'printed_scale_only', 'warning':'Paper scale does not locate features or establish scan scale.'},
+                    'key':'drawing_scale', 'node_id':'C0', 'evidence_type':'text_quote'})
         new_facts=[]
         for f in ai_facts:
-            version='openai-pages-v2' if self.settings.ai_provider=='openai' else 'ai-extract-v1'
-            fid=stable_id(d['project_id'],d['id']+':'+version+':'+self.settings.ai_model+':'+str(f['page']),json.dumps([f.get('quote'),f['value'],f['node_id'],f.get('evidence_type'),f.get('source_region',{}).get('region')],sort_keys=True))
+            version=f.get('pipeline') or ('openai-pages-v2' if self.settings.ai_provider=='openai' else 'ai-extract-v1')
+            fact_scope=json.dumps([f.get(k) for k in ('entity','property','scope','revision')],sort_keys=True) if f.get('pipeline','').startswith('precheck-cascade') else ''
+            fid=stable_id(d['project_id'],d['id']+':'+version+':'+f.get('model',self.settings.ai_model)+':'+str(f['page'])+fact_scope,json.dumps([f.get('quote'),f['value'],f['node_id'],f.get('evidence_type'),f.get('source_region',{}).get('region')],sort_keys=True))
             if fid in existing_fact_ids:continue
-            new_facts.append({**f,'id':fid,'project_id':d['project_id'],'document_id':d['id'],'field':'document_fact','review_status':'proposed','extractor':version,'model':self.settings.ai_model,'created_at':now()})
+            new_facts.append({**f,'id':fid,'project_id':d['project_id'],'document_id':d['id'],'field':'document_fact','review_status':'proposed','extractor':version,'model':f.get('model',self.settings.ai_model),'created_at':now()})
         self.db.save_many('fact',new_facts)
+        processing=d.get('ai_processing',{})
+        if processing.get('pipeline','').startswith('precheck-cascade'):
+            d['active_extraction_pages']={'pipeline':processing['pipeline'],'pages':[p['page'] for p in processing.get('page_manifest',[]) if p.get('status')=='processed' and not p.get('coverage_incomplete')]}
+        if d.get('pending_extraction_pipeline'):
+            d['active_extraction_pipeline']=d.pop('pending_extraction_pipeline')
         digest=hashlib.sha256(content).hexdigest()
         d.update(ai_warning=ai_warning,ai_fact_count=len(ai_facts),sha256=digest,size=len(content),page_count=len(pages),pages=pages,status='needs_review',parse_warning='Some scanned pages need OCR; install poppler-utils and tesseract-ocr or upload searchable PDF.' if ocr_missing else None,extractor_version='native-text-and-tesseract-v2')
         self.db.save('document',d)

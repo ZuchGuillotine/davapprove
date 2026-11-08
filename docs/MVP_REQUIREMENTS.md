@@ -1,6 +1,8 @@
 # Davapprove parcel intelligence MVP requirements
 
-November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: platform OpenAI processing for three trial projects; future user-funded models beyond trial or for authoring/editing. This is planned, not yet deployed; no user-facing model integration in this phase.
+November 7 automation direction: [Automated pre-check pipeline](AUTOMATED_PRECHECK_PIPELINE.md) defines the next architecture: machine-validated evidence, scoped revision reconciliation, automated geometry and exception-based human review. It supersedes blanket manual-acceptance design requirements below; existing runtime behavior remains unchanged until implemented.
+
+November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: initial platform OpenAI processing for three trial projects. The later automated pre-check plan supersedes its user-model gate: core processing stays platform funded, user models are deferred, and the shared test cap is $25/month. This is planned, not yet deployed; no user-facing model integration in this phase.
 
 Implementation update (November 7, 2026): this document is the design/acceptance target. See [implementation status](IMPLEMENTATION_STATUS.md) and [operations](operations.md) for the deployed MVP, verified behavior and remaining work.
 

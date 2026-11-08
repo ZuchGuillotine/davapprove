@@ -56,3 +56,14 @@ def test_serialized_prompt_stays_within_proxy_byte_limit(tmp_path,monkeypatch):
         facts,warning=extract(settings,db,{'id':str(i)},[{'page':1,'text':text},{'page':2,'text':text}])
         assert warning is None
     assert len(seen)==2
+
+
+def test_test_budget_allows_35_dollars_and_preserves_lower_caps(tmp_path):
+    db=SQLiteStore(tmp_path/'budget.db')
+    assert db.reserve_ai('first','2026-11',6_000_000,35_000_000)
+    assert db.reserve_ai('rest','2026-11',29_000_000,35_000_000)
+    assert not db.reserve_ai('over','2026-11',1,35_000_000)
+    assert not db.reserve_ai('bypass','2026-11',1,35_000_001)
+    assert not db.reserve_ai('negative','2026-11',-1,35_000_000)
+    assert not db.reserve_ai('lower','2026-12',5_000_001,5_000_000)
+    assert db.reserve_ai('new_month','2026-12',35_000_000,35_000_000)

@@ -150,6 +150,12 @@ function assessment(p: Project): Assessment {
       reason: "Confirm capacity for the proposed bedroom count.",
     },
     {
+      id: "X0",
+      title: "Electrical service & trade permits",
+      state: "unknown",
+      reason: "No utility installation or permitting evidence is attached to this synthetic sample.",
+    },
+    {
       id: "D0",
       title: "Coordinated site plan",
       state: "blocked",
@@ -172,6 +178,7 @@ function assessment(p: Project): Assessment {
       { source: "E0", target: "D0", type: "INPUT" },
       { source: "S0", target: "D0", type: "INPUT" },
       { source: "D0", target: "B1", type: "RECOMMENDED" },
+      { source: "X0", target: "D0", type: "RECOMMENDED" },
     ],
     actions: nodes
       .slice(1, 4)
@@ -230,6 +237,10 @@ export async function demoRequest(
     state.projects.push(result);
   } else if (parts[0] === "projects" && parts.length === 2 && method === "GET")
     return p;
+  else if (parts[0] === "projects" && parts.length === 2 && method === "PATCH") {
+    p.name = body.name;
+    result = p;
+  }
   else if (parts[2] === "discover") {
     state.candidates = candidates.map((c) => ({ ...c, project_id: id }));
     result = {
@@ -272,6 +283,7 @@ export async function demoRequest(
             id: "fact-" + cid,
             project_id: id,
             key: cid + "_date",
+            node_id: ({survey: "B0", wetland: "E0", septic: "S0"} as Record<string, string>)[cid],
             value: c.record_date || "Unknown",
             review_status: "proposed",
             document_id: cid,

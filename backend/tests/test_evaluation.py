@@ -11,7 +11,7 @@ def test_repeatable_and_unknown_not_approval():
  assert first==assess(p,[],[],[],as_of='2026-11-07')
  assert first['envelope']['status']=='cannot_determine'
  assert all(n['decision']=='unknown' for n in first['nodes'])
- assert first['rule_version']=='2026-11-07.1'
+ assert first['rule_version']=='2026-11-07.2'
 
 def test_unsupported_does_not_inherit_county():
  p=project();p['jurisdiction']='bremerton'
@@ -58,3 +58,48 @@ def test_not_applicable_requires_source_and_expiry_requires_review():
  p['accepted_facts']={'f':{'review_status':'accepted','expires_on':'2025-01-01'}}
  result=assess(p,[],[{'id':'f','node_id':'E0'}],[],as_of='2026-11-07')
  assert next(n for n in result['nodes'] if n['id']=='E0')['status']=='review_required'
+
+def test_discipline_conflicts_preserve_proposals():
+ p=project()
+ p['constraints']=[{'id':'s','label':'Septic reserve','discipline':'septic','geometry':POLY,'review_status':'accepted','role':'exclusion'}, {'id':'c','label':'Civil layout','discipline':'civil','geometry':POLY,'review_status':'proposed','role':'design'}]
+ result=envelope(p)
+ assert len(result['layers'])==2
+ assert len(result['constraints'])==1
+ assert result['spatial_conflicts'][0]['layer_ids']==['s','c']
+ assert result['spatial_conflicts'][0]['area_sqft']>0
+ # Hiding layers is presentation only; overlapping exclusions are not contradictions.
+ p['constraints'][1]['role']='exclusion'
+ assert not envelope(p)['spatial_conflicts']
+
+def test_fact_geometry_requires_calibration_and_acceptance():
+ p=project()
+ fact={'id':'f','key':'site_geometry','document_id':'doc','page':2,'value':{'label':'Drainfield','geometry':POLY,'role':'exclusion','discipline':'septic'}}
+ p['accepted_facts']={'f':{'review_status':'accepted'}}
+ assert envelope(p,[fact])['geometry'] is None
+ fact['value'].update(crs='EPSG:4326',calibration='reviewer_confirmed')
+ assert envelope(p,[fact])['status']=='conflict'
+ p['accepted_facts']['f']['review_status']='proposed'
+ result=envelope(p,[fact])
+ assert result['geometry'] is None and len(result['layers'])==1
+ p['accepted_facts']['f']['review_status']='rejected'
+ assert not envelope(p,[fact])['layers']
+
+def test_utility_evidence_is_inspectable_without_promoting_legacy_or_proposed_facts():
+ p=project()
+ facts=[{'id':'legacy','node_id':'C0','document_id':'d','value':'PSE installed electrical lines'},
+        {'id':'new','node_id':'X0','document_id':'d','value':'Service application'}]
+ p['accepted_facts']={'legacy':{'review_status':'accepted'}}
+ result=assess(p,[{'id':'d'}],facts,[])
+ node=next(n for n in result['nodes'] if n['id']=='X0')
+ assert node['related_evidence_ids']==['legacy','new']
+ assert node['document_ids']==['d']
+ assert node['evidence_ids']==[]
+ assert node['status']=='unknown' and node['decision']=='unknown'
+ assert any(e['source']=='X0' and e['target']=='D0' and e['type']=='RECOMMENDED' for e in result['edges'])
+
+def test_draft_road_visible_without_changing_envelope():
+ p=project()
+ p['constraints']=[{'id':'road','label':'Partial road','role':'design','discipline':'civil',
+  'review_status':'proposed','geometry':{'type':'LineString','coordinates':[[-122.65,47.7],[-122.6495,47.7005]]}}]
+ r=envelope(p)
+ assert len(r['layers'])==1 and r['geometry'] is None and not r['constraints']

@@ -30,7 +30,7 @@ export default function DocumentCoverage({
   const totalChunks = count(processing.total_chunks);
   const failures = count(processing.failed_chunks) ?? 0;
   const paused = count(processing.budget_paused_chunks) ?? 0;
-  const partial = count(processing.partial_pages) ?? 0;
+  const partial = count(processing.partial_pages) ?? processing.page_manifest?.filter(p => p.coverage_incomplete).length ?? 0;
   const unreadable = count(processing.unreadable_pages) ?? 0;
   const pending = count(processing.pending_pages) ?? 0;
   const incomplete =
@@ -58,7 +58,7 @@ export default function DocumentCoverage({
           <strong>
             {pages ?? "—"} / {totalPages ?? "—"}
           </strong>{" "}
-          pages fully analyzed
+          pages processed
         </span>
         <span>
           <strong>
@@ -74,6 +74,7 @@ export default function DocumentCoverage({
           value={Math.min(chunks, totalChunks)}
         />
       )}
+      {processing.machine_validated_facts !== undefined && <p className="muted">{processing.machine_validated_facts} source-supported facts · {processing.exception_facts ?? 0} unresolved facts{processing.verification_pending_facts ? ` (${processing.verification_pending_facts} awaiting automated verification)` : ""}</p>}
       <div className="analysis-exceptions">
         {partial > 0 && (
           <span>
@@ -112,7 +113,7 @@ export default function DocumentCoverage({
       )}
       {status === "complete" && (
         <p>
-          Processing is complete; extracted facts still need evidence review.
+          Processing is complete. Source-supported facts may be resolved automatically; unresolved evidence remains in the exception list.
         </p>
       )}
       {onResume &&
@@ -142,14 +143,14 @@ export default function DocumentCoverage({
                   <strong>Page {page.page}</strong>
                   <span>{words(page.status || "unknown")}</span>
                 </div>
-                <small>
+                {page.route ? <small>Source analysis: {page.route === "vision" ? "text and image" : "text"}</small> : <small>
                   {page.completed_text_chunks ?? "—"} /{" "}
                   {page.text_chunks ?? "—"} text chunks · visual review:{" "}
                   {words(
                     page.vision_status ||
                       (page.vision_required ? "pending" : "not required"),
                   )}
-                </small>
+                </small>}
                 {page.issues?.map((issue, i) => (
                   <p key={i}>{issue}</p>
                 ))}

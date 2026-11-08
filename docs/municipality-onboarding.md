@@ -18,3 +18,12 @@ The MVP supports Poulsbo parcel research and evidence coordination. Numerical ru
 ## Change review
 
 When code or boundaries change, add a new version and test it. Compare affected projects against that version, present the impact and request reviewer acceptance before changing project reliance. Preserve agency decision history and any unresolved vesting question. Update only the applicable rules; do not treat a newly published manual as proof that every prior approval is invalid.
+
+
+## Source-specific parcel identifiers — November 7, 2026 lesson
+
+Store parcel identifiers as strings, preserving leading zeros. Separate the canonical internal identifier from each provider's search representation. County, city, assessor, recorder, health and permit portals may use different punctuation, segment widths, account IDs or historical aliases for the same property. Do not apply one county's formatter globally.
+
+For each new source adapter, document identifier type, normalization rules, outgoing display/query format, sample successful query, and exact matching rules. Retain the original input and the actual query in coverage/provenance. Test formatted and unformatted inputs against a known positive record, leading-zero parcels, account IDs, ambiguous matches and retired/split parcels. Verify response identity, not just HTTP success. A zero-result response is not evidence of no records until expected source formatting and supported aliases have been checked.
+
+Kitsap regression: `04260110252000` returned no SmartGov results while `042601-1-025-2000` exposed the parcel and 115 attachment candidates. KPHD uses the digits-only tax ID. Keep these as source-specific fixtures. Coverage must distinguish successful exact-query completion from exhaustive parcel history research.

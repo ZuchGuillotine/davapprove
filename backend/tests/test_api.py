@@ -123,3 +123,97 @@ def test_document_processing_resume_requires_project_access(env):
     assert client.post(path,headers={'X-Demo-User':'bob'}).status_code==403
     a=client.post(path,headers={'X-Demo-User':'alice'});b=client.post(path,headers={'X-Demo-User':'alice'})
     assert a.status_code==202 and a.json()['id']==b.json()['id']
+
+
+def test_review_retroactively_classifies_540_existing_facts_without_writes(env):
+    client, db, worker, calls = env
+    p = new_project(client)
+    for i in range(540):
+        db.save('fact', {'id': f'legacy-{i}', 'project_id': p['id'],
+                         'value': 'Wetland buffer' if i < 100 else 'Electrical invoice',
+                         'review_status': 'proposed'})
+    before = db.records(p['id'], 'fact')
+    url = '/api/v1/projects/' + p['id'] + '/review'
+    first = client.get(url, headers={'X-Demo-User': 'alice'})
+    assert first.status_code == 200
+    facts = first.json()['facts']
+    assert len(facts) == 540
+    assert sum(f['classification']['bucket'] == 'review_now' for f in facts) == 100
+    assert sum(f['classification']['bucket'] == 'later' for f in facts) == 440
+    assert client.get(url, headers={'X-Demo-User': 'alice'}).json() == first.json()
+    assert db.records(p['id'], 'fact') == before
+    assert calls == []
+
+
+def test_project_rename_preserves_design_and_requires_editor(env):
+    client,db,_,_=env;p=new_project(client);url='/api/v1/projects/'+p['id'];headers={'X-Demo-User':'alice'}
+    renamed=client.patch(url,headers=headers,json={'name':'  Smith residence  '})
+    assert renamed.status_code==200
+    assert renamed.json()['name']=='Smith residence'
+    assert renamed.json()['current_revision']==p['current_revision']
+    assert client.get(url,headers=headers).json()['name']=='Smith residence'
+    assert len(db.records(p['id'],'revision'))==1
+    for name in ('','   ','x'*161):
+        assert client.patch(url,headers=headers,json={'name':name}).status_code==422
+    assert client.patch(url,headers={'X-Demo-User':'bob'},json={'name':'Other'}).status_code==404
+    db.add_member(p['id'],'bob','reviewer')
+    assert client.patch(url,headers={'X-Demo-User':'bob'},json={'name':'Other'}).status_code==403
+    db.add_member(p['id'],'bob','editor')
+    assert client.patch(url,headers={'X-Demo-User':'bob'},json={'name':'Builder project'}).status_code==200
+
+
+def test_project_rename_browser_preflight(env):
+    client,_,_,_=env
+    origin=Settings().cors_origins.split(',')[0]
+    response=client.options('/api/v1/projects/example',headers={
+        'Origin':origin,
+        'Access-Control-Request-Method':'PATCH',
+        'Access-Control-Request-Headers':'authorization,content-type',
+    })
+    assert response.status_code==200
+    assert response.headers['access-control-allow-origin']==origin
+    assert 'PATCH' in response.headers['access-control-allow-methods']
+
+def test_sheet_alignment_preview_save_isolation_and_stale_revision(env):
+ from test_alignment import fixture
+ client,db,worker,calls=env;p=new_project(client);state,docs=fixture()
+ for d in docs:db.save('document',{**d,'project_id':p['id']})
+ base='/api/v1/projects/'+p['id'];headers={'X-Demo-User':'alice'}
+ body={'expected_revision':1,'alignment':state}
+ assert client.post(base+'/alignment/preview',headers={'X-Demo-User':'bob'},json=body).status_code==404
+ db.add_member(p['id'],'bob','reviewer')
+ assert client.post(base+'/alignment',headers={'X-Demo-User':'bob'},json=body).status_code==403
+ result=client.post(base+'/alignment/preview',headers=headers,json=body)
+ assert result.status_code==200,result.text
+ assert db.project(p['id'])['current_revision']==1
+ result=client.post(base+'/alignment',headers=headers,json=body)
+ assert result.status_code==200,result.text
+ assert result.json()['current_revision']==2
+ assert result.json()['alignment']['registrations'][0]['reviewer']=='alice'
+ assert client.post(base+'/alignment',headers=headers,json=body).status_code==409
+ assert db.records(p['id'],'revision')[-1]['snapshot']['alignment']
+
+
+def test_page_preview_cross_project_and_cache(env):
+ client,db,worker,calls=env;p=new_project(client);did='2589dca4-dd60-4325-9fc3-f3fe86140d7d'
+ db.save('document',{'id':did,'project_id':p['id'],'sha256':'a'*64,'page_count':1,'storage_path':p['id']+'/'+did+'.pdf'})
+ url='/api/v1/projects/'+p['id']+'/documents/'+did+'/pages/1/image'
+ assert client.get(url,headers={'X-Demo-User':'bob'}).status_code==404
+ cache=worker.settings.data_dir/'page-previews'/('a'*64+'-1-1600-v1.png');cache.parent.mkdir();cache.write_bytes(b'PNG fixture')
+ assert client.get(url,headers={'X-Demo-User':'alice'}).content==b'PNG fixture'
+ assert client.get(url.replace('/pages/1/','/pages/2/'),headers={'X-Demo-User':'alice'}).status_code==422
+
+
+def test_page_preview_renders_and_reuses_pdf_cache(env):
+ import shutil,hashlib
+ if not shutil.which('pdftoppm'):pytest.skip('Poppler unavailable')
+ client,db,worker,calls=env;p=new_project(client)
+ did='4589dca4-dd60-4325-9fc3-f3fe86140d7d';key=p['id']+'/'+did+'.pdf'
+ writer=PdfWriter();writer.add_blank_page(width=200,height=100);out=io.BytesIO();writer.write(out);data=out.getvalue()
+ path=worker.settings.data_dir/'files'/key;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data)
+ db.save('document',{'id':did,'project_id':p['id'],'storage_path':key,'page_count':1,'sha256':hashlib.sha256(data).hexdigest()})
+ url='/api/v1/projects/'+p['id']+'/documents/'+did+'/pages/1/image'
+ first=client.get(url,headers={'X-Demo-User':'alice'})
+ assert first.status_code==200 and first.content.startswith(b'\x89PNG')
+ path.unlink()
+ assert client.get(url,headers={'X-Demo-User':'alice'}).content==first.content

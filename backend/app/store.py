@@ -48,6 +48,12 @@ CREATE INDEX IF NOT EXISTS records_project_kind ON records(project_id,kind);''')
             self.db.execute('insert into projects values(?,?,?)',(data['id'],user,json.dumps(data)))
             self._save('revision',{'id':ident(),'project_id':data['id'],'revision':1,'snapshot':data,'created_at':now()})
         return data
+    def rename_project(self,pid,name,user):
+        with self.lock,self.db:
+            p=self.project(pid,user)
+            p.update(name=name,updated_at=now())
+            self.db.execute('update projects set data=? where id=?',(json.dumps(p),pid))
+            return p
     def _save(self,kind,data):
         self.db.execute('insert into records values(?,?,?,?) on conflict(id) do update set data=excluded.data',(data['id'],data['project_id'],kind,json.dumps(data)))
         return data
@@ -104,7 +110,7 @@ CREATE INDEX IF NOT EXISTS records_project_kind ON records(project_id,kind);''')
         with self.lock,self.db:
             if self.db.execute('select 1 from ai_usage where job_key=?',(key,)).fetchone():return False
             total=self.db.execute('select coalesce(sum(amount),0) from ai_usage where month=?',(month,)).fetchone()[0]
-            if total+amount>min(limit,5000000):return False
+            if amount<0 or limit<0 or limit>35000000 or total+amount>limit:return False
             self.db.execute('insert into ai_usage values(?,?,?)',(key,month,amount));return True
     def reconcile_ai(self,key,amount):
         with self.lock,self.db:self.db.execute('update ai_usage set amount=min(amount,?) where job_key=?',(max(0,amount),key))
@@ -135,6 +141,8 @@ class SupabaseStore:
     def projects(self,user):return [r['data'] for r in self.req('GET','projects',params={'select':'data','order':'created_at.desc'})]
     def create_project(self,data,user):
         return self.req('POST','rpc/create_project',json={'payload':data})
+    def rename_project(self,pid,name,user):
+        return self.req('POST','rpc/rename_project',json={'target_project':pid,'project_name':name})
     def save(self,kind,data):
         if not self.worker: return self.req('POST','rpc/save_record',json={'record_kind':kind,'payload':data})
         self.req('POST','project_records',headers={**self.headers,'Prefer':'resolution=merge-duplicates,return=representation'},json={'id':data['id'],'project_id':data['project_id'],'kind':kind,'data':data})

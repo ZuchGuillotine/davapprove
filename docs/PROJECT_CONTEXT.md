@@ -1,6 +1,10 @@
 # Davapprove project handoff
 
-November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: platform OpenAI processing for three trial projects; future user-funded models beyond trial or for authoring/editing. This is planned, not yet deployed; no user-facing model integration in this phase.
+November 8 implementation: [Jev/Sol cascade release](CASCADE_RELEASE.md) records the operational processing pipeline, validation, benchmark and deployment limits. The broader architecture below remains the roadmap where the release explicitly lists remaining work.
+
+November 7 automation direction: [Automated pre-check pipeline](AUTOMATED_PRECHECK_PIPELINE.md) defines the next architecture: machine-validated evidence, scoped revision reconciliation, automated geometry and exception-based human review. It supersedes blanket manual-acceptance design requirements below; existing runtime behavior remains unchanged until implemented.
+
+November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: initial platform OpenAI processing for three trial projects. The later automated pre-check plan supersedes its user-model gate: core processing stays platform funded, user models are deferred, and the shared test cap was initially $25/month. On November 8 the user authorized $35 to finish source verification; the database and hosted worker now enforce $35. The Jev/Sol cascade is deployed; no user-facing model integration is exposed.
 
 Updated: November 7, 2026. Research baseline: November 5, 2026.
 
@@ -50,3 +54,8 @@ Use this repository for versioned files and project guidance. This handoff summa
 Remote: https://github.com/ZuchGuillotine/davapprove.git
 
 For the desktop checkout: verify its remote and working-tree state, fetch origin, then integrate main without discarding local work. If main is clean and only behind, a fast-forward pull is appropriate. If there are local commits or modifications, inspect and reconcile them first. Keep the desktop project pointed at that existing checkout.
+
+
+## Drawing coordination follow-up
+
+Parcel identifiers require provider-specific formatting; see the onboarding and sprint-plan regression guidance. The shared-reference/sheet-registration implementation is in `backend/app/alignment.py` and `web/src/SheetAlignment.tsx`. It uses imported page images, persisted controls, a similarity transform and independent checks. Its database migration must accompany deployment. Source alignment, feature review and agency approval remain separate. See `docs/SITE_ENVELOPE_VIEWER.md` for current behavior and limitations.

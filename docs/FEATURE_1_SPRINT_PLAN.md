@@ -1,6 +1,8 @@
 # Parcel discovery and preliminary envelope sprint plan
 
-November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: platform OpenAI processing for three trial projects; future user-funded models beyond trial or for authoring/editing. This is planned, not yet deployed; no user-facing model integration in this phase.
+November 7 automation direction: [Automated pre-check pipeline](AUTOMATED_PRECHECK_PIPELINE.md) defines the next architecture: machine-validated evidence, scoped revision reconciliation, automated geometry and exception-based human review. It supersedes blanket manual-acceptance design requirements below; existing runtime behavior remains unchanged until implemented.
+
+November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: initial platform OpenAI processing for three trial projects. The later automated pre-check plan supersedes its user-model gate: core processing stays platform funded, user models are deferred, and the shared test cap is $25/month. This is planned, not yet deployed; no user-facing model integration in this phase.
 
 Implementation update (November 7, 2026): this document is the design/acceptance target. See [implementation status](IMPLEMENTATION_STATUS.md) and [operations](operations.md) for the deployed MVP, verified behavior and remaining work.
 
@@ -77,3 +79,12 @@ Finish print briefing, owner/editor/reviewer flows, operational quotas, backups/
 - Collaboration: stale revision update rejected, comment stays on its revision, change impact propagates without overwriting prior decisions, cross-project access denied at database and file levels.
 - Operations: resumable large upload, malformed/encrypted PDF, worker interruption and retry, idempotent processing, AI quota exhaustion, restore of database plus files, and rollback of the deployed app.
 - Preserve the existing report; run `node tests/report_logic.test.cjs` as regression verification. If research outputs change, edit the generator and regenerate both artifacts as instructed in AGENTS.md.
+
+
+## Source-specific parcel identifiers — November 7, 2026 lesson
+
+Store parcel identifiers as strings, preserving leading zeros. Separate the canonical internal identifier from each provider's search representation. County, city, assessor, recorder, health and permit portals may use different punctuation, segment widths, account IDs or historical aliases for the same property. Do not apply one county's formatter globally.
+
+For each new source adapter, document identifier type, normalization rules, outgoing display/query format, sample successful query, and exact matching rules. Retain the original input and the actual query in coverage/provenance. Test formatted and unformatted inputs against a known positive record, leading-zero parcels, account IDs, ambiguous matches and retired/split parcels. Verify response identity, not just HTTP success. A zero-result response is not evidence of no records until expected source formatting and supported aliases have been checked.
+
+Kitsap regression: `04260110252000` returned no SmartGov results while `042601-1-025-2000` exposed the parcel and 115 attachment candidates. KPHD uses the digits-only tax ID. Keep these as source-specific fixtures. Coverage must distinguish successful exact-query completion from exhaustive parcel history research.

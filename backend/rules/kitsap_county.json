@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-07.1",
+  "version": "2026-11-07.2",
   "stage": "feasibility",
   "supported_project_types": [
     "new_house",
@@ -43,6 +43,12 @@
       "id": "S0",
       "title": "Confirm wastewater route",
       "discipline": "Septic designer / sewer provider"
+    },
+    {
+      "id": "X0",
+      "title": "Review electrical service and trade permits",
+      "discipline": "Utility provider / electrical authority",
+      "reason": "Review service installation, utility correspondence, permits and inspections separately."
     },
     {
       "id": "D0",
@@ -140,6 +146,15 @@
       "evidence_class": "model",
       "milestone": "feasibility",
       "reason": "Check applicable civil inputs for building intake.",
+      "source_url": "https://www.kitsap.gov/dcd/Pages/permitpathway.aspx"
+    },
+    {
+      "source": "X0",
+      "target": "D0",
+      "type": "RECOMMENDED",
+      "evidence_class": "model",
+      "milestone": "feasibility",
+      "reason": "Coordinate documented service locations and utility requirements with the proposed layout; installation alone does not establish permit approval.",
       "source_url": "https://www.kitsap.gov/dcd/Pages/permitpathway.aspx"
     }
   ],

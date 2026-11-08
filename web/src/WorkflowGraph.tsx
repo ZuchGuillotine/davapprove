@@ -1,13 +1,18 @@
 import { ReactFlow, Background, Controls, MarkerType } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { statusTone } from "./WorkflowEvidence";
 import type { Assessment } from "./types";
 export default function WorkflowGraph({
-  assessment,
+  assessment, selectedId, onSelect,
 }: {
   assessment: Assessment;
+  selectedId?: string;
+  onSelect: (id: string) => void;
 }) {
   const nodes = assessment.nodes.map((n, i) => ({
     id: n.id,
+    selected: n.id === selectedId,
+    ariaLabel: `${n.title || n.label}: ${n.state || n.status || "unknown"}. Inspect evidence`,
     position: {
       x: i < 4 ? (i % 2) * 280 : 140,
       y: i < 4 ? Math.floor(i / 2) * 140 : 320 + (i - 4) * 140,
@@ -24,9 +29,9 @@ export default function WorkflowGraph({
       ),
     },
     style: {
-      border: "1px solid #cbd8d0",
+      border: n.id === selectedId ? "3px solid #233d39" : "1px solid #8b9c91",
       borderRadius: 12,
-      background: "#fff",
+      background: { red: "#fde5e5", yellow: "#fff3cd", green: "#e1f3e5" }[statusTone(String(n.state || n.status || "unknown"))],
       width: 235,
       padding: 16,
       color: "#233d39",
@@ -47,6 +52,8 @@ export default function WorkflowGraph({
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        onNodeClick={(_, node) => onSelect(node.id)}
+        onSelectionChange={({ nodes: selected }) => { if (selected[0]) onSelect(selected[0].id); }}
         fitView
         nodesDraggable={false}
         nodesConnectable={false}

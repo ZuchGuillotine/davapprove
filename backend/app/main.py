@@ -18,6 +18,8 @@ class ProjectInput(BaseModel):
     parcel_number:str
     intent:dict[str,Any]=Field(default_factory=dict)
     parcel:dict[str,Any]|None=None
+class ProjectNameInput(BaseModel):
+    name:str=Field(min_length=1,max_length=160)
 class LookupInput(BaseModel):parcel_number:str
 class ImportInput(BaseModel):
     candidate_ids:list[str]=Field(max_length=100)
@@ -32,6 +34,9 @@ class RevisionInput(BaseModel):
     setbacks:list[dict[str,Any]]|None=None
     boundary_reviewed:bool|None=None
     node_reviews:dict[str,Any]|None=None
+class AlignmentInput(BaseModel):
+    expected_revision:int=Field(ge=1)
+    alignment:dict[str,Any]
 class CommentInput(BaseModel):
     body:str=Field(min_length=1,max_length=10000)
     revision:int|None=None
@@ -51,7 +56,7 @@ def create_app(settings=None,store=None):
     demo_store=store or (SQLiteStore(settings.data_dir/'demo.sqlite3') if settings.mode=='demo' else None)
     app=FastAPI(title='Davapprove API',version='0.1.0')
     app.state.settings=settings;app.state.store=demo_store
-    app.add_middleware(CORSMiddleware,allow_origins=settings.cors_origins.split(','),allow_credentials=False,allow_methods=['GET','POST','OPTIONS'],allow_headers=['Authorization','Content-Type','X-Demo-User'])
+    app.add_middleware(CORSMiddleware,allow_origins=settings.cors_origins.split(','),allow_credentials=False,allow_methods=['GET','POST','PATCH','OPTIONS'],allow_headers=['Authorization','Content-Type','X-Demo-User'])
     @app.exception_handler(NotFound)
     async def missing(request,exc):return JSONResponse(status_code=404,content={'detail':'Not found or not authorized'})
     @app.exception_handler(Conflict)
@@ -107,6 +112,12 @@ def create_app(settings=None,store=None):
         return saved
     @app.get('/api/v1/projects/{pid}')
     def project(pid:str,ctx=Depends(session)):return project_for(pid,ctx)
+    @app.patch('/api/v1/projects/{pid}')
+    def rename_project(pid:str,body:ProjectNameInput,ctx=Depends(session)):
+        project_for(pid,ctx,True)
+        name=body.name.strip()
+        if not name:raise HTTPException(422,'Project name cannot be blank')
+        return ctx[1].rename_project(pid,name,ctx[0])
     @app.post('/api/v1/projects/{pid}/members')
     def member(pid:str,body:MemberInput,ctx=Depends(session)):
         project_for(pid,ctx)
@@ -205,10 +216,48 @@ def create_app(settings=None,store=None):
             r=await client.post(settings.supabase_url+'/storage/v1/object/sign/'+settings.bucket+'/'+d['storage_path'],headers={'apikey':settings.publishable_key,'Authorization':'Bearer '+ctx[2]},json={'expiresIn':300})
         if r.status_code!=200:raise HTTPException(502,'Document not available')
         return {'url':settings.supabase_url+'/storage/v1'+r.json()['signedURL']}
+    @app.get('/api/v1/projects/{pid}/documents/{did}/pages/{page}/image')
+    async def sheet_image(pid:str,did:str,page:int,ctx=Depends(session)):
+        project_for(pid,ctx);d=ctx[1].record(did,'document')
+        if d.get('project_id')!=pid:raise NotFound()
+        from .page_preview import page_image
+        path=await page_image(settings,d,ctx[2],page)
+        return FileResponse(path,media_type='image/png',headers={'Cache-Control':'private, max-age=300'})
+    def prepare_alignment(pid,body,ctx):
+        p=project_for(pid,ctx,True)
+        if p['current_revision']!=body.expected_revision:raise Conflict()
+        from .alignment import alignment_state
+        try:
+            state=alignment_state(body.alignment,ctx[1].records(pid,'document'))
+            for r in state['registrations']:
+                if r.get('review_status') not in ('proposed','accepted'):raise ValueError('Invalid alignment review state.')
+                if r.get('review_status')=='accepted' and r['status']=='unlocated':
+                    r['review_status']='proposed'
+                elif r.get('review_status')=='accepted' and r['status']!='reviewed':raise ValueError('An alignment with failed controls cannot be accepted.')
+            return p,state
+        except (ValueError,TypeError,KeyError,OverflowError) as exc:raise HTTPException(422,str(exc))
+    @app.post('/api/v1/projects/{pid}/alignment/preview')
+    def preview_alignment(pid:str,body:AlignmentInput,ctx=Depends(session)):
+        p,state=prepare_alignment(pid,body,ctx)
+        return state
+    @app.post('/api/v1/projects/{pid}/alignment')
+    def save_alignment(pid:str,body:AlignmentInput,ctx=Depends(session)):
+        p,state=prepare_alignment(pid,body,ctx)
+        prior={r['id']:r for r in p.get('alignment',{}).get('registrations',[])}
+        for r in state['registrations']:
+            old=prior.get(r['id'],{})
+            fields=('document_id','document_sha256','page','reference_id','reference_fingerprint','pairs','review_status','tolerance_ft','sheet_height','discipline','design_revision')
+            if old and all(old.get(k)==r.get(k) for k in fields):
+                r.update(reviewer=old.get('reviewer'),reviewed_at=old.get('reviewed_at'))
+            else:r.update(reviewer=ctx[0],reviewed_at=now())
+        changes={'alignment':state,'notes':'Updated shared reference / sheet registration'}
+        changes['review_required_nodes']=revision_impact(p,changes)
+        return ctx[1].revision(pid,body.expected_revision,changes,ctx[0])
     @app.get('/api/v1/projects/{pid}/review')
     def review(pid:str,ctx=Depends(session)):
         p=project_for(pid,ctx);facts=ctx[1].records(pid,'fact')
-        return {'facts':[{**f,**p.get('accepted_facts',{}).get(f['id'],{})} for f in facts]}
+        from .classification import classify_review
+        return {'facts': classify_review(p, facts, ctx[1].records(pid, 'document'))}
     @app.post('/api/v1/projects/{pid}/revisions')
     def revision(pid:str,body:RevisionInput,ctx=Depends(session)):
         p=project_for(pid,ctx,True);db=ctx[1];changes={'notes':body.notes};accepted=dict(p.get('accepted_facts',{}))

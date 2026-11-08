@@ -20,7 +20,9 @@ class Settings:
     ai_model: str = os.getenv('AI_MODEL', '')
     ai_input_per_million: float = float(os.getenv('AI_INPUT_USD_PER_MILLION', '0'))
     ai_output_per_million: float = float(os.getenv('AI_OUTPUT_USD_PER_MILLION', '0'))
-    ai_monthly_usd: float = min(5.0,float(os.getenv('AI_MONTHLY_USD', '5')))
+    ai_monthly_usd: float = min(35.0,max(0.0,float(os.getenv('AI_MONTHLY_USD', '25'))))
 
     ai_provider: str = os.getenv('AI_PROVIDER', 'legacy')
     openai_api_key: str = os.getenv('OPENAI_API_KEY', '')
+
+    typesafe_api_key: str = os.getenv('TYPESAFE_API_KEY', '')

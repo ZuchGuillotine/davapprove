@@ -1,0 +1,28 @@
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, expect, test, vi } from 'vitest';
+import SheetAlignment from './SheetAlignment';
+import { loadSheetImage, request } from './api';
+vi.mock('./api',()=>({loadSheetImage:vi.fn(),request:vi.fn()}));
+vi.mock('./ParcelMap',()=>({default:()=> <div>Aligned overlay preview</div>}));
+afterEach(()=>{cleanup();vi.clearAllMocks();});
+test('point clicks use page-width units and editing invalidates preview approval',async()=>{
+ vi.mocked(loadSheetImage).mockResolvedValue('blob:test');URL.revokeObjectURL=vi.fn();
+ const reference={id:'ref',label:'Survey A',points:[0,1,2,3].map(i=>({id:`P${i}`,label:`Control ${i}`,coordinates:[0,0]}))};
+ const reg={id:'sheet',document_id:'doc',page:1,discipline:'civil',design_revision:'B',tolerance_ft:1,pairs:reference.points.map((p,i)=>({point_id:p.id,sheet:[i%2,Math.floor(i/2)],use:i===3?'check':'fit'}))};
+ const alignment={reference,reference_fingerprint:'hash',registrations:[reg]};
+ vi.mocked(request).mockResolvedValue({...alignment,registrations:[{...reg,status:'proposed',transform:{real:100},issues:[],fit_rms_ft:.1,check_max_ft:.2}]});
+ render(<SheetAlignment project={{id:'project',current_revision:3,parcel:{},alignment} as any} documents={[{id:'doc',title:'Civil B',sha256:'hash',page_count:1} as any]} onSaved={vi.fn()}/>);
+ fireEvent.change(screen.getAllByLabelText('Source document')[1],{target:{value:'doc'}});
+ const img=await screen.findByAltText('Original sheet — click to match the selected control');
+ Object.defineProperties(img,{naturalWidth:{value:1000},naturalHeight:{value:500}});
+ img.getBoundingClientRect=()=>({left:10,top:20,bottom:220,width:400,height:200} as DOMRect);
+ fireEvent.load(img);fireEvent.click(img,{clientX:110,clientY:120});
+ expect(screen.getByLabelText('P0 sheet X')).toHaveValue(.25);
+ expect(screen.getByLabelText('P0 sheet Y')).toHaveValue(.25);
+ fireEvent.click(screen.getByText('Preview alignment'));
+ await waitFor(()=>expect(screen.getByText('Accept alignment after source review')).toBeEnabled());
+ expect(vi.mocked(request).mock.calls[0][2].alignment.registrations[0].sheet_height).toBe(.5);
+ expect(vi.mocked(request).mock.calls[0][2].expected_revision).toBe(3);
+ fireEvent.change(screen.getByLabelText('Control error tolerance (ft)'),{target:{value:2}});
+ expect(screen.getByText('Accept alignment after source review')).toBeDisabled();
+});

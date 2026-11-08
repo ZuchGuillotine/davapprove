@@ -98,3 +98,13 @@ export async function documentUrl(projectId: string, documentId: string) {
   }
   return URL.createObjectURL(await r.blob());
 }
+
+export async function loadSheetImage(projectId: string, documentId: string, page: number, signal?: AbortSignal): Promise<string> {
+  const session = client ? await client.auth.getSession() : null;
+  const token = session?.data.session?.access_token;
+  const r = await fetch(`${apiBase}/projects/${projectId}/documents/${documentId}/pages/${page}/image`, {
+    headers: token ? {Authorization: `Bearer ${token}`} : {}, signal,
+  });
+  if (!r.ok) throw Error("Unable to render this source page. Check that document processing has finished.");
+  return URL.createObjectURL(await r.blob());
+}

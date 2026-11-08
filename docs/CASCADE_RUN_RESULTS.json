@@ -1,0 +1,96 @@
+{
+  "project_id": "a4b9199b-bad0-454b-a555-dbf13463ca84",
+  "pipeline": "precheck-cascade-2026-11-08-v2",
+  "verification_policy": "source-verification-2026-11-08-v3",
+  "as_of": "2026-11-08T20:42:55.424559+00:00",
+  "documents": 44,
+  "pages": 774,
+  "document_statuses": {
+    "complete": 31,
+    "partial": 13
+  },
+  "page_statuses": {
+    "processed": 774
+  },
+  "coverage_incomplete_pages": 32,
+  "pages_with_source_issues": 148,
+  "new_facts": 4712,
+  "raw_validation": {
+    "validated": 3976,
+    "needs_review": 736
+  },
+  "new_fact_buckets": {
+    "resolved": 3691,
+    "review_now": 1013,
+    "later": 8
+  },
+  "all_fact_buckets": {
+    "resolved": 3707,
+    "review_now": 1305,
+    "history": 3839,
+    "later": 10
+  },
+  "verification_pending_facts": 0,
+  "geometry_facts": 280,
+  "costs": {
+    "cascade/sol": {
+      "calls": 1542,
+      "metered_microusd": 26134600,
+      "unreconciled_reserved_microusd": 228185,
+      "statuses": {
+        "completed": 1542
+      }
+    },
+    "cascade/jev": {
+      "calls": 1262,
+      "metered_microusd": 93590,
+      "unreconciled_reserved_microusd": 0,
+      "statuses": {
+        "completed": 1262
+      }
+    },
+    "benchmark-cascade/sol": {
+      "calls": 6,
+      "metered_microusd": 143051,
+      "unreconciled_reserved_microusd": 0,
+      "statuses": {
+        "completed": 6
+      }
+    },
+    "benchmark-sol_only/sol": {
+      "calls": 3,
+      "metered_microusd": 75985,
+      "unreconciled_reserved_microusd": 0,
+      "statuses": {
+        "completed": 3
+      }
+    },
+    "benchmark-cascade/jev": {
+      "calls": 6,
+      "metered_microusd": 625,
+      "unreconciled_reserved_microusd": 0,
+      "statuses": {
+        "completed": 6
+      }
+    },
+    "benchmark-literal-controls/sol": {
+      "calls": 1,
+      "metered_microusd": 2284,
+      "unreconciled_reserved_microusd": 0,
+      "statuses": {
+        "completed": 1
+      }
+    },
+    "benchmark-literal-controls/jev": {
+      "calls": 1,
+      "metered_microusd": 84,
+      "unreconciled_reserved_microusd": 0,
+      "statuses": {
+        "completed": 1
+      }
+    }
+  },
+  "pricing_note": "API-reported usage at published rates; not a reconciled provider invoice.",
+  "snapshot_event_id": "7478141a-8188-4b60-b7b1-d6627f9a9ea4",
+  "snapshot_hash": "58f8bc43d2e059e7abb17615136af4f39b2d34a3d01c1dea439f8c396325ae66"
+}

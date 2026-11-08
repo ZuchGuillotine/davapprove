@@ -1,5 +1,7 @@
 # MVP implementation status
 
+November 8 implementation: [Jev/Sol cascade release](CASCADE_RELEASE.md) records the operational processing pipeline, validation, benchmark and deployment limits. The broader architecture below remains the roadmap where the release explicitly lists remaining work.
+
 November 7, 2026. This is an operational prototype for early feedback, not a fully validated permit precheck product. The [requirements](MVP_REQUIREMENTS.md) remain the acceptance target; this page distinguishes delivered behavior from remaining work.
 
 ## Working

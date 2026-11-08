@@ -10,6 +10,9 @@ See [implementation status](docs/IMPLEMENTATION_STATUS.md) for delivered feature
 
 ## Start here
 
+- [Automation-first permitting pre-check direction](docs/AUTOMATED_PRECHECK_PIPELINE.md)
+- [Test-parcel pipeline results and AI costs](docs/CASCADE_RUN_RESULTS.md)
+
 - [MVP product requirements](docs/MVP_REQUIREMENTS.md)
 - [Feature 1 sprint plan and source coverage](docs/FEATURE_1_SPRINT_PLAN.md)
 - [Application architecture and hosting budget](docs/APP_ARCHITECTURE.md)

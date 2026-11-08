@@ -165,3 +165,39 @@ def test_cancellation_during_render_prevents_reservation(tmp_path, monkeypatch):
     calls = client(monkeypatch, lambda request: [])
     ai.extract_openai(settings, db, doc, [{'page': 1, 'needs_vision': True}], is_active=lambda: active[0])
     assert not calls and db.db.execute('select count(*) from ai_usage').fetchone()[0] == 0
+
+def test_drawing_observation_runs_calibration_and_preserves_source():
+    from app.drawings import TO_LOCAL, TO_WEB
+    x,y=TO_LOCAL.transform(-122.65,47.7)
+    drawing={'label':'Reserve','entity_id':'R1','discipline':'septic','role':'exclusion',
+             'vertices':[[0,0],[1,0],[1,1],[0,1]], 'dimensions':[],
+             'controls':[{'sheet':[a,b],'lonlat':list(TO_WEB.transform(x+a*100,y+b*100)),
+                          'notation':'WGS84 coordinate'} for a,b in [(0,0),(1,0),(0,1)]]}
+    payload={'facts':[fact(quote='',evidence_type='visual_observation',region='site plan',drawing=drawing)]}
+    facts,rejected=ai._validate_facts(payload,{'page':1,'route':'vision','text':''},'hash')
+    assert not rejected and facts[0]['key']=='site_geometry'
+    assert facts[0]['value']['calibration']=='automatic_control_fit'
+    assert facts[0]['source_region']['image_sha256']=='hash'
+    assert facts[0]['review_status']=='proposed'
+    facts,rejected=ai._validate_facts(payload,{'page':1,'route':'text','text':''},None)
+    assert not facts and rejected==1
+
+def test_image_lettering_retained_as_reviewable_visual_not_verified_quote():
+    payload={'facts':[fact(quote='100 feet',region='dimension above drainfield')]}
+    result,rejected=ai._validate_facts(payload,{'page':1,'route':'vision','text':''},'hash')
+    assert rejected==0 and result[0]['evidence_type']=='visual_observation'
+    assert result[0]['quote']==''
+    assert result[0]['source_region']['visual_transcription']=='100 feet'
+    assert result[0]['review_status']=='proposed'
+    result,rejected=ai._validate_facts(payload,{'page':1,'route':'text','text':''},None)
+    assert not result and rejected==1
+
+
+def test_openai_processing_can_continue_above_old_five_dollar_cap(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    settings, db, doc = setup(tmp_path)
+    settings.ai_monthly_usd = 25
+    assert db.reserve_ai('previous', datetime.now(timezone.utc).strftime('%Y-%m'), 6_000_000, 25_000_000)
+    calls = client(monkeypatch, lambda request: [fact()])
+    facts, warning = ai.extract_openai(settings, db, doc, [{'page': 1, 'text': 'REAL'}])
+    assert len(calls) == len(facts) == 1 and warning is None

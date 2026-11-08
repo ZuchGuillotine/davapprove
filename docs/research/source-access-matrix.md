@@ -58,3 +58,7 @@ Do not make live export tests part of routine CI. A maintainer can explicitly se
 - Source permissions/terms review for the intended retention and client use; do not represent a public endpoint as a commercial data license.
 - Monitor endpoint schema changes, report source failures visibly and keep manual routes working. No availability SLA is inferred.
 - Confirm intended map/code editions before activating numeric rules. The adapter deliberately returns screening observations rather than accepted constraint geometry.
+
+### County permit attachment discovery update — November 7, 2026
+
+Verified the public SmartGov parcel-search UI and server-rendered HTML. Search `/Parcels/ParcelSearch?query=<formatted-tax-id>&_conv=1`; unformatted digits can incorrectly produce no hits. Read the returned `Detail/<uuid>` action references and open `/Parcels/ParcelDetail/Index/<uuid>`. The detail page exposes `/Blob/<uuid>` PDF links under permit notes, including initial and revised submittals. Discovery reads metadata only and is bounded to five unique parcel-detail records. Selected import reconstructs the allowlisted Blob URL, applies the existing byte/redirect limits and validates PDF signature. Live test returned 115 candidates; this is not exhaustive public-records or title research. Auditor indexing and Ecology SEPA-register discovery still need separate adapters.

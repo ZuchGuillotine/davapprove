@@ -1,5 +1,11 @@
 # Document processing v2 and model funding
 
+November 8 implementation: [Jev/Sol cascade release](CASCADE_RELEASE.md) records the operational processing pipeline, validation, benchmark and deployment limits. The broader architecture below remains the roadmap where the release explicitly lists remaining work.
+
+Funding revision, November 7: the [revised cascade decision](AUTOMATED_PRECHECK_PIPELINE.md#revised-model-and-funding-decision--november-7-follow-up) takes precedence over the earlier funding rules below. Core processing remains platform funded; user models are a future optional capability, not a requirement after trial. The shared test-project AI cap is $35/month following explicit November 8 authorization to complete verification. Jev plus GPT-6.1 Sol low is deployed; see the cascade release and run results.
+
+November 7 automation direction: [Automated pre-check pipeline](AUTOMATED_PRECHECK_PIPELINE.md) defines the next architecture: machine-validated evidence, scoped revision reconciliation, automated geometry and exception-based human review. It supersedes blanket manual-acceptance design requirements below; existing runtime behavior remains unchanged until implemented.
+
 Decision: November 7, 2026. This is the next implementation plan, not deployed functionality. It supersedes the original single-excerpt/provider-neutral AI plan. Implementation update: OpenAI chunk/text/vision processing is now deployed; see [implementation status](IMPLEMENTATION_STATUS.md). New trial gates, calibrated geometry and cross-sheet synthesis are still planned.
 
 ## Product boundary
@@ -32,7 +38,7 @@ Store geometry provenance: document hash, sheet/revision, crop/bounds, coordinat
 
 ## Cost and connection architecture
 
-Three projects is an acquisition allowance, not a sufficient spend cap. Reserve worst-case cost before each chunk; reconcile measured tokens/images/retries after completion. Enforce platform-global and per-owner/project budgets plus upload/page limits. Never spend beyond the configured cap to complete a run. Keep the existing $5 global pilot AI allowance until the owner approves a revised budget; this may pause full-document runs and is not a promise of three unlimited projects.
+Three projects is an acquisition allowance, not a sufficient spend cap. Reserve worst-case cost before each chunk; reconcile measured tokens/images/retries after completion. Enforce platform-global and per-owner/project budgets plus upload/page limits. Never spend beyond the configured cap to complete a run. Use the authorized $35 shared monthly test AI allowance; this may pause full-document runs and is not a promise of three unlimited projects.
 
 Measure representative scan/drawing workloads before setting an included page allowance or user price. Report per-project cost, pages by processing route, retries, latency, extraction quality and reviewer corrections; calculate median and high-percentile costs. Platform cost includes VM, storage/egress and backups as well as inference. A user API token only transfers model charges, not these infrastructure costs.
 
