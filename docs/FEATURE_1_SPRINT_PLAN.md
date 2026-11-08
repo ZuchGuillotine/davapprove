@@ -1,5 +1,7 @@
 # Parcel discovery and preliminary envelope sprint plan
 
+November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: platform OpenAI processing for three trial projects; future user-funded models beyond trial or for authoring/editing. This is planned, not yet deployed; no user-facing model integration in this phase.
+
 Implementation update (November 7, 2026): this document is the design/acceptance target. See [implementation status](IMPLEMENTATION_STATUS.md) and [operations](operations.md) for the deployed MVP, verified behavior and remaining work.
 
 Baseline: November 7, 2026. Implements the [MVP requirements](MVP_REQUIREMENTS.md) using the [architecture](APP_ARCHITECTURE.md). Planning estimate: four one-week milestones for one experienced developer with agent assistance and regular architect review; source access is the principal schedule uncertainty. Each milestone ends in a usable demo, not a promise of complete portal coverage.

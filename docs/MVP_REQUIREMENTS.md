@@ -1,5 +1,7 @@
 # Davapprove parcel intelligence MVP requirements
 
+November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: platform OpenAI processing for three trial projects; future user-funded models beyond trial or for authoring/editing. This is planned, not yet deployed; no user-facing model integration in this phase.
+
 Implementation update (November 7, 2026): this document is the design/acceptance target. See [implementation status](IMPLEMENTATION_STATUS.md) and [operations](operations.md) for the deployed MVP, verified behavior and remaining work.
 
 Decision baseline: November 7, 2026. Audience: architect/product sponsor and implementation agents. Companion documents: [sprint plan](FEATURE_1_SPRINT_PLAN.md), [architecture](APP_ARCHITECTURE.md), [agent prompts](DEVELOPMENT_PROMPTS.md).

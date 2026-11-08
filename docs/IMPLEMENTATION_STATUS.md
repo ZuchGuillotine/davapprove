@@ -29,3 +29,7 @@ November 7, 2026. This is an operational prototype for early feedback, not a ful
 The prototype stores typed JSON entities behind relational project boundaries, uses Python Shapely/PROJ for geometry, and uses a server-only Supabase service-role worker. The architecture proposed more normalized entities, PostGIS operations and a narrower worker role. These substitutions reduce initial implementation size but should be revisited before expansion; the frontend and evidence interfaces allow that change.
 
 Source-derived parcel geometry is revalidated by the worker before it is trusted; browser-provided jurisdiction is never enough. Evidence transcription acceptance does not approve a permit. Changing the proposal flags dependent work for review without revoking past agency decisions.
+
+## Next approved direction
+
+See [document processing v2](DOCUMENT_PROCESSING_V2.md): full-document chunk coverage, OpenAI text/vision processing, verified drawing geometry, three-project trial accounting and a future user-model boundary. These are planned; the live backend still uses Cloudflare AI and does not enforce the new trial policy.

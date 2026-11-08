@@ -1,5 +1,7 @@
 # Davapprove MVP application architecture
 
+November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: platform OpenAI processing for three trial projects; future user-funded models beyond trial or for authoring/editing. This is planned, not yet deployed; no user-facing model integration in this phase.
+
 Implementation update (November 7, 2026): this document is the design/acceptance target. See [implementation status](IMPLEMENTATION_STATUS.md) and [operations](operations.md) for the deployed MVP, verified behavior and remaining work.
 
 Decision baseline: November 7, 2026. Implements the [requirements](MVP_REQUIREMENTS.md) and [sprint plan](FEATURE_1_SPRINT_PLAN.md). The recommended deployment is a small modular application with managed Postgres/auth/files and one replaceable processing server. It is intentionally not a microservice platform.

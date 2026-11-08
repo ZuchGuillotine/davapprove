@@ -1,5 +1,7 @@
 # Davapprove project handoff
 
+November 7 follow-up decision: [Document processing v2 and model funding](DOCUMENT_PROCESSING_V2.md) supersedes the earlier AI/funding plan: platform OpenAI processing for three trial projects; future user-funded models beyond trial or for authoring/editing. This is planned, not yet deployed; no user-facing model integration in this phase.
+
 Updated: November 7, 2026. Research baseline: November 5, 2026.
 
 ## Objective
