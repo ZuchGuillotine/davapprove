@@ -10,13 +10,13 @@ Updated November 7, 2026. See [implementation status](IMPLEMENTATION_STATUS.md) 
 - Server login: `ssh -i ~/.ssh/hetzner root@178.105.77.156`. Application directory `/opt/davapprove`. This is separate from Orbitfleet; do not deploy to `5.78.196.181`.
 - API preview: https://exclusive-orbit-fruit-appendix.trycloudflare.com — temporary hostname; see recovery below.
 
-Verified account quote: server $6.49/month + IPv4 $0.60/month = **$7.09/month**, excluding usage outside included allowances. Supabase and static hosting currently use free tiers. Workers AI is enabled behind a server-only proxy, with a $5/month application allowance and shared account free quota. A future $25 Supabase Pro subscription would bring the base to $32.09, leaving room within the $50 budget for bounded AI and backups. No Pro or Workers paid-plan upgrade was activated.
+Verified account quote: server $6.49/month + IPv4 $0.60/month = **$7.09/month**, excluding usage outside included allowances. Supabase and static hosting currently use free tiers. Platform OpenAI processing is enabled with a $5/month application allowance. A future $25 Supabase Pro subscription would bring the base to $32.09, leaving room within the $50 budget for bounded AI and backups. No Pro or Workers paid-plan upgrade was activated.
 
 ## Runtime and deployment
 
 `deploy/compose.yaml` runs isolated API and worker containers. `--profile preview` also runs a Cloudflare Quick Tunnel; `--profile domain` runs Caddy instead when a controlled hostname is available. Do not activate both profiles accidentally. API has only the publishable key; worker has the service-role key. Both use `DAVAPPROVE_MODE=supabase` in hosted deployment.
 
-Required protected environment in `deploy/.env`: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CORS_ORIGINS`. Current `MAX_PDF_BYTES=52428800` matches the Free storage limit. `EMAIL_DELIVERY_ENABLED=false` until a sender is configured. AI configuration and verified rates are described in [AI proxy operations](../ai-proxy/README.md); the authenticated proxy is `davapprove-ai-proxy.delicacybydesign.workers.dev`, used only by the document worker. Do not set guessed model prices.
+Required protected environment in `deploy/.env`: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CORS_ORIGINS`. Current `MAX_PDF_BYTES=52428800` matches the Free storage limit. `EMAIL_DELIVERY_ENABLED=false` until a sender is configured. OpenAI configuration is documented below. The legacy proxy remains deployed for rollback but is no longer the default processing provider. Do not set guessed model prices.
 
 On the dedicated host:
 
@@ -67,3 +67,11 @@ npm --prefix web run build
 For a local live-source workspace, start API and worker with `DAVAPPROVE_MODE=demo`, the same `DATA_DIR`, and `PYTHONPATH=backend`; use `uvicorn app.main:app` and `python -m app.worker`. Bind to loopback. Demo authentication is not safe for public deployment. `npm --prefix web run dev` proxies the local API; the separate synthetic sample never stores real files.
 
 Database checks use `tests/supabase_bootstrap.sql`, all migrations in filename order, then `tests/rls_assertions.sql` against a disposable empty PostgreSQL database. The bootstrap creates test auth/storage surfaces and must never run on a hosted Supabase project. CI includes these checks.
+
+## OpenAI processing configuration
+
+The platform credential is `OPENAI_API_KEY` in protected `deploy/.env`; it is passed only to the worker container. `AI_PROVIDER=openai` selects the Responses adapter, with `AI_MODEL=gpt-4.1-mini-2025-04-14`, input $0.40/M tokens and output $1.60/M tokens ([official pricing](https://developers.openai.com/api/docs/pricing), verified November 7, 2026). Keep `AI_MONTHLY_USD=5`; the database also enforces this pilot cap. The legacy Cloudflare adapter remains available for rollback; no user-model connection UI is exposed.
+
+OpenAI requests use `store:false`, no external tools and bounded text/image inputs. This setting is not a claim of zero provider retention. Originals remain in private Supabase Storage; rendered images are temporary worker files. Model proposals, source pages and processing checkpoints are project-scoped data.
+
+Resume processing uses `POST /api/v1/projects/{project_id}/documents/{document_id}/process` as an owner/editor. Completed chunks are reused; unresolved possibly-billed requests are not blindly resent. An incomplete run remains visibly partial. Reprocessing adds versioned proposals and preserves prior accepted evidence. Model interpretation alone does not supply calibrated geometry.

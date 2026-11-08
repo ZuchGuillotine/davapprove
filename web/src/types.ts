@@ -24,6 +24,32 @@ export type Candidate = {
   size_bytes?: number;
   category?: string;
 };
+export type AiProcessing = {
+  pipeline?: string;
+  provider?: string;
+  model?: string;
+  status: string;
+  total_pages?: number;
+  processed_pages?: number;
+  partial_pages?: number;
+  unreadable_pages?: number;
+  pending_pages?: number;
+  total_chunks?: number;
+  completed_chunks?: number;
+  failed_chunks?: number;
+  budget_paused_chunks?: number;
+  updated_at?: string;
+  warning?: string;
+  page_manifest?: Array<{
+    page: number;
+    status: string;
+    text_chunks?: number;
+    completed_text_chunks?: number;
+    vision_required?: boolean;
+    vision_status?: string;
+    issues?: string[];
+  }>;
+};
 export type DocumentRecord = {
   id: string;
   title?: string;
@@ -33,6 +59,7 @@ export type DocumentRecord = {
   created_at?: string;
   page_count?: number;
   size_bytes?: number;
+  ai_processing?: AiProcessing;
   [key: string]: any;
 };
 export type Fact = {
@@ -44,6 +71,8 @@ export type Fact = {
   document_id?: string;
   page?: number;
   source_quote?: string;
+  evidence_type?: "text" | "text_quote" | "visual" | "visual_observation";
+  source_region?: { page?: number; image_sha256?: string; region?: unknown };
   [key: string]: any;
 };
 export type Job = {

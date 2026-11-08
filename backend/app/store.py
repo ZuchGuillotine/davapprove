@@ -53,6 +53,10 @@ CREATE INDEX IF NOT EXISTS records_project_kind ON records(project_id,kind);''')
         return data
     def save(self,kind,data):
         with self.lock,self.db:return self._save(kind,data)
+    def save_many(self,kind,items):
+        with self.lock,self.db:
+            for item in items:self._save(kind,item)
+
     def records(self,pid,kind):
         with self.lock:return [json.loads(r[0]) for r in self.db.execute('select data from records where project_id=? and kind=?',(pid,kind)).fetchall()]
     def record(self,id,kind=None):
@@ -80,6 +84,12 @@ CREATE INDEX IF NOT EXISTS records_project_kind ON records(project_id,kind);''')
                     j.update(status='running',attempts=j.get('attempts',0)+1,lease_until=t+1200,updated_at=now())
                     self._save('job',j);return j
         return None
+
+    def renew_job(self,jid,attempt):
+        with self.lock,self.db:
+            j=self.record(jid,'job')
+            if j.get('status')!='running' or j.get('attempts')!=attempt:return False
+            j['lease_until']=time.time()+1200;self._save('job',j);return True
 
     def hydrate(self,pid,parcel):
         with self.lock,self.db:
@@ -129,7 +139,17 @@ class SupabaseStore:
         if not self.worker: return self.req('POST','rpc/save_record',json={'record_kind':kind,'payload':data})
         self.req('POST','project_records',headers={**self.headers,'Prefer':'resolution=merge-duplicates,return=representation'},json={'id':data['id'],'project_id':data['project_id'],'kind':kind,'data':data})
         return data
-    def records(self,pid,kind):return [r['data'] for r in self.req('GET','project_records',params={'project_id':f'eq.{pid}','kind':f'eq.{kind}','select':'data'})]
+    def save_many(self,kind,items):
+        if not self.worker:raise PermissionError('Batch extraction writes require worker credentials')
+        for start in range(0,len(items),100):
+            self.req('POST','project_records',headers={**self.headers,'Prefer':'resolution=ignore-duplicates,return=minimal'},json=[{'id':d['id'],'project_id':d['project_id'],'kind':kind,'data':d} for d in items[start:start+100]])
+    def records(self,pid,kind):
+        result=[]
+        while True:
+            rows=self.req('GET','project_records',params={'project_id':f'eq.{pid}','kind':f'eq.{kind}','select':'data','order':'id','limit':1000,'offset':len(result)})
+            result.extend(r['data'] for r in rows)
+            if len(rows)<1000:return result
+
     def record(self,id,kind=None):
         params={'id':f'eq.{id}','select':'data,kind'}
         if kind:params['kind']=f'eq.{kind}'
@@ -140,6 +160,7 @@ class SupabaseStore:
     def add_member(self,pid,user,role):self.req('POST','project_memberships',json={'project_id':pid,'user_id':user,'role':role})
     def claim(self):return self.req('POST','rpc/claim_job',json={})
 
+    def renew_job(self,jid,attempt):return self.req('POST','rpc/renew_processing_job',json={'job_id':jid,'attempt':attempt})
     def reserve_ai(self,key,month,amount,limit):return self.req('POST','rpc/reserve_ai_budget',json={'job_key':key,'month':month,'amount_microusd':amount,'limit_microusd':limit})
     def reconcile_ai(self,key,amount):self.req('POST','rpc/reconcile_ai_budget',json={'job_key':key,'actual_microusd':amount})
 

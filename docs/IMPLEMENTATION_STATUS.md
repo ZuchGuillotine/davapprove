@@ -18,7 +18,7 @@ November 7, 2026. This is an operational prototype for early feedback, not a ful
 | Legal/numerical rules | No county/city numeric zoning or buffer rules are activated. Cite and validate the small rule set against adopted text and actual permit cases before enabling it. All legal approval states remain unknown unless separately evidenced. |
 | Automated documents | KPHD selected PDFs are automated. Auditor, SmartGov permit attachments and utility letters use assisted links/uploads. A search is not exhaustive title or permit research. |
 | Geometry | GeoJSON input with a source reference; no CAD import, automated survey georeferencing or drawing interface. Computed areas remain partial and code-unchecked. |
-| AI | Cloudflare Workers AI proxy is deployed with server-only authentication, verified token rates and a $5/month application allowance. Live inference is verified; output remains proposed evidence with exact quotation checks. Free quota is shared account-wide and exhaustion falls back to manual review. |
+| AI | Platform OpenAI processing is deployed with server-only authentication, page/chunk coverage and a $5/month allowance. Text quotations are checked; visual observations remain explicitly unverified proposals. See processing implementation notes below. |
 | Auth/onboarding | Manual one-time beta links work without email delivery. Custom SMTP and a project invitation UI remain. Do not promise automated email signup yet. |
 | Uploads | Current Free Supabase limit is 50 MiB. The planned 100 MB interrupted-upload test and 250 MB ceiling need a paid tier and verification. |
 | Operations | API tunnel URL can change on restart. Independent backups, restore/rollback drills and stable API domain remain before dependable client use. |
@@ -32,4 +32,11 @@ Source-derived parcel geometry is revalidated by the worker before it is trusted
 
 ## Next approved direction
 
-See [document processing v2](DOCUMENT_PROCESSING_V2.md): full-document chunk coverage, OpenAI text/vision processing, verified drawing geometry, three-project trial accounting and a future user-model boundary. These are planned; the live backend still uses Cloudflare AI and does not enforce the new trial policy.
+See [document processing v2](DOCUMENT_PROCESSING_V2.md): full-document chunk coverage, OpenAI text/vision processing, verified drawing geometry, three-project trial accounting and a future user-model boundary. OpenAI page/chunk processing is now implemented; the live backend does not yet enforce the new trial policy.
+
+
+## OpenAI processing implementation
+
+The new adapter inventories all pages, splits text into bounded overlapping chunks, reviews each page image, validates text quotes and visual source regions, and saves resumable project-scoped checkpoints. It uses a pinned GPT-4.1 mini baseline via Responses with the existing $5 allowance. Versioned proposals preserve prior facts. The UI displays coverage and a resume action. Exact geometric calibration, drawing crops, cross-sheet conflict synthesis, and the three-project entitlement rollout remain separate work; this change is not a completed CAD interpretation system.
+
+Verified on the hosted worker: the existing two-page PDF completed four text/vision chunks and produced 18 proposed facts; unsupported citations were discarded. The 46-page PDF was queued for 92 chunks, with coverage visible during processing. This checkpoint is not a claim that all 46 pages have completed. Local validation: 59 backend tests, 12 UI tests, research consistency checks and PostgreSQL RLS checks pass.

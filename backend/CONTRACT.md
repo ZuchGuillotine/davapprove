@@ -32,3 +32,12 @@ The MVP stores typed entity documents in a generic JSON record table behind rela
 ## Checks
 
 `cd backend && .venv/bin/python -m pytest -q` covers source parsing/network boundaries, selective import, duplicate jobs, project access, reviews, revision conflicts, geometry/rule evaluation and AI budget/citation behavior. Root SQL assertions exercise migration/RLS independently against a disposable PostgreSQL cluster. Hosted verification is required before claiming production ready.
+
+
+## OpenAI processing v2
+
+`POST /projects/{pid}/documents/{did}/process` (owner/editor) enqueues a parse/resume job, reusing an existing pending parse job when present. The immutable original and prior accepted evidence remain. `document.ai_processing` reports provider/model, page/chunk totals, complete/partial/budget-paused status and page manifest. A completed job means the processing attempt ended; it does not guarantee complete document coverage.
+
+Facts include `evidence_type: text_quote | visual_observation`, original page, model/prompt/pipeline version and `source_region`. Text quotes are checked against supplied text; visual proposals use an empty quote with a page-image hash and region description and never contain accepted calibrated geometry. Partial runs expose a Resume processing action. Completed checkpoints are reused without repeat inference; failed/uncertain prior charges are not automatically retried.
+
+Worker-only `processing_chunk` records use existing project RLS; clients cannot write them. `renew_processing_job` renews only the matching running attempt and cannot revive a cancelled job. Platform key is `OPENAI_API_KEY`, only on the worker. Three-project entitlement enforcement and user model connections remain planned.

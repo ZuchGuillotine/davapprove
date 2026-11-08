@@ -39,7 +39,7 @@ async function openSample() {
   await waitFor(
     () =>
       expect(
-        screen.getByRole("button", { name: "Find records" }),
+        screen.getAllByRole("button", { name: "Find records" })[0],
       ).toBeEnabled(),
     { timeout: 4000 },
   );
@@ -48,7 +48,7 @@ async function openSample() {
 describe("project workspace", () => {
   it("keeps discovery separate from import and imports only explicitly selected records", async () => {
     const user = await openSample();
-    await user.click(screen.getByRole("button", { name: "Find records" }));
+    await user.click(screen.getAllByRole("button", { name: "Find records" })[0]);
     await screen.findByText(
       "Boundary & topographic survey",
       {},
@@ -138,7 +138,7 @@ describe("project workspace", () => {
       screen.getByRole("button", { name: /Explore the sample project/ }),
     );
     await screen.findByRole("heading", { name: "Cedar House · Concept study" });
-    await user.click(screen.getByRole("tab", { name: "Records" }));
+    await user.click(screen.getByRole("tab", { name: /^Records/ }));
     expect(screen.getByText("Upload PDF · 50 MiB max")).toBeInTheDocument();
   });
   it("shows a loading state rather than zero evidence while project details are pending", async () => {
@@ -197,5 +197,91 @@ describe("project workspace", () => {
       await screen.findByRole("heading", { name: "Delayed project" }),
     ).toBeInTheDocument();
     expect(screen.getByText("Project evidence")).toBeInTheDocument();
+  });
+  it("refreshes document coverage while a job runs without resetting the project view", async () => {
+    const project = {
+      id: "progress-project",
+      name: "Processing project",
+      parcel_number: "123",
+      parcel: {},
+      jurisdiction: "kitsap_county",
+      intent: {},
+      current_revision: 1,
+    };
+    let polls = 0;
+    const fetcher = vi.fn(async (url: string) => {
+      let result: any = {};
+      if (url.endsWith("/config")) result = { mode: "demo" };
+      else if (url.endsWith("/projects")) result = { projects: [project] };
+      else if (url.endsWith("/projects/progress-project")) result = project;
+      else if (url.endsWith("/process"))
+        result = { id: "running-job", status: "queued" };
+      else if (url.endsWith("/jobs/running-job"))
+        result = {
+          id: "running-job",
+          status: ++polls > 1 ? "completed" : "running",
+        };
+      else if (url.endsWith("/documents"))
+        result = {
+          documents: [
+            {
+              id: "doc-1",
+              title: "Survey.pdf",
+              page_count: 4,
+              ai_processing: {
+                status: polls ? "running" : "partial",
+                total_pages: 4,
+                processed_pages: polls ? 1 : 0,
+                total_chunks: 4,
+                completed_chunks: polls ? 1 : 0,
+              },
+            },
+          ],
+        };
+      else if (url.endsWith("/assessment"))
+        result = {
+          nodes: [],
+          edges: [],
+          actions: [],
+          envelope: { status: "cannot_determine" },
+          coverage_gaps: [],
+        };
+      return { ok: true, json: async () => result };
+    });
+    vi.stubGlobal("fetch", fetcher);
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(
+      await screen.findByRole("button", {
+        name: /Open local development workspace/,
+      }),
+    );
+    await screen.findByRole("heading", { name: "Processing project" });
+    await user.click(screen.getByRole("tab", { name: /^Records/ }));
+    await user.click(screen.getByRole("button", { name: "Resume processing" }));
+    expect(await screen.findByText("Analysis in progress")).toBeInTheDocument();
+    expect(screen.getAllByText("1 / 4")).toHaveLength(2);
+    expect(
+      screen.queryByText("Loading Processing project."),
+    ).not.toBeInTheDocument();
+    expect(
+      fetcher.mock.calls.some(([url]) =>
+        url.endsWith("/projects/progress-project"),
+      ),
+    ).toBe(false);
+    await waitFor(
+      () =>
+        expect(
+          fetcher.mock.calls.some(([url]) =>
+            url.endsWith("/projects/progress-project"),
+          ),
+        ).toBe(true),
+      { timeout: 4000 },
+    );
+    await waitFor(() =>
+      expect(
+        screen.getAllByRole("button", { name: "Find records" })[0],
+      ).toBeEnabled(),
+    );
   });
 });

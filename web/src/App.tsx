@@ -37,6 +37,8 @@ import {
   documentUrl,
 } from "./api";
 import { Upload as TusUpload } from "tus-js-client";
+import DocumentCoverage from "./DocumentCoverage";
+import FactEvidence from "./FactEvidence";
 import type {
   Assessment,
   Candidate,
@@ -300,6 +302,17 @@ export default function App() {
         await loadProject(await request("/projects/" + p.id));
         return;
       }
+      if (attempt % 5 === 0) {
+        try {
+          const progress = await request<{ documents: DocumentRecord[] }>(
+            `/projects/${p.id}/documents`,
+          );
+          setDocuments(progress.documents || []);
+        } catch {
+          // Retain the last known coverage if this optional refresh fails.
+          // Job polling remains authoritative and continues independently.
+        }
+      }
       await new Promise((r) => setTimeout(r, 2000));
     }
     setNotice(
@@ -412,14 +425,17 @@ export default function App() {
       );
     });
   }
-  async function openDocument(d: DocumentRecord) {
+  async function openDocument(d: DocumentRecord, page?: number) {
     await run("Opening private document", async () => {
       if (sample)
         throw Error(
           "This is a synthetic sample record; no real PDF is attached.",
         );
       const url = await documentUrl(project!.id, d.id);
-      setViewDoc({ title: d.title || d.filename || "Document", url });
+      setViewDoc({
+        title: d.title || d.filename || "Document",
+        url: page ? `${url.split("#")[0]}#page=${page}` : url,
+      });
     });
   }
   const loading = (
@@ -1113,21 +1129,42 @@ export default function App() {
                           </p>
                         ) : (
                           documents.map((d) => (
-                            <button
-                              key={d.id}
-                              className="document-row"
-                              onClick={() => openDocument(d)}
-                            >
-                              <FileText size={19} />
-                              <span>
-                                <strong>{d.title || d.filename}</strong>
-                                <small>
-                                  {human(d.status || "imported")} ·{" "}
-                                  {d.page_count || "?"} pages
-                                </small>
-                              </span>
-                              <ArrowUpRight size={16} />
-                            </button>
+                            <div className="document-entry" key={d.id}>
+                              <button
+                                className="document-row"
+                                onClick={() => openDocument(d)}
+                              >
+                                <FileText size={19} />
+                                <span>
+                                  <strong>{d.title || d.filename}</strong>
+                                  <small>
+                                    {human(d.status || "imported")} ·{" "}
+                                    {d.page_count || "?"} pages
+                                  </small>
+                                </span>
+                                <ArrowUpRight size={16} />
+                              </button>
+                              <DocumentCoverage
+                                processing={d.ai_processing}
+                                resuming={!!busy}
+                                onResume={
+                                  sample
+                                    ? undefined
+                                    : () =>
+                                        run(
+                                          "Resuming document processing",
+                                          async () => {
+                                            const job = await request<Job>(
+                                              `/projects/${project.id}/documents/${d.id}/process`,
+                                              "POST",
+                                              {},
+                                            );
+                                            await poll(project, [job]);
+                                          },
+                                        )
+                                }
+                              />
+                            </div>
                           ))
                         )}
                       </section>
@@ -1184,15 +1221,26 @@ export default function App() {
                                 {human(f.key || f.name || "Extracted fact")}
                               </strong>
                               <div className="fact-value">{human(f.value)}</div>
-                              <p>
-                                {f.source_quote ||
-                                  f.quote ||
-                                  "Verify against the original document."}
-                              </p>
-                              <small>
-                                Page {f.page || f.page_number || "?"} ·{" "}
-                                {human(f.review_status || "proposed")}
-                              </small>
+                              <FactEvidence
+                                fact={f}
+                                document={documents.find(
+                                  (d) => d.id === f.document_id,
+                                )}
+                                onOpen={
+                                  documents.some((d) => d.id === f.document_id)
+                                    ? () =>
+                                        openDocument(
+                                          documents.find(
+                                            (d) => d.id === f.document_id,
+                                          )!,
+                                          f.page ??
+                                            f.page_number ??
+                                            f.source_region?.page,
+                                        )
+                                    : undefined
+                                }
+                              />
+
                               {!["accepted", "rejected"].includes(
                                 f.review_status || "",
                               ) && (
@@ -1991,12 +2039,7 @@ function FactEditor({
               onChange={(e) => setValue(e.target.value)}
             />
           </label>
-          <p className="small muted">
-            Source page {fact.page || fact.page_number || "?"} ·{" "}
-            {fact.source_quote ||
-              fact.quote ||
-              "Refer to the original document."}
-          </p>
+          <FactEvidence fact={fact} />
           {error && (
             <p role="alert" className="error">
               {error}

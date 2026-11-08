@@ -112,3 +112,14 @@ def test_email_delivery_requires_explicit_configuration(tmp_path):
 def test_missing_production_configuration_reports_degraded(tmp_path):
     client=TestClient(create_app(Settings(mode='supabase',data_dir=tmp_path,supabase_url='',publishable_key='')))
     assert client.get('/health').json()['status']=='degraded'
+
+
+def test_document_processing_resume_requires_project_access(env):
+    client,db,worker,_=env;p=new_project(client);pid=p['id'];did='6dac491e-d535-401b-90bc-95c34ab86edc'
+    db.save('document',{'id':did,'project_id':pid,'status':'needs_review'})
+    path=f'/api/v1/projects/{pid}/documents/{did}/process'
+    assert client.post(path,headers={'X-Demo-User':'bob'}).status_code==404
+    db.add_member(pid,'bob','reviewer')
+    assert client.post(path,headers={'X-Demo-User':'bob'}).status_code==403
+    a=client.post(path,headers={'X-Demo-User':'alice'});b=client.post(path,headers={'X-Demo-User':'alice'})
+    assert a.status_code==202 and a.json()['id']==b.json()['id']

@@ -1,6 +1,6 @@
 # Document processing v2 and model funding
 
-Decision: November 7, 2026. This is the next implementation plan, not deployed functionality. It supersedes the original single-excerpt/provider-neutral AI plan. The live prototype still uses Cloudflare Workers AI; no OpenAI calls or new trial gates are enabled by this document.
+Decision: November 7, 2026. This is the next implementation plan, not deployed functionality. It supersedes the original single-excerpt/provider-neutral AI plan. Implementation update: OpenAI chunk/text/vision processing is now deployed; see [implementation status](IMPLEMENTATION_STATUS.md). New trial gates, calibrated geometry and cross-sheet synthesis are still planned.
 
 ## Product boundary
 

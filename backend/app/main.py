@@ -182,6 +182,14 @@ def create_app(settings=None,store=None):
         # Worker verifies bytes/signature/size from private storage before accepting extraction.
         d={'id':did,'project_id':pid,'title':Path(body.get('filename','Uploaded PDF')).name,'storage_path':path,'status':'uploaded','created_at':now()}
         ctx[1].save('document',d);new_job(ctx[1],pid,'parse',document_id=did,idempotency_key='parse:'+did+':extract-v1');return d
+    @app.post('/api/v1/projects/{pid}/documents/{did}/process',status_code=202)
+    def process_document(pid:str,did:str,ctx=Depends(session)):
+        project_for(pid,ctx,True)
+        d=ctx[1].record(did,'document')
+        if d['project_id']!=pid:raise NotFound()
+        for job in ctx[1].records(pid,'job'):
+            if job.get('document_id')==did and job.get('type')=='parse' and job.get('status') in ('queued','running'):return job
+        return new_job(ctx[1],pid,'parse',document_id=did)
     @app.get('/api/v1/projects/{pid}/documents/{did}/file')
     async def document_file(pid:str,did:str,ctx=Depends(session)):
         project_for(pid,ctx);d=ctx[1].record(did,'document')

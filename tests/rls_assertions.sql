@@ -23,6 +23,10 @@ do $$ begin
   raise exception 'Forged extraction accepted';
  exception when insufficient_privilege then null;end;
  begin
+  perform public.save_record('processing_chunk','{"id":"30000000-0000-4000-8000-000000000005","project_id":"10000000-0000-4000-8000-000000000002"}');
+  raise exception 'Client forged processing checkpoint';
+ exception when raise_exception then if sqlerrm<>'write not permitted' then raise;end if;end;
+ begin
   perform public.claim_job();raise exception 'Client claimed worker job';
  exception when insufficient_privilege then null;end;
 end $$;
