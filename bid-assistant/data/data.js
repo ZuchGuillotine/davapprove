@@ -34,8 +34,4076 @@
    }
   ]
  },
- "citations": {},
- "fees": {},
+ "citations": {
+  "kcc-19.100.110": {
+   "id": "kcc-19.100.110",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.100.110(B)",
+   "title": "Applicability.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "This title applies to all uses and activities within areas or adjacent to areas designated as regulated critical areas unless identified as exempt in Section 19.100.125.",
+   "summary": "Any county permit (SDAP, building permit, land division, shoreline permit, CUP, Class IV-G forest practice) on or adjacent to a regulated critical area triggers Title 19 critical-areas review unless exempt under 19.100.125.",
+   "key_values": {
+    "exemptions_section": "19.100.125",
+    "permits_listed": [
+     "site development activity permit",
+     "site plan approval",
+     "subdivision or short subdivision",
+     "building permit",
+     "performance-based development",
+     "shoreline substantial development",
+     "variance",
+     "conditional use permit",
+     "Class IV general / Class III COHP forest practice permits",
+     "rezones"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 8)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.100.110-G": {
+   "id": "kcc-19.100.110-G",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.100.110(G)",
+   "title": "Applicability. (area of review)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "For the purpose of this title, the area of review is defined as the critical area and its largest potential buffer or setback. This defines the area of review only. Refer to Chapters 19.200 through 19.600 for specific development standards.",
+   "summary": "The review area is the critical area plus its largest potential buffer or setback, so a bid must screen beyond the parcel for critical areas whose maximum buffer could reach the work.",
+   "key_values": {
+    "area_of_review": "critical area + largest potential buffer or setback"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 8)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.200.215": {
+   "id": "kcc-19.200.215",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.200.215",
+   "title": "Wetland review procedures.",
+   "url": "https://ecode360.com/49527502",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "The applicant shall be responsible for hiring a qualified wetlands specialist to determine the wetland boundaries by means of a wetland delineation.",
+   "summary": "Development with potential to impact a wetland or its largest potential buffer needs a wetland delineation report and mitigation report at application, prepared by a qualified wetlands specialist; the county may require a licensed survey of the boundary.",
+   "key_values": {
+    "reports_required_at_application": [
+     "Wetland delineation report (19.700.710)",
+     "Wetland mitigation report (19.700.715)"
+    ],
+    "trigger_as_adopted_2024": "all applications for development that have the potential to impact a wetland or its largest potential buffer width",
+    "largest_potential_wetland_buffer_ft": 300
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 55). Subsection (A) was amended by Ord. 633-2024 (old text \"within a wetland or its largest potential buffer width\" struck; new text \"that have the potential to impact a wetland or its largest potential buffer width\"); because the struck text garbles the OCR, the machine-verified excerpt is taken from subsection (B)(2) and the (A) trigger is recorded in key_values as read from the page image. ecode360 deep link supplied by requester, not independently confirmed.",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.200.220": {
+   "id": "kcc-19.200.220",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.200.220(A) and Tables 19.200.220(A)-(E)",
+   "title": "Wetland buffer requirements.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Buffers shall be measured horizontally from a perpendicular line established at the wetland edge based on the buffer width identified using the tables below.",
+   "summary": "Standard wetland buffers run 25-300 ft depending on wetland category (I-IV), habitat score and land-use intensity (low/moderate/high); single-family lots are \"moderate\" intensity.",
+   "key_values": {
+    "units": "feet; values are Low / Moderate / High land-use intensity",
+    "intensity_examples": {
+     "high": "commercial, urban, industrial, institutional, residential subdivisions >1 unit/acre",
+     "moderate": "single-family residential lots, subdivisions <=1 unit/acre",
+     "low": "forestry, low-intensity open space"
+    },
+    "category_IV": {
+     "all (score < 16 points)": [
+      25,
+      40,
+      50
+     ]
+    },
+    "category_III": {
+     "habitat score 6-7": [
+      75,
+      110,
+      150
+     ],
+     "habitat score 3-5": [
+      40,
+      60,
+      80
+     ]
+    },
+    "category_II": {
+     "habitat score 8-9": [
+      150,
+      225,
+      300
+     ],
+     "habitat score 6-7": [
+      75,
+      110,
+      150
+     ],
+     "water quality 8-9 and habitat < 6": [
+      50,
+      75,
+      100
+     ],
+     "estuarine": [
+      75,
+      110,
+      150
+     ],
+     "interdunal": [
+      75,
+      110,
+      150
+     ],
+     "not meeting above": [
+      50,
+      75,
+      100
+     ]
+    },
+    "category_I": {
+     "wetlands of high conservation value": [
+      125,
+      190,
+      250
+     ],
+     "bogs": [
+      125,
+      190,
+      250
+     ],
+     "forested": "based on habitat or water quality score",
+     "estuarine": [
+      100,
+      150,
+      200
+     ],
+     "coastal lagoons": [
+      100,
+      150,
+      200
+     ],
+     "habitat score 8-9": [
+      150,
+      225,
+      300
+     ],
+     "interdunal with habitat 8-9": [
+      150,
+      225,
+      300
+     ],
+     "habitat score 6-7": [
+      75,
+      110,
+      150
+     ],
+     "water quality 8-9 and habitat < 6": [
+      50,
+      75,
+      100
+     ],
+     "not meeting any of the above": [
+      50,
+      75,
+      100
+     ]
+    },
+    "rating_system": "Washington State Wetland Rating System for Western Washington (2014 update, Ecology Pub. 14-06-029)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 57-61). Table values were read from the page images (tables OCR poorly); the numeric widths themselves were not changed by Ord. 633-2024 (only table titles and the \"hobby farms\" example were edited).",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.200.220-E": {
+   "id": "kcc-19.200.220-E",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.200.220(E)",
+   "title": "Wetland buffer requirements. (Building or Impervious Surface Setback Lines)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "A building or impervious surface setback line of fifteen feet is required from the edge of any wetland buffer",
+   "summary": "Add a 15-foot building/impervious-surface setback outside the wetland buffer edge when laying out a footprint.",
+   "key_values": {
+    "building_setback_beyond_buffer_ft": 15
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 71). 2024 amendment adds \"including exempt wetlands in 19.200.210.C\" immediately after the excerpt. Note KCC 19.200.210(C)(8) as adopted refers to this setback as \"19.200.220.F\" although the subsection is lettered E in the adopted exhibit.",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.700.710": {
+   "id": "kcc-19.700.710",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.700.710",
+   "title": "Wetland delineation report.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "The delineation report shall delineate the entire wetland boundary. If the wetland extends outside the site, the delineation report shall discuss methods for delineation beyond the site if physical access was not granted.",
+   "summary": "The delineation must cover the whole wetland even off-site, and must map inventoried wetlands on or within 300 feet of the site; reports are valid 5 years.",
+   "key_values": {
+    "inventory_map_search_distance_ft": 300,
+    "previous_distance_ft_struck_in_2024": 250,
+    "general_site_conditions_radius": "one-quarter mile of the subject wetland(s)",
+    "report_validity_years": 5
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 125-126). The 300-ft figure was read from the page image: \"three hundred\" is underlined (new) and \"two hundred fifty\" is struck.",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.300.310": {
+   "id": "kcc-19.300.310",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.300.310(B)(1)",
+   "title": "Fish and wildlife habitat conservation area categories.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Type S waters are regulated through the shoreline master program (Title 22). The DNR stream maps should not be the only source for identifying regulated areas or establishing buffers.",
+   "summary": "Streams are typed F / Np / Ns under the DNR system (WAC 222-16-030); Type S (shorelines) fall under Title 22 instead, and DNR maps alone are not enough - expect field verification of stream type.",
+   "key_values": {
+    "water_types": {
+     "S": "former Type 1 (regulated by Title 22 SMP)",
+     "F": "former Types 2 and 3",
+     "Np": "former Type 4",
+     "Ns": "former Type 5",
+     "O": "new 2024 \"Other\" type: segments not connected by surface channel to S, F or N waters"
+    }
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image NOT individually inspected for strikeout; OCR text showed no strikeout artefacts in this passage. (ordinance pp. 87-88)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.300.315": {
+   "id": "kcc-19.300.315",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.300.315(A) and Table 19.300.315",
+   "title": "Development standards.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Buffers shall be maintained along the perimeter of fish and wildlife habitat conservation areas, as listed in Table 19.300.315.",
+   "summary": "Stream buffers were increased in 2025: Type F 200 ft, Np and Ns 100 ft, Type O 50 ft, lakes under 20 acres 100 ft, each with a further 15-ft building setback; reduced \"UGA alternative\" widths exist inside urban growth areas.",
+   "key_values": {
+    "stream_buffer_ft": {
+     "S": "see Title 22 (SMP)",
+     "F": 200,
+     "Np": 100,
+     "Ns": 100,
+     "O": 50
+    },
+    "uga_alternative_buffer_ft": {
+     "S": "NA",
+     "F": 150,
+     "Np": 75,
+     "Ns": 75,
+     "O": 50
+    },
+    "lakes_less_than_20_acres_buffer_ft": 100,
+    "minimum_building_setback": "15 feet beyond buffer",
+    "pre_2025_buffers_struck_ft": {
+     "F": 150,
+     "Np": 50,
+     "Ns": 50
+    },
+    "measured_from": "ordinary high water mark, or top of bank where OHWM cannot be identified; from edge of channel migration zone where applicable"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 89-90). Table values read from the page image, where old values 150/50/50 are struck and 200/100/100 underlined; UGA alternative column and Type O row are new in Ord. 633-2024 (criteria at 19.300.315(A)(4)).",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.300.315-hmp": {
+   "id": "kcc-19.300.315-hmp",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.300.315 Table (Wildlife Habitat Conservation Areas); KCC 19.700.720",
+   "title": "Development standards. / Habitat management plan (HMP).",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Buffer widths and setbacks will be determined through a mandatory habitat management plan (HMP). In the case of bald eagles, a HMP will not be required, but additional state and federal permits and/or timing considerations for construction may be required to ensure compliance with all federal laws, including the federal Bald and Golden Eagle Protection Act (16 USC 668) to avoid impacting eagles and their habitat.",
+   "summary": "Class I wildlife habitat conservation areas (listed-species habitat) require a habitat management plan by a fish or wildlife biologist; Class II is site-specific; bald eagles need no HMP but may need federal permits/timing.",
+   "key_values": {
+    "class_I": "mandatory HMP",
+    "class_II": "site-specific conditions determine need for HMP",
+    "hmp_preparer": "fish or wildlife biologist (KCC 19.150.320, 19.150.690)",
+    "hmp_content_section": "19.700.720"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 90; preparer sentence read from p. 147 image).",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.400.420": {
+   "id": "kcc-19.400.420",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.400.420",
+   "title": "Erosion hazard areas.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "These include coastal erosion-prone areas and channel migration zones, and may be inclusive of landslide areas.",
+   "summary": "Erosion hazard areas (bluffs, steep slopes, unconsolidated soils, coastal erosion areas, channel migration zones) are mapped as high or moderate; moderate includes slopes of 15% or more with highly erodible soils.",
+   "key_values": {
+    "high": [
+     "channel migration zones",
+     "coastal erosion sediment source rating 0.6-1.0"
+    ],
+    "moderate": [
+     "slopes >= 15% with NRCS highly erodible / potentially highly erodible soils",
+     "coastal erosion sediment source rating 0.3-0.6"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image NOT individually inspected for strikeout; OCR text showed no strikeout artefacts in this passage. (ordinance p. 109)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.400.425": {
+   "id": "kcc-19.400.425",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.400.425",
+   "title": "Landslide hazard areas.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Landslide hazard areas include those areas at risk of mass movement due to a combination of geologic, topographic, and hydrologic factors, such as bedrock, soil, slope (gradient), slope aspect, structure, hydrology, and other factors. Landslide hazards are further classified as either shallow or deep-seated.",
+   "summary": "Landslide hazard is classed high or moderate from slope, soils and mapped factor of safety; slopes of 30%+ meeting unstable-slope criteria and all deep-seated slides are high; 15%+ with erodible soils or seepage and all slopes 40%+ are moderate.",
+   "key_values": {
+    "high": [
+     "shallow landslide areas with factor of safety 0.5-1.5",
+     "slopes >= 30% meeting U, UOS or URS criteria",
+     "all deep-seated landslide areas"
+    ],
+    "moderate": [
+     "shallow landslide areas with FS 1.5-2.5",
+     "slopes >= 15% with highly erodible soils or with springs/groundwater seepage",
+     "slopes >= 40%"
+    ],
+    "indicator_distance_ft": "areas within 200 feet of areas classified U, UOS or URS"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 110-112)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.400.430": {
+   "id": "kcc-19.400.430",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.400.430",
+   "title": "Seismic hazard areas.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Seismic hazard areas are areas subject to severe risk of damage as a result of earthquake-induced land sliding, seismic ground shaking, dynamic settlement, fault rupture, soil liquefaction, or flooding caused by tsunamis and seiches.",
+   "summary": "High seismic hazard = faults with evidence of surface rupture; moderate = liquefiable soils, Seismic Site Class D/E/F, or faults without surface rupture evidence.",
+   "key_values": {
+    "high": "faults with evidence of rupture at the ground surface",
+    "moderate": [
+     "areas susceptible to liquefaction (hydric soils, filled areas)",
+     "Seismic Site Class D, E and F",
+     "faults without recognized surface rupture"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 112)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.400.435": {
+   "id": "kcc-19.400.435",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.400.435(A)(2)",
+   "title": "Development standards.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "For high landslide hazard areas, the vegetated buffer shall be twenty-five feet beyond the top of the slope, and the overall setback shall be equal to the height of the slope (1:1 horizontal to vertical) plus the greater of one-third of the vertical slope height or twenty-five feet.",
+   "summary": "Top-of-slope rule: 25-ft vegetated buffer in all cases; total setback = slope height + greater of 1/3 height or 25 ft (high landslide), 40 ft (moderate landslide), or 25 ft + 15 ft (erosion hazard), unless a geotechnical report supports less.",
+   "key_values": {
+    "high_landslide": {
+     "vegetated_buffer_ft": 25,
+     "overall_setback": "slope height (1:1 H:V) + greater of 1/3 vertical slope height or 25 ft"
+    },
+    "moderate_landslide": {
+     "vegetated_buffer_ft": 25,
+     "overall_setback_ft": 40
+    },
+    "moderate_and_high_erosion": {
+     "vegetated_buffer_ft": 25,
+     "additional_building_and_impervious_setback_ft": 15
+    },
+    "toe_of_slope": "geotechnical report may be required based on slope height and stability indicators; otherwise KCC 14.04 applies",
+    "seismic": "geotechnical report for development within 200 ft of a high seismic hazard area; geologic assessment for moderate"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 113-114). Subsection renumbered/reworded in 2024 (erosion-area item (a) is new; \"vegetated buffer shall be twenty-five feet beyond the top of the slope, and the overall\" is new underlined text).",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.400.440": {
+   "id": "kcc-19.400.440",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.400.440",
+   "title": "Review procedures.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "A geological assessment shall be required when the proposed activity is located within a potential hazard area.",
+   "summary": "Any work in a mapped potential geologic hazard area needs a geological assessment: a stamped letter if no hazard within 200 ft, a geological report if a hazard is within 200 ft but needs no engineering, or a full geotechnical report if engineering/mitigation is needed.",
+   "key_values": {
+    "screening_distance_ft": 200,
+    "forms": [
+     "geological letter",
+     "geological report (geologist)",
+     "geotechnical report (geotechnical engineer)"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 115). As adopted, 19.400.440(C) cross-references Section 19.700.715 for the qualified professional; the qualifications actually appear in 19.700.725(A).",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.500.505": {
+   "id": "kcc-19.500.505",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.500.505",
+   "title": "Purpose. (Chapter 19.500 Frequently Flooded Areas)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "To fulfill this purpose, Kitsap County uses Title 15 (Flood Hazard Areas), adopted by reference, which designates special flood hazard areas and establishes permit requirements for these areas.",
+   "summary": "Frequently flooded areas are regulated through Title 15 (Flood Hazard Areas); critical drainage areas under Title 12 are also in the review area.",
+   "key_values": {
+    "implementing_title": "KCC Title 15"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 116)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.600.610": {
+   "id": "kcc-19.600.610",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.600.610",
+   "title": "Critical aquifer recharge area categories.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Category I critical aquifer recharge areas are those areas where the potential for certain land use activities to adversely affect groundwater is high.",
+   "summary": "Category I CARAs (5-year wellhead travel zones for Group A wells, certain 10-year zones, and named significant recharge areas) are the high-risk class; Category II covers permeable soils, shallow/Vashon aquifer areas and well concentrations.",
+   "key_values": {
+    "category_I": [
+     "5-year time-of-travel zone for Group A water system wells",
+     "10-year time-of-travel zones where aquifer is at/above sea level under permeable soils",
+     "significant recharge areas: Hansville, Seabeck, Island Lake, Gorst, Poulsbo"
+    ],
+    "category_II": [
+     "Group A hydrologic soils",
+     "areas above shallow aquifers",
+     "areas above the Vashon aquifer",
+     "areas with high concentration of potable water supply wells"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 118-120)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.600.615": {
+   "id": "kcc-19.600.615",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.600.615",
+   "title": "Development standards.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "The hydrogeological report shall evaluate potential impacts of a proposed land use or activity on both groundwater and surface water quality and quantity. The waiver will be evaluated and treated as a special use review (Section 19.100.145) and be reviewed by the department, Kitsap public health, affected tribes, and the affected water purveyors.",
+   "summary": "Uses listed in Table 19.600.620 are prohibited in Category I CARAs unless a waiver with a hydrogeological report is granted; in Category II the county, health district and water purveyor decide whether a hydrogeological report is needed.",
+   "key_values": {
+    "category_I": "Table 19.600.620 uses prohibited unless waiver granted; waiver request must include hydrogeological report; processed as special use review (19.100.145)",
+    "category_II": "Table 19.600.620 uses may be required to submit hydrogeological report, as determined by department, health district and affected water purveyor",
+    "use_table": "Table 19.600.620 (activities with potential threat to groundwater quality)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 120-121)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.700.705": {
+   "id": "kcc-19.700.705",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.700.705(D)",
+   "title": "Special reports.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Any special report required herein shall be prepared and signed by the professionals identified below and in Chapter 19.150, and shall include his or her resume, or other list of qualifications, to aid the department in assessing these qualifications.",
+   "summary": "Special reports (wetland delineation/mitigation, HMP, geotechnical/geological, hydrogeological) must be signed by the qualified professionals defined in Chapter 19.150 and are valid for 5 years.",
+   "key_values": {
+    "special_reports": [
+     "19.700.710 Wetland delineation report",
+     "19.700.715 Wetland mitigation report",
+     "19.700.720 Habitat management plan",
+     "19.700.725 Geological assessments",
+     "19.700.730 Hydrogeological report"
+    ],
+    "report_validity_years": 5
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance pp. 124-125). The 5-year validity is new subsection (E) added by Ord. 633-2024.",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.700.725": {
+   "id": "kcc-19.700.725",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.700.725",
+   "title": "Geological assessments.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "Whenever development is proposed in a potentially geologically hazardous area or shoreline setback as defined in Chapters 19.300 and 19.400, or when the department determines that additional soils and slope analysis is appropriate on a particular site, the applicant is required to submit a geological assessment.",
+   "summary": "A geological assessment is required for development in a potential geologic hazard area or shoreline setback; geotechnical reports must be by a geotechnical engineer, geological reports/letters by a licensed geologist or geotechnical engineer.",
+   "key_values": {
+    "geotechnical_report_by": "geotechnical engineer (19.150.365)",
+    "geological_report_or_letter_by": "licensed geologist (19.150.360) or geotechnical engineer"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected by eye: the excerpt contains no struck-through text and key_values reflect only un-struck (adopted) values. (ordinance p. 147)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.700.730": {
+   "id": "kcc-19.700.730",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.700.730",
+   "title": "Hydrogeological report.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "The report shall address the impact the proposed land use will have on both the quality and quantity of the water transmitted to the aquifer.",
+   "summary": "A hydrogeological report must address water quality and quantity effects on the aquifer, inventory wells and surface water within 1,000 ft, and be prepared by a licensed hydrogeologist/geologist or qualified soil scientist.",
+   "key_values": {
+    "well_and_surface_water_inventory_radius_ft": 1000,
+    "preparer": "professional geologist/hydrologist or soil scientist with strong geology background (see 19.150.410)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image NOT individually inspected for strikeout; OCR text showed no strikeout artefacts in this passage. (ordinance p. 153)",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.150.365": {
+   "id": "kcc-19.150.365",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.150.365",
+   "title": "Geotechnical engineer.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "means a practicing geotechnical/civil engineer licensed as a professional civil engineer with the state of Washington, with professional training and experience in geotechnical engineering, including at least four years’ professional experience in evaluating geologically hazardous areas.",
+   "summary": "A \"geotechnical engineer\" for Title 19 reports must be a Washington-licensed civil PE with at least four years of experience evaluating geologic hazards.",
+   "key_values": {
+    "license": "professional civil engineer, State of Washington",
+    "minimum_experience_years": 4
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image NOT individually inspected for strikeout; OCR text showed no strikeout artefacts in this passage.",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-19.150.685": {
+   "id": "kcc-19.150.685",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 19.150.685",
+   "title": "Wetlands specialist.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Kitsap%20County%20CAO%20Ordinance%20and%20Amendments.pdf",
+   "excerpt": "means a person with experience and training in wetland issues who is able to submit substantially correct reports on wetland delineations, classifications, functional assessments and mitigation plans.",
+   "summary": "Wetland reports must come from a \"wetlands specialist\" (e.g. PWS/WPIT-certified or degreed with experience) able to submit substantially correct delineations, ratings and mitigation plans.",
+   "key_values": {
+    "example_qualification": "Professional Wetland Scientist (PWS) or Wetland Professional in Training (WPIT), Society of Wetland Scientists"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 633-2024 (adopted 14 Oct 2024, effective 1 Apr 2025), the county-posted adopting ordinance with Title 19 exhibit. The PDF is a scanned underline/strikeout markup; excerpt matched against OCR text (tesseract) with margin line numbers stripped. Any amendment to Title 19 after Ord. 633-2024 would not be reflected (none found on kitsap.gov, but ecode360 could not be consulted). ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image NOT individually inspected for strikeout; OCR text showed no strikeout artefacts in this passage.",
+   "source_currency": "adopting ordinance effective 2025-04-01 (latest CAO update found); later amendments, if any, not checked on ecode360"
+  },
+  "kcc-22.200.100": {
+   "id": "kcc-22.200.100",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.200.100(A)",
+   "title": "Shoreline jurisdiction.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "Shorelands adjacent to these water bodies, typically within two hundred feet of the ordinary high water mark (OHWM);",
+   "summary": "Shoreline jurisdiction covers marine waters, streams over 20 cfs, lakes of 20+ acres, associated wetlands and shorelands typically within 200 ft of the OHWM - work in that band needs shoreline review.",
+   "key_values": {
+    "shoreland_width_ft_from_OHWM": 200,
+    "stream_threshold_cfs_mean_annual_flow": 20,
+    "lake_threshold_acres": 20,
+    "associated_estuarine_wetlands": "jurisdiction extends 200 ft landward of the wetland OHWM",
+    "associated_palustrine_wetlands_beyond_200ft": "jurisdiction extends to the OHWM of the wetland"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; text layer shows no strikeout artefacts in the quoted item.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.400.120-B1": {
+   "id": "kcc-22.400.120-B1",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.400.120(B)(1)",
+   "title": "Vegetation conservation buffers. (Standard Buffer)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "Each shoreline environment designation shall have a starting, or standard, buffer as measured landward from the OHWM. This buffer shall be adhered to unless otherwise allowed as described in the reduced standard buffer provisions below.",
+   "summary": "Standard shoreline buffers measured landward from OHWM: High Intensity 50 ft, Shoreline Residential 85 ft, Urban Conservancy 100 ft, Rural Conservancy 130 ft, Natural 200 ft; shoreline streams/rivers 200 ft.",
+   "key_values": {
+    "standard_buffer_ft": {
+     "High Intensity": 50,
+     "Shoreline Residential": 85,
+     "Urban Conservancy": 100,
+     "Rural Conservancy": 130,
+     "Natural": 200,
+     "shoreline jurisdictional freshwater streams and rivers": 200
+    },
+    "aquatic_designation": "no upland buffer listed - Aquatic is waterward of OHWM; buffers are measured landward from OHWM by the adjacent upland designation",
+    "measured_from": "OHWM, landward"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (PDF pp. 69): list items b-f carry no strikeout; item (a) is on the preceding page. The published text reads \"Shoreline residential: eight-five feet\" (sic) - i.e. 85 ft.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.400.120-B2": {
+   "id": "kcc-22.400.120-B2",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.400.120(B)(2)",
+   "title": "Vegetation conservation buffers. (Reduced Standard Buffer)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "the standard buffer may be reduced down to athe reduced standard buffer as specified below. Mitigation options shall be reviewed and approved by the county for applicability to the project site commensurate with project impacts.",
+   "summary": "With mitigation from the Appendix B no-net-loss table, buffers can drop to the reduced standard: Shoreline Residential 50 ft, Urban Conservancy 85 ft (50 with net gain), Rural Conservancy 100 ft, Natural 150 ft; High Intensity stays 50 ft.",
+   "key_values": {
+    "reduced_standard_buffer_ft": {
+     "High Intensity": 50,
+     "Shoreline Residential": 50,
+     "Urban Conservancy": "85 (50 where a net gain in shoreline ecological functions can be achieved)",
+     "Rural Conservancy": 100,
+     "Natural": 150,
+     "shoreline jurisdictional freshwater streams and rivers": "200; may be reduced under subsection (C)"
+    },
+    "rural_conservancy_natural_and_hood_canal_condition": "reduction for single-family/water-oriented uses only if lot is physically or legally constrained (cannot fit 1,200 sq ft home+garage footprint) or previously cleared"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (PDF p. 69): in item (a) the words \"(no reduction without variance)\" are STRUCK in the 2021 redline, and the excerpt contains the redline artefact \"athe\" (struck \"a\" + \"the\"); numeric values confirmed un-struck.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.400.120-B4": {
+   "id": "kcc-22.400.120-B4",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.400.120(B)(4)",
+   "title": "Vegetation conservation buffers. (additional building setback)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "An additional fifteen-foot building setback shall be maintained beyond the outer boundary of the buffer. This building setback may be reduced; provided, that the resulting setback is protective of existing vegetation within the buffer.",
+   "summary": "Add a 15-ft building setback landward of the shoreline buffer (reducible if vegetation in the buffer stays protected).",
+   "key_values": {
+    "additional_building_setback_ft": 15
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (PDF p. 70): no strikeout.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.500.100-B": {
+   "id": "kcc-22.500.100-B",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.500.100(B)",
+   "title": "Permit application review and permit types. (Substantial Development Permit)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "The Act provides that no substantial development shall be undertaken on the shorelines of the state without first obtaining a substantial development permit (SDP). 2. An SDP shall be classified as a Type III permit under Chapter 21.04.",
+   "summary": "Non-exempt shoreline development needs a Shoreline Substantial Development Permit, processed as a Type III (hearing examiner) permit.",
+   "key_values": {
+    "SDP_permit_type": "Type III",
+    "criteria": "WAC 173-27-150"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; no artefacts in text layer.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.500.100-C": {
+   "id": "kcc-22.500.100-C",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.500.100(C)(3)(g)",
+   "title": "Permit application review and permit types. (Exemptions - single-family residence)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "Construction on shorelands by an owner, lessee or contract purchaser of a single-family residence for their own use or for the use of their family, which residence does not exceed a height of thirty-five feet above average grade level and which meets all requirements of Kitsap County or a state agency having jurisdiction thereof, other than requirements imposed pursuant to Chapter 90.58 RCW.",
+   "summary": "An owner-occupied single-family residence up to 35 ft high is exempt from the SDP (not from the SMP): a statement of exemption is still required, and appurtenance grading is limited to 250 cubic yards.",
+   "key_values": {
+    "max_height_ft": 35,
+    "appurtenance_grading_limit_cubic_yards": 250,
+    "general_cost_threshold_in_2021_text": "$7,047 (superseded: OFM figure is $8,504 from 1 Jul 2022, see wsr-22-11-036)",
+    "dock_thresholds_in_2021_text": {
+     "salt water": "$2,500",
+     "fresh water replacement": "$22,500",
+     "fresh water other": "$11,200",
+     "note": "fresh-water figures superseded by OFM adjustment of 5 Aug 2023: $28,000 / $13,900 (see wsr-23-13-012)"
+    },
+    "exemption_letter": "statement of exemption approved by the director is required"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (PDF p. 90): item (g) carries no strikeout.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.500.100-C2": {
+   "id": "kcc-22.500.100-C2",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.500.100(C)(2)(a)",
+   "title": "Permit application review and permit types. (Application and Interpretation of Exemptions)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "Exemptions shall be construed narrowly. Only those developments that meet the precise terms of one or more of the listed exemptions may be granted exemption from the substantial development permit process.",
+   "summary": "Shoreline exemptions are read narrowly, the applicant bears the burden, and an exempt project must still meet the SMP and may still need a CUP or variance.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; no artefacts in the quoted sentence.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.500.100-D": {
+   "id": "kcc-22.500.100-D",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.500.100(D)(2)",
+   "title": "Permit application review and permit types. (Conditional Use Permits)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "CUPs shall be classified as a Type III permit under Chapter 21.04. Where administrative CUPs are allowed, they shall be classified as a Type II permit under Chapter 21.04.",
+   "summary": "Shoreline conditional use permits are Type III; administrative CUPs (e.g. hard shoreline stabilization) are Type II.",
+   "key_values": {
+    "CUP": "Type III",
+    "administrative_CUP": "Type II",
+    "criteria": "WAC 173-27-160"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; no artefacts in text layer.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.500.100-E": {
+   "id": "kcc-22.500.100-E",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.500.100(E)(2)",
+   "title": "Permit application review and permit types. (Variances and Administrative Variances)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "Variances shall be classified as a Type III permit under Chapter 21.04. Administrative variances shall be a Type II permit and may be granted where allowed under the use and modifications matrix or applicable permit requirements.",
+   "summary": "Shoreline variances (relief from bulk/dimensional standards such as buffers, never uses) are Type III; administrative variances are Type II where the matrix allows.",
+   "key_values": {
+    "variance": "Type III",
+    "administrative_variance": "Type II"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; no artefacts in text layer.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.600.160": {
+   "id": "kcc-22.600.160",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.600.160(C)(1)(f)-(g)",
+   "title": "Mooring structures and activities.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "Buoys shall be preferred over piers, docks or floats. Applicants shall demonstrate that a buoy is not a feasible option prior to proposing a less preferred option. g. Single-use mooring structures, with the exception of buoys, shall be prohibited except where it can be demonstrated that a joint use facility is not feasible.",
+   "summary": "A new residential dock must first show a buoy is infeasible and that a joint-use dock is infeasible; docks need an SDP (prohibited for single use next to Natural designation) plus habitat surveys.",
+   "key_values": {
+    "permit_by_adjacent_upland_designation": {
+     "Natural": "prohibited for single use; joint/public use prohibited unless adjoining upland is a public park (up to two buoys with SDP)",
+     "Rural Conservancy / Urban Conservancy / Shoreline Residential / High Intensity": "SDP"
+    },
+    "public_moorage_alternatives_search_radius": "ten driving miles",
+    "habitat_survey_section": "22.700.145"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; no artefacts in the quoted sentences.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.600.160-B1": {
+   "id": "kcc-22.600.160-B1",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.600.160(B)(1)",
+   "title": "Mooring structures and activities. (Application Requirements)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "A staff consultation meeting with the department, state and federal agencies (where applicable), and tribes affected by proposals within their usual and accustomed grounds and stations shall be required prior to application for new piers and docks",
+   "summary": "New piers and docks require a pre-application staff consultation with the county, state and federal agencies and affected tribes.",
+   "key_values": {
+    "pre_application_meeting": "required for new piers and docks"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; no artefacts in text layer.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.600.175-A": {
+   "id": "kcc-22.600.175-A",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.600.175(A)",
+   "title": "Shoreline stabilization. (Permit Requirements)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "Based on the type of shoreline modification proposed, the identified permit requirements shall apply for all designations: 1. SDP for soft shoreline stabilization, unless otherwise exempt. 2. Administrative CUP for hard shoreline stabilization.",
+   "summary": "Soft shoreline stabilization needs an SDP (unless exempt); hard armoring (bulkheads) needs an administrative conditional use permit in every designation.",
+   "key_values": {
+    "soft": "SDP unless exempt",
+    "hard": "Administrative CUP",
+    "hybrid": "Administrative CUP unless shown to meet soft-shore intent (Ecology Pub. 14-06-009)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (PDF p. 134): items 1-2 carry no strikeout; item 3 (hybrid) is new 2021 text.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-22.600.175-C2": {
+   "id": "kcc-22.600.175-C2",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 22.600.175(C)(2)(c)(i)(A)",
+   "title": "Shoreline stabilization. (New and Expanded Shoreline Stabilization)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/SMP_Ordinance%20598-2021.pdf",
+   "excerpt": "New or enlarged structural shoreline stabilization measures for the existing primary structure, including residences and their primary appurtenant structures or uses, shall not be allowed unless there is conclusive evidence, documented by a geotechnical analysis, that the lawfully established, primary structure is in imminent danger from shoreline erosion caused by tidal actions, currents, or waves;",
+   "summary": "New or enlarged hard armoring is allowed only with a geotechnical analysis giving conclusive evidence that the primary structure is in imminent danger from shoreline erosion; normal bluff sloughing alone is not demonstration of need.",
+   "key_values": {
+    "demonstration_of_need": "geotechnical analysis / geotechnical report",
+    "replacement": "existing structure may be replaced with similar structure if demonstrated need through a geotechnical report",
+    "designer": "professional engineer licensed in Washington with experience in hydraulic activities of shorelines"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 598-2021 (2021 SMP periodic review, locally adopted June 2021), Appendix 1 = Title 22 shown in redline/strikeout. This is the locally adopted text sent to Ecology for final approval; Ecology's approved copy could not be fetched (ecology.wa.gov returned HTTP 403) so any Ecology-required changes or later amendments are not reflected. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (PDF p. 137): no strikeout in the quoted item.",
+   "source_currency": "possibly_outdated: locally adopted 2021 SMP ordinance (pre-Ecology final approval); no later copy reachable"
+  },
+  "kcc-12.10.030": {
+   "id": "kcc-12.10.030",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 12.10.030",
+   "title": "Site development activity permits required.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Ordinance%20599-2021.pdf",
+   "excerpt": "Grading activities that result in the movement of one hundred fifty cubic yards or more of earth; (4) Grading activities that will result in a temporary or permanent slope having a steepness exceeding three to one (three feet horizontal to one foot vertical) and having a total slope height, measured vertically from toe of slope to top of slope, exceeding five feet;",
+   "summary": "A Site Development Activity Permit (SDAP) is needed for grading of 150 cubic yards or more, cuts/fills steeper than 3:1 and over 5 ft high, any clearing/grading on 30%+ slopes or in critical-area setbacks, storm-system connections, or projects hitting Minimum Requirements 1-9.",
+   "key_values": {
+    "grading_volume_trigger_cubic_yards": 150,
+    "slope_trigger": "steeper than 3H:1V and total slope height > 5 ft",
+    "berm_impoundment": "depth > 18 inches and/or volume > 2,500 cubic feet",
+    "steep_slope_clearing": "any land clearing or grading on slopes steeper than 30%, or within mandatory setback of steep slope, wetland, stream, lake or Puget Sound",
+    "other": [
+     "meets thresholds requiring Minimum Requirements 1-9",
+     "requires connection to a public storm water drainage system",
+     "diversion of existing drainage courses"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 599-2021 (adopted 28 Jun 2021, effective 4 Oct 2021), which amended this section; text is shown in underline/strikeout. The county's Stormwater Design Manual page shows a new Title 12 / manual update before the Planning Commission in 2026 (June 2026 materials); whether it has been adopted could not be confirmed, so re-check before relying on thresholds. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (ordinance p. 12): items (3)-(7) carry no strikeout. The ordinance prints the heading as \"12.10.30\" (typo for 12.10.030).",
+   "source_currency": "possibly_outdated: 2021 ordinance; 2026 Title 12 update in progress, adoption status unconfirmed"
+  },
+  "kcc-12.10.060": {
+   "id": "kcc-12.10.060",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 12.10.060",
+   "title": "Professional engineer required.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Ordinance%20599-2021.pdf",
+   "excerpt": "Unless otherwise required by Chapter 12.16, site development activity permit applications shall require the submittal of documents prepared by a qualified professional engineer when one of the following conditions exists:",
+   "summary": "A licensed professional engineer must prepare SDAP documents when the project triggers Minimum Requirements 1-9, includes work in county right-of-way, when the director requires it, or when the Kitsap manual requires engineered BMP design.",
+   "key_values": {
+    "engineer_required_when": [
+     "thresholds for Minimum Requirements 1-9 are met",
+     "improvements within Kitsap County rights-of-way",
+     "director determination",
+     "whenever required by the Kitsap manual (conveyance, on-site stormwater management, flow control, runoff treatment BMPs)"
+    ],
+    "small_projects": "projects triggering only MR 1-5 may use an abbreviated grading plan (12.16.040)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 599-2021 (adopted 28 Jun 2021, effective 4 Oct 2021), which amended this section; text is shown in underline/strikeout. The county's Stormwater Design Manual page shows a new Title 12 / manual update before the Planning Commission in 2026 (June 2026 materials); whether it has been adopted could not be confirmed, so re-check before relying on thresholds. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image not inspected; no artefacts in quoted sentence.",
+   "source_currency": "possibly_outdated: 2021 ordinance; 2026 Title 12 update in progress, adoption status unconfirmed"
+  },
+  "kcc-12.20.010-A": {
+   "id": "kcc-12.20.010-A",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 12.20.010(1)(A)",
+   "title": "Minimum requirements for new and redevelopment projects.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Ordinance%20599-2021.pdf",
+   "excerpt": "The following new development shall comply with minimum requirements Nos. 1 through 5 for the new and replaced hard surfaces and for the land disturbed when the development: 1. Results in two thousand square feet, or greater, of new plus replaced hard surface area; or 2. Has land disturbing activity of seven thousand square feet or greater.",
+   "summary": "New development with 2,000 sq ft or more of new plus replaced hard surface, or 7,000 sq ft or more of land disturbance, must meet stormwater Minimum Requirements 1-5 (all projects must meet MR 2, construction SWPPP).",
+   "key_values": {
+    "MR1_5_hard_surface_sqft": 2000,
+    "MR1_5_land_disturbance_sqft": 7000,
+    "all_projects": "Minimum Requirement No. 2"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 599-2021 (adopted 28 Jun 2021, effective 4 Oct 2021), which amended this section; text is shown in underline/strikeout. The county's Stormwater Design Manual page shows a new Title 12 / manual update before the Planning Commission in 2026 (June 2026 materials); whether it has been adopted could not be confirmed, so re-check before relying on thresholds. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (ordinance p. 16): no strikeout.",
+   "source_currency": "possibly_outdated: 2021 ordinance; 2026 Title 12 update in progress, adoption status unconfirmed"
+  },
+  "kcc-12.20.010-B": {
+   "id": "kcc-12.20.010-B",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 12.20.010(1)(B)",
+   "title": "Minimum requirements for new and redevelopment projects.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/PEP%20Documents/Ordinance%20599-2021.pdf",
+   "excerpt": "For sites located outside census defined urban areas or UGAs, results in ten thousand square feet or more of new plus replaced hard surface area, or results in five percent or more of hard surface area covering the lot area (whichever is greater).",
+   "summary": "Full Minimum Requirements 1-9 (engineered plans, flow control/treatment analysis) apply at 5,000 cubic yards of grading, or inside census urban areas at 5,000 sq ft new+replaced hard surface, 3/4 acre converted to lawn or 2.5 acres to pasture; outside urban areas/UGAs at 10,000 sq ft or 5% of lot.",
+   "key_values": {
+    "grading_cubic_yards": 5000,
+    "inside_census_urban_areas": {
+     "new_plus_replaced_hard_surface_sqft": 5000,
+     "vegetation_to_lawn_acres": 0.75,
+     "native_vegetation_to_pasture_acres": 2.5
+    },
+    "outside_census_urban_areas_or_UGAs": "10,000 sq ft new plus replaced hard surface, or 5% or more of lot area (whichever is greater)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Version: Kitsap County Ordinance 599-2021 (adopted 28 Jun 2021, effective 4 Oct 2021), which amended this section; text is shown in underline/strikeout. The county's Stormwater Design Manual page shows a new Title 12 / manual update before the Planning Commission in 2026 (June 2026 materials); whether it has been adopted could not be confirmed, so re-check before relying on thresholds. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Page image inspected (ordinance p. 16): no strikeout in (1)(B).",
+   "source_currency": "possibly_outdated: 2021 ordinance; 2026 Title 12 update in progress, adoption status unconfirmed"
+  },
+  "kcc-15.12.010": {
+   "id": "kcc-15.12.010",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 15.12.010",
+   "title": "Development permit required.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap15/Kitsap1512.html",
+   "excerpt": "A development permit shall be obtained before construction or development begins within any area of special flood hazard established in Section 15.04.040.",
+   "summary": "Any construction or development in a mapped special flood hazard area needs a flood hazard development permit, with lowest-floor elevation data in the application.",
+   "key_values": {
+    "application_data": [
+     "lowest floor elevation (incl. basement) relative to mean sea level",
+     "floodproofing elevation",
+     "PE/architect floodproofing certification for nonresidential"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-15.12.090": {
+   "id": "kcc-15.12.090",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 15.12.090",
+   "title": "Residential construction.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap15/Kitsap1512.html",
+   "excerpt": "New construction and substantial improvement of any residential structure shall have the lowest floor, including basement, elevated one foot or more above base flood elevation.",
+   "summary": "Residential lowest floor (including basement) must be at least 1 foot above base flood elevation - plan for an elevation certificate.",
+   "key_values": {
+    "freeboard_ft_above_BFE": 1
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-15.13.010": {
+   "id": "kcc-15.13.010",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 15.13.010",
+   "title": "Provisions for habitat protection.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap15/Kitsap1513.html",
+   "excerpt": "Before new development activities are permitted within the floodplain, compliance with FEMA National Flood Insurance Program (NFIP) protection standards for critical habitats for listed species shall be demonstrated through submittal of a habitat plan prepared by a qualified wildlife biologist.",
+   "summary": "Floodplain development requires a habitat plan by a qualified wildlife biologist showing no harm to federally listed species (NFIP-ESA compliance).",
+   "key_values": {
+    "habitat_assessment_required": true,
+    "ordinance": "Ord. 527 (2015)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-17.415-adu": {
+   "id": "kcc-17.415-adu",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 17.415.010 and 17.415.015 (as summarised by Kitsap DCD)",
+   "title": "Accessory dwelling unit (ADU) located in an urban growth area / ADU located outside an urban growth area (headings per county allowed-use tables; not fetched from code)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://www.kitsap.gov/dcd/FormsandBrochures/Accessory%20Dwelling%20Unit%20(ADU)%20and%20Guest%20Houses.pdf",
+   "excerpt": "In urban areas, ADUs can be larger, you may have up to two per lot, and they must connect to urban services like sewer and water. In rural areas, only one ADU is allowed per lot, detached ADUs must be located near the primary home and must meet health district standards for water and sewage.",
+   "summary": "Urban (UGA) lots may have up to two ADUs on urban services; rural lots only one, and a detached rural ADU needs a Conditional Use Permit and must be near the primary home.",
+   "key_values": {
+    "urban_max_ADUs_per_lot": 2,
+    "rural_max_ADUs_per_lot": 1,
+    "rural_detached_ADU": "Conditional Use Permit required in addition to construction permits (KCC 17.410)",
+    "rural_attached_ADU": "construction permits only",
+    "guest_house_max_sqft": "under 900",
+    "guest_house_distance_from_main_home_ft": 150,
+    "handout_revised": "2026-02-17",
+    "urban_size_limit": "NOT stated in the handout - not verified"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Excerpt is from the Kitsap DCD public handout \"Accessory Dwelling Units (ADU) & Guest Houses\", revised 2/17/2026 - a county summary, not the code text; the handout itself says the code controls. The code text of 17.415.010 (urban size limit etc.) could not be fetched. ADU provisions formerly sat in KCC 17.410 footnotes (2019 code); they are now KCC 17.415.010/.015. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root.",
+   "source_currency": "secondary official source (county handout / staff report), not codified text"
+  },
+  "kcc-17.415.015": {
+   "id": "kcc-17.415.015",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 17.415.015(B)(3) (as quoted in a Kitsap County staff report, Aug 2025)",
+   "title": "Accessory dwelling unit (ADU), detached, located outside an urban growth area",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": null,
+   "excerpt": "The ADU shall not exceed fifty percent of the square footage of the habitable area of the primary residence or nine hundred square feet, whichever is smaller.",
+   "summary": "A detached rural ADU is capped at the smaller of 900 sq ft or 50% of the primary home's habitable area, one per lot, owner-occupancy required, within 150 ft of the primary residence.",
+   "key_values": {
+    "max_size": "smaller of 50% of primary residence habitable area or 900 sq ft",
+    "max_ADUs_per_lot": 1,
+    "owner_occupancy": "owner must reside in primary residence or ADU",
+    "max_distance_from_primary_residence_ft": 150
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Secondary official source: Kitsap County DCD staff report to the Hearing Examiner dated 8/7/2025 quoting KCC 17.415.015.B verbatim; not the codified text itself, and later Title 17 amendments (Ord. 643-2025; 2026 Title 17 edits in draft) are not reflected. Owner-occupancy for rural ADUs is as quoted in Aug 2025. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Verified against the county hearing examiner staff report for permit file 25-00093 (kitsap.gov/dcd/HEDocs); not linked here because the file name includes a private applicant's name.",
+   "source_currency": "secondary official source (county handout / staff report), not codified text"
+  },
+  "kcc-17.420.010": {
+   "id": "kcc-17.420.010",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 17.420.010; tables at 17.420.052-.058, footnotes 17.420.060",
+   "title": "Standards established. (Chapter 17.420 Density, Dimensions, and Design)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap17/Kitsap17420.html",
+   "excerpt": "The following sections and tables contain density, dimension standards, and other limitations for the various zones. Additional development requirements not found in these sections and tables may also apply.",
+   "summary": "Setbacks, density, lot coverage and height for each zone are in the Chapter 17.420 tables (17.420.052 residential/rural, .054 commercial/industrial, .056 LAMIRDs, .058 Silverdale) with footnotes in 17.420.060.",
+   "key_values": {
+    "tables": {
+     "17.420.052": "Rural, resource, and urban residential zones density and dimensions table",
+     "17.420.054": "Commercial, industrial, and parks zones",
+     "17.420.056": "LAMIRD",
+     "17.420.058": "Silverdale regional center and design district",
+     "17.420.060": "Footnotes for tables"
+    }
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Title 17 has been amended several times since 2019 (2024 Comprehensive Plan update, Ord. 643-2025, 2026 edits); only the location of the tables is recorded here, no dimensional values.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-21.04.050": {
+   "id": "kcc-21.04.050",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 21.04.050",
+   "title": "Project permit application type.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap21/Kitsap2104.html",
+   "excerpt": "Type II applications are administrative actions that require notice of application and notice of decision. 3. Type III. Type III applications are quasi-judicial actions that require an open record hearing before the hearing examiner.",
+   "summary": "Permits are Type I (ministerial), Type II (administrative with notice), Type III (hearing examiner) or Type IV (Board); the table in 21.04.100 assigns each permit to a type.",
+   "key_values": {
+    "Type I": "ministerial",
+    "Type II": "administrative, notice of application and decision",
+    "Type III": "quasi-judicial, open record hearing before hearing examiner",
+    "Type IV": "decided by the board",
+    "assignment_table": "KCC 21.04.100"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. KCC 21.04.100 was amended by Ord. 598-2021 and Title 21 is the subject of 2025/2026 administrative code edits.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-21.04.120": {
+   "id": "kcc-21.04.120",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 21.04.120",
+   "title": "Project and application assistance.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap21/Kitsap2104.html",
+   "excerpt": "Applicants may request a pre-application meeting for all Type I, II or III applications. The purpose is to conduct a review of the development application prior to submittal to the department.",
+   "summary": "The county offers an informal 30-minute staff consultation and a formal pre-application meeting for Type I-III applications (fees apply).",
+   "key_values": {
+    "staff_consultation_minutes": 30,
+    "pre_application": "may be requested for all Type I, II or III applications"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-16.48.010": {
+   "id": "kcc-16.48.010",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 16.48.010",
+   "title": "Purpose. (Chapter 16.48 Short Subdivisions)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap16/Kitsap1648.html",
+   "excerpt": "short subdivisions within the UGA boundaries may contain up to nine lots; short subdivisions outside the UGA boundaries are limited to contain up to four lots.",
+   "summary": "A short subdivision is up to 9 lots inside an urban growth area and up to 4 lots outside; more lots means a full subdivision.",
+   "key_values": {
+    "max_lots_inside_UGA": 9,
+    "max_lots_outside_UGA": 4
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Title 16 was included in the 2025 administrative code edits.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-11.22.070": {
+   "id": "kcc-11.22.070",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 11.22.070(a)",
+   "title": "Permits. (Chapter 11.22 Kitsap County Road Standards)",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap11/Kitsap1122.html",
+   "excerpt": "No person, firm, partnership, association, joint venture, corporation, or other public or private legal entity shall construct or alter a permanent or temporary vehicular access to a county road without first obtaining a road approach permit from Kitsap County.",
+   "summary": "A new or altered driveway onto a county road needs a road approach permit from Kitsap County (Public Works).",
+   "key_values": {
+    "permit": "road approach permit"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. Requester expected this in \"Title 11 Roads\"; in the 2019 code it is KCC 11.22.070 (Chapter 11.24 is repealed).",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-13.12.020": {
+   "id": "kcc-13.12.020",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 13.12.020",
+   "title": "Connection with public sewer required.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap13/Kitsap1312.html",
+   "excerpt": "A proposal to develop, redevelop, or substantially remodel a structure that increases the volume or strength of sewage above the permitted design capacity of the on-site sewage system located within an Urban Growth Area (UGA) which is or will be situated within two hundred feet of an existing public sewer main that has adequate capacity to serve shall connect.",
+   "summary": "Inside a UGA, a project that increases sewage flow beyond the septic design and is within 200 ft of a public sewer main with capacity must connect to sewer at the owner's expense.",
+   "key_values": {
+    "distance_to_sewer_main_ft": 200,
+    "applies": "within an Urban Growth Area"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-18.04.090": {
+   "id": "kcc-18.04.090",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 18.04.090",
+   "title": "Flexible thresholds for categorical exemptions.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap18/Kitsap1804.html",
+   "excerpt": "Up to nine residential dwelling units within the boundaries of an urban growth area; or b. Up to four residential dwelling units outside the boundaries of an urban growth area;",
+   "summary": "Local SEPA exemption levels (2019 text): 9 dwelling units in a UGA / 4 outside, 8,000 sq ft commercial with 40 parking spaces, 500 cubic yards of fill or excavation (150 in shoreline jurisdiction).",
+   "key_values": {
+    "dwelling_units_inside_UGA": 9,
+    "dwelling_units_outside_UGA": 4,
+    "agricultural_structure_sqft": 15000,
+    "commercial_building_sqft": 8000,
+    "parking_spaces": 40,
+    "fill_or_excavation_cubic_yards": 500,
+    "fill_or_excavation_in_shoreline_jurisdiction_cubic_yards": 150
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. WAC 197-11-800(1) was amended after 2019 (new maximum levels); Kitsap may have raised its thresholds since - re-confirm.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-18.16.180": {
+   "id": "kcc-18.16.180",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 18.16.180",
+   "title": "Lifting of forest practices six-year development moratorium.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap18/Kitsap1816.html",
+   "excerpt": "Any person who intends to convert property which has been logged pursuant to a Class II, III or IV special non-conversion forest practices application or notification, or without any such application or notification, from forestry use to another use, shall notify the director in writing of such an intent.",
+   "summary": "Land logged without a conversion (Class IV-General) approval carries a six-year development moratorium that only the Board of County Commissioners can lift through a noticed process.",
+   "key_values": {
+    "moratorium_years": 6,
+    "decision_maker": "board of county commissioners"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-14.04.730": {
+   "id": "kcc-14.04.730",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC 14.04.730 (IFC 503.1.1 as locally amended)",
+   "title": "Fire department access.",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "https://dcd.kitsapgov.com/ordnances/2019-12-26-WA-KitsapCounty/Kitsap14/Kitsap1404.html",
+   "excerpt": "Approved fire apparatus access roads shall be provided for every building, facility or portion of building or facility hereafter constructed or moved into or within the jurisdiction.",
+   "summary": "Every new building needs an approved fire apparatus access road (2019 text: max 12% grade, 25-ft inside turning radius for single-family) - check current Title 14 for the adopted code edition.",
+   "key_values": {
+    "max_grade_percent_2019_text": 12,
+    "single_family_inside_turning_radius_ft_2019_text": 25,
+    "fire_flow": "IFC Appendix B adopted with amendments (2019 text)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "POSSIBLY OUTDATED COPY: verified against the county-hosted archive snapshot of the Kitsap County Code dated 26 Dec 2019 (dcd.kitsapgov.com), the newest full-code copy reachable. The current code on ecode360 could not be fetched (Cloudflare bot challenge), so section number and text must be re-confirmed before production use. ecode360 (official host) returned a Cloudflare bot challenge (HTTP 403) to ordinary requests, so the section-level deep link could not be determined; url is the code root. The 2019 Title 14 adopted the 2015 International Codes; Washington has since moved to the 2021 codes, so Title 14 has certainly been amended - treat values as indicative only.",
+   "source_currency": "possibly_outdated: county archive snapshot of code dated 2019-12-26"
+  },
+  "kcc-14.04-permit-exemptions": {
+   "id": "kcc-14.04-permit-exemptions",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC Chapter 14.04 (IRC R105.2 / IBC 105.2 work exempt from permit)",
+   "title": "Work exempt from permit",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "Small one-story detached accessory structures are commonly permit-exempt under the IRC, but the current Kitsap size limit was not verified.",
+   "key_values": {
+    "2019_text_found": "KCC 14.04.505 only added a re-roofing exemption (roof area up to 2,100 sq ft) to IRC R105.2; the accessory-structure size limit comes from the adopted IRC and was not in the county text"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED: current Title 14 could not be fetched (ecode360 bot check); the 2019 archive copy does not state the accessory-structure size exemption, and the model code text was not fetched.",
+   "source_currency": "not fetched"
+  },
+  "kcc-14.04-sprinklers-fire-flow": {
+   "id": "kcc-14.04-sprinklers-fire-flow",
+   "jurisdiction": "Kitsap County",
+   "citation": "KCC Chapter 14.04 (IFC 903 / Appendix B local amendments)",
+   "title": "Residential sprinkler / fire flow provisions",
+   "url": "https://ecode360.com/KI4737",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "Residential sprinkler and fire-flow requirements depend on the current Title 14 local amendments and the fire marshal; not verified.",
+   "key_values": {
+    "2019_text_found": "fire-sprinkler amendments located in KCC 14.04.780; IFC Appendix B (fire flow) adopted with amendments"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED: only the 2019 archive copy (2015 I-codes) was reachable; no current sprinkler or fire-flow thresholds are recorded.",
+   "source_currency": "not fetched"
+  },
+  "kphd-2025-01-s10-bsa": {
+   "id": "kphd-2025-01-s10-bsa",
+   "jurisdiction": "Kitsap Public Health District",
+   "citation": "KPHB Ordinance 2025-01, Section 10.B.3",
+   "title": "Application and Design Requirements - New Construction (General and Application Requirements)",
+   "url": "https://www.kitsappublichealth.org/_files/ugd/0f8b3b_b8efed6c1293475eb0b79ad3971cb7ad.pdf",
+   "verified_against": "https://www.kitsappublichealth.org/_files/ugd/0f8b3b_b8efed6c1293475eb0b79ad3971cb7ad.pdf",
+   "excerpt": "Project proposals shall be submitted to the Health Officer for review and consideration through a completed Building Site Application form, and shall address both OSS and water supply requirements.",
+   "summary": "New construction needing plumbing where sewer is unavailable requires an approved Building Site Application (BSA) covering both septic and water supply, prepared by a licensed designer, before construction starts.",
+   "key_values": {
+    "application": "Building Site Application",
+    "prepared_by": "designer as defined in WAC 246-272A-0010(2)",
+    "covers": [
+     "onsite sewage system",
+     "water supply"
+    ],
+    "also_triggers": "modification/expansion increasing sewage flow or strength, or decreasing OSS/reserve capacity"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Kitsap Public Health Board Ordinance 2025-01, Onsite Sewage System and General Sewage Sanitation Regulations, effective 17 Mar 2025 (replaced Ordinance 2008A-01). PDF linked from the district landing page https://www.kitsappublichealth.org/ehdocs/2025ossregs.",
+   "source_currency": "current publication on fetch date"
+  },
+  "kphd-2025-01-s11-building-clearance": {
+   "id": "kphd-2025-01-s11-building-clearance",
+   "jurisdiction": "Kitsap Public Health District",
+   "citation": "KPHB Ordinance 2025-01, Section 11.A.3 and 11.B.1, Table 6",
+   "title": "Application and Design Requirements - Existing Development",
+   "url": "https://www.kitsappublichealth.org/_files/ugd/0f8b3b_b8efed6c1293475eb0b79ad3971cb7ad.pdf",
+   "verified_against": "https://www.kitsappublichealth.org/_files/ugd/0f8b3b_b8efed6c1293475eb0b79ad3971cb7ad.pdf",
+   "excerpt": "These regulations apply to the following types of situations for existing development: a. There is a proposed expansion or modification of an existing building or structure; b. There is a proposed addition of a building or structure; c. There is proposed replacement of an existing building or structure;",
+   "summary": "On a property with an existing septic system, an expansion, addition or replacement building needs Health District sign-off before construction: a Building Clearance, a Building Clearance Exemption, or a full BSA if flow/bedrooms increase or no septic permit record exists.",
+   "key_values": {
+    "BSA_new_or_modification_when": [
+     "bedrooms/occupancy/water use above permitted design capacity",
+     "increased wastewater strength (change of use)",
+     "expansion of plumbed structure with no OSS permit records",
+     "additional habitable structures (ADU, guest house) above design capacity",
+     "reduction in OSS capacity"
+    ],
+    "building_clearance_application_when": [
+     "footprint expansion with permitted OSS and approved reserve, no increase in flow",
+     "outbuildings/garages with plumbing but no cooking or sleeping",
+     "interior-only remodel with no record of approved OSS",
+     "replacement of structure with permitted OSS, no increase"
+    ],
+    "building_clearance_exemption_when": [
+     "new structures with no water/plumbing, record of approved OSS, property greater than 1 acre",
+     "interior-only remodels within permitted design capacity"
+    ],
+    "validity": "Building Clearance Applications valid for a maximum of one (1) year"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Kitsap Public Health Board Ordinance 2025-01, Onsite Sewage System and General Sewage Sanitation Regulations, effective 17 Mar 2025 (replaced Ordinance 2008A-01). PDF linked from the district landing page https://www.kitsappublichealth.org/ehdocs/2025ossregs.",
+   "source_currency": "current publication on fetch date"
+  },
+  "kphd-2025-01-table-1a": {
+   "id": "kphd-2025-01-table-1a",
+   "jurisdiction": "Kitsap Public Health District",
+   "citation": "KPHB Ordinance 2025-01, Section 10, Table 1A",
+   "title": "Minimum Horizontal Setback Requirements (in Feet) to OSS Components",
+   "url": "https://www.kitsappublichealth.org/_files/ugd/0f8b3b_b8efed6c1293475eb0b79ad3971cb7ad.pdf",
+   "verified_against": "https://www.kitsappublichealth.org/_files/ugd/0f8b3b_b8efed6c1293475eb0b79ad3971cb7ad.pdf",
+   "excerpt": "Account for, and adhere to, the minimum horizontal separations identified in Tables 1A, 1B, and 1C.",
+   "summary": "Drainfield (primary and reserve) setbacks: 100 ft from wells and surface water, 10 ft from foundations, 5 ft from property lines, 30 ft down-gradient of drains/ditches; tanks 50 ft from wells and surface water, 5 ft from foundations.",
+   "key_values": {
+    "units": "feet: [edge of primary & reserve soil dispersal area, sewage tanks & distribution boxes, sewer pipe / nonperforated distribution pipe]",
+    "well_nonpublic_or_private": [
+     100,
+     50,
+     50
+    ],
+    "public_drinking_water_well": [
+     100,
+     100,
+     100
+    ],
+    "public_drinking_water_spring_or_surface_water": [
+     200,
+     200,
+     100
+    ],
+    "surface_water_OHWM": [
+     100,
+     50,
+     10
+    ],
+    "building_foundation": [
+     10,
+     5,
+     2
+    ],
+    "property_or_easement_line": [
+     5,
+     5,
+     "None"
+    ],
+    "pressurized_water_supply_line": [
+     10,
+     10,
+     10
+    ],
+    "seasonal_surface_water": [
+     30,
+     10,
+     10
+    ],
+    "roadside_ditches": [
+     15,
+     "None",
+     "None"
+    ],
+    "interceptor_curtain_foundation_drains": [
+     "down-gradient 30 / up-gradient 10",
+     "down-gradient 5",
+     "None"
+    ],
+    "downgradient_cut_or_bank_5ft_plus_soil": [
+     25,
+     "None",
+     "None"
+    ],
+    "downgradient_cut_or_bank_less_than_5ft_soil": [
+     50,
+     "None",
+     "None"
+    ],
+    "stormwater_devices": "see Table 1B (10/30/100-ft zones)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Kitsap Public Health Board Ordinance 2025-01, Onsite Sewage System and General Sewage Sanitation Regulations, effective 17 Mar 2025 (replaced Ordinance 2008A-01). PDF linked from the district landing page https://www.kitsappublichealth.org/ehdocs/2025ossregs. Table values transcribed from the PDF text layer (pdftotext -layout); compare WAC 246-272A-0210 Table IV.",
+   "source_currency": "current publication on fetch date"
+  },
+  "kphd-policy-os-06": {
+   "id": "kphd-policy-os-06",
+   "jurisdiction": "Kitsap Public Health District",
+   "citation": "KPHD Policy OS-06 (Appendix A to Ordinance 2025-01)",
+   "title": "Building Clearance Exemptions",
+   "url": "https://kitsappublichealth.org/_files/ugd/0ce87a_019876c2c5434fbda1627869fb5c95d5.pdf",
+   "verified_against": "https://kitsappublichealth.org/_files/ugd/0ce87a_019876c2c5434fbda1627869fb5c95d5.pdf",
+   "excerpt": "certain types of building permit proposals may be exempted from the Building Clearance Application requirements, when enough information is presented by an applicant to clearly demonstrate that the subject site meets the applicable requirements for onsite sewage system use and drinking water supply.",
+   "summary": "Some building permit proposals can get an over-the-counter Building Clearance Exemption if a septic permit record and reserve area exist and the applicant shows the site meets septic and drinking-water requirements.",
+   "key_values": {
+    "effective": "2025-03-17",
+    "requires": "Health District permit record of approval for the OSS (among other criteria)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "KPHD administrative policy effective 17 Mar 2025.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-90.58.030-shorelands": {
+   "id": "rcw-90.58.030-shorelands",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 90.58.030(2)(d)",
+   "title": "Definitions and concepts.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.58.030",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.58.030",
+   "excerpt": "\"Shorelands\" or \"shoreland areas\" means those lands extending landward for two hundred feet in all directions as measured on a horizontal plane from the ordinary high water mark; floodways and contiguous floodplain areas landward two hundred feet from such floodways; and all wetlands and river deltas associated with the streams, lakes, and tidal waters which are subject to the provisions of this chapter;",
+   "summary": "State shoreline jurisdiction reaches 200 ft landward of the ordinary high water mark, plus floodways, 200 ft of contiguous floodplain and associated wetlands.",
+   "key_values": {
+    "shoreland_width_ft": 200
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. Last amended 2016 c 193 s 1 per history note.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-90.58.030-substantial-development": {
+   "id": "rcw-90.58.030-substantial-development",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 90.58.030(3)(e)",
+   "title": "Definitions and concepts.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.58.030",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.58.030",
+   "excerpt": "\"Substantial development\" means any development of which the total cost or fair market value exceeds five thousand dollars, or any development which materially interferes with the normal public use of the water or shorelines of the state.",
+   "summary": "Development over the substantial-development dollar threshold (statutory $5,000, inflation-adjusted by OFM to $8,504 since 1 July 2022) or that interferes with public use of the water needs a shoreline substantial development permit.",
+   "key_values": {
+    "statutory_base_threshold_usd": 5000,
+    "current_adjusted_threshold_usd": 8504,
+    "current_threshold_effective": "2022-07-01",
+    "next_adjustment_due": "2027-07-01 (five-year cycle; no newer WSR notice was found/fetched)",
+    "SFR_exemption_height_ft": 35,
+    "dock_exemption_salt_water_usd": 2500,
+    "dock_exemption_fresh_water_statutory_usd": {
+     "replacement": 20000,
+     "other": 10000
+    },
+    "dock_exemption_fresh_water_adjusted_usd": {
+     "replacement": 28000,
+     "other": 13900,
+     "effective": "2023-08-05"
+    }
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. The statute text still prints \"five thousand dollars\"; current adjusted figures are published only in the Washington State Register (see wsr-22-11-036 and wsr-23-13-012). Ecology's web page on the threshold could not be fetched (HTTP 403).",
+   "source_currency": "current publication on fetch date"
+  },
+  "wsr-22-11-036": {
+   "id": "wsr-22-11-036",
+   "jurisdiction": "Washington State",
+   "citation": "WSR 22-11-036 (OFM notice under RCW 90.58.030(3)(e))",
+   "title": "Notice of Substantial Development Dollar Threshold Adjustment",
+   "url": "https://lawfilesext.leg.wa.gov/law/WSR/2022/11/22-11-036.htm",
+   "verified_against": "https://lawfilesext.leg.wa.gov/law/WSR/2022/11/22-11-036.htm",
+   "excerpt": "In accordance with these requirements, OFM submits for publication the new dollar threshold of $8,504. The new dollar threshold takes effect July 1, 2022.",
+   "summary": "The current shoreline substantial-development threshold is $8,504 (effective 1 July 2022); projects under it may be exempt from an SDP.",
+   "key_values": {
+    "threshold_usd": 8504,
+    "effective": "2022-07-01",
+    "prior_threshold_usd": 7047,
+    "filed": "2022-05-11"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Washington State Register notice filed 11 May 2022. Adjusted every five years; the next adjustment would take effect 1 July 2027 - check the Register in mid-2027.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wsr-23-13-012": {
+   "id": "wsr-23-13-012",
+   "jurisdiction": "Washington State",
+   "citation": "WSR 23-13-012 (OFM notice under RCW 90.58.030(3)(e)(vii))",
+   "title": "Notice of Substantial Development Dollar Threshold Adjustment (fresh water docks)",
+   "url": "https://lawfilesext.leg.wa.gov/law/WSR/2023/13/23-13-012.htm",
+   "verified_against": "https://lawfilesext.leg.wa.gov/law/WSR/2023/13/23-13-012.htm",
+   "excerpt": "In accordance with these requirements, OFM submits for publication the new dollar thresholds of $28,000 for docks defined under RCW 90.58.030 (3)(e)(vii)(I), and $13,900 for docks defined under RCW 90.58.030 (3)(e)(vii)(II). The new dollar threshold takes effect August 5, 2023.",
+   "summary": "Fresh-water dock exemption thresholds are $28,000 (replacement docks of equal or lesser size) and $13,900 (other docks) since 5 Aug 2023; the salt-water dock threshold stays $2,500 (not inflation-adjusted).",
+   "key_values": {
+    "fresh_water_replacement_dock_usd": 28000,
+    "fresh_water_other_dock_usd": 13900,
+    "effective": "2023-08-05",
+    "prior_values_usd": [
+     22500,
+     11200
+    ],
+    "salt_water_dock_usd": 2500
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Washington State Register notice filed 8 June 2023. Kitsap marine shorelines are salt water, so the $2,500 figure governs most Kitsap docks.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-90.58.140": {
+   "id": "rcw-90.58.140",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 90.58.140(2)",
+   "title": "Development permits—Grounds for granting—Administration by local government, conditions—Applications—Notices—Rescission—Approval when permit for variance or conditional use.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.58.140",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.58.140",
+   "excerpt": "A substantial development shall not be undertaken on shorelines of the state without first obtaining a permit from the government entity having administrative jurisdiction under this chapter.",
+   "summary": "No substantial development on state shorelines without a permit from the local government (Kitsap County or the city).",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-173-27-040-sfr": {
+   "id": "wac-173-27-040-sfr",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 173-27-040(2)(g)",
+   "title": "Developments exempt from substantial development permit requirement.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-040",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-040",
+   "excerpt": "Construction on shorelands by an owner, lessee or contract purchaser of a single-family residence for their own use or for the use of their family, which residence does not exceed a height of thirty-five feet above average grade level and which meets all requirements of the state agency or local government having jurisdiction thereof, other than requirements imposed pursuant to chapter 90.58 RCW.",
+   "summary": "Owner-occupied single-family homes up to 35 ft high (with normal appurtenances, grading up to 250 cubic yards, all landward of OHWM) are exempt from the SDP but must still comply with the SMP.",
+   "key_values": {
+    "max_height_ft": 35,
+    "appurtenance_grading_cubic_yards": 250
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. Section last amended WSR 17-17-016, effective 9/7/17.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-173-27-040-bulkhead": {
+   "id": "wac-173-27-040-bulkhead",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 173-27-040(2)(c)",
+   "title": "Developments exempt from substantial development permit requirement.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-040",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-040",
+   "excerpt": "Construction of the normal protective bulkhead common to single-family residences. A \"normal protective\" bulkhead includes those structural and nonstructural developments installed at or near, and parallel to, the ordinary high water mark for the sole purpose of protecting an existing single-family residence and appurtenant structures from loss or damage by erosion. A normal protective bulkhead is not exempt if constructed for the purpose of creating dry land.",
+   "summary": "A \"normal protective bulkhead\" protecting an existing single-family residence is SDP-exempt, but not if it creates dry land; local SMP armoring rules (Kitsap admin CUP + geotech) still apply.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-173-27-040-dock": {
+   "id": "wac-173-27-040-dock",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 173-27-040(2)(h)",
+   "title": "Developments exempt from substantial development permit requirement.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-040",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-040",
+   "excerpt": "Construction of a dock, including a community dock, designed for pleasure craft only, for the private noncommercial use of the owner, lessee, or contract purchaser of single-family and multiple-family residences.",
+   "summary": "A private recreational dock is SDP-exempt only below the dollar threshold: $2,500 in salt water; fresh-water figures are OFM-adjusted ($28,000 replacement / $13,900 other).",
+   "key_values": {
+    "salt_water_usd": 2500,
+    "fresh_water_rule_text_usd": {
+     "replacement": 20000,
+     "other": 10000
+    },
+    "fresh_water_current_adjusted_usd": {
+     "replacement": 28000,
+     "other": 13900
+    }
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. Rule text prints the unadjusted fresh-water amounts; see wsr-23-13-012 for current values.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-173-27-190": {
+   "id": "wac-173-27-190",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 173-27-190(1)",
+   "title": "Permits for substantial development, conditional use, or variance.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-190",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-27-190",
+   "excerpt": "Each permit for a substantial development, conditional use or variance, issued by local government shall contain a provision that construction pursuant to the permit shall not begin and is not authorized until twenty-one days from the date of filing as defined in RCW 90.58.140(6) and WAC 173-27-130, or until all review proceedings initiated within twenty-one days from the date of such filing have been terminated;",
+   "summary": "Shoreline permits carry a mandatory 21-day wait after filing with Ecology before construction can start - build it into the schedule.",
+   "key_values": {
+    "wait_days_after_filing": 21
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-77.55.021": {
+   "id": "rcw-77.55.021",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 77.55.021(1)",
+   "title": "Permit.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=77.55.021",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=77.55.021",
+   "excerpt": "in the event that any person or government agency desires to undertake a hydraulic project, the person or government agency shall, before commencing work thereon, secure the approval of the department in the form of a permit as to the adequacy of the means proposed for the protection of fish life.",
+   "summary": "Work that affects the bed or flow of state waters needs a Hydraulic Project Approval (HPA) from WDFW before work starts.",
+   "key_values": {
+    "agency": "Washington Department of Fish and Wildlife"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-77.55.011": {
+   "id": "rcw-77.55.011",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 77.55.011(11)",
+   "title": "Definitions.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=77.55.011",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=77.55.011",
+   "excerpt": "\"Hydraulic project\" means the construction or performance of work that will use, divert, obstruct, or change the natural flow or bed of any of the salt or fresh waters of the state.",
+   "summary": "A \"hydraulic project\" is any work that will use, divert, obstruct or change the natural flow or bed of salt or fresh state waters (culverts, docks, bulkheads, stream crossings).",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-76.09.050": {
+   "id": "rcw-76.09.050",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 76.09.050(1) (Class IV)",
+   "title": "Rules establishing classes of forest practices—Applications for classes of forest practices—Approval or disapproval—Notifications—Procedures—Appeals—Waiver.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=76.09.050",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=76.09.050",
+   "excerpt": "Class IV: Forest practices other than those contained in Class I or II: (a) On forestlands that are being converted to another use; (b) On lands which, pursuant to RCW 76.09.070 as now or hereafter amended, are not to be reforested because of the likelihood of future conversion to urban development;",
+   "summary": "Clearing timber to convert land to development is a Class IV forest practice requiring an approved forest practices application before work.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-222-16-050": {
+   "id": "wac-222-16-050",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 222-16-050(2)",
+   "title": "Classes of forest practices.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=222-16-050",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=222-16-050",
+   "excerpt": "Applications involving the following circumstances are Class IV-general forest practices unless they are listed in Class IV-special. Forest practices applications classified Class IV-general are subject to the SEPA review process described in subsection (1) of this section. *(a) Forest practices (other than those in Class I) on lands that are being converted to another use;",
+   "summary": "Timber harvest on land being converted to another use is \"Class IV-general\" and subject to SEPA review.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-76.09.460": {
+   "id": "rcw-76.09.460",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 76.09.460",
+   "title": "Notice of conversion to nonforestry use—Denial of permits or approvals by the county, city, town, or regional governmental entity—Enforcement.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=76.09.460",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=76.09.460",
+   "excerpt": "then the county, city, town, or regional governmental entity must deny all applications for permits or approvals, including building permits and subdivision approvals, relating to nonforestry uses of the land that is the subject of the notification.",
+   "summary": "If land was logged without declaring conversion, the county must deny building and subdivision permits for six years unless the moratorium is lifted - check forest practice history before bidding on recently logged land.",
+   "key_values": {
+    "moratorium_years": 6
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-76.09.470": {
+   "id": "rcw-76.09.470",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 76.09.470(1)",
+   "title": "Conversion of land to nonforestry use—Action required of landowner—Action required of county, city, town, or regional governmental entity.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=76.09.470",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=76.09.470",
+   "excerpt": "If a landowner who did not state an intent to convert his or her land to a nonforestry use decides to convert his or her land to a nonforestry use within six years of receiving an approved forest practices application or notification under this chapter, the landowner must:",
+   "summary": "An owner who decides to convert within six years of a non-conversion forest practice approval must stop forest practices, contact Ecology and the county, and file a new conversion application.",
+   "key_values": {
+    "window_years": 6
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-27.53.060": {
+   "id": "rcw-27.53.060",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 27.53.060(1)",
+   "title": "Disturbing archaeological resource or site—Permit required—Conditions—Exceptions—Penalty.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=27.53.060",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=27.53.060",
+   "excerpt": "On the private and public lands of this state it shall be unlawful for any person, firm, corporation, or any agency or institution of the state or a political subdivision thereof to knowingly remove, alter, dig into, or excavate by use of any mechanical, hydraulic, or other means, or to damage, deface, or destroy any historic or prehistoric archaeological resource or site, or remove any archaeological object from such site",
+   "summary": "Knowingly disturbing an archaeological site on private or public land without a DAHP permit is unlawful - known sites need an archaeological site alteration and excavation permit.",
+   "key_values": {
+    "agency": "Department of Archaeology and Historic Preservation (DAHP)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-27.44.040": {
+   "id": "rcw-27.44.040",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 27.44.040(1)",
+   "title": "Protection of Indian graves—Penalty.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=27.44.040",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=27.44.040",
+   "excerpt": "Any person who knowingly removes, mutilates, defaces, injures, or destroys any cairn or grave of any native Indian, or any glyptic or painted record of any tribe or peoples is guilty of a class C felony punishable under chapter 9A.20 RCW.",
+   "summary": "Knowingly disturbing a Native American grave is a class C felony; inadvertent disturbance during construction triggers reinterment duties.",
+   "key_values": {
+    "offense": "class C felony"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-27.44.055": {
+   "id": "rcw-27.44.055",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 27.44.055(1)",
+   "title": "Skeletal human remains—Duty to notify—Ground disturbing activities—Coroner determination—Definitions.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=27.44.055",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=27.44.055",
+   "excerpt": "Any person who discovers skeletal human remains must notify the coroner and local law enforcement in the most expeditious manner possible.",
+   "summary": "Anyone who finds skeletal human remains must notify the coroner and local law enforcement as fast as possible - include an inadvertent discovery plan in the bid.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-68.50.645": {
+   "id": "rcw-68.50.645",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 68.50.645(2)",
+   "title": "Skeletal human remains—Duty to notify—Ground disturbing activities—Coroner determination—Definitions.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=68.50.645",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=68.50.645",
+   "excerpt": "Any person engaged in ground disturbing activity and who encounters or discovers skeletal human remains in or on the ground shall: (a) Immediately cease any activity which may cause further disturbance; (b) Make a reasonable effort to protect the area from further disturbance; (c) Report the presence and location of the remains to the coroner and local law enforcement in the most expeditious manner possible;",
+   "summary": "If ground-disturbing work uncovers skeletal human remains: stop work immediately, protect the area, and report to the coroner and local law enforcement.",
+   "key_values": {
+    "steps": [
+     "cease activity",
+     "protect area",
+     "report to coroner and local law enforcement"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-43.21C.030": {
+   "id": "rcw-43.21C.030",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 43.21C.030(2)(c)",
+   "title": "Guidelines for state agencies, local governments—Statements—Reports—Advice—Information.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=43.21C.030",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=43.21C.030",
+   "excerpt": "Include in every recommendation or report on proposals for legislation and other major actions significantly affecting the quality of the environment, a detailed statement by the responsible official on: (i) the environmental impact of the proposed action;",
+   "summary": "SEPA requires environmental review (checklist / threshold determination, possibly an EIS) for non-exempt government decisions, including permits.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-197-11-800-1": {
+   "id": "wac-197-11-800-1",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 197-11-800(1)(a)",
+   "title": "Categorical exemptions.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=197-11-800",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=197-11-800",
+   "excerpt": "The exemptions in this subsection apply except when the project: (i) Is undertaken wholly or partly on lands covered by water; (ii) Requires a license governing discharges to water that is not exempt under RCW 43.21C.0383;",
+   "summary": "The minor-new-construction SEPA exemptions do NOT apply to a project undertaken wholly or partly on lands covered by water, so in-water or over-water work needs SEPA review even if small.",
+   "key_values": {
+    "exceptions": [
+     "undertaken wholly or partly on lands covered by water",
+     "requires a license governing discharges to water (not exempt under RCW 43.21C.0383)",
+     "requires a license governing emissions to air",
+     "requires a non-exempt land use decision"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-197-11-800-1b": {
+   "id": "wac-197-11-800-1b",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 197-11-800(1)(b)",
+   "title": "Categorical exemptions.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=197-11-800",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=197-11-800",
+   "excerpt": "The following types of construction shall be exempt: (i) The construction or location of four attached or detached single family residential units. (ii) The construction or location of four multifamily residential units.",
+   "summary": "Statewide baseline SEPA exemptions: 4 single-family units, 4 multifamily units, 10,000 sq ft farm building, 4,000 sq ft commercial with 20 parking spaces, 100 cubic yards of fill/excavation; counties may adopt higher levels (see KCC 18.04.090).",
+   "key_values": {
+    "single_family_units": 4,
+    "multifamily_units": 4,
+    "agricultural_structure_sqft": 10000,
+    "commercial_building_sqft": 4000,
+    "parking_spaces": 20,
+    "fill_or_excavation_cubic_yards": 100
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-19.27.097": {
+   "id": "rcw-19.27.097",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 19.27.097(1)(a)",
+   "title": "Building permit application—Evidence of adequate water supply—Authority of a county or city to impose additional requirements—Applicability—Exemption—Groundwater withdrawal authorized under RCW 90.44.050.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.27.097",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.27.097",
+   "excerpt": "Each applicant for a building permit of a building necessitating potable water shall provide evidence of an adequate water supply for the intended use of the building. Evidence may be in the form of a water right permit from the department of ecology, a letter from an approved water purveyor stating the ability to provide water, or another form sufficient to verify the existence of an adequate water supply.",
+   "summary": "A building permit for a building needing potable water requires proof of adequate water supply (water right, purveyor letter, or other verification such as an approved well).",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-90.44.050": {
+   "id": "rcw-90.44.050",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 90.44.050",
+   "title": "Permit to withdraw.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.44.050",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=90.44.050",
+   "excerpt": "or for single or group domestic uses in an amount not exceeding five thousand gallons a day, or as provided in RCW 90.44.052, or for an industrial purpose in an amount not exceeding five thousand gallons a day, is and shall be exempt from the provisions of this section",
+   "summary": "Permit-exempt wells: single or group domestic use up to 5,000 gallons per day and irrigation of up to half an acre of lawn or noncommercial garden need no water right permit.",
+   "key_values": {
+    "domestic_gallons_per_day": 5000,
+    "lawn_or_garden_acres": 0.5,
+    "industrial_gallons_per_day": 5000
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. Local limits under RCW 90.44.052 / chapter 90.94 RCW (streamflow restoration) may further restrict new domestic wells; not fetched.",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-246-272A-0210": {
+   "id": "wac-246-272A-0210",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 246-272A-0210(1), Table IV",
+   "title": "Location.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=246-272A-0210",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=246-272A-0210",
+   "excerpt": "OSS must be designed and installed to meet at least the minimum horizontal separations shown in Table IV: Table IV Minimum Horizontal Separations Items Requiring Setback From edge of soil dispersal component and reserve area From sewage tank and distribution box From building sewer, and nonperforated distribution pipe",
+   "summary": "State minimum septic setbacks: drainfield 100 ft from wells and surface water, 10 ft from building foundations, 5 ft from property lines; tanks 50 ft from wells/surface water and 5 ft from foundations.",
+   "key_values": {
+    "units": "feet: [edge of soil dispersal component and reserve area, sewage tank and distribution box, building sewer / nonperforated distribution pipe]",
+    "well": [
+     100,
+     50,
+     50
+    ],
+    "public_drinking_water_well": [
+     100,
+     100,
+     100
+    ],
+    "public_drinking_water_spring_or_surface_water": [
+     200,
+     200,
+     100
+    ],
+    "surface_water_OHWM": [
+     100,
+     50,
+     10
+    ],
+    "building_foundation_or_inground_pool": [
+     10,
+     5,
+     2
+    ],
+    "property_or_easement_line": [
+     5,
+     5,
+     "N/A"
+    ],
+    "pressurized_water_supply_line": [
+     10,
+     10,
+     10
+    ],
+    "decommissioned_well": [
+     10,
+     "N/A",
+     "N/A"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. Section amended by WSR 24-06-046, filed 3/1/24, effective 4/1/25 (current revised on-site sewage rule).",
+   "source_currency": "current publication on fetch date"
+  },
+  "wac-246-272A-0320": {
+   "id": "wac-246-272A-0320",
+   "jurisdiction": "Washington State",
+   "citation": "WAC 246-272A-0320(1)",
+   "title": "Developments, subdivisions, and minimum land area requirements.",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=246-272A-0320",
+   "verified_against": "https://app.leg.wa.gov/WAC/default.aspx?cite=246-272A-0320",
+   "excerpt": "Prior to approving any development, the local health officer shall: (a) Require site evaluations under WAC 246-272A-0220; (b) Require information consisting of field data, plans, and reports supporting a conclusion that the proposed land area is sufficient to: (i) Install conforming OSS;",
+   "summary": "Before approving a land division or development on septic, the health officer must confirm the land area is sufficient for a conforming system and reserve area (minimum lot sizes by soil type in Table XI).",
+   "key_values": {
+    "table": "Table XI minimum land area by soil type and water supply (values not transcribed)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. Minimum land area values were not transcribed; read Table XI directly.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-79.105.430": {
+   "id": "rcw-79.105.430",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 79.105.430(1)",
+   "title": "Private recreational docks—Mooring buoys.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=79.105.430",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=79.105.430",
+   "excerpt": "The abutting residential owner to state-owned shorelands, tidelands, or related beds of navigable waters, other than harbor areas, may install and maintain without charge a dock on the areas if used exclusively for private recreational purposes",
+   "summary": "An abutting residential owner may keep a private recreational dock on state-owned aquatic lands without charge (no DNR lease) if used only for private recreation; other permits still apply and DNR can revoke.",
+   "key_values": {
+    "agency": "Washington Department of Natural Resources (aquatic lands)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. The requester mentioned a \"general authorization requirement\"; that wording was not located in the fetched statute text - confirm DNR authorization practice separately.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-58.17.020": {
+   "id": "rcw-58.17.020",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 58.17.020(16)",
+   "title": "Definitions.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=58.17.020",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=58.17.020",
+   "excerpt": "\"Short subdivision\" is the division or redivision of land into four or fewer lots, tracts, parcels, sites, or divisions for the purpose of sale, lease, or transfer of ownership. However, the legislative authority of any city or town may by local ordinance increase the number of lots, tracts, or parcels to be regulated as short subdivisions to a maximum of nine.",
+   "summary": "State law: a short subdivision is 4 or fewer lots, which local governments may raise to 9 (Kitsap: 9 inside UGAs, 4 outside).",
+   "key_values": {
+    "default_max_lots": 4,
+    "local_option_max_lots": 9
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. KCC 16.48.010 (2019 copy) cites this as RCW 58.17.020(6); the definition is currently subsection (16).",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-18.08.410": {
+   "id": "rcw-18.08.410",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 18.08.410(5)-(6)",
+   "title": "Application of chapter.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=18.08.410",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=18.08.410",
+   "excerpt": "Any person from doing design work including preparing construction contract documents and administration of the construction contract for the erection, enlargement, repair, or alteration of a structure or any appurtenance to a structure regardless of size, if the structure is to be used for a residential building of up to and including four dwelling units",
+   "summary": "An architect's stamp is not required for residential buildings of up to four dwelling units (any size), farm buildings, or other buildings up to 4,000 sq ft.",
+   "key_values": {
+    "residential_exemption": "residential building of up to and including four dwelling units, regardless of size",
+    "other_buildings_sqft": 4000
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-18.43.130": {
+   "id": "rcw-18.43.130",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 18.43.130",
+   "title": "Excepted services—Fees.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=18.43.130",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=18.43.130",
+   "excerpt": "This chapter shall not be construed to prevent or affect: (1) The practice of any other legally recognized profession or trade; (2) The work of an employee or a subordinate of a person holding a certificate of registration under this chapter, or an employee of a person practicing lawfully under provisions of this section: PROVIDED, That such work does not include final design or decisions",
+   "summary": "The engineers' act exceptions cover other professions, supervised employees, corporate in-house and federal engineers - there is NO residential or 4,000 sq ft exemption here; engineering stamps are driven by code/permit requirements instead.",
+   "key_values": {
+    "residential_or_4000_sqft_exemption_present": false
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC. CORRECTION to the research brief: the \"residential / 4,000 sq ft\" exemption is in RCW 18.08.410 (architects) only; RCW 18.43.130 contains no such text.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-19.28.101": {
+   "id": "rcw-19.28.101",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 19.28.101(1)",
+   "title": "Inspections—Notice to repair and change—Disconnection—Entry—Concealment—Accessibility—Connection to utility—Permits, fees—Limitation—Waiver of provisions during state of emergency.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.28.101",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.28.101",
+   "excerpt": "The director shall cause an inspector to inspect all wiring, appliances, devices, and equipment to which this chapter applies except for basic electrical work as defined in this chapter.",
+   "summary": "Electrical wiring and equipment is inspected under chapter 19.28 RCW by the Department of Labor & Industries (the \"department\"), separately from the county building permit; certain cities run their own programs under RCW 19.28.010(3).",
+   "key_values": {
+    "agency": "Washington Department of Labor & Industries"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "rcw-47.50.040": {
+   "id": "rcw-47.50.040",
+   "jurisdiction": "Washington State",
+   "citation": "RCW 47.50.040(1)",
+   "title": "Access permits.",
+   "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=47.50.040",
+   "verified_against": "https://app.leg.wa.gov/RCW/default.aspx?cite=47.50.040",
+   "excerpt": "No connection to a state highway shall be constructed or altered without obtaining an access permit in accordance with this chapter in advance of such action.",
+   "summary": "A driveway or road connection to a state highway needs an access permit from the permitting authority (WSDOT; statute also provides for cities within their limits) before construction.",
+   "key_values": {
+    "agency": "WSDOT / permitting authority under chapter 47.50 RCW"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the Washington Legislature (Code Reviser) site, the official online RCW/WAC.",
+   "source_currency": "current publication on fetch date"
+  },
+  "ecology-cswgp": {
+   "id": "ecology-cswgp",
+   "jurisdiction": "Washington State",
+   "citation": "Construction Stormwater General Permit (NPDES and State Waste Discharge General Permit for Stormwater Discharges Associated with Construction Activity)",
+   "title": "Construction Stormwater General Permit",
+   "url": "https://ecology.wa.gov/regulations-permits/permits-certifications/stormwater-general-permits/construction-stormwater-permit",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "Sites disturbing one acre or more (or part of a larger common plan that will) with a discharge to surface waters need Ecology permit coverage and a SWPPP - coverage trigger per the federal rule is verified in cfr-40-122.26; Ecology's own wording was not fetched.",
+   "key_values": {
+    "expected_trigger": ">= 1 acre of disturbance (or part of larger common plan of development or sale) with stormwater discharge to surface waters of the state - NOT verified against Ecology text"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED: ecology.wa.gov, apps.ecology.wa.gov and fortress.wa.gov/ecy all returned HTTP 403 to ordinary requests; no bypass attempted.",
+   "source_currency": "not fetched"
+  },
+  "cfr-40-122.26": {
+   "id": "cfr-40-122.26",
+   "jurisdiction": "Federal",
+   "citation": "40 CFR 122.26(b)(15)(i)",
+   "title": "Storm water discharges (applicable to State NPDES programs, see § 123.25).",
+   "url": "https://www.ecfr.gov/current/title-40/section-122.26",
+   "verified_against": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-40?part=122&section=122.26",
+   "excerpt": "Storm water discharge associated with small construction activity means the discharge of storm water from: (i) Construction activities including clearing, grading, and excavating that result in land disturbance of equal to or greater than one acre and less than five acres.",
+   "summary": "Federal NPDES rule behind the Construction Stormwater General Permit: clearing/grading that disturbs 1 acre or more (or less if part of a larger common plan) is regulated construction activity.",
+   "key_values": {
+    "small_construction_acres": ">= 1 and < 5",
+    "large_construction_acres": ">= 5 (40 CFR 122.26(b)(14)(x))",
+    "common_plan": "less than one acre counts if part of a larger common plan of development or sale that will disturb 1+ acres"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the official eCFR renderer API (current edition on fetch date). Section heading as commonly published; confirm on page.",
+   "source_currency": "current publication on fetch date"
+  },
+  "pscaa-reg3-4.02": {
+   "id": "pscaa-reg3-4.02",
+   "jurisdiction": "Puget Sound Clean Air Agency",
+   "citation": "PSCAA Regulation III, Article 4, Section 4.02(b)",
+   "title": "Asbestos Survey Requirements (Requirements for Demolitions)",
+   "url": "https://pscleanair.gov/DocumentCenter/View/353",
+   "verified_against": "https://pscleanair.gov/DocumentCenter/View/353",
+   "excerpt": "It shall be unlawful for any person to cause or allow any demolition unless the property owner or the owner's agent obtains an asbestos survey by an AHERA building inspector of the structure to be demolished.",
+   "summary": "Every demolition needs an asbestos survey by an AHERA building inspector first; renovations need a survey of suspect materials (owner-occupied single-family renovations may be surveyed without an AHERA inspector).",
+   "key_values": {
+    "demolition": "AHERA building inspector survey required",
+    "renovation": "survey of suspect asbestos-containing materials; AHERA inspector not required for owner-occupied single-family residence"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "PSCAA Regulation III Article 4 PDF from pscleanair.gov; Section 4.02 adopted 06/08/95 (page footer date 07/11).",
+   "source_currency": "current publication on fetch date"
+  },
+  "pscaa-reg3-4.03": {
+   "id": "pscaa-reg3-4.03",
+   "jurisdiction": "Puget Sound Clean Air Agency",
+   "citation": "PSCAA Regulation III, Article 4, Section 4.03(a)",
+   "title": "Asbestos Notification Requirements (General Requirements)",
+   "url": "https://pscleanair.gov/DocumentCenter/View/353",
+   "verified_against": "https://pscleanair.gov/DocumentCenter/View/353",
+   "excerpt": "It shall be unlawful for any person to cause or allow any work on an asbestos project or demolition unless a complete notification, including the appropriate nonrefundable fee and any additional information requested by the Control Officer, has been submitted to the Agency in accordance with the waiting period and fee requirements in Section 4.03(d) of this regulation.",
+   "summary": "A notification (with fee and waiting period) must be filed with PSCAA before any asbestos project or any demolition, even if no asbestos is found.",
+   "key_values": {
+    "waiting_period_and_fees": "Section 4.03(d) (values not transcribed)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Section 4.03 last revised 05/26/11 (1211) per the heading note. Waiting periods/fees not transcribed.",
+   "source_currency": "current publication on fetch date"
+  },
+  "usc-33-1344": {
+   "id": "usc-33-1344",
+   "jurisdiction": "Federal",
+   "citation": "33 U.S.C. 1344(a) (Clean Water Act Section 404)",
+   "title": "Permits for dredged or fill material",
+   "url": "https://www.law.cornell.edu/uscode/text/33/1344",
+   "verified_against": "https://www.law.cornell.edu/uscode/text/33/1344",
+   "excerpt": "The Secretary may issue permits, after notice and opportunity for public hearings for the discharge of dredged or fill material into the navigable waters at specified disposal sites.",
+   "summary": "Placing dredged or fill material in waters of the United States (including jurisdictional wetlands) needs a Corps of Engineers Section 404 permit.",
+   "key_values": {
+    "agency": "U.S. Army Corps of Engineers, Seattle District"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from Cornell LII (law.cornell.edu), an unofficial but standard publication of the U.S. Code.",
+   "source_currency": "current publication on fetch date"
+  },
+  "usc-33-403": {
+   "id": "usc-33-403",
+   "jurisdiction": "Federal",
+   "citation": "33 U.S.C. 403 (Rivers and Harbors Act Section 10)",
+   "title": "Obstruction of navigable waters generally; wharves; piers, etc.; excavations and filling in",
+   "url": "https://www.law.cornell.edu/uscode/text/33/403",
+   "verified_against": "https://www.law.cornell.edu/uscode/text/33/403",
+   "excerpt": "it shall not be lawful to build or commence the building of any wharf, pier, dolphin, boom, weir, breakwater, bulkhead, jetty, or other structures in any port, roadstead, haven, harbor, canal, navigable river, or other water of the United States, outside established harbor lines, or where no harbor lines have been established, except on plans recommended by the Chief of Engineers and authorized by the Secretary of the Army;",
+   "summary": "Piers, docks, bulkheads and other structures or work in navigable waters (all of Puget Sound) need Corps Section 10 authorization.",
+   "key_values": {
+    "agency": "U.S. Army Corps of Engineers"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from Cornell LII (law.cornell.edu), an unofficial but standard publication of the U.S. Code.",
+   "source_currency": "current publication on fetch date"
+  },
+  "usc-33-1341": {
+   "id": "usc-33-1341",
+   "jurisdiction": "Federal",
+   "citation": "33 U.S.C. 1341(a)(1) (Clean Water Act Section 401)",
+   "title": "Certification",
+   "url": "https://www.law.cornell.edu/uscode/text/33/1341",
+   "verified_against": "https://www.law.cornell.edu/uscode/text/33/1341",
+   "excerpt": "Any applicant for a Federal license or permit to conduct any activity including, but not limited to, the construction or operation of facilities, which may result in any discharge into the navigable waters, shall provide the licensing or permitting agency a certification from the State in which the discharge originates or will originate",
+   "summary": "Any federal permit (e.g. Corps 404/Section 10) for an activity that may discharge to navigable waters needs a Section 401 water quality certification from the state in which the discharge originates.",
+   "key_values": {
+    "certifying_agency_WA": "Department of Ecology (agency name not from the statute; certifying authority on tribal lands differs - confirm)"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from Cornell LII (law.cornell.edu), an unofficial but standard publication of the U.S. Code.",
+   "source_currency": "current publication on fetch date"
+  },
+  "usc-16-1536": {
+   "id": "usc-16-1536",
+   "jurisdiction": "Federal",
+   "citation": "16 U.S.C. 1536(a)(2) (Endangered Species Act Section 7)",
+   "title": "Interagency cooperation",
+   "url": "https://www.law.cornell.edu/uscode/text/16/1536",
+   "verified_against": "https://www.law.cornell.edu/uscode/text/16/1536",
+   "excerpt": "Each Federal agency shall, in consultation with and with the assistance of the Secretary, insure that any action authorized, funded, or carried out by such agency (hereinafter in this section referred to as an “agency action”) is not likely to jeopardize the continued existence of any endangered species or threatened species",
+   "summary": "A federal permit or funding triggers ESA Section 7 consultation with NMFS/USFWS (salmon, orca, etc.), which can add timing windows and mitigation to in-water work.",
+   "key_values": {
+    "services": [
+     "NOAA Fisheries (NMFS)",
+     "U.S. Fish and Wildlife Service"
+    ]
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from Cornell LII (law.cornell.edu), an unofficial but standard publication of the U.S. Code.",
+   "source_currency": "current publication on fetch date"
+  },
+  "usc-54-306108": {
+   "id": "usc-54-306108",
+   "jurisdiction": "Federal",
+   "citation": "54 U.S.C. 306108 (National Historic Preservation Act Section 106)",
+   "title": "Effect of undertaking on historic property",
+   "url": "https://www.law.cornell.edu/uscode/text/54/306108",
+   "verified_against": "https://www.law.cornell.edu/uscode/text/54/306108",
+   "excerpt": "the head of any Federal department or independent agency having authority to license any undertaking, prior to the approval of the expenditure of any Federal funds on the undertaking or prior to the issuance of any license, shall take into account the effect of the undertaking on any historic property.",
+   "summary": "Federal permits, licenses or funding require the agency to consider effects on historic properties (Section 106 review with DAHP and tribes) before approval.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from Cornell LII (law.cornell.edu), an unofficial but standard publication of the U.S. Code.",
+   "source_currency": "current publication on fetch date"
+  },
+  "cfr-36-800.2": {
+   "id": "cfr-36-800.2",
+   "jurisdiction": "Federal",
+   "citation": "36 CFR 800.2(c)(2)(ii)",
+   "title": "Participants in the Section 106 process.",
+   "url": "https://www.ecfr.gov/current/title-36/section-800.2",
+   "verified_against": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-36?part=800&section=800.2",
+   "excerpt": "Section 101(d)(6)(B) of the act requires the agency official to consult with any Indian tribe or Native Hawaiian organization that attaches religious and cultural significance to historic properties that may be affected by an undertaking. This requirement applies regardless of the location of the historic property. Such Indian tribe or Native Hawaiian organization shall be a consulting party.",
+   "summary": "In Section 106 review the federal agency must consult tribes that attach religious and cultural significance to affected historic properties, wherever located (Suquamish, Port Gamble S'Klallam and others in Kitsap).",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the official eCFR renderer API.",
+   "source_currency": "current publication on fetch date"
+  },
+  "cfr-44-60.3-permits": {
+   "id": "cfr-44-60.3-permits",
+   "jurisdiction": "Federal",
+   "citation": "44 CFR 60.3(a)(1)",
+   "title": "Flood plain management criteria for flood-prone areas.",
+   "url": "https://www.ecfr.gov/current/title-44/section-60.3",
+   "verified_against": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-44?part=60&section=60.3",
+   "excerpt": "Require permits for all proposed construction or other development in the community, including the placement of manufactured homes, so that it may determine whether such construction or other development is proposed within flood-prone areas;",
+   "summary": "NFIP communities must require permits for all development so floodplain location can be determined - the basis for Kitsap's Title 15 flood development permit.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the official eCFR renderer API.",
+   "source_currency": "current publication on fetch date"
+  },
+  "cfr-44-60.3-lowest-floor": {
+   "id": "cfr-44-60.3-lowest-floor",
+   "jurisdiction": "Federal",
+   "citation": "44 CFR 60.3(c)(2)",
+   "title": "Flood plain management criteria for flood-prone areas.",
+   "url": "https://www.ecfr.gov/current/title-44/section-60.3",
+   "verified_against": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-44?part=60&section=60.3",
+   "excerpt": "Require that all new construction and substantial improvements of residential structures within Zones A1-30, AE and AH zones on the community's FIRM have the lowest floor (including basement) elevated to or above the base flood level",
+   "summary": "Federal minimum: residential lowest floor (including basement) at or above base flood elevation in A/AE/AH zones; Kitsap adds 1 ft of freeboard (KCC 15.12.090, 2019 text).",
+   "key_values": {
+    "federal_minimum": "at or above BFE"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from the official eCFR renderer API.",
+   "source_currency": "current publication on fetch date"
+  },
+  "usc-16-1456": {
+   "id": "usc-16-1456",
+   "jurisdiction": "Federal",
+   "citation": "16 U.S.C. 1456(c)(3)(A) (Coastal Zone Management Act)",
+   "title": "Coordination and cooperation",
+   "url": "https://www.law.cornell.edu/uscode/text/16/1456",
+   "verified_against": "https://www.law.cornell.edu/uscode/text/16/1456",
+   "excerpt": "any applicant for a required Federal license or permit to conduct an activity, in or outside of the coastal zone, affecting any land or water use or natural resource of the coastal zone of that state shall provide in the application to the licensing or permitting agency a certification that the proposed activity complies with the enforceable policies",
+   "summary": "Federal permits for activities affecting Washington's coastal zone (Kitsap County is within it) need a CZMA consistency certification, with Ecology concurrence.",
+   "key_values": {
+    "state_agency": "Department of Ecology"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Fetched from Cornell LII (law.cornell.edu), an unofficial but standard publication of the U.S. Code. That Kitsap County lies within Washington's coastal zone is not stated in the statute and was not separately fetched.",
+   "source_currency": "current publication on fetch date"
+  },
+  "fema-r10-nfip-esa": {
+   "id": "fema-r10-nfip-esa",
+   "jurisdiction": "Federal",
+   "citation": "FEMA Region 10 - NFIP Puget Sound Biological Opinion (NMFS 2008) habitat assessment",
+   "title": "NFIP-ESA integration in Puget Sound",
+   "url": "https://www.fema.gov/about/organization/region-10/washington/nfip-esa-integration",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "Floodplain development in Puget Sound communities generally needs a habitat assessment showing no adverse effect on listed salmon/orca habitat (locally: KCC 15.13.010).",
+   "key_values": {
+    "local_implementation": "KCC 15.13.010 habitat plan (verified separately against 2019 code copy)"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED: fema.gov returned HTTP 403 to ordinary requests; URL not confirmed to exist. No bypass attempted.",
+   "source_currency": "not fetched"
+  },
+  "tribe-pgst-cultural-resources": {
+   "id": "tribe-pgst-cultural-resources",
+   "jurisdiction": "Port Gamble S'Klallam Tribe",
+   "citation": "Port Gamble S'Klallam Tribe - Cultural Resources Department page",
+   "title": "Cultural Resources",
+   "url": "https://pgst.nsn.us/cultural-resources/",
+   "verified_against": "https://pgst.nsn.us/cultural-resources/",
+   "excerpt": "Ongoing Section 106 consultation. By working with various agencies, we can assure preservation of cultural resources found during or connected to any projects within our Tribe’s Usual and Accustomed Areas.",
+   "summary": "The Port Gamble S'Klallam Tribe's Cultural Resources department handles Section 106 consultation for projects in the Tribe's Usual and Accustomed Areas and lists a Tribal Historic Preservation Officer contact.",
+   "key_values": {
+    "THPO_email": "pgst-thpo@pgst.nsn.us",
+    "THPO_phone": "(360) 297-9658"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Tribal website page fetched 2026-11-12; staff contacts change - re-check before use. Contact details read from the same page (raw file).",
+   "source_currency": "current publication on fetch date"
+  },
+  "tribe-pgst-planning": {
+   "id": "tribe-pgst-planning",
+   "jurisdiction": "Port Gamble S'Klallam Tribe",
+   "citation": "Port Gamble S'Klallam Tribe - Planning Department page",
+   "title": "Planning",
+   "url": "https://pgst.nsn.us/planning/",
+   "verified_against": "https://pgst.nsn.us/planning/",
+   "excerpt": "Planning serves the Tribal community by providing land use and development planning services as well as oversight of the design and construction of high-value Tribal government and community facilities.",
+   "summary": "The Tribe's Planning Department handles land use and development planning for reservation lands; the page does not spell out trust-versus-fee permitting, so confirm jurisdiction with the Tribe and Kitsap County for any parcel within the reservation.",
+   "key_values": {
+    "trust_vs_fee_permitting_statement_found": false
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "No published statement on who permits development on trust vs fee land was found on the fetched page.",
+   "source_currency": "current publication on fetch date"
+  },
+  "tribe-suquamish-planning": {
+   "id": "tribe-suquamish-planning",
+   "jurisdiction": "Suquamish Tribe",
+   "citation": "Suquamish Tribe - Community Development / Planning page",
+   "title": "Planning (Community Development)",
+   "url": "https://suquamish.nsn.us/home/departments/community-development1/planning/",
+   "verified_against": "https://suquamish.nsn.us/home/departments/community-development1/planning/",
+   "excerpt": "The planning division is responsible for creating annual and five-year housing plans, as well as annual reports, planning development projects within the Reservation, and working with other governmental agencies on future development plans both inside and outside the Reservation.",
+   "summary": "The Suquamish Tribe's Community Development planning division plans development within the Port Madison Indian Reservation and coordinates with other governments; its site asks \"Should you obtain building use or construction permits from the Suquamish Tribe?\" but the answer page could not be located.",
+   "key_values": {
+    "trust_vs_fee_permitting_statement_found": false,
+    "tribal_code": "https://suquamish.nsn.us/home/government/suquamish-tribal-code/"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "The Community Development landing page carries the teaser \"Should you obtain building use or construction permits from the Suquamish Tribe?\" (raw_code/tribe-suquamish-community-development.txt) but the linked detail page was not reachable by ordinary link-following; trust-vs-fee permitting rules are therefore NOT captured. Confirm with the Tribe and Kitsap DCD.",
+   "source_currency": "current publication on fetch date"
+  },
+  "tribe-suquamish-archaeology": {
+   "id": "tribe-suquamish-archaeology",
+   "jurisdiction": "Suquamish Tribe",
+   "citation": "Suquamish Tribe news article, \"Suquamish archaeologists protect the past for future generations\" (5 Oct 2026)",
+   "title": "Suquamish archaeologists protect the past for future generations",
+   "url": "https://suquamish.nsn.us/suquamish-archaeologists-protect-the-past-for-future-generations/",
+   "verified_against": "https://suquamish.nsn.us/suquamish-archaeologists-protect-the-past-for-future-generations/",
+   "excerpt": "Any construction project that uses federal or state funding and falls within the tribe’s “Usual and Accustomed” area must be reviewed in consultation with the tribe. In addition, projects within the U&A area that trigger review under Washington’s State Environmental Policy Act also require consultation.",
+   "summary": "Per the Tribe, projects in its Usual and Accustomed area with federal or state funding, or that trigger SEPA review, are reviewed in consultation with the Tribe's archaeology and historic preservation staff (the Tribe has a THPO).",
+   "key_values": {
+    "program": "Archaeology & Historic Preservation Program",
+    "THPO": "position exists per article; contact details not captured"
+   },
+   "verified": true,
+   "fetched": "2026-11-12",
+   "notes": "Source is a tribal news article (not a regulation); describes the Tribe's own statement of practice. The article text contains soft hyphens in some words; the quoted sentences do not.",
+   "source_currency": "current publication on fetch date"
+  },
+  "tribe-trust-vs-fee-permitting": {
+   "id": "tribe-trust-vs-fee-permitting",
+   "jurisdiction": "Suquamish Tribe / Port Gamble S'Klallam Tribe / Kitsap County",
+   "citation": "Jurisdiction over development on trust land vs fee land within reservation boundaries",
+   "title": "Who permits development within the Port Madison and Port Gamble S'Klallam reservations",
+   "url": "https://suquamish.nsn.us/home/departments/community-development1/",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "Not established from primary sources: whether the Tribe or Kitsap County issues permits depends on land status (trust vs fee) and must be confirmed parcel-by-parcel with the Tribe and Kitsap DCD.",
+   "key_values": {},
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED: neither tribe's fetched pages nor a kitsap.gov page stating the trust/fee permitting split could be located with ordinary requests. Do not present any rule on this point as cited law.",
+   "source_currency": "not fetched"
+  },
+  "city-bremerton": {
+   "id": "city-bremerton",
+   "jurisdiction": "City of Bremerton",
+   "citation": "City of Bremerton Municipal Code",
+   "title": "Municipal code - critical areas, shoreline master program, zoning",
+   "url": "https://ecode360.com/BR4361",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "City of Bremerton administers its own critical areas, shoreline and zoning codes and permit center inside city limits; Kitsap County Code does not apply there.",
+   "key_values": {
+    "critical_areas": "BMC Chapter 20.14",
+    "shoreline_master_program": "BMC Chapter 20.16",
+    "zoning": "BMC Title 20",
+    "permit_center_url": "https://www.bremertonwa.gov/"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED by design (requester asked for excerpt \"\" / verified false). Chapter numbers are from the researcher's memory, NOT fetched. Code host: the legacy codepublishing.com page for this city now redirects to the ecode360 address given in url (fetched 2026-11-12); ecode360 itself and *.municipal.codes returned bot-check 403s. Permit-center URL not fetched.",
+   "source_currency": "not fetched"
+  },
+  "city-port-orchard": {
+   "id": "city-port-orchard",
+   "jurisdiction": "City of Port Orchard",
+   "citation": "City of Port Orchard Municipal Code",
+   "title": "Municipal code - critical areas, shoreline master program, zoning",
+   "url": "https://ecode360.com/PO4594",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "City of Port Orchard administers its own critical areas, shoreline and zoning codes and permit center inside city limits; Kitsap County Code does not apply there.",
+   "key_values": {
+    "critical_areas": "POMC Chapter 20.162",
+    "shoreline_master_program": "POMC Chapter 20.164",
+    "zoning": "POMC Title 20 (Unified Development Code)",
+    "permit_center_url": "https://portorchardwa.gov/"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED by design (requester asked for excerpt \"\" / verified false). Chapter numbers are from the researcher's memory, NOT fetched. Code host: the legacy codepublishing.com page for this city now redirects to the ecode360 address given in url (fetched 2026-11-12); ecode360 itself and *.municipal.codes returned bot-check 403s. Permit-center URL not fetched.",
+   "source_currency": "not fetched"
+  },
+  "city-poulsbo": {
+   "id": "city-poulsbo",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "City of Poulsbo Municipal Code",
+   "title": "Municipal code - critical areas, shoreline master program, zoning",
+   "url": "https://ecode360.com/PO4596",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "City of Poulsbo administers its own critical areas, shoreline and zoning codes and permit center inside city limits; Kitsap County Code does not apply there.",
+   "key_values": {
+    "critical_areas": "PMC Chapter 16.20",
+    "shoreline_master_program": "PMC Chapter 16.08",
+    "zoning": "PMC Title 18",
+    "permit_center_url": "https://cityofpoulsbo.com/"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED by design (requester asked for excerpt \"\" / verified false). Chapter numbers are from the researcher's memory, NOT fetched. Code host: the legacy codepublishing.com page for this city now redirects to the ecode360 address given in url (fetched 2026-11-12); ecode360 itself and *.municipal.codes returned bot-check 403s. Permit-center URL not fetched. Poulsbo was processing a critical areas ordinance update in 2025 (a city \"CAO Update Phase I\" exhibit dated Oct 2025 appeared in search results), so chapter content has likely changed.",
+   "source_currency": "not fetched"
+  },
+  "city-bainbridge-island": {
+   "id": "city-bainbridge-island",
+   "jurisdiction": "City of Bainbridge Island",
+   "citation": "City of Bainbridge Island Municipal Code",
+   "title": "Municipal code - critical areas, shoreline master program, zoning",
+   "url": "https://ecode360.com/BA4345",
+   "verified_against": "",
+   "excerpt": "",
+   "summary": "City of Bainbridge Island administers its own critical areas, shoreline and zoning codes and permit center inside city limits; Kitsap County Code does not apply there.",
+   "key_values": {
+    "critical_areas": "BIMC Chapter 16.20",
+    "shoreline_master_program": "BIMC Chapter 16.12",
+    "zoning": "BIMC Title 18",
+    "permit_center_url": "https://www.bainbridgewa.gov/"
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "notes": "UNVERIFIED by design (requester asked for excerpt \"\" / verified false). Chapter numbers are from the researcher's memory, NOT fetched. Code host: the legacy codepublishing.com page for this city now redirects to the ecode360 address given in url (fetched 2026-11-12); ecode360 itself and *.municipal.codes returned bot-check 403s. Permit-center URL not fetched.",
+   "source_currency": "not fetched"
+  }
+ },
+ "fees": {
+  "dcd-building-permit": {
+   "id": "dcd-building-permit",
+   "label": "Building permit and plan review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 0,
+   "high": 0,
+   "unit": "formula",
+   "note": "Computed from the published formula; the county does not print worked totals.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Residential, Commercial Mechanical/Plumbing, Commercial Tenant / .0224 / Improvements and Fire Permits - includes plan review"
+   },
+   "components": [
+    {
+     "item": "Permit Fee Multipliers (PFM) - Residential",
+     "low": null,
+     "high": null,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    },
+    {
+     "item": "Building Valuation Determination - New residential space",
+     "low": 177.63,
+     "high": 177.63,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Building%20Valuation%20Determination.pdf",
+     "effective": "Revised 11/1/2026 (effective 11/1/2026; next change expected 5/1/2027)"
+    },
+    {
+     "item": "Building Valuation Determination - New garage, barn, shed, pole building (unheated, attached or detached)",
+     "low": 69.28,
+     "high": 69.28,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Building%20Valuation%20Determination.pdf",
+     "effective": "Revised 11/1/2026 (effective 11/1/2026; next change expected 5/1/2027)"
+    },
+    {
+     "item": "Base Application Fee",
+     "low": 90,
+     "high": 90,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    },
+    {
+     "item": "Washington State Building Code Council - surcharge per building permit",
+     "low": 6.5,
+     "high": 6.5,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    },
+    {
+     "item": "Technology Surcharge",
+     "low": null,
+     "high": null,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "method": {
+    "multiplier": 0.0224,
+    "technology_surcharge": 0.03,
+    "flat": 96.5,
+    "rates": {
+     "residential": 177.63,
+     "garage": 69.28
+    },
+    "describe": "floor area x valuation rate x 0.0224, plus 3% technology surcharge, $90 base fee and $6.5 state surcharge"
+   },
+   "confidence": "high"
+  },
+  "kitsap-impact-fees": {
+   "id": "kitsap-impact-fees",
+   "label": "Road, park and school impact fees",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "Kitsap County",
+   "low": 0,
+   "high": 0,
+   "unit": "formula",
+   "note": null,
+   "source": {
+    "title": "Kitsap County Impact Fee Table (Revised 9/24/26)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+    "date": "Revised 9/24/26",
+    "excerpt": "210 Single Family Detached Housing per dwelling unit 5,181.34"
+   },
+   "components": [
+    {
+     "item": "Road Impact Fee - ITE 210 Single Family Detached Housing",
+     "low": 5181.34,
+     "high": 5181.34,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+     "effective": "Revised 9/24/26"
+    },
+    {
+     "item": "Road Impact Fee - ITE 210 Single Family Detached Housing - ADU",
+     "low": 2590.67,
+     "high": 2590.67,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+     "effective": "Revised 9/24/26"
+    },
+    {
+     "item": "Park Impact Fees - Residential Only (ADU, Single Family & Multi Family)",
+     "low": 356.73,
+     "high": 1596.82,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+     "effective": "Revised 9/24/26"
+    },
+    {
+     "item": "School Impact Fees - Residential Only (ADU, Single Family & Multi Family)",
+     "low": 688.33,
+     "high": 3075.51,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+     "effective": "Revised 9/24/26"
+    }
+   ],
+   "method": {
+    "roads_sfr": 5181.34,
+    "roads_adu": 2590.67,
+    "parks_per_sqft": 0.45,
+    "parks_min": 356.73,
+    "parks_max": 1596.82,
+    "schools_per_sqft": 0.86,
+    "schools_min": 688.33,
+    "schools_max": 3075.51
+   },
+   "confidence": "high"
+  },
+  "dcd-sdap-sfr": {
+   "id": "dcd-sdap-sfr",
+   "label": "Site Development Activity Permit, single-family",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 2900,
+   "high": 3278,
+   "unit": "flat",
+   "note": "Flat fee plus base fee and surcharge at submittal. Inspections are billed hourly on top.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "SDAP Single Family Residence ** $2,900.00"
+   },
+   "components": [
+    {
+     "item": "SDAP Single Family Residence",
+     "low": 2900,
+     "high": 2900,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-sdap-minor": {
+   "id": "dcd-sdap-minor",
+   "label": "Site Development Activity Permit, minor grading",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 1450,
+   "high": 1450,
+   "unit": "flat",
+   "note": "Inspections are billed hourly on top.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "SDAP Minor Grading ** $1,450.00"
+   },
+   "components": [
+    {
+     "item": "SDAP Minor Grading",
+     "low": 1450,
+     "high": 1450,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-sdap-grading-1": {
+   "id": "dcd-sdap-grading-1",
+   "label": "Site Development Activity Permit, grading 150 to 500 cu yd",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 2610,
+   "high": 2610,
+   "unit": "flat",
+   "note": "Inspections are billed hourly on top.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Grading 1: >150 but < 500 cubic yards** $2,610.00"
+   },
+   "components": [
+    {
+     "item": "Grading 1: >150 but < 500 cubic yards",
+     "low": 2610,
+     "high": 2610,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-sdap-grading-2": {
+   "id": "dcd-sdap-grading-2",
+   "label": "Site Development Activity Permit, grading 500 to 5,000 cu yd",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 3045,
+   "high": 3045,
+   "unit": "flat",
+   "note": "Inspections are billed hourly on top.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Grading 2: > 500 but < 5000 cubic yards ** $3,045.00"
+   },
+   "components": [
+    {
+     "item": "Grading 2: > 500 but < 5000 cubic yards",
+     "low": 3045,
+     "high": 3045,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-sdap-grading-3": {
+   "id": "dcd-sdap-grading-3",
+   "label": "Site Development Activity Permit, grading over 5,000 cu yd",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 5365,
+   "high": 5365,
+   "unit": "flat",
+   "note": "Inspections are billed hourly on top.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Grading 3: >5000 cubic yards or greater ** $5,365.00"
+   },
+   "components": [
+    {
+     "item": "Grading 3: >5000 cubic yards or greater",
+     "low": 5365,
+     "high": 5365,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-sdap-short-plat": {
+   "id": "dcd-sdap-short-plat",
+   "label": "Site Development Activity Permit, short plat",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 4205,
+   "high": 4205,
+   "unit": "flat",
+   "note": "Inspections are billed hourly on top.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "SDAP Short Plats ** $4,205.00"
+   },
+   "components": [
+    {
+     "item": "SDAP Short Plats",
+     "low": 4205,
+     "high": 4205,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-simplified-drainage": {
+   "id": "dcd-simplified-drainage",
+   "label": "Simplified drainage review, engineered",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 1160,
+   "high": 1160,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Simplified Drainage Review - Engineered $1,160.00"
+   },
+   "components": [
+    {
+     "item": "Simplified Drainage Review - Engineered",
+     "low": 1160,
+     "high": 1160,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-buffer-reduction": {
+   "id": "dcd-buffer-reduction",
+   "label": "Critical area or shoreline buffer reduction",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 1595,
+   "high": 1595,
+   "unit": "flat",
+   "note": "Covers two review cycles; further review is hourly.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Critical Area or Shoreline Buffer Reduction $1,595.00"
+   },
+   "components": [
+    {
+     "item": "Critical Area or Shoreline Buffer Reduction",
+     "low": 1595,
+     "high": 1595,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-critical-area-variance": {
+   "id": "dcd-critical-area-variance",
+   "label": "Critical area variance or reasonable use exception",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 4350,
+   "high": 5000,
+   "unit": "flat",
+   "note": "Includes the hearing examiner fee.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Critical Area Variance – Type III $4,350.00 $650.00 $5,000.00"
+   },
+   "components": [
+    {
+     "item": "Critical Area Variance - Type III",
+     "low": 4350,
+     "high": 5000,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-site-evaluation": {
+   "id": "dcd-site-evaluation",
+   "label": "Site evaluation",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 290,
+   "high": 290,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Site Evaluation* $290.00"
+   },
+   "components": [
+    {
+     "item": "Site Evaluation",
+     "low": 290,
+     "high": 290,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-staff-consultation": {
+   "id": "dcd-staff-consultation",
+   "label": "Staff consultation",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 350,
+   "high": 350,
+   "unit": "flat",
+   "note": "Credited to an application filed within 12 months.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Staff Consultation / Cross-functional mix of review team members help identify potential / $350.00 / requirements for developing a single residential parcel; 30 minute / maximum, credit towards application within 12 months"
+   },
+   "components": [
+    {
+     "item": "Staff Consultation",
+     "low": 350,
+     "high": 350,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-sepa": {
+   "id": "dcd-sepa",
+   "label": "SEPA checklist review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 725,
+   "high": 725,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "SEPA Checklist Review* $725.00"
+   },
+   "components": [
+    {
+     "item": "SEPA Checklist Review",
+     "low": 725,
+     "high": 725,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-shoreline-exemption": {
+   "id": "dcd-shoreline-exemption",
+   "label": "Shoreline exemption",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 870,
+   "high": 870,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Shoreline Exemption $870.00"
+   },
+   "components": [
+    {
+     "item": "Shoreline Exemption",
+     "low": 870,
+     "high": 870,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-shoreline-sdp": {
+   "id": "dcd-shoreline-sdp",
+   "label": "Shoreline substantial development permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 4640,
+   "high": 4640,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Shoreline Substantial Development Permit (Residential or Commercial) $4,640.00"
+   },
+   "components": [
+    {
+     "item": "Shoreline Substantial Development Permit (Residential or Commercial)",
+     "low": 4640,
+     "high": 4640,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-shoreline-acup": {
+   "id": "dcd-shoreline-acup",
+   "label": "Shoreline administrative conditional use permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 2610,
+   "high": 2610,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Administrative Conditional Use Permit – Shoreline $2,610.00"
+   },
+   "components": [
+    {
+     "item": "Administrative Conditional Use Permit - Shoreline",
+     "low": 2610,
+     "high": 2610,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-cup-adu": {
+   "id": "dcd-cup-adu",
+   "label": "Conditional use permit for an ADU",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 3045,
+   "high": 4565,
+   "unit": "flat",
+   "note": "Low end is the administrative permit; high end is the hearing examiner permit with its hearing fee.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Administrative Conditional Use Permit – Accessory Dwelling $3,045.00 / Unit"
+   },
+   "components": [
+    {
+     "item": "Administrative Conditional Use Permit - Accessory Dwelling Unit",
+     "low": 3045,
+     "high": 3045,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    },
+    {
+     "item": "Conditional Use Permit - Accessory Dwelling Unit",
+     "low": 3915,
+     "high": 4565,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-short-plat-prelim": {
+   "id": "dcd-short-plat-prelim",
+   "label": "Preliminary short plat",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 3045,
+   "high": 3045,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Short Lot Subdivisions / Preliminary $3,045.00"
+   },
+   "components": [
+    {
+     "item": "Short Lot Subdivisions - Preliminary",
+     "low": 3045,
+     "high": 3045,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-short-plat-final": {
+   "id": "dcd-short-plat-final",
+   "label": "Final short plat",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 1595,
+   "high": 1595,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Short Lot Subdivisions / Preliminary $3,045.00 / Preliminary Amendment $2,320.00 / Final $1,595.00"
+   },
+   "components": [
+    {
+     "item": "Short Lot Subdivisions - Final",
+     "low": 1595,
+     "high": 1595,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-demolition": {
+   "id": "dcd-demolition",
+   "label": "Demolition permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 145,
+   "high": 145,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Demolition $145.00"
+   },
+   "components": [
+    {
+     "item": "Demolition",
+     "low": 145,
+     "high": 145,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-timber-harvest": {
+   "id": "dcd-timber-harvest",
+   "label": "County timber harvest permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 1160,
+   "high": 1160,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Timber Harvest / Minor $1,160.00 / Major $1,160.00"
+   },
+   "components": [
+    {
+     "item": "Timber Harvest (Minor / Major)",
+     "low": 1160,
+     "high": 1160,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dcd-well-water": {
+   "id": "dcd-well-water",
+   "label": "Building permit supplied by a well",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 500,
+   "high": 500,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Building Permits Supplied with Well Water / Each new domestic use that proposes a new withdrawal from a water right / permit-exempt well approved after January 19, 2018, shall be assessed a $500.00 / $500 fee. / ($350 to Department of Ecology / $150 DCD program administration)"
+   },
+   "components": [
+    {
+     "item": "Building Permits Supplied with Well Water",
+     "low": 500,
+     "high": 500,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "pw-road-approach": {
+   "id": "pw-road-approach",
+   "label": "Road approach permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap County DCD",
+   "low": 0,
+   "high": 290,
+   "unit": "flat",
+   "note": "Waived when filed with a building permit.",
+   "source": {
+    "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+    "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "date": "Revised 6/3/2026",
+    "excerpt": "Road Approach* / Fee waived if submitted with SDAP or building permit. Includes inspection $290.00 / hours"
+   },
+   "components": [
+    {
+     "item": "Road Approach",
+     "low": 290,
+     "high": 290,
+     "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+     "effective": "Revised 6/3/2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "kphd-bsa": {
+   "id": "kphd-bsa",
+   "label": "Building Site Application, single-family",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap Public Health District",
+   "low": 820,
+   "high": 1085,
+   "unit": "flat",
+   "note": "Low end on public water, high end on a private well. A 2027 increase was in draft when checked.",
+   "source": {
+    "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+    "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "date": "Effective January 1, 2026",
+    "excerpt": "Single Family Residential Onsite Sewage System on Public Water Supply 820"
+   },
+   "components": [
+    {
+     "item": "New/Alteration/Expansion BSA - Single Family Residential Onsite Sewage System on Public Water Supply",
+     "low": 820,
+     "high": 820,
+     "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+     "effective": "Effective January 1, 2026"
+    },
+    {
+     "item": "New/Alteration/Expansion BSA - Single Family Residential Onsite Sewage System w/Private Water Supply (Existing or proposed water source)",
+     "low": 1085,
+     "high": 1085,
+     "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+     "effective": "Effective January 1, 2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "kphd-sewage-permit": {
+   "id": "kphd-sewage-permit",
+   "label": "Septic installation permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap Public Health District",
+   "low": 600,
+   "high": 600,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+    "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "date": "Effective January 1, 2026",
+    "excerpt": "New, Replacement, or Repair Installation 600"
+   },
+   "components": [
+    {
+     "item": "Sewage System Permits - New, Replacement, or Repair Installation",
+     "low": 600,
+     "high": 600,
+     "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+     "effective": "Effective January 1, 2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "kphd-building-clearance": {
+   "id": "kphd-building-clearance",
+   "label": "Building Clearance, residential on septic",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap Public Health District",
+   "low": 335,
+   "high": 335,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+    "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "date": "Effective January 1, 2026",
+    "excerpt": "Building Clearance (BC) - Residential 335"
+   },
+   "components": [
+    {
+     "item": "Building Clearance (BC) - Residential",
+     "low": 335,
+     "high": 335,
+     "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+     "effective": "Effective January 1, 2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "kphd-building-clearance-sewered": {
+   "id": "kphd-building-clearance-sewered",
+   "label": "Building Clearance, sewered lot",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Kitsap Public Health District",
+   "low": 90,
+   "high": 145,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+    "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "date": "Effective January 1, 2026",
+    "excerpt": "Building Clearances for Sewered Properties: / Properties with a public water supply 90 / Properties with a private water supply 145"
+   },
+   "components": [
+    {
+     "item": "Building Clearances for Sewered Properties",
+     "low": 90,
+     "high": 145,
+     "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+     "effective": "Effective January 1, 2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "sewer-connection": {
+   "id": "sewer-connection",
+   "label": "County sewer connection: newcomer assessment, permit and side service",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "Kitsap County Public Works Sewer Utility",
+   "low": 10784,
+   "high": 11184,
+   "unit": "flat",
+   "note": "County-operated systems only. City and district utilities set their own charges.",
+   "source": {
+    "title": "Kitsap County Public Works Sewer Utility Development Service Fees (Resolution 191-2025)",
+    "url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+    "date": "Effective January 1, 2026",
+    "excerpt": "Newcomer’s Assessment $9,939"
+   },
+   "components": [
+    {
+     "item": "Newcomer's Assessment",
+     "low": 9939,
+     "high": 9939,
+     "source_url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+     "effective": "Effective January 1, 2026"
+    },
+    {
+     "item": "Sewer Permit",
+     "low": 145,
+     "high": 145,
+     "source_url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+     "effective": "Effective January 1, 2026"
+    },
+    {
+     "item": "Side Service Installation (Gravity 6\" Typical / Force main 2\" Typical)",
+     "low": 700,
+     "high": 1100,
+     "source_url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+     "effective": "Effective January 1, 2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "water-connection": {
+   "id": "water-connection",
+   "label": "New water service connection (Kitsap PUD and Silverdale Water as examples)",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "Water purveyor",
+   "low": 12700,
+   "high": 17650,
+   "unit": "flat",
+   "note": "Range spans Kitsap PUD ($13,892) and Silverdale Water for a 5/8 inch meter. Other purveyors differ; the purveyor for this lot is not mapped.",
+   "source": {
+    "title": "KPUD Water and Streetlight Utility Rates and Fees - 2026/2027 (Adopted 11.10.25)",
+    "url": "https://www.kpud.org/wp-content/uploads/KPUD-Water-Streetlight-Rates-2026-2027-Adopted-11.10.25.pdf",
+    "date": "2026 Rate column; rates take effect January 1 unless noted",
+    "excerpt": "Capital Facilities Charge / 5/8” x 3/4” meter $6,553 $8,531 $8,787"
+   },
+   "components": [
+    {
+     "item": "Capital Facilities Charge - 5/8\" x 3/4\" meter",
+     "low": 8531,
+     "high": 8531,
+     "source_url": "https://www.kpud.org/wp-content/uploads/KPUD-Water-Streetlight-Rates-2026-2027-Adopted-11.10.25.pdf",
+     "effective": "2026 Rate column; rates take effect January 1 unless noted"
+    },
+    {
+     "item": "Service Installation Charges - Residential - 5/8\" x 3/4\" meter",
+     "low": 5361,
+     "high": 5361,
+     "source_url": "https://www.kpud.org/wp-content/uploads/KPUD-Water-Streetlight-Rates-2026-2027-Adopted-11.10.25.pdf",
+     "effective": "2026 Rate column; rates take effect January 1 unless noted"
+    },
+    {
+     "item": "Capital Facilities Charge (CFC) - 5/8\" meter",
+     "low": 11325,
+     "high": 11325,
+     "source_url": "https://www.swd16.org/Customer%20Care/2026%20Docs/2026%20Connection%20Charges.pdf",
+     "effective": "January 1, 2026"
+    },
+    {
+     "item": "Service Installation Charge (SIC) - Residential - 5/8\" meter",
+     "low": 1375,
+     "high": 6325,
+     "source_url": "https://www.swd16.org/Customer%20Care/2026%20Docs/2026%20Connection%20Charges.pdf",
+     "effective": "January 1, 2026"
+    }
+   ],
+   "confidence": "high"
+  },
+  "lni-electrical": {
+   "id": "lni-electrical",
+   "label": "Electrical permit, new residence",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "WA Labor and Industries",
+   "low": 0,
+   "high": 0,
+   "unit": "formula",
+   "note": null,
+   "source": {
+    "title": "WAC 296-46B-906 Inspection fees (L&I electrical)",
+    "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=296-46B-906",
+    "date": "WSR 26-10-060, filed 5/5/26, effective 7/1/26",
+    "excerpt": "(i) First 1300 sq. ft. $119.90 | Each additional 500 sq. ft. or portion of $38.20"
+   },
+   "components": [
+    {
+     "item": "Electrical inspection fee - Single- and two-family residential (New Construction)",
+     "low": 119.9,
+     "high": null,
+     "source_url": "https://app.leg.wa.gov/WAC/default.aspx?cite=296-46B-906",
+     "effective": "WSR 26-10-060, filed 5/5/26, effective 7/1/26"
+    }
+   ],
+   "method": {
+    "first_1300": 119.9,
+    "per_additional_500": 38.2
+   },
+   "confidence": "high"
+  },
+  "ecology-cswgp": {
+   "id": "ecology-cswgp",
+   "label": "Construction Stormwater General Permit, 1 to 5 acres",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "WA Department of Ecology",
+   "low": 850,
+   "high": 850,
+   "unit": "flat",
+   "note": "Annual fee while the permit is open.",
+   "source": {
+    "title": "WAC 173-224-040 Permit fee schedule",
+    "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-224-040",
+    "date": "FY2027 column (July 1, 2026 - June 30, 2027); rule filed 7/1/25, effective 8/1/25",
+    "excerpt": "c. Construction Stormwater General Permit (CSWGP) 1. Less than 1 acre 525 550 2. 1 to < 5 acres 820 850"
+   },
+   "components": [
+    {
+     "item": "Construction Stormwater General Permit (CSWGP) - 1 to < 5 acres (annual permit fee)",
+     "low": 850,
+     "high": 850,
+     "source_url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-224-040",
+     "effective": "FY2027 column (July 1, 2026 - June 30, 2027); rule filed 7/1/25, effective 8/1/25"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dnr-fpa-conversion": {
+   "id": "dnr-fpa-conversion",
+   "label": "Forest practices application, conversion",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "WA Department of Natural Resources",
+   "low": 1500,
+   "high": 1500,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "DNR Forest Practices Application/Notification (FPA/N) Fees (fp_form_fpanfees.pdf)",
+    "url": "https://dnr.wa.gov/sites/default/files/2025-03/fp_form_fpanfees.pdf",
+    "date": "Undated form (file path 2025-03); statutory reference RCW 76.09.065(2)(b)(i)",
+    "excerpt": "Conversion of land to non‐forestry use $1500 $150"
+   },
+   "components": [
+    {
+     "item": "Forest Practices Application/Notification (FPA/N) Fees - Conversion of land to non-forestry use",
+     "low": 1500,
+     "high": 1500,
+     "source_url": "https://dnr.wa.gov/sites/default/files/2025-03/fp_form_fpanfees.pdf",
+     "effective": "Undated form (file path 2025-03); statutory reference RCW 76.09.065(2)(b)(i)"
+    }
+   ],
+   "confidence": "high"
+  },
+  "dnr-aquatic": {
+   "id": "dnr-aquatic",
+   "label": "Aquatic use authorization application",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "WA Department of Natural Resources",
+   "low": 25,
+   "high": 25,
+   "unit": "flat",
+   "note": "Application fee only. Rent or other charges may apply.",
+   "source": {
+    "title": "ORIA Regulatory Handbook - Aquatic Use Authorization (permit detail 31)",
+    "url": "https://www.oria.wa.gov/permithandbook/permitdetail/31",
+    "date": "As displayed 2026-11-12",
+    "excerpt": "Yes, submit a $25 non-refundable application processing fee with JARPA and Attachment E. DNR may also require surveys or a legal description of the property, a plan of development/operations, bonds, insurance, etc."
+   },
+   "components": [
+    {
+     "item": "Aquatic Use Authorization - application processing fee",
+     "low": 25,
+     "high": 25,
+     "source_url": "https://www.oria.wa.gov/permithandbook/permitdetail/31",
+     "effective": "As displayed 2026-11-12"
+    }
+   ],
+   "confidence": "high"
+  },
+  "pscaa-notification": {
+   "id": "pscaa-notification",
+   "label": "Asbestos and demolition notification, single-family",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "Puget Sound Clean Air Agency",
+   "low": 25,
+   "high": 65,
+   "unit": "flat",
+   "note": "Confirm the amount at filing; the posted fee table is old.",
+   "source": {
+    "title": "PSCAA Regulation III, Article 4, Section 4.03(d) Waiting Period and Fees",
+    "url": "https://www.pscleanair.gov/DocumentCenter/View/353",
+    "date": "Page dated 07/11 (current posted Regulation III Article 4 as of 2026-11-12)",
+    "excerpt": "Single-Family Residence: /  Asbestos Project prior written $25 / notification /  Demolition (with or 10 days $0 $65 / without asbestos project)"
+   },
+   "components": [
+    {
+     "item": "Asbestos/Demolition notification - Single-Family Residence",
+     "low": 25,
+     "high": 65,
+     "source_url": "https://www.pscleanair.gov/DocumentCenter/View/353",
+     "effective": "Page dated 07/11 (current posted Regulation III Article 4 as of 2026-11-12)"
+    }
+   ],
+   "confidence": "high"
+  },
+  "wsdot-access": {
+   "id": "wsdot-access",
+   "label": "State highway access connection permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "WSDOT",
+   "low": 50,
+   "high": 50,
+   "unit": "flat",
+   "note": null,
+   "source": {
+    "title": "WAC 468-51-070 Fees and surety bond",
+    "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=468-51-070",
+    "date": "WSR 99-06-034, effective 3/28/99 ('No agency filings affecting this section since 2003')",
+    "excerpt": "Residential dwelling units (up to 10) utilizing a single connection point . . . . / $50"
+   },
+   "components": [
+    {
+     "item": "Access connection permit - Category I base fee, residential dwelling units (up to 10) utilizing a single connection point",
+     "low": 50,
+     "high": 50,
+     "source_url": "https://app.leg.wa.gov/WAC/default.aspx?cite=468-51-070",
+     "effective": "WSR 99-06-034, effective 3/28/99 ('No agency filings affecting this section since 2003')"
+    }
+   ],
+   "confidence": "high"
+  },
+  "usace-permit": {
+   "id": "usace-permit",
+   "label": "Department of the Army permit fee",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "U.S. Army Corps of Engineers",
+   "low": 0,
+   "high": 100,
+   "unit": "flat",
+   "note": "No fee for nationwide and other general permits; $10 for an individual non-commercial permit.",
+   "source": {
+    "title": "33 CFR 325.1(f) Fees (eCFR, as of 2026-10-01)",
+    "url": "https://www.ecfr.gov/current/title-33/chapter-II/part-325/section-325.1",
+    "date": "eCFR version date 2026-10-01",
+    "excerpt": "A fee of $100.00 will be charged when the planned or ultimate purpose of the project is commercial or industrial in nature and is in support of operations that charge for the production, distribution or sale of goods or services. A $10.00 fee will be charged for permit applications when the proposed work is non-commercial in nature and would provide personal benefits that have no connection with a commercial enterprise. The final decision as to the basis for a fee ( ... No fees will be charged for time extensions, general permits or letters of permi"
+   },
+   "components": [
+    {
+     "item": "Department of the Army permit fee (33 CFR 325.1(f))",
+     "low": 10,
+     "high": 100,
+     "source_url": "https://www.ecfr.gov/current/title-33/chapter-II/part-325/section-325.1",
+     "effective": "eCFR version date 2026-10-01"
+    }
+   ],
+   "confidence": "high"
+  },
+  "wdfw-hpa": {
+   "id": "wdfw-hpa",
+   "label": "Hydraulic Project Approval application",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "WA Department of Fish and Wildlife",
+   "low": 0,
+   "high": 0,
+   "unit": "flat",
+   "note": "No application fee; the fee statute expired in 2017.",
+   "source": {
+    "title": "ORIA Regulatory Handbook - Hydraulic Project Approval (permit detail 25)",
+    "url": "https://www.oria.wa.gov/permithandbook/permitdetail/25",
+    "date": "Updated on Monday, March 16, 2026 (from 2025 agency submittal)",
+    "excerpt": "Application fee: 0 (from 2025 submittal) / Credential fee: 0 (from 2025 submittal) / Explanation/Description of costs/fees, including statutory, regulatory, or other legal authority for fees / No fee / Statutory Details: Chapter 220-660"
+   },
+   "components": [
+    {
+     "item": "Hydraulic Project Approval (HPA) application fee",
+     "low": 0,
+     "high": 0,
+     "source_url": "https://www.oria.wa.gov/permithandbook/permitdetail/25",
+     "effective": "Updated on Monday, March 16, 2026 (from 2025 agency submittal)"
+    }
+   ],
+   "confidence": "high"
+  },
+  "pro-geotech-report": {
+   "id": "pro-geotech-report",
+   "label": "Geotechnical report",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Geotechnical engineer",
+   "low": 2500,
+   "high": 6000,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "Blue Landscaping Services (Seattle-area contractor) - Retaining Wall Cost in Seattle: 2026",
+    "url": "https://bluelandscapingservices.com/blog/retaining-wall-cost-seattle",
+    "date": "2026",
+    "excerpt": "Geotechnical report on a mapped steep slope $2,500-$6,000 per parcel"
+   },
+   "sources": [
+    {
+     "title": "Blue Landscaping Services (Seattle-area contractor) - Retaining Wall Cost in Seattle: 2026",
+     "url": "https://bluelandscapingservices.com/blog/retaining-wall-cost-seattle",
+     "date": "2026",
+     "quote": "Geotechnical report on a mapped steep slope $2,500-$6,000 per parcel"
+    },
+    {
+     "title": "HomeAdvisor - How Much Does a Geotechnical Report Cost? [2025 Data]",
+     "url": "https://www.homeadvisor.com/cost/architects-and-engineers/geotechnical-report",
+     "date": "2025",
+     "quote": "On average, a geotechnical report costs between $1,000 and $5,000, with most homeowners spending an average of $2,700."
+    },
+    {
+     "title": "HomeGuide - How Much Does a Geotechnical Report Cost? (2026)",
+     "url": "https://homeguide.com/costs/geotechnical-report-cost",
+     "date": "2026",
+     "quote": "A geotechnical survey costs $1,000 to $5,000 on average."
+    }
+   ]
+  },
+  "pro-geo-assessment": {
+   "id": "pro-geo-assessment",
+   "label": "Geological assessment letter or report",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Geologist or geotechnical engineer",
+   "low": 1000,
+   "high": 2500,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "Placeholder estimate with no published source. Get a quote.",
+   "source": null,
+   "sources": [
+    {
+     "title": "HomeGuide - Geotechnical report cost (2026)",
+     "url": "https://homeguide.com/costs/geotechnical-report-cost",
+     "date": "2026",
+     "quote": "Average Range $1,000 to $5,000"
+    }
+   ]
+  },
+  "pro-wetland-delineation": {
+   "id": "pro-wetland-delineation",
+   "label": "Wetland delineation and rating report",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Wetland specialist",
+   "low": 2500,
+   "high": 4500,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "excerpt": "Comprehensive Stream and Wetland Reporting, Delineation, and GPS < 2 acres $2,830 to $3,518 + cost for GPS"
+   },
+   "sources": [
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Comprehensive Stream and Wetland Reporting, Delineation, and GPS < 2 acres $2,830 to $3,518 + cost for GPS"
+    },
+    {
+     "title": "Eastside Environmental Pros (Woodinville, WA) - Wetland Delineation Cost - Washington State",
+     "url": "https://eastsideenvironmentalpros.com/wetland-delineation-costs-in-king-and-snohomish-county/",
+     "date": "© 2026 (page undated)",
+     "quote": "In general, a wetland delineation and report costs between $2,500 and $4,000 but can be as low as $1,000 if no wetlands or streams are identified."
+    },
+    {
+     "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+     "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+     "date": "Last verified March 2026",
+     "quote": "Wetland delineation study by a qualified professional ($2,000-8,000)"
+    }
+   ]
+  },
+  "pro-wetland-mitigation-plan": {
+   "id": "pro-wetland-mitigation-plan",
+   "label": "Wetland buffer mitigation plan",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Wetland specialist",
+   "low": 3500,
+   "high": 6500,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+   },
+   "sources": [
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+    },
+    {
+     "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+     "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+     "date": "Last verified March 2026",
+     "quote": "Mitigation (if required) $10,000-100,000+"
+    }
+   ]
+  },
+  "pro-stream-typing": {
+   "id": "pro-stream-typing",
+   "label": "Stream or wetland reconnaissance",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Biologist",
+   "low": 1000,
+   "high": 3300,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "excerpt": "Basic Site Reconnaissance w/o GPS Services < 2 acres $1,757 to $3,324 + cost for GPS"
+   },
+   "sources": [
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Basic Site Reconnaissance w/o GPS Services < 2 acres $1,757 to $3,324 + cost for GPS"
+    },
+    {
+     "title": "Eastside Environmental Pros (Woodinville, WA) - Wetland Delineation Cost - Washington State",
+     "url": "https://eastsideenvironmentalpros.com/wetland-delineation-costs-in-king-and-snohomish-county/",
+     "date": "© 2026",
+     "quote": "can be as low as $1,000 if no wetlands or streams are identified."
+    }
+   ]
+  },
+  "pro-hmp": {
+   "id": "pro-hmp",
+   "label": "Habitat management plan",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Fish or wildlife biologist",
+   "low": 1500,
+   "high": 4500,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "excerpt": "Preparation of critical areas reports $1,413.00 to $2,563"
+   },
+   "sources": [
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Preparation of critical areas reports $1,413.00 to $2,563"
+    },
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Conduct urban wildlife habitat assessment $2,368.00 to $4,113"
+    },
+    {
+     "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+     "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+     "date": "Last verified March 2026",
+     "quote": "Habitat assessment if wildlife concerns exist ($1,500-4,000)"
+    }
+   ]
+  },
+  "pro-shoreline-nnl": {
+   "id": "pro-shoreline-nnl",
+   "label": "Shoreline no-net-loss or mitigation report",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Shoreline consultant",
+   "low": 2500,
+   "high": 8000,
+   "unit": "per project",
+   "confidence": "low",
+   "note": null,
+   "source": {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+   },
+   "sources": [
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+    },
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Ordinary high-water mark determination $1,285.00 to $2,960"
+    },
+    {
+     "title": "AskBaily - What is the Seattle Shoreline Management Act?",
+     "url": "https://askbaily.pages.dev/ask/what-is-the-seattle-shoreline-management-act",
+     "date": "Updated 2026-04-23",
+     "quote": "Habitat assessment: $2,000-$8,000."
+    }
+   ]
+  },
+  "pro-bio-eval": {
+   "id": "pro-bio-eval",
+   "label": "Biological evaluation for a Corps permit",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Biologist",
+   "low": 3000,
+   "high": 10000,
+   "unit": "per project",
+   "confidence": "low",
+   "note": null,
+   "source": {
+    "title": "AskBaily - What is the Seattle Shoreline Management Act?",
+    "url": "https://askbaily.pages.dev/ask/what-is-the-seattle-shoreline-management-act",
+    "date": "Updated 2026-04-23",
+    "excerpt": "Biological evaluation: $3,000-$15,000 (required for many applications)."
+   },
+   "sources": [
+    {
+     "title": "AskBaily - What is the Seattle Shoreline Management Act?",
+     "url": "https://askbaily.pages.dev/ask/what-is-the-seattle-shoreline-management-act",
+     "date": "Updated 2026-04-23",
+     "quote": "Biological evaluation: $3,000-$15,000 (required for many applications)."
+    },
+    {
+     "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+     "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+     "date": "Last verified March 2026",
+     "quote": "Biological assessments $2,000-10,000"
+    }
+   ]
+  },
+  "pro-jarpa": {
+   "id": "pro-jarpa",
+   "label": "Joint aquatic permit application preparation",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Shoreline consultant",
+   "low": 3000,
+   "high": 12000,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "Placeholder estimate with no published source. Get a quote.",
+   "source": null,
+   "sources": []
+  },
+  "pro-survey": {
+   "id": "pro-survey",
+   "label": "Boundary and topographic survey",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Land surveyor",
+   "low": 2000,
+   "high": 5000,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "Peninsula Construction Services (Kitsap County builder) - Custom Home Building in Kitsap County, WA: costs, process, what to expect",
+    "url": "https://peninsulaconstructionservices.net/custom-home-building-in-kitsap-county-wa-costs-process-what-to-expect/",
+    "date": "2026 ('current 2026 market data')",
+    "excerpt": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
+   },
+   "sources": [
+    {
+     "title": "Peninsula Construction Services (Kitsap County builder) - Custom Home Building in Kitsap County, WA: costs, process, what to expect",
+     "url": "https://peninsulaconstructionservices.net/custom-home-building-in-kitsap-county-wa-costs-process-what-to-expect/",
+     "date": "2026 ('current 2026 market data')",
+     "quote": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
+    }
+   ]
+  },
+  "pro-elevation-cert": {
+   "id": "pro-elevation-cert",
+   "label": "FEMA elevation certificate",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Land surveyor",
+   "low": 500,
+   "high": 1500,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "Placeholder estimate with no published source. Get a quote.",
+   "source": null,
+   "sources": [
+    {
+     "title": "Find Land Surveyor - Elevation Certificate guides (Washington / King / Pierce)",
+     "url": "https://findlandsurveyor.com/guides/elevation-certificate-washington",
+     "date": "2026",
+     "quote": "$400 to $900 for a standard residential property ... $1,000 to $1,500 [complex sites]"
+    }
+   ]
+  },
+  "pro-flood-habitat": {
+   "id": "pro-flood-habitat",
+   "label": "Floodplain habitat assessment",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Biologist",
+   "low": 3100,
+   "high": 4600,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "excerpt": "Prepare habitat assessment for properties in a floodplain $3,118.00 to $4,563"
+   },
+   "sources": [
+    {
+     "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+     "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+     "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+     "quote": "Prepare habitat assessment for properties in a floodplain $3,118.00 to $4,563"
+    }
+   ]
+  },
+  "pro-septic-design": {
+   "id": "pro-septic-design",
+   "label": "Septic design and soil logs",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Septic designer",
+   "low": 2000,
+   "high": 5000,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "Placeholder estimate with no published source. Get a quote.",
+   "source": null,
+   "sources": [
+    {
+     "title": "HomeGuide - How Much Does a Septic Tank System Cost? (2026)",
+     "url": "https://homeguide.com/costs/septic-tank-system-cost",
+     "date": "2026",
+     "quote": "Engineering, permits, and inspections $1,000 – $1,500"
+    },
+    {
+     "title": "HomeGuide - How Much Does a Perc Test Cost? (2026)",
+     "url": "https://homeguide.com/costs/perc-test-cost",
+     "date": "2026",
+     "quote": "A perc test costs $200 to $1,500 to hand-dig test holes and measure the soil's drainage for a septic system."
+    }
+   ]
+  },
+  "pro-civil-sdap": {
+   "id": "pro-civil-sdap",
+   "label": "Civil engineering for site development and drainage",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Civil engineer",
+   "low": 3500,
+   "high": 10000,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "Placeholder estimate with no published source. Get a quote.",
+   "source": null,
+   "sources": []
+  },
+  "pro-arch-survey": {
+   "id": "pro-arch-survey",
+   "label": "Archaeological survey",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Archaeologist",
+   "low": 2000,
+   "high": 5000,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "Washington Recreation and Conservation Office - Cultural Resources guidance for grant sponsors",
+    "url": "https://rco.wa.gov/wp-content/uploads/2022/06/GRANTS-CulturalResSponsors.pdf",
+    "date": "June 2022 (upload path)",
+    "excerpt": "Cost for a survey depends on the scope, scale, and location of the project. A survey for a discrete project action in a low-risk area may cost $2,000-$5,000."
+   },
+   "sources": [
+    {
+     "title": "Washington Recreation and Conservation Office - Cultural Resources guidance for grant sponsors",
+     "url": "https://rco.wa.gov/wp-content/uploads/2022/06/GRANTS-CulturalResSponsors.pdf",
+     "date": "June 2022 (upload path)",
+     "quote": "Cost for a survey depends on the scope, scale, and location of the project. A survey for a discrete project action in a low-risk area may cost $2,000-$5,000."
+    }
+   ]
+  },
+  "pro-asbestos-survey": {
+   "id": "pro-asbestos-survey",
+   "label": "Asbestos survey before demolition",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "AHERA building inspector",
+   "low": 600,
+   "high": 1500,
+   "unit": "per project",
+   "confidence": "medium",
+   "note": null,
+   "source": {
+    "title": "HomeAdvisor - How Much Does Asbestos Testing Cost [2025 Data]",
+    "url": "https://www.homeadvisor.com/cost/environmental-safety/test-or-remove-asbestos/",
+    "date": "2025",
+    "excerpt": "The cost of an asbestos refurbishment or demolition survey for a standard single-family home is $600 to $1,500 or more."
+   },
+   "sources": [
+    {
+     "title": "HomeAdvisor - How Much Does Asbestos Testing Cost [2025 Data]",
+     "url": "https://www.homeadvisor.com/cost/environmental-safety/test-or-remove-asbestos/",
+     "date": "2025",
+     "quote": "The cost of an asbestos refurbishment or demolition survey for a standard single-family home is $600 to $1,500 or more."
+    },
+    {
+     "title": "Fixr - Asbestos Testing Cost",
+     "url": "https://www.fixr.com/costs/asbestos-testing",
+     "date": "fetched 2026-11-12",
+     "quote": "This type of asbestos survey cost ranges from $900 to $1,200 to complete."
+    }
+   ]
+  },
+  "pro-hydrogeo": {
+   "id": "pro-hydrogeo",
+   "label": "Hydrogeological report",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Hydrogeologist",
+   "low": 3000,
+   "high": 8000,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "Placeholder estimate with no published source. Get a quote.",
+   "source": null,
+   "sources": []
+  },
+  "pro-sepa": {
+   "id": "pro-sepa",
+   "label": "SEPA checklist preparation",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Consultant",
+   "low": 1000,
+   "high": 3500,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "Placeholder estimate with no published source. Get a quote.",
+   "source": null,
+   "sources": []
+  }
+ },
  "agencies": {
   "kitsap-dcd": {
    "id": "kitsap-dcd",
@@ -108,6 +4176,13 @@
    "name": "Port Gamble S'Klallam Tribe",
    "role": "Sovereign government of the Port Gamble S'Klallam Reservation; treaty and cultural resource interests in north Kitsap and Hood Canal",
    "url": "https://pgst.nsn.us/"
+  },
+  "treaty-tribes": {
+   "id": "treaty-tribes",
+   "tier": "tribal",
+   "name": "Tribes with treaty rights in the area",
+   "role": "Suquamish, Port Gamble S'Klallam and other treaty tribes are consulted on federal permits and notified of shoreline and environmental reviews",
+   "url": ""
   },
   "ecology": {
    "id": "ecology",
@@ -184,7 +4259,7 @@
    "tier": "utility",
    "name": "Sewer utility",
    "role": "Sewer availability, connection approval and connection charges",
-   "url": "https://www.kitsap.gov/pw/Pages/sewer.aspx"
+   "url": "https://www.kitsap.gov/pw/Pages/Sewer-Rates.aspx"
   },
   "water-purveyor": {
    "id": "water-purveyor",

@@ -76,8 +76,11 @@
     L.push('## Bottom line');
     L.push('');
     L.push('- Add **' + range(t.base.low, t.base.high) + '** to the bid for permit fees and pre-construction studies that are required or likely.');
+    var k = t.by_kind, part = function (key, name) { return k[key] && k[key].base.high ? name + ' ' + range(k[key].base.low, k[key].base.high) : null; };
+    var split = [part('agency_fee', 'agency fees'), part('professional', 'studies and consultants'), part('impact_fee', 'impact fees'), part('utility', 'utility connections')].filter(Boolean);
+    if (split.length > 1) L.push('  - Of which: ' + split.join('; ') + '.');
     if (t.contingent.high) L.push('- Carry **' + range(t.contingent.low, t.contingent.high) + '** as contingency for items that depend on what is found on site.');
-    if (grid) L.push('- ' + pct(grid.totals.core.pct + grid.totals.buffer.pct) + ' of the lot is inside mapped constraints and standard buffers.');
+    if (grid && grid.totals.core.pct + grid.totals.buffer.pct < 85 && grid.totals.core.pct + grid.totals.buffer.pct >= 1) L.push('- ' + pct(grid.totals.core.pct + grid.totals.buffer.pct) + ' of the lot is inside mapped constraints and standard buffers.');
     flags(report, facts, grid).forEach(function (f) { L.push('- ' + f.text); });
     L.push('');
     L.push('## Who is involved');

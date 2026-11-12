@@ -12,8 +12,16 @@
 
   var DEFAULT_TIMEOUT_MS = 30000;
 
+  /** GET/POST JSON with one automatic retry, since public map servers drop requests now and then. */
   function getJson(url, params, opts) {
     opts = opts || {};
+    return getJsonOnce(url, params, opts).catch(function (err) {
+      if (opts.noRetry) throw err;
+      return new Promise(function (resolve) { setTimeout(resolve, 600); }).then(function () { return getJsonOnce(url, params, opts); });
+    });
+  }
+
+  function getJsonOnce(url, params, opts) {
     var qs = Object.keys(params || {})
       .filter(function (k) { return params[k] !== undefined && params[k] !== null; })
       .map(function (k) {

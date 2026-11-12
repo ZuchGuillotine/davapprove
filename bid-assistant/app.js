@@ -280,10 +280,15 @@
     var constrained = g.totals.core.pct + g.totals.buffer.pct;
     return '<div class="tiles">' +
       tile('Agencies and districts', String(firm), maybe ? 'plus ' + maybe + ' possible' : 'required or likely') +
-      tile('Add to the bid', range(t.base.low, t.base.high), 'permit fees and studies, required or likely') +
+      tile('Add to the bid', range(t.base.low, t.base.high), splitText(t) || 'permit fees and studies, required or likely') +
       tile('Contingency', t.contingent.high ? range(t.contingent.low, t.contingent.high) : '$0', 'only if a possible trigger is confirmed') +
       tile('Lot inside mapped constraints', pct(constrained), acres(g.totals.clear.sqft + g.totals.review.sqft) + ' outside mapped features and buffers') +
       '</div>';
+  }
+  function splitText(t) {
+    var names = { agency_fee: 'agency fees', professional: 'studies', impact_fee: 'impact fees', utility: 'utility hookups' };
+    return Object.keys(names).filter(function (k) { return t.by_kind[k] && t.by_kind[k].base.high; })
+      .map(function (k) { return names[k] + ' ' + money((t.by_kind[k].base.low + t.by_kind[k].base.high) / 2); }).join(', ');
   }
   function tile(label, value, sub) { return '<div class="tile"><span>' + label + '</span><b>' + value + '</b><small>' + sub + '</small></div>'; }
 
@@ -316,11 +321,15 @@
   function renderFinding(f) {
     var cites = f.citations.map(function (id) {
       var c = DATA.citations[id];
-      return '<details class="cite"><summary>' + esc(c.citation) + '</summary><blockquote>' + (c.excerpt ? '&ldquo;' + esc(c.excerpt) + '&rdquo;' : esc(c.summary || '')) + '</blockquote><p><a href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.title || c.citation) + '</a> <span class="hint">text checked ' + esc(c.fetched || '') + (c.verified ? '' : ' · excerpt not machine-verified') + '</span></p></details>';
+      return '<details class="cite' + (c.verified ? '' : ' unverified') + '"><summary>' + esc(c.citation) + '</summary>' +
+        '<blockquote>' + (c.excerpt ? '&ldquo;' + esc(c.excerpt) + '&rdquo;' : esc(c.summary || '')) + '</blockquote>' +
+        '<p><a href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.title || c.citation) + '</a>' +
+        (c.verified_against && c.verified_against !== c.url ? ' · <a href="' + esc(c.verified_against) + '" target="_blank" rel="noopener">text as checked</a>' : '') +
+        ' <span class="hint">' + (c.verified ? 'quote matched to source ' + esc(c.fetched || '') : 'not verified against source text') + (c.source_currency && !/^current/.test(c.source_currency) ? ' · ' + esc(c.source_currency.replace(/^possibly_outdated: /, 'may be outdated: ')) : '') + '</span></p></details>';
     }).join('');
-    var costs = f.costs.map(function (c) { return '<li>' + esc(c.label) + ' <b>' + range(c.low, c.high) + '</b></li>'; }).join('');
+    var costs = f.costs.map(function (c) { return '<li>' + esc(c.label) + ' <b>' + range(c.low, c.high) + '</b>' + (c.bucket === 'contingent' ? ' <span class="hint">contingency' + (c.note ? ': ' + esc(c.note) : '') + '</span>' : '') + '</li>'; }).join('');
     return '<div class="finding">' +
-      '<h4>' + badge(f.level) + ' ' + esc(f.title) + '</h4>' +
+      '<h4>' + badge(f.level) + ' ' + esc(f.title) + (f.basis && f.basis !== 'documented' ? ' <span class="basis">' + (f.basis === 'workflow' ? 'recommended step' : 'needs agency answer') + '</span>' : '') + '</h4>' +
       '<p>' + esc(f.why) + '</p>' +
       (f.confirm ? '<p class="confirm"><b>Confirm:</b> ' + esc(f.confirm) + '</p>' : '') +
       (costs ? '<ul class="fcosts">' + costs + '</ul>' : '') +
@@ -332,7 +341,7 @@
   function renderCosts(r) {
     var rows = function (bucket) {
       return r.costs.items.filter(function (c) { return c.bucket === bucket; }).map(function (c) {
-        var src = c.source ? '<a href="' + esc(c.source.url) + '" target="_blank" rel="noopener" title="' + esc(c.source.title + (c.source.date ? ' · ' + c.source.date : '')) + '">' + (c.basis === 'published' ? 'published fee' : 'market range') + '</a>' : (c.basis === 'published' ? 'published fee' : 'market range');
+        var src = c.source ? '<a href="' + esc(c.source.url) + '" target="_blank" rel="noopener" title="' + esc(c.source.title + (c.source.date ? ' · ' + c.source.date : '')) + '">' + (c.basis === 'published' ? 'published fee' : 'market range') + '</a>' : (c.confidence === 'unsourced' ? '<b class="unsourced">placeholder, no source</b>' : 'market range');
         return '<tr class="' + (c.excluded ? 'excluded' : '') + '" data-fee="' + esc(c.fee) + '">' +
           '<td><input type="checkbox" class="inc" ' + (c.excluded ? '' : 'checked') + ' aria-label="Include"></td>' +
           '<td><b>' + esc(c.label) + '</b><small>' + esc(c.payee || '') + (c.note ? ' · ' + esc(c.note) : '') + '</small></td>' +

@@ -108,6 +108,7 @@
   function helpers(data) {
     return {
       cite: function (id) { return data.citations[id]; },
+      rangeText: function (id) { var f = data.fees[id]; return '$' + roundMoney(f.low).toLocaleString('en-US') + ' to $' + roundMoney(f.high).toLocaleString('en-US'); },
       fee: function (id) { return data.fees[id]; },
       value: function (citationId, key) {
         var c = data.citations[citationId];

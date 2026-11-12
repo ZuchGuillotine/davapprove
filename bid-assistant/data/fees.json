@@ -1,1 +1,1640 @@
-[]
+[
+ {
+  "id": "dcd-building-permit",
+  "label": "Building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 0,
+  "high": 0,
+  "unit": "formula",
+  "note": "Computed from the published formula; the county does not print worked totals.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Residential, Commercial Mechanical/Plumbing, Commercial Tenant / .0224 / Improvements and Fire Permits - includes plan review"
+  },
+  "components": [
+   {
+    "item": "Permit Fee Multipliers (PFM) - Residential",
+    "low": null,
+    "high": null,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   },
+   {
+    "item": "Building Valuation Determination - New residential space",
+    "low": 177.63,
+    "high": 177.63,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Building%20Valuation%20Determination.pdf",
+    "effective": "Revised 11/1/2026 (effective 11/1/2026; next change expected 5/1/2027)"
+   },
+   {
+    "item": "Building Valuation Determination - New garage, barn, shed, pole building (unheated, attached or detached)",
+    "low": 69.28,
+    "high": 69.28,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Building%20Valuation%20Determination.pdf",
+    "effective": "Revised 11/1/2026 (effective 11/1/2026; next change expected 5/1/2027)"
+   },
+   {
+    "item": "Base Application Fee",
+    "low": 90,
+    "high": 90,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   },
+   {
+    "item": "Washington State Building Code Council - surcharge per building permit",
+    "low": 6.5,
+    "high": 6.5,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   },
+   {
+    "item": "Technology Surcharge",
+    "low": null,
+    "high": null,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "method": {
+   "multiplier": 0.0224,
+   "technology_surcharge": 0.03,
+   "flat": 96.5,
+   "rates": {
+    "residential": 177.63,
+    "garage": 69.28
+   },
+   "describe": "floor area x valuation rate x 0.0224, plus 3% technology surcharge, $90 base fee and $6.5 state surcharge"
+  },
+  "confidence": "high"
+ },
+ {
+  "id": "kitsap-impact-fees",
+  "label": "Road, park and school impact fees",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Kitsap County",
+  "low": 0,
+  "high": 0,
+  "unit": "formula",
+  "note": null,
+  "source": {
+   "title": "Kitsap County Impact Fee Table (Revised 9/24/26)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+   "date": "Revised 9/24/26",
+   "excerpt": "210 Single Family Detached Housing per dwelling unit 5,181.34"
+  },
+  "components": [
+   {
+    "item": "Road Impact Fee - ITE 210 Single Family Detached Housing",
+    "low": 5181.34,
+    "high": 5181.34,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+    "effective": "Revised 9/24/26"
+   },
+   {
+    "item": "Road Impact Fee - ITE 210 Single Family Detached Housing - ADU",
+    "low": 2590.67,
+    "high": 2590.67,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+    "effective": "Revised 9/24/26"
+   },
+   {
+    "item": "Park Impact Fees - Residential Only (ADU, Single Family & Multi Family)",
+    "low": 356.73,
+    "high": 1596.82,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+    "effective": "Revised 9/24/26"
+   },
+   {
+    "item": "School Impact Fees - Residential Only (ADU, Single Family & Multi Family)",
+    "low": 688.33,
+    "high": 3075.51,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Impact%20Fee%20Table.pdf",
+    "effective": "Revised 9/24/26"
+   }
+  ],
+  "method": {
+   "roads_sfr": 5181.34,
+   "roads_adu": 2590.67,
+   "parks_per_sqft": 0.45,
+   "parks_min": 356.73,
+   "parks_max": 1596.82,
+   "schools_per_sqft": 0.86,
+   "schools_min": 688.33,
+   "schools_max": 3075.51
+  },
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-sdap-sfr",
+  "label": "Site Development Activity Permit, single-family",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 2900,
+  "high": 3278,
+  "unit": "flat",
+  "note": "Flat fee plus base fee and surcharge at submittal. Inspections are billed hourly on top.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "SDAP Single Family Residence ** $2,900.00"
+  },
+  "components": [
+   {
+    "item": "SDAP Single Family Residence",
+    "low": 2900,
+    "high": 2900,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-sdap-minor",
+  "label": "Site Development Activity Permit, minor grading",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 1450,
+  "high": 1450,
+  "unit": "flat",
+  "note": "Inspections are billed hourly on top.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "SDAP Minor Grading ** $1,450.00"
+  },
+  "components": [
+   {
+    "item": "SDAP Minor Grading",
+    "low": 1450,
+    "high": 1450,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-sdap-grading-1",
+  "label": "Site Development Activity Permit, grading 150 to 500 cu yd",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 2610,
+  "high": 2610,
+  "unit": "flat",
+  "note": "Inspections are billed hourly on top.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Grading 1: >150 but < 500 cubic yards** $2,610.00"
+  },
+  "components": [
+   {
+    "item": "Grading 1: >150 but < 500 cubic yards",
+    "low": 2610,
+    "high": 2610,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-sdap-grading-2",
+  "label": "Site Development Activity Permit, grading 500 to 5,000 cu yd",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 3045,
+  "high": 3045,
+  "unit": "flat",
+  "note": "Inspections are billed hourly on top.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Grading 2: > 500 but < 5000 cubic yards ** $3,045.00"
+  },
+  "components": [
+   {
+    "item": "Grading 2: > 500 but < 5000 cubic yards",
+    "low": 3045,
+    "high": 3045,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-sdap-grading-3",
+  "label": "Site Development Activity Permit, grading over 5,000 cu yd",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 5365,
+  "high": 5365,
+  "unit": "flat",
+  "note": "Inspections are billed hourly on top.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Grading 3: >5000 cubic yards or greater ** $5,365.00"
+  },
+  "components": [
+   {
+    "item": "Grading 3: >5000 cubic yards or greater",
+    "low": 5365,
+    "high": 5365,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-sdap-short-plat",
+  "label": "Site Development Activity Permit, short plat",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 4205,
+  "high": 4205,
+  "unit": "flat",
+  "note": "Inspections are billed hourly on top.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "SDAP Short Plats ** $4,205.00"
+  },
+  "components": [
+   {
+    "item": "SDAP Short Plats",
+    "low": 4205,
+    "high": 4205,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-simplified-drainage",
+  "label": "Simplified drainage review, engineered",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 1160,
+  "high": 1160,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Simplified Drainage Review - Engineered $1,160.00"
+  },
+  "components": [
+   {
+    "item": "Simplified Drainage Review - Engineered",
+    "low": 1160,
+    "high": 1160,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-buffer-reduction",
+  "label": "Critical area or shoreline buffer reduction",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 1595,
+  "high": 1595,
+  "unit": "flat",
+  "note": "Covers two review cycles; further review is hourly.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Critical Area or Shoreline Buffer Reduction $1,595.00"
+  },
+  "components": [
+   {
+    "item": "Critical Area or Shoreline Buffer Reduction",
+    "low": 1595,
+    "high": 1595,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-critical-area-variance",
+  "label": "Critical area variance or reasonable use exception",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 4350,
+  "high": 5000,
+  "unit": "flat",
+  "note": "Includes the hearing examiner fee.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Critical Area Variance – Type III $4,350.00 $650.00 $5,000.00"
+  },
+  "components": [
+   {
+    "item": "Critical Area Variance - Type III",
+    "low": 4350,
+    "high": 5000,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-site-evaluation",
+  "label": "Site evaluation",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 290,
+  "high": 290,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Site Evaluation* $290.00"
+  },
+  "components": [
+   {
+    "item": "Site Evaluation",
+    "low": 290,
+    "high": 290,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-staff-consultation",
+  "label": "Staff consultation",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 350,
+  "high": 350,
+  "unit": "flat",
+  "note": "Credited to an application filed within 12 months.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Staff Consultation / Cross-functional mix of review team members help identify potential / $350.00 / requirements for developing a single residential parcel; 30 minute / maximum, credit towards application within 12 months"
+  },
+  "components": [
+   {
+    "item": "Staff Consultation",
+    "low": 350,
+    "high": 350,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-sepa",
+  "label": "SEPA checklist review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 725,
+  "high": 725,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "SEPA Checklist Review* $725.00"
+  },
+  "components": [
+   {
+    "item": "SEPA Checklist Review",
+    "low": 725,
+    "high": 725,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-shoreline-exemption",
+  "label": "Shoreline exemption",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 870,
+  "high": 870,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Shoreline Exemption $870.00"
+  },
+  "components": [
+   {
+    "item": "Shoreline Exemption",
+    "low": 870,
+    "high": 870,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-shoreline-sdp",
+  "label": "Shoreline substantial development permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 4640,
+  "high": 4640,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Shoreline Substantial Development Permit (Residential or Commercial) $4,640.00"
+  },
+  "components": [
+   {
+    "item": "Shoreline Substantial Development Permit (Residential or Commercial)",
+    "low": 4640,
+    "high": 4640,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-shoreline-acup",
+  "label": "Shoreline administrative conditional use permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 2610,
+  "high": 2610,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Administrative Conditional Use Permit – Shoreline $2,610.00"
+  },
+  "components": [
+   {
+    "item": "Administrative Conditional Use Permit - Shoreline",
+    "low": 2610,
+    "high": 2610,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-cup-adu",
+  "label": "Conditional use permit for an ADU",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 3045,
+  "high": 4565,
+  "unit": "flat",
+  "note": "Low end is the administrative permit; high end is the hearing examiner permit with its hearing fee.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Administrative Conditional Use Permit – Accessory Dwelling $3,045.00 / Unit"
+  },
+  "components": [
+   {
+    "item": "Administrative Conditional Use Permit - Accessory Dwelling Unit",
+    "low": 3045,
+    "high": 3045,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   },
+   {
+    "item": "Conditional Use Permit - Accessory Dwelling Unit",
+    "low": 3915,
+    "high": 4565,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-short-plat-prelim",
+  "label": "Preliminary short plat",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 3045,
+  "high": 3045,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Short Lot Subdivisions / Preliminary $3,045.00"
+  },
+  "components": [
+   {
+    "item": "Short Lot Subdivisions - Preliminary",
+    "low": 3045,
+    "high": 3045,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-short-plat-final",
+  "label": "Final short plat",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 1595,
+  "high": 1595,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Short Lot Subdivisions / Preliminary $3,045.00 / Preliminary Amendment $2,320.00 / Final $1,595.00"
+  },
+  "components": [
+   {
+    "item": "Short Lot Subdivisions - Final",
+    "low": 1595,
+    "high": 1595,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-demolition",
+  "label": "Demolition permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 145,
+  "high": 145,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Demolition $145.00"
+  },
+  "components": [
+   {
+    "item": "Demolition",
+    "low": 145,
+    "high": 145,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-timber-harvest",
+  "label": "County timber harvest permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 1160,
+  "high": 1160,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Timber Harvest / Minor $1,160.00 / Major $1,160.00"
+  },
+  "components": [
+   {
+    "item": "Timber Harvest (Minor / Major)",
+    "low": 1160,
+    "high": 1160,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dcd-well-water",
+  "label": "Building permit supplied by a well",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 500,
+  "high": 500,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Building Permits Supplied with Well Water / Each new domestic use that proposes a new withdrawal from a water right / permit-exempt well approved after January 19, 2018, shall be assessed a $500.00 / $500 fee. / ($350 to Department of Ecology / $150 DCD program administration)"
+  },
+  "components": [
+   {
+    "item": "Building Permits Supplied with Well Water",
+    "low": 500,
+    "high": 500,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "pw-road-approach",
+  "label": "Road approach permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap County DCD",
+  "low": 0,
+  "high": 290,
+  "unit": "flat",
+  "note": "Waived when filed with a building permit.",
+  "source": {
+   "title": "Kitsap County DCD Fee Schedule (Revised 6/3/2026)",
+   "url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+   "date": "Revised 6/3/2026",
+   "excerpt": "Road Approach* / Fee waived if submitted with SDAP or building permit. Includes inspection $290.00 / hours"
+  },
+  "components": [
+   {
+    "item": "Road Approach",
+    "low": 290,
+    "high": 290,
+    "source_url": "https://www.kitsap.gov/dcd/FormsandBrochures/Fee%20Schedule.pdf",
+    "effective": "Revised 6/3/2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "kphd-bsa",
+  "label": "Building Site Application, single-family",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap Public Health District",
+  "low": 820,
+  "high": 1085,
+  "unit": "flat",
+  "note": "Low end on public water, high end on a private well. A 2027 increase was in draft when checked.",
+  "source": {
+   "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+   "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+   "date": "Effective January 1, 2026",
+   "excerpt": "Single Family Residential Onsite Sewage System on Public Water Supply 820"
+  },
+  "components": [
+   {
+    "item": "New/Alteration/Expansion BSA - Single Family Residential Onsite Sewage System on Public Water Supply",
+    "low": 820,
+    "high": 820,
+    "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "effective": "Effective January 1, 2026"
+   },
+   {
+    "item": "New/Alteration/Expansion BSA - Single Family Residential Onsite Sewage System w/Private Water Supply (Existing or proposed water source)",
+    "low": 1085,
+    "high": 1085,
+    "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "effective": "Effective January 1, 2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "kphd-sewage-permit",
+  "label": "Septic installation permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap Public Health District",
+  "low": 600,
+  "high": 600,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+   "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+   "date": "Effective January 1, 2026",
+   "excerpt": "New, Replacement, or Repair Installation 600"
+  },
+  "components": [
+   {
+    "item": "Sewage System Permits - New, Replacement, or Repair Installation",
+    "low": 600,
+    "high": 600,
+    "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "effective": "Effective January 1, 2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "kphd-building-clearance",
+  "label": "Building Clearance, residential on septic",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap Public Health District",
+  "low": 335,
+  "high": 335,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+   "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+   "date": "Effective January 1, 2026",
+   "excerpt": "Building Clearance (BC) - Residential 335"
+  },
+  "components": [
+   {
+    "item": "Building Clearance (BC) - Residential",
+    "low": 335,
+    "high": 335,
+    "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "effective": "Effective January 1, 2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "kphd-building-clearance-sewered",
+  "label": "Building Clearance, sewered lot",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kitsap Public Health District",
+  "low": 90,
+  "high": 145,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "Kitsap Public Health District Environmental Health Division Fee Schedule (Effective January 1, 2026), Board Resolution 2025-06",
+   "url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+   "date": "Effective January 1, 2026",
+   "excerpt": "Building Clearances for Sewered Properties: / Properties with a public water supply 90 / Properties with a private water supply 145"
+  },
+  "components": [
+   {
+    "item": "Building Clearances for Sewered Properties",
+    "low": 90,
+    "high": 145,
+    "source_url": "https://www.kitsappublichealth.org/_files/ugd/461036_db2fb82f8b6a4cab89ecd4f7a4885a1b.pdf",
+    "effective": "Effective January 1, 2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "sewer-connection",
+  "label": "County sewer connection: newcomer assessment, permit and side service",
+  "kind": "utility",
+  "basis": "published",
+  "payee": "Kitsap County Public Works Sewer Utility",
+  "low": 10784,
+  "high": 11184,
+  "unit": "flat",
+  "note": "County-operated systems only. City and district utilities set their own charges.",
+  "source": {
+   "title": "Kitsap County Public Works Sewer Utility Development Service Fees (Resolution 191-2025)",
+   "url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+   "date": "Effective January 1, 2026",
+   "excerpt": "Newcomer’s Assessment $9,939"
+  },
+  "components": [
+   {
+    "item": "Newcomer's Assessment",
+    "low": 9939,
+    "high": 9939,
+    "source_url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+    "effective": "Effective January 1, 2026"
+   },
+   {
+    "item": "Sewer Permit",
+    "low": 145,
+    "high": 145,
+    "source_url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+    "effective": "Effective January 1, 2026"
+   },
+   {
+    "item": "Side Service Installation (Gravity 6\" Typical / Force main 2\" Typical)",
+    "low": 700,
+    "high": 1100,
+    "source_url": "https://www.kitsap.gov/pw/Documents/191-2025%20sewer%20development%20fees.pdf",
+    "effective": "Effective January 1, 2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "water-connection",
+  "label": "New water service connection (Kitsap PUD and Silverdale Water as examples)",
+  "kind": "utility",
+  "basis": "published",
+  "payee": "Water purveyor",
+  "low": 12700,
+  "high": 17650,
+  "unit": "flat",
+  "note": "Range spans Kitsap PUD ($13,892) and Silverdale Water for a 5/8 inch meter. Other purveyors differ; the purveyor for this lot is not mapped.",
+  "source": {
+   "title": "KPUD Water and Streetlight Utility Rates and Fees - 2026/2027 (Adopted 11.10.25)",
+   "url": "https://www.kpud.org/wp-content/uploads/KPUD-Water-Streetlight-Rates-2026-2027-Adopted-11.10.25.pdf",
+   "date": "2026 Rate column; rates take effect January 1 unless noted",
+   "excerpt": "Capital Facilities Charge / 5/8” x 3/4” meter $6,553 $8,531 $8,787"
+  },
+  "components": [
+   {
+    "item": "Capital Facilities Charge - 5/8\" x 3/4\" meter",
+    "low": 8531,
+    "high": 8531,
+    "source_url": "https://www.kpud.org/wp-content/uploads/KPUD-Water-Streetlight-Rates-2026-2027-Adopted-11.10.25.pdf",
+    "effective": "2026 Rate column; rates take effect January 1 unless noted"
+   },
+   {
+    "item": "Service Installation Charges - Residential - 5/8\" x 3/4\" meter",
+    "low": 5361,
+    "high": 5361,
+    "source_url": "https://www.kpud.org/wp-content/uploads/KPUD-Water-Streetlight-Rates-2026-2027-Adopted-11.10.25.pdf",
+    "effective": "2026 Rate column; rates take effect January 1 unless noted"
+   },
+   {
+    "item": "Capital Facilities Charge (CFC) - 5/8\" meter",
+    "low": 11325,
+    "high": 11325,
+    "source_url": "https://www.swd16.org/Customer%20Care/2026%20Docs/2026%20Connection%20Charges.pdf",
+    "effective": "January 1, 2026"
+   },
+   {
+    "item": "Service Installation Charge (SIC) - Residential - 5/8\" meter",
+    "low": 1375,
+    "high": 6325,
+    "source_url": "https://www.swd16.org/Customer%20Care/2026%20Docs/2026%20Connection%20Charges.pdf",
+    "effective": "January 1, 2026"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "lni-electrical",
+  "label": "Electrical permit, new residence",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "WA Labor and Industries",
+  "low": 0,
+  "high": 0,
+  "unit": "formula",
+  "note": null,
+  "source": {
+   "title": "WAC 296-46B-906 Inspection fees (L&I electrical)",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=296-46B-906",
+   "date": "WSR 26-10-060, filed 5/5/26, effective 7/1/26",
+   "excerpt": "(i) First 1300 sq. ft. $119.90 | Each additional 500 sq. ft. or portion of $38.20"
+  },
+  "components": [
+   {
+    "item": "Electrical inspection fee - Single- and two-family residential (New Construction)",
+    "low": 119.9,
+    "high": null,
+    "source_url": "https://app.leg.wa.gov/WAC/default.aspx?cite=296-46B-906",
+    "effective": "WSR 26-10-060, filed 5/5/26, effective 7/1/26"
+   }
+  ],
+  "method": {
+   "first_1300": 119.9,
+   "per_additional_500": 38.2
+  },
+  "confidence": "high"
+ },
+ {
+  "id": "ecology-cswgp",
+  "label": "Construction Stormwater General Permit, 1 to 5 acres",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "WA Department of Ecology",
+  "low": 850,
+  "high": 850,
+  "unit": "flat",
+  "note": "Annual fee while the permit is open.",
+  "source": {
+   "title": "WAC 173-224-040 Permit fee schedule",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-224-040",
+   "date": "FY2027 column (July 1, 2026 - June 30, 2027); rule filed 7/1/25, effective 8/1/25",
+   "excerpt": "c. Construction Stormwater General Permit (CSWGP) 1. Less than 1 acre 525 550 2. 1 to < 5 acres 820 850"
+  },
+  "components": [
+   {
+    "item": "Construction Stormwater General Permit (CSWGP) - 1 to < 5 acres (annual permit fee)",
+    "low": 850,
+    "high": 850,
+    "source_url": "https://app.leg.wa.gov/WAC/default.aspx?cite=173-224-040",
+    "effective": "FY2027 column (July 1, 2026 - June 30, 2027); rule filed 7/1/25, effective 8/1/25"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dnr-fpa-conversion",
+  "label": "Forest practices application, conversion",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "WA Department of Natural Resources",
+  "low": 1500,
+  "high": 1500,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "DNR Forest Practices Application/Notification (FPA/N) Fees (fp_form_fpanfees.pdf)",
+   "url": "https://dnr.wa.gov/sites/default/files/2025-03/fp_form_fpanfees.pdf",
+   "date": "Undated form (file path 2025-03); statutory reference RCW 76.09.065(2)(b)(i)",
+   "excerpt": "Conversion of land to non‐forestry use $1500 $150"
+  },
+  "components": [
+   {
+    "item": "Forest Practices Application/Notification (FPA/N) Fees - Conversion of land to non-forestry use",
+    "low": 1500,
+    "high": 1500,
+    "source_url": "https://dnr.wa.gov/sites/default/files/2025-03/fp_form_fpanfees.pdf",
+    "effective": "Undated form (file path 2025-03); statutory reference RCW 76.09.065(2)(b)(i)"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "dnr-aquatic",
+  "label": "Aquatic use authorization application",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "WA Department of Natural Resources",
+  "low": 25,
+  "high": 25,
+  "unit": "flat",
+  "note": "Application fee only. Rent or other charges may apply.",
+  "source": {
+   "title": "ORIA Regulatory Handbook - Aquatic Use Authorization (permit detail 31)",
+   "url": "https://www.oria.wa.gov/permithandbook/permitdetail/31",
+   "date": "As displayed 2026-11-12",
+   "excerpt": "Yes, submit a $25 non-refundable application processing fee with JARPA and Attachment E. DNR may also require surveys or a legal description of the property, a plan of development/operations, bonds, insurance, etc."
+  },
+  "components": [
+   {
+    "item": "Aquatic Use Authorization - application processing fee",
+    "low": 25,
+    "high": 25,
+    "source_url": "https://www.oria.wa.gov/permithandbook/permitdetail/31",
+    "effective": "As displayed 2026-11-12"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "pscaa-notification",
+  "label": "Asbestos and demolition notification, single-family",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Puget Sound Clean Air Agency",
+  "low": 25,
+  "high": 65,
+  "unit": "flat",
+  "note": "Confirm the amount at filing; the posted fee table is old.",
+  "source": {
+   "title": "PSCAA Regulation III, Article 4, Section 4.03(d) Waiting Period and Fees",
+   "url": "https://www.pscleanair.gov/DocumentCenter/View/353",
+   "date": "Page dated 07/11 (current posted Regulation III Article 4 as of 2026-11-12)",
+   "excerpt": "Single-Family Residence: /  Asbestos Project prior written $25 / notification /  Demolition (with or 10 days $0 $65 / without asbestos project)"
+  },
+  "components": [
+   {
+    "item": "Asbestos/Demolition notification - Single-Family Residence",
+    "low": 25,
+    "high": 65,
+    "source_url": "https://www.pscleanair.gov/DocumentCenter/View/353",
+    "effective": "Page dated 07/11 (current posted Regulation III Article 4 as of 2026-11-12)"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "wsdot-access",
+  "label": "State highway access connection permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "WSDOT",
+  "low": 50,
+  "high": 50,
+  "unit": "flat",
+  "note": null,
+  "source": {
+   "title": "WAC 468-51-070 Fees and surety bond",
+   "url": "https://app.leg.wa.gov/WAC/default.aspx?cite=468-51-070",
+   "date": "WSR 99-06-034, effective 3/28/99 ('No agency filings affecting this section since 2003')",
+   "excerpt": "Residential dwelling units (up to 10) utilizing a single connection point . . . . / $50"
+  },
+  "components": [
+   {
+    "item": "Access connection permit - Category I base fee, residential dwelling units (up to 10) utilizing a single connection point",
+    "low": 50,
+    "high": 50,
+    "source_url": "https://app.leg.wa.gov/WAC/default.aspx?cite=468-51-070",
+    "effective": "WSR 99-06-034, effective 3/28/99 ('No agency filings affecting this section since 2003')"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "usace-permit",
+  "label": "Department of the Army permit fee",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "U.S. Army Corps of Engineers",
+  "low": 0,
+  "high": 100,
+  "unit": "flat",
+  "note": "No fee for nationwide and other general permits; $10 for an individual non-commercial permit.",
+  "source": {
+   "title": "33 CFR 325.1(f) Fees (eCFR, as of 2026-10-01)",
+   "url": "https://www.ecfr.gov/current/title-33/chapter-II/part-325/section-325.1",
+   "date": "eCFR version date 2026-10-01",
+   "excerpt": "A fee of $100.00 will be charged when the planned or ultimate purpose of the project is commercial or industrial in nature and is in support of operations that charge for the production, distribution or sale of goods or services. A $10.00 fee will be charged for permit applications when the proposed work is non-commercial in nature and would provide personal benefits that have no connection with a commercial enterprise. The final decision as to the basis for a fee ( ... No fees will be charged for time extensions, general permits or letters of permi"
+  },
+  "components": [
+   {
+    "item": "Department of the Army permit fee (33 CFR 325.1(f))",
+    "low": 10,
+    "high": 100,
+    "source_url": "https://www.ecfr.gov/current/title-33/chapter-II/part-325/section-325.1",
+    "effective": "eCFR version date 2026-10-01"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "wdfw-hpa",
+  "label": "Hydraulic Project Approval application",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "WA Department of Fish and Wildlife",
+  "low": 0,
+  "high": 0,
+  "unit": "flat",
+  "note": "No application fee; the fee statute expired in 2017.",
+  "source": {
+   "title": "ORIA Regulatory Handbook - Hydraulic Project Approval (permit detail 25)",
+   "url": "https://www.oria.wa.gov/permithandbook/permitdetail/25",
+   "date": "Updated on Monday, March 16, 2026 (from 2025 agency submittal)",
+   "excerpt": "Application fee: 0 (from 2025 submittal) / Credential fee: 0 (from 2025 submittal) / Explanation/Description of costs/fees, including statutory, regulatory, or other legal authority for fees / No fee / Statutory Details: Chapter 220-660"
+  },
+  "components": [
+   {
+    "item": "Hydraulic Project Approval (HPA) application fee",
+    "low": 0,
+    "high": 0,
+    "source_url": "https://www.oria.wa.gov/permithandbook/permitdetail/25",
+    "effective": "Updated on Monday, March 16, 2026 (from 2025 agency submittal)"
+   }
+  ],
+  "confidence": "high"
+ },
+ {
+  "id": "pro-geotech-report",
+  "label": "Geotechnical report",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Geotechnical engineer",
+  "low": 2500,
+  "high": 6000,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "Blue Landscaping Services (Seattle-area contractor) - Retaining Wall Cost in Seattle: 2026",
+   "url": "https://bluelandscapingservices.com/blog/retaining-wall-cost-seattle",
+   "date": "2026",
+   "excerpt": "Geotechnical report on a mapped steep slope $2,500-$6,000 per parcel"
+  },
+  "sources": [
+   {
+    "title": "Blue Landscaping Services (Seattle-area contractor) - Retaining Wall Cost in Seattle: 2026",
+    "url": "https://bluelandscapingservices.com/blog/retaining-wall-cost-seattle",
+    "date": "2026",
+    "quote": "Geotechnical report on a mapped steep slope $2,500-$6,000 per parcel"
+   },
+   {
+    "title": "HomeAdvisor - How Much Does a Geotechnical Report Cost? [2025 Data]",
+    "url": "https://www.homeadvisor.com/cost/architects-and-engineers/geotechnical-report",
+    "date": "2025",
+    "quote": "On average, a geotechnical report costs between $1,000 and $5,000, with most homeowners spending an average of $2,700."
+   },
+   {
+    "title": "HomeGuide - How Much Does a Geotechnical Report Cost? (2026)",
+    "url": "https://homeguide.com/costs/geotechnical-report-cost",
+    "date": "2026",
+    "quote": "A geotechnical survey costs $1,000 to $5,000 on average."
+   }
+  ]
+ },
+ {
+  "id": "pro-geo-assessment",
+  "label": "Geological assessment letter or report",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Geologist or geotechnical engineer",
+  "low": 1000,
+  "high": 2500,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "Placeholder estimate with no published source. Get a quote.",
+  "source": null,
+  "sources": [
+   {
+    "title": "HomeGuide - Geotechnical report cost (2026)",
+    "url": "https://homeguide.com/costs/geotechnical-report-cost",
+    "date": "2026",
+    "quote": "Average Range $1,000 to $5,000"
+   }
+  ]
+ },
+ {
+  "id": "pro-wetland-delineation",
+  "label": "Wetland delineation and rating report",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Wetland specialist",
+  "low": 2500,
+  "high": 4500,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+   "excerpt": "Comprehensive Stream and Wetland Reporting, Delineation, and GPS < 2 acres $2,830 to $3,518 + cost for GPS"
+  },
+  "sources": [
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Comprehensive Stream and Wetland Reporting, Delineation, and GPS < 2 acres $2,830 to $3,518 + cost for GPS"
+   },
+   {
+    "title": "Eastside Environmental Pros (Woodinville, WA) - Wetland Delineation Cost - Washington State",
+    "url": "https://eastsideenvironmentalpros.com/wetland-delineation-costs-in-king-and-snohomish-county/",
+    "date": "© 2026 (page undated)",
+    "quote": "In general, a wetland delineation and report costs between $2,500 and $4,000 but can be as low as $1,000 if no wetlands or streams are identified."
+   },
+   {
+    "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+    "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+    "date": "Last verified March 2026",
+    "quote": "Wetland delineation study by a qualified professional ($2,000-8,000)"
+   }
+  ]
+ },
+ {
+  "id": "pro-wetland-mitigation-plan",
+  "label": "Wetland buffer mitigation plan",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Wetland specialist",
+  "low": 3500,
+  "high": 6500,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+   "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+  },
+  "sources": [
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+   },
+   {
+    "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+    "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+    "date": "Last verified March 2026",
+    "quote": "Mitigation (if required) $10,000-100,000+"
+   }
+  ]
+ },
+ {
+  "id": "pro-stream-typing",
+  "label": "Stream or wetland reconnaissance",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Biologist",
+  "low": 1000,
+  "high": 3300,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+   "excerpt": "Basic Site Reconnaissance w/o GPS Services < 2 acres $1,757 to $3,324 + cost for GPS"
+  },
+  "sources": [
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Basic Site Reconnaissance w/o GPS Services < 2 acres $1,757 to $3,324 + cost for GPS"
+   },
+   {
+    "title": "Eastside Environmental Pros (Woodinville, WA) - Wetland Delineation Cost - Washington State",
+    "url": "https://eastsideenvironmentalpros.com/wetland-delineation-costs-in-king-and-snohomish-county/",
+    "date": "© 2026",
+    "quote": "can be as low as $1,000 if no wetlands or streams are identified."
+   }
+  ]
+ },
+ {
+  "id": "pro-hmp",
+  "label": "Habitat management plan",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Fish or wildlife biologist",
+  "low": 1500,
+  "high": 4500,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+   "excerpt": "Preparation of critical areas reports $1,413.00 to $2,563"
+  },
+  "sources": [
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Preparation of critical areas reports $1,413.00 to $2,563"
+   },
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Conduct urban wildlife habitat assessment $2,368.00 to $4,113"
+   },
+   {
+    "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+    "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+    "date": "Last verified March 2026",
+    "quote": "Habitat assessment if wildlife concerns exist ($1,500-4,000)"
+   }
+  ]
+ },
+ {
+  "id": "pro-shoreline-nnl",
+  "label": "Shoreline no-net-loss or mitigation report",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Shoreline consultant",
+  "low": 2500,
+  "high": 8000,
+  "unit": "per project",
+  "confidence": "low",
+  "note": null,
+  "source": {
+   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+   "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+  },
+  "sources": [
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+   },
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Ordinary high-water mark determination $1,285.00 to $2,960"
+   },
+   {
+    "title": "AskBaily - What is the Seattle Shoreline Management Act?",
+    "url": "https://askbaily.pages.dev/ask/what-is-the-seattle-shoreline-management-act",
+    "date": "Updated 2026-04-23",
+    "quote": "Habitat assessment: $2,000-$8,000."
+   }
+  ]
+ },
+ {
+  "id": "pro-bio-eval",
+  "label": "Biological evaluation for a Corps permit",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Biologist",
+  "low": 3000,
+  "high": 10000,
+  "unit": "per project",
+  "confidence": "low",
+  "note": null,
+  "source": {
+   "title": "AskBaily - What is the Seattle Shoreline Management Act?",
+   "url": "https://askbaily.pages.dev/ask/what-is-the-seattle-shoreline-management-act",
+   "date": "Updated 2026-04-23",
+   "excerpt": "Biological evaluation: $3,000-$15,000 (required for many applications)."
+  },
+  "sources": [
+   {
+    "title": "AskBaily - What is the Seattle Shoreline Management Act?",
+    "url": "https://askbaily.pages.dev/ask/what-is-the-seattle-shoreline-management-act",
+    "date": "Updated 2026-04-23",
+    "quote": "Biological evaluation: $3,000-$15,000 (required for many applications)."
+   },
+   {
+    "title": "Washington Contractors Directory - Washington Shoreline & Wetland Construction Requirements",
+    "url": "https://www.washingtoncontractors.org/regulations/wa-shoreline-wetland-construction-requirements/",
+    "date": "Last verified March 2026",
+    "quote": "Biological assessments $2,000-10,000"
+   }
+  ]
+ },
+ {
+  "id": "pro-jarpa",
+  "label": "Joint aquatic permit application preparation",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Shoreline consultant",
+  "low": 3000,
+  "high": 12000,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "Placeholder estimate with no published source. Get a quote.",
+  "source": null,
+  "sources": []
+ },
+ {
+  "id": "pro-survey",
+  "label": "Boundary and topographic survey",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Land surveyor",
+  "low": 2000,
+  "high": 5000,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "Peninsula Construction Services (Kitsap County builder) - Custom Home Building in Kitsap County, WA: costs, process, what to expect",
+   "url": "https://peninsulaconstructionservices.net/custom-home-building-in-kitsap-county-wa-costs-process-what-to-expect/",
+   "date": "2026 ('current 2026 market data')",
+   "excerpt": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
+  },
+  "sources": [
+   {
+    "title": "Peninsula Construction Services (Kitsap County builder) - Custom Home Building in Kitsap County, WA: costs, process, what to expect",
+    "url": "https://peninsulaconstructionservices.net/custom-home-building-in-kitsap-county-wa-costs-process-what-to-expect/",
+    "date": "2026 ('current 2026 market data')",
+    "quote": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
+   }
+  ]
+ },
+ {
+  "id": "pro-elevation-cert",
+  "label": "FEMA elevation certificate",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Land surveyor",
+  "low": 500,
+  "high": 1500,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "Placeholder estimate with no published source. Get a quote.",
+  "source": null,
+  "sources": [
+   {
+    "title": "Find Land Surveyor - Elevation Certificate guides (Washington / King / Pierce)",
+    "url": "https://findlandsurveyor.com/guides/elevation-certificate-washington",
+    "date": "2026",
+    "quote": "$400 to $900 for a standard residential property ... $1,000 to $1,500 [complex sites]"
+   }
+  ]
+ },
+ {
+  "id": "pro-flood-habitat",
+  "label": "Floodplain habitat assessment",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Biologist",
+  "low": 3100,
+  "high": 4600,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+   "excerpt": "Prepare habitat assessment for properties in a floodplain $3,118.00 to $4,563"
+  },
+  "sources": [
+   {
+    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
+    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
+    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
+    "quote": "Prepare habitat assessment for properties in a floodplain $3,118.00 to $4,563"
+   }
+  ]
+ },
+ {
+  "id": "pro-septic-design",
+  "label": "Septic design and soil logs",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Septic designer",
+  "low": 2000,
+  "high": 5000,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "Placeholder estimate with no published source. Get a quote.",
+  "source": null,
+  "sources": [
+   {
+    "title": "HomeGuide - How Much Does a Septic Tank System Cost? (2026)",
+    "url": "https://homeguide.com/costs/septic-tank-system-cost",
+    "date": "2026",
+    "quote": "Engineering, permits, and inspections $1,000 – $1,500"
+   },
+   {
+    "title": "HomeGuide - How Much Does a Perc Test Cost? (2026)",
+    "url": "https://homeguide.com/costs/perc-test-cost",
+    "date": "2026",
+    "quote": "A perc test costs $200 to $1,500 to hand-dig test holes and measure the soil's drainage for a septic system."
+   }
+  ]
+ },
+ {
+  "id": "pro-civil-sdap",
+  "label": "Civil engineering for site development and drainage",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Civil engineer",
+  "low": 3500,
+  "high": 10000,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "Placeholder estimate with no published source. Get a quote.",
+  "source": null,
+  "sources": []
+ },
+ {
+  "id": "pro-arch-survey",
+  "label": "Archaeological survey",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Archaeologist",
+  "low": 2000,
+  "high": 5000,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "Washington Recreation and Conservation Office - Cultural Resources guidance for grant sponsors",
+   "url": "https://rco.wa.gov/wp-content/uploads/2022/06/GRANTS-CulturalResSponsors.pdf",
+   "date": "June 2022 (upload path)",
+   "excerpt": "Cost for a survey depends on the scope, scale, and location of the project. A survey for a discrete project action in a low-risk area may cost $2,000-$5,000."
+  },
+  "sources": [
+   {
+    "title": "Washington Recreation and Conservation Office - Cultural Resources guidance for grant sponsors",
+    "url": "https://rco.wa.gov/wp-content/uploads/2022/06/GRANTS-CulturalResSponsors.pdf",
+    "date": "June 2022 (upload path)",
+    "quote": "Cost for a survey depends on the scope, scale, and location of the project. A survey for a discrete project action in a low-risk area may cost $2,000-$5,000."
+   }
+  ]
+ },
+ {
+  "id": "pro-asbestos-survey",
+  "label": "Asbestos survey before demolition",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "AHERA building inspector",
+  "low": 600,
+  "high": 1500,
+  "unit": "per project",
+  "confidence": "medium",
+  "note": null,
+  "source": {
+   "title": "HomeAdvisor - How Much Does Asbestos Testing Cost [2025 Data]",
+   "url": "https://www.homeadvisor.com/cost/environmental-safety/test-or-remove-asbestos/",
+   "date": "2025",
+   "excerpt": "The cost of an asbestos refurbishment or demolition survey for a standard single-family home is $600 to $1,500 or more."
+  },
+  "sources": [
+   {
+    "title": "HomeAdvisor - How Much Does Asbestos Testing Cost [2025 Data]",
+    "url": "https://www.homeadvisor.com/cost/environmental-safety/test-or-remove-asbestos/",
+    "date": "2025",
+    "quote": "The cost of an asbestos refurbishment or demolition survey for a standard single-family home is $600 to $1,500 or more."
+   },
+   {
+    "title": "Fixr - Asbestos Testing Cost",
+    "url": "https://www.fixr.com/costs/asbestos-testing",
+    "date": "fetched 2026-11-12",
+    "quote": "This type of asbestos survey cost ranges from $900 to $1,200 to complete."
+   }
+  ]
+ },
+ {
+  "id": "pro-hydrogeo",
+  "label": "Hydrogeological report",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Hydrogeologist",
+  "low": 3000,
+  "high": 8000,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "Placeholder estimate with no published source. Get a quote.",
+  "source": null,
+  "sources": []
+ },
+ {
+  "id": "pro-sepa",
+  "label": "SEPA checklist preparation",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Consultant",
+  "low": 1000,
+  "high": 3500,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "Placeholder estimate with no published source. Get a quote.",
+  "source": null,
+  "sources": []
+ }
+]
