@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Davapprove Bid Assistant</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo" aria-hidden="true"></span>
+    <div>
+      <h1>Davapprove <span>Bid Assistant</span></h1>
+      <p>Who you will deal with, what it will cost, and where on the lot it bites.</p>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <label class="sr-only" for="jurisdiction">Jurisdiction</label>
+    <select id="jurisdiction" title="Jurisdiction pack"></select>
+    <button id="btn-print" class="ghost" type="button" disabled>Print / PDF</button>
+    <button id="btn-copy" class="ghost" type="button" disabled>Copy bid memo</button>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="panel" id="panel">
+    <form id="search-form" class="card search" autocomplete="off">
+      <label for="q">Parcel</label>
+      <div class="search-row">
+        <input id="q" type="search" placeholder="Street address, tax account number, or click the map" aria-describedby="q-help">
+        <button type="submit">Find</button>
+      </div>
+      <p id="q-help" class="hint">Example: <a href="#" data-example="6042 WATAUGA BEACH DR E">6042 Watauga Beach Dr E</a></p>
+      <ul id="suggestions" class="suggestions" hidden></ul>
+
+      <label for="ptype">Project</label>
+      <select id="ptype"></select>
+
+      <details id="assumptions">
+        <summary>Project assumptions <span class="hint">(defaults are typical; adjust if you know better)</span></summary>
+        <div class="grid2">
+          <label>New building area (sq ft)<input type="number" min="0" step="50" id="a-new_sqft"></label>
+          <label>New or replaced hard surface (sq ft)<input type="number" min="0" step="100" id="a-hard_surface_sqft"></label>
+          <label>Land disturbed (sq ft)<input type="number" min="0" step="500" id="a-disturbance_sqft"></label>
+          <label>Grading, cut plus fill (cu yd)<input type="number" min="0" step="10" id="a-grading_cy"></label>
+          <label>Bedrooms added<input type="number" min="0" step="1" id="a-bedrooms"></label>
+          <label>Lots created<input type="number" min="0" step="1" id="a-lots"></label>
+          <label>Wastewater
+            <select id="a-wastewater">
+              <option value="unknown">Not sure yet</option>
+              <option value="septic_new">New septic system</option>
+              <option value="septic_existing">Existing septic system</option>
+              <option value="sewer">Public sewer</option>
+            </select>
+          </label>
+          <label>Water
+            <select id="a-water">
+              <option value="unknown">Not sure yet</option>
+              <option value="public">Public water system</option>
+              <option value="well_existing">Existing well</option>
+              <option value="well_new">New well</option>
+            </select>
+          </label>
+        </div>
+        <div class="checks">
+          <label><input type="checkbox" id="a-demo"> Demolition of an existing structure</label>
+          <label><input type="checkbox" id="a-in_water"> Work at or below the ordinary high water line</label>
+          <label><input type="checkbox" id="a-tree_clearing"> Clearing of forested land</label>
+          <label><input type="checkbox" id="a-state_highway_access"> Driveway connects to a state highway</label>
+        </div>
+      </details>
+    </form>
+
+    <div id="status" class="status" hidden></div>
+    <div id="results" hidden></div>
+
+    <div id="intro" class="card intro">
+      <h2>What this does</h2>
+      <p>Enter a parcel and a project type. The assistant reads the public map layers that regulators use, then tells you:</p>
+      <ul>
+        <li><strong>Which agencies</strong> the project will route through, and why, with the code section behind each one.</li>
+        <li><strong>What to add to the bid</strong> for permit fees and studies, as a low to high range with a source for every line.</li>
+        <li><strong>Where the lot is constrained</strong> by mapped critical areas, buffers, shoreline and flood zones.</li>
+        <li><strong>What has been permitted before</strong> on the parcel, and what has lapsed.</li>
+      </ul>
+      <p class="hint">This is a screening tool for early client conversations. It reads maps and code; it does not replace a site visit, a delineation, a survey or an agency determination.</p>
+    </div>
+  </section>
+
+  <section class="mapwrap">
+    <div id="map" role="application" aria-label="Parcel map"></div>
+    <div id="legend" class="legend" hidden></div>
+  </section>
+</main>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="lib/geo.js"></script>
+<script src="lib/arcgis.js"></script>
+<script src="lib/screen.js"></script>
+<script src="lib/engine.js"></script>
+<script src="lib/report.js"></script>
+<script src="data/data.js"></script>
+<script src="packs/wa-kitsap.js"></script>
+<script src="rules/federal.js"></script>
+<script src="rules/wa-state.js"></script>
+<script src="rules/wa-kitsap.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
