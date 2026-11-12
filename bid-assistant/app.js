@@ -456,6 +456,11 @@
     if (params.type && Engine.PROJECT_TYPES[params.type]) sel.value = params.type;
     fillAssumptions(sel.value);
     initMap();
+    // If the page is served by bid-assistant/server.js, use its relay as a fallback for map
+    // servers that refuse cross-origin browser requests.
+    if (/^https?:$/.test(location.protocol)) {
+      fetch('proxy/ping').then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { if (t === 'ok') window.BidArcgis.setProxy('proxy?url='); }).catch(function () {});
+    }
 
     $('search-form').addEventListener('submit', onSearch);
     sel.addEventListener('change', function () { fillAssumptions(sel.value); evaluate(); });
@@ -471,9 +476,14 @@
     });
     window.addEventListener('afterprint', function () { reopened.forEach(function (d) { d.open = false; }); reopened = []; map.invalidateSize(); });
     $('btn-copy').addEventListener('click', copyMemo);
+    $('examples').innerHTML = state.pack.examples.map(function (x, i) { return '<a href="#" data-example="' + i + '">' + esc(x.label) + '</a>'; }).join(' · ');
     document.addEventListener('click', function (e) {
       var a = e.target.closest('a[data-example]');
-      if (a) { e.preventDefault(); $('q').value = a.dataset.example; onSearch(); }
+      if (!a) return;
+      e.preventDefault();
+      var x = state.pack.examples[Number(a.dataset.example)];
+      sel.value = x.type; fillAssumptions(x.type); $('q').value = '';
+      loadParcel(function () { return state.pack.parcelById(x.parcel_key); }, x.label);
     });
     if (params.parcel) loadParcel(function () { return state.pack.parcelById(params.parcel); }, 'parcel ' + params.parcel);
     window.BidApp = { state: state };

@@ -73,9 +73,9 @@
     var cityNote = 'Inside city limits: the city sets its own buffers, which are not modelled here.';
 
     // wetlands
-    var wet = shapes('wetland');
+    var wet = shapes('wetland').concat(shapes('nwi'));
     if (wet.length) {
-      out.push({ id: 'wetland', short: 'wetland', label: 'Mapped wetland', tier: 'core', shapes: wet, buffer_ft: 0, basis: 'County wetland inventory. A delineation sets the real edge.' });
+      out.push({ id: 'wetland', short: 'wetland', label: 'Mapped wetland', tier: 'core', shapes: wet, buffer_ft: 0, basis: 'County wetland inventory and National Wetlands Inventory. A delineation sets the real edge.' });
       if (!inCity) {
         var r = wetlandBufferRange(data, 'moderate'), sb = wetlandSetback(data);
         out.push({ id: 'wetland_buffer_min', short: 'wetland buffer', label: 'Wetland buffer, smallest standard width (' + r.min + ' ft) plus ' + sb + ' ft building setback', tier: 'buffer', shapes: wet, buffer_ft: r.min + sb,
@@ -185,7 +185,17 @@
   rule('kitsap.reservation', 'suquamish', 'Jurisdiction', function (ctx) {
     var j = ctx.facts.jurisdiction;
     if (j.status === 'unknown') return unknownFinding('Jurisdiction', 'City limits, reservation boundary or zoning');
-    if (!j.reservation) return null;
+    if (!j.reservation) {
+      if (!j.off_reservation_trust) return null;
+      return {
+        level: 'required', basis: 'confirm', agency: /Klallam/i.test(j.off_reservation_trust) ? 'pgst' : 'suquamish',
+        title: 'Mapped as off-reservation trust land (' + j.off_reservation_trust + ')',
+        why: 'The state tribal lands compilation maps this location as off-reservation trust land. Land held in trust is generally under tribal and federal jurisdiction rather than county permitting. The layer is reference scale and is not a title record.',
+        confirm: 'Confirm the trust status on title and with the tribe before quoting any county permit scope.',
+        flag: 'Mapped as tribal trust land: county permitting may not apply at all. Confirm before quoting.', flag_weight: 25,
+        citations: ['ecology-tribal-lands-layer', 'tribe-trust-vs-fee-permitting']
+      };
+    }
     var tribe = j.reservation.tribe === 'pgst' ? 'pgst' : 'suquamish';
     var name = tribe === 'pgst' ? "Port Gamble S'Klallam Tribe" : 'Suquamish Tribe';
     return {
@@ -576,7 +586,7 @@
     var mode = p.wastewater;
     if (mode === 'unknown') {
       if (f.sewer.status === 'unknown') return unknownFinding('Septic and sewer', 'Sewer service area');
-      mode = sewerLikely || f.parcel.assessor_sewer === 'Y' || f.jurisdiction.city ? 'sewer' : (f.parcel.vacant === false && (p.type === 'addition' || p.type === 'adu' || p.type === 'accessory') ? 'septic_existing' : 'septic_new');
+      mode = sewerLikely || f.parcel.assessor_sewer === 'Y' || f.jurisdiction.city ? 'sewer' : (f.parcel.vacant === false && (p.type === 'addition' || p.type === 'adu' || p.type === 'accessory' || p.type === 'rebuild') ? 'septic_existing' : 'septic_new');
       var guessed = true;
     }
     var out = [];
@@ -615,7 +625,7 @@
       return out;
     }
     // existing septic
-    var more = p.bedrooms > 0 || p.type === 'adu';
+    var more = p.type === 'adu' || (p.bedrooms > 0 && p.type !== 'rebuild');
     out.push({
       level: 'required', basis: 'documented',
       title: more ? 'Health district review: added bedrooms or a second dwelling on an existing septic system' : 'Building Clearance for an existing septic system',
@@ -625,7 +635,7 @@
       flag: more ? 'Existing septic with added bedrooms: expect a septic redesign or expansion, not just a clearance.' : null,
       citations: ['kphd-2025-01-s11-building-clearance', 'kphd-policy-os-06'],
       costs: [d.fees['kphd-building-clearance'] ? 'kphd-building-clearance' : null,
-        more ? { fee: 'pro-septic-design', bucket: 'contingent', note: 'if the existing system cannot take the added flow' } : null,
+        more || p.type === 'rebuild' ? { fee: 'pro-septic-design', bucket: 'contingent', note: p.type === 'rebuild' ? 'if the replacement home has more bedrooms than the system is permitted for, or the old system has no permit record' : 'if the existing system cannot take the added flow' } : null,
         more && d.fees['kphd-bsa'] ? { fee: 'kphd-bsa', bucket: 'contingent', note: 'if a new or modified system is required' } : null].filter(Boolean)
     });
     return out;

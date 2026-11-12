@@ -17,9 +17,16 @@
     opts = opts || {};
     return getJsonOnce(url, params, opts).catch(function (err) {
       if (opts.noRetry) throw err;
-      return new Promise(function (resolve) { setTimeout(resolve, 600); }).then(function () { return getJsonOnce(url, params, opts); });
+      // Second attempt goes through the same-origin relay when one is configured. Some public
+      // servers answer server-to-server requests but refuse or drop browser cross-origin ones.
+      var second = proxyPrefix ? Object.assign({}, opts, { viaProxy: true }) : opts;
+      return new Promise(function (resolve) { setTimeout(resolve, 600); }).then(function () { return getJsonOnce(url, params, second); });
     });
   }
+
+  var proxyPrefix = null;
+  /** Configure a same-origin relay, e.g. '/proxy?url='. Pass null to turn it off. */
+  function setProxy(prefix) { proxyPrefix = prefix || null; }
 
   function getJsonOnce(url, params, opts) {
     var qs = Object.keys(params || {})
@@ -35,9 +42,10 @@
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, opts.timeoutMs || DEFAULT_TIMEOUT_MS) : null;
     // POST keeps long geometries out of the URL; ArcGIS accepts form-encoded queries.
     var usePost = full.length > 1800;
+    var target = opts.viaProxy && proxyPrefix ? proxyPrefix + encodeURIComponent(usePost ? url : full) : null;
     var req = usePost
-      ? fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: qs, signal: ctrl && ctrl.signal })
-      : fetch(full, { signal: ctrl && ctrl.signal });
+      ? fetch(target || url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: qs, signal: ctrl && ctrl.signal })
+      : fetch(target || full, { signal: ctrl && ctrl.signal });
     return req
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status + ' from ' + hostOf(url));
@@ -168,5 +176,5 @@
     return String(s).replace(/'/g, "''");
   }
 
-  return { getJson: getJson, query: query, pool: pool, probeCoverage: probeCoverage, sqlString: sqlString, hostOf: hostOf };
+  return { setProxy: setProxy, getJson: getJson, query: query, pool: pool, probeCoverage: probeCoverage, sqlString: sqlString, hostOf: hostOf };
 });

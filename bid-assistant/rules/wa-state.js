@@ -43,10 +43,12 @@
 
   rule('wa.aquatic_lands', 'dnr', 'Work in or near water', function (ctx) {
     if (!ctx.project.in_water || !ctx.facts.shoreline.marine) return null;
+    var sh = ctx.facts.shoreline, owners = (sh.aquatic_owners || []).filter(Boolean);
+    var mapped = owners.length ? ' The DNR aquatic ownership layer shows these owners for aquatic parcels within 150 ft of the lot: ' + owners.join('; ').toLowerCase() + '.' : sh.aquatic_status === 'unknown' ? ' The DNR aquatic ownership layer could not be read.' : '';
     return {
-      level: 'likely', basis: 'documented',
+      level: sh.state_aquatic ? 'required' : owners.length ? 'possible' : 'likely', basis: 'documented',
       title: 'State-owned aquatic lands: authorization or recreational dock registration',
-      why: 'Tidelands and bedlands waterward of private ownership are generally state-owned and managed by DNR. A private recreational dock for an abutting residential owner can use them without rent under the statute, subject to its conditions; other structures and uses need a DNR use authorization. Whether the tidelands here are privately owned has to be checked on title.',
+      why: 'Tidelands and bedlands waterward of private ownership are generally state-owned and managed by DNR. A private recreational dock for an abutting residential owner can use them without rent under the statute, subject to its conditions; other structures and uses need a DNR use authorization. Whether the tidelands here are privately owned has to be checked on title.' + mapped,
       confirm: 'Who owns the tidelands in front of the lot? Many Puget Sound tidelands were sold into private ownership.',
       citations: ['rcw-79.105.430'],
       costs: ['dnr-aquatic']
@@ -161,7 +163,20 @@
   });
 
   rule('wa.highway', 'wsdot', 'Access', function (ctx) {
-    if (!ctx.project.state_highway_access) return null;
+    var a = ctx.facts.access || {}, p = ctx.project;
+    if (!p.state_highway_access) {
+      if (a.state_route && (p.new_dwelling || p.type === 'short_plat') && ctx.facts.parcel.vacant !== false) {
+        return {
+          level: 'possible', basis: 'documented',
+          title: 'State highway access permit if the driveway connects to ' + a.state_route,
+          why: a.state_route + ' is mapped about ' + ft(a.state_route_distance_ft) + ' from the lot. A new or changed driveway onto a state highway needs a WSDOT access connection permit; access from a side road does not.',
+          confirm: 'Where will the driveway connect?',
+          citations: ['rcw-47.50.040'],
+          costs: ['wsdot-access']
+        };
+      }
+      return null;
+    }
     return {
       level: 'required', basis: 'documented',
       title: 'State highway access connection permit',
@@ -203,6 +218,21 @@
     var p = ctx.project, f = ctx.facts;
     if (!(p.disturbance_sqft > 0)) return null;
     var nearWater = f.shoreline.in_jurisdiction || (f.shoreline.marine && f.shoreline.marine_distance_ft <= 250) || f.stream.streams.some(function (s) { return s.on_parcel && (s.type === 'F' || s.type === 'S'); });
+    var risk = f.cultural && f.cultural.risk;
+    var RISK = { 1: 'low risk', 2: 'moderately low risk', 3: 'moderate risk, survey recommended', 4: 'high risk, survey highly advised', 5: 'very high risk, survey highly advised' };
+    if (risk) {
+      return {
+        level: risk >= 4 ? 'likely' : 'possible', basis: 'workflow',
+        title: 'Cultural resources: state model rates this location ' + RISK[risk].split(',')[0],
+        why: 'The state archaeology office publishes a risk model for where archaeological resources are likely. The highest value sampled on this lot is ' + risk + ' of 5 (' + RISK[risk] + '). The model is a probability map, not a record of known sites, which are confidential. Knowingly disturbing an archaeological site without a state permit is unlawful, and anyone who uncovers human remains must stop work and notify the coroner and law enforcement.' +
+          (risk >= 4 ? ' Tribes and the state archaeology office are notified of shoreline, SEPA and federal permit applications, and at this risk level a survey request is common.' : ''),
+        confirm: risk >= 3 ? 'Ask the county at pre-application whether a cultural resources survey will be required.' : null,
+        flag: risk >= 4 ? 'The state archaeology model rates this lot ' + RISK[risk].split(',')[0] + '. Carry ' + ctx.helpers.rangeText('pro-arch-survey') + ' for a cultural resources survey.' : null,
+        flag_weight: -8,
+        citations: ['dahp-risk-model', 'rcw-27.53.060', 'rcw-27.44.055', 'rcw-68.50.645'],
+        costs: risk >= 3 ? [{ fee: 'pro-arch-survey', bucket: 'contingent' }] : []
+      };
+    }
     return {
       level: 'possible', basis: nearWater ? 'workflow' : 'documented',
       title: nearWater ? 'Cultural resources: survey may be requested near the water' : 'Cultural resources: inadvertent discovery duties',

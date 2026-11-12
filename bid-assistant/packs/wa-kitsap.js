@@ -45,11 +45,26 @@
     { id: 'airport', group: 'jurisdiction', kind: 'attributes', label: 'Airport overlay', publisher: COUNTY,
       url: fs('Airport_Overlay'), fields: ['zone', 'airportnam'] },
 
+    { id: 'tribal_lands', group: 'jurisdiction', kind: 'attributes', label: 'Reservation and off-reservation trust lands (state compilation)', publisher: 'WA Department of Ecology',
+      url: 'https://gis.ecology.wa.gov/serverext/rest/services/Authoritative/ECY/MapServer/10', where: "LAND_TYPE IN ('RES','OOF')", fields: ['LAND_TYPE', 'TRIBAL_NM1', 'TRIBAL_NM2'],
+      caveat: 'Reference-scale compilation. Not a title record; trust status of a parcel must be confirmed.' },
+    { id: 'state_route', group: 'jurisdiction', kind: 'features', label: 'State highways', publisher: 'WSDOT',
+      url: 'https://data.wsdot.wa.gov/arcgis/rest/services/Shared/StateRoutes/MapServer/0', fields: ['StateRouteNumber', 'RT_TYPEA'], search_ft: 75,
+      caveat: 'Centreline only. Frontage is inferred from the centreline lying within 75 ft of the lot.', style: { color: '#cf222e', weight: 3, dash: '8 5' } },
+    { id: 'arch_risk', group: 'jurisdiction', kind: 'identify', label: 'Archaeological risk assessment model', publisher: 'WA Department of Archaeology and Historic Preservation',
+      url: 'https://wisaard.dahp.wa.gov/server/rest/services/Archaeological_Risk_Assessment_Model/MapServer/0', samples: 5,
+      caveat: 'A statewide probability model, not recorded site locations, which are confidential.' },
+
     // ---- critical areas -------------------------------------------------------------------
     { id: 'wetland', group: 'critical', kind: 'features', label: 'Mapped wetlands (county inventory)', publisher: COUNTY,
       url: fs('Kitsap_County_Wetlands'), fields: ['SOURCE', 'MODIFIED'], search_ft: 315,
       caveat: 'Compiled from NWI, DNR and parcel-map sources. Inventory maps miss many wetlands and do not show category; only a delineation and rating establish the regulated edge and buffer.',
       style: { color: '#1f8a70', fill: '#1f8a70', fillOpacity: 0.45 } },
+    { id: 'nwi', group: 'critical', kind: 'features', label: 'National Wetlands Inventory', publisher: 'U.S. Fish and Wildlife Service',
+      url: 'https://fwspublicservices.wim.usgs.gov/wetlandsmapservice/rest/services/Wetlands/MapServer/0',
+      where: "WETLAND_TYPE NOT IN ('Estuarine and Marine Deepwater','Estuarine and Marine Wetland','Lake','Riverine')", fields: ['ATTRIBUTE', 'WETLAND_TYPE'], search_ft: 315, max_offset_ft: 2, timeout_ms: 45000,
+      caveat: 'Reconnaissance-level photo interpretation, often from old imagery. It under-maps forested wetlands and is not a delineation. Freshwater types only: tidal shore and open water classes are left to the shoreline checks.',
+      style: { color: '#0e8a6a', fill: '#3fb68b', fillOpacity: 0.3, dash: '3 3' } },
     { id: 'stream', group: 'critical', kind: 'features', label: 'Streams with water type', publisher: COUNTY + ' (WA DNR and Wild Fish Conservancy typing)',
       url: fs('Updated_Streams_Layer_WFL1', 0), fields: ['FP_WTRTY_CD', 'FP_WTRTY_NM', 'DataSource'], search_ft: 315,
       caveat: 'Mapped stream position and water type are modelled or field-typed to varying standards. A water type can be changed by field verification.',
@@ -90,6 +105,10 @@
       url: ENVIRO + '28', fields: [], search_ft: 150, style: { color: '#d4a72c', fill: '#d4a72c', fillOpacity: 0.2 } },
     { id: 'eelgrass', group: 'shoreline', kind: 'features', label: 'Eelgrass', publisher: 'Kitsap County DCD',
       url: ENVIRO + '22', fields: [], search_ft: 150, style: { color: '#2da44e', weight: 4 } },
+
+    { id: 'aquatic_own', group: 'shoreline', kind: 'features', label: 'Aquatic land ownership (tidelands and bedlands)', publisher: 'WA Department of Natural Resources',
+      url: 'https://gis.dnr.wa.gov/site3/rest/services/Aquatics/Washington_State_Aquatic_Lands_and_Boundaries/MapServer/1', fields: ['OWNER_AGENT_NM', 'AQPRCL_TYPE_CD'], search_ft: 150, max_offset_ft: 3, timeout_ms: 45000,
+      caveat: 'Compiled from deeds and plats, not survey grade. Tideland ownership must be confirmed on title.' },
 
     // ---- flood ----------------------------------------------------------------------------
     { id: 'flood', group: 'flood', kind: 'features', label: 'FEMA special flood hazard areas', publisher: 'FEMA National Flood Hazard Layer',
@@ -221,6 +240,14 @@
     var geoClasses = Object.keys(geo.classes || {}).filter(function (c) { return geo.classes[c].full.length || geo.classes[c].partial.length; })
       .map(function (c) { return c.replace(/ Hazard Area$/, ''); });
 
+    var wetAll = (L.wetland && L.wetland.features || []).concat(L.nwi && L.nwi.features || []).sort(function (a, b) { return a.distance_ft - b.distance_ft; });
+    var wetStatus = worst([st(L.wetland), st(L.nwi)]);
+    // one source answering is enough to report a mapped wetland; "unknown" only if nothing was found and a source failed
+    if (wetAll.length) wetStatus = wetAll[0].on_parcel ? 'on_parcel' : 'nearby';
+    var trust = attrsOf(L.tribal_lands);
+    var routes = (L.state_route && L.state_route.features || []);
+    var owners = uniq((L.aquatic_own && L.aquatic_own.features || []).map(function (f) { return f.attrs.OWNER_AGENT_NM; }));
+
     var facts = {
       parcel: {
         key: p.parcel_key,
@@ -251,7 +278,9 @@
         military: zoning.some(function (z) { return z.ZONEBREV === 'MIL'; }),
         fire_district: attrsOf(L.fire_district).map(function (a) { return FIRE[a.DISTRICT] || 'Fire District ' + a.DISTRICT; })[0] || null,
         water_district: attrsOf(L.water_district).map(function (a) { return 'Water District ' + a.DISTRICT; })[0] || null,
-        airport_overlay: attrsOf(L.airport).map(function (a) { return a.airportnam; })[0] || null
+        airport_overlay: attrsOf(L.airport).map(function (a) { return a.airportnam; })[0] || null,
+        trust_status: st(L.tribal_lands),
+        off_reservation_trust: trust.filter(function (a) { return a.LAND_TYPE === 'OOF'; }).map(function (a) { return a.TRIBAL_NM1; })[0] || null
       },
       sewer: {
         status: worst([st(L.sewer_area), st(L.sewer_main)]),
@@ -260,11 +289,22 @@
         assessor_flag: land.SEWER || null
       },
       wetland: {
-        status: st(L.wetland),
-        on_parcel: st(L.wetland) === 'on_parcel',
-        min_distance_ft: L.wetland && L.wetland.features[0] ? round(L.wetland.features[0].distance_ft, 0) : null,
-        bearing: L.wetland && L.wetland.features[0] ? L.wetland.features[0].bearing : null,
-        count: L.wetland ? L.wetland.features.length : 0
+        status: wetStatus,
+        on_parcel: wetStatus === 'on_parcel',
+        min_distance_ft: wetAll[0] ? round(wetAll[0].distance_ft, 0) : null,
+        bearing: wetAll[0] ? wetAll[0].bearing : null,
+        count: wetAll.length,
+        sources: [L.wetland && L.wetland.features.length ? 'county inventory' : null, L.nwi && L.nwi.features.length ? 'National Wetlands Inventory' : null].filter(Boolean),
+        partial_check: wetAll.length === 0 ? false : (st(L.wetland) === 'unknown' || st(L.nwi) === 'unknown')
+      },
+      access: {
+        status: st(L.state_route),
+        state_route: routes[0] ? (routes[0].attrs.RT_TYPEA || 'SR') + ' ' + routes[0].attrs.StateRouteNumber : null,
+        state_route_distance_ft: routes[0] ? round(routes[0].distance_ft, 0) : null
+      },
+      cultural: {
+        status: st(L.arch_risk),
+        risk: L.arch_risk && L.arch_risk.max ? L.arch_risk.max : null
       },
       stream: {
         status: worst([st(L.stream), st(L.waterbody)]),
@@ -287,7 +327,10 @@
         feeder_bluff: (L.feeder_bluff && L.feeder_bluff.features || []).map(function (f) { return f.attrs.SHORETYPE; }),
         forage_fish: ['smelt', 'sandlance', 'herring'].filter(function (k) { return L[k] && L[k].features.length; }),
         forage_fish_status: worst([st(L.smelt), st(L.sandlance), st(L.herring)]),
-        eelgrass: !!(L.eelgrass && L.eelgrass.features.length)
+        eelgrass: !!(L.eelgrass && L.eelgrass.features.length),
+        aquatic_owners: owners,
+        aquatic_status: st(L.aquatic_own),
+        state_aquatic: owners.some(function (o) { return /STATE OF WASHINGTON/i.test(o || ''); })
       },
       geohazard: {
         status: st(L.geohazard),
@@ -379,6 +422,13 @@
     deriveFacts: deriveFacts,
     permitFamily: permitFamily,
     streamType: streamType,
-    examples: []
+    examples: [
+      { parcel_key: '2403947', label: 'Vacant 6 acres, pond and wetland', type: 'new_sfr' },
+      { parcel_key: '1248699', label: 'Hood Canal waterfront, dock', type: 'shoreline_structure' },
+      { parcel_key: '1414234', label: 'Hansville beach lot, flood zone', type: 'rebuild' },
+      { parcel_key: '1224310', label: 'Rural lot, detached ADU', type: 'adu' },
+      { parcel_key: '1375559', label: 'Inside Port Madison Reservation', type: 'new_sfr' },
+      { parcel_key: '1139955', label: 'Inside Bremerton city limits', type: 'addition' }
+    ]
   };
 });

@@ -18,6 +18,7 @@ const citations = C.map((c) => {
   delete o.raw_file; delete o.excerpt_words;
   return o;
 });
+for (const c of JSON.parse(fs.readFileSync(path.join(D, 'citations_extra.json'), 'utf8'))) citations.push(c);
 fs.writeFileSync(path.join(D, 'citations.json'), JSON.stringify(citations, null, 1) + '\n');
 
 // ---- fees

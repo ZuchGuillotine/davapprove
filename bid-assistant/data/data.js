@@ -2462,6 +2462,48 @@
    "fetched": "2026-11-12",
    "notes": "UNVERIFIED by design (requester asked for excerpt \"\" / verified false). Chapter numbers are from the researcher's memory, NOT fetched. Code host: the legacy codepublishing.com page for this city now redirects to the ecode360 address given in url (fetched 2026-11-12); ecode360 itself and *.municipal.codes returned bot-check 403s. Permit-center URL not fetched.",
    "source_currency": "not fetched"
+  },
+  "dahp-risk-model": {
+   "id": "dahp-risk-model",
+   "jurisdiction": "Washington State",
+   "citation": "DAHP Archaeological Risk Assessment Model",
+   "title": "Statewide archaeological risk assessment model (map service)",
+   "url": "https://wisaard.dahp.wa.gov/server/rest/services/Archaeological_Risk_Assessment_Model/MapServer",
+   "excerpt": "",
+   "summary": "State probability model, values 1 to 5: 1 low risk, 2 moderately low risk, 3 moderate risk (survey recommended), 4 high risk and 5 very high risk (survey highly advised). It is not a map of recorded sites.",
+   "key_values": {
+    "labels": {
+     "1": "Survey Contingent Upon Project Parameters: Low Risk",
+     "2": "Survey Contingent Upon Project Parameters: Moderately Low Risk",
+     "3": "Survey Recommended: Moderate Risk",
+     "4": "Survey Highly Advised: High Risk",
+     "5": "Survey Highly Advised: Very High Risk"
+    }
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "source_currency": "map service legend read on fetch date",
+   "notes": "Labels are from the service legend, read live on 2026-11-12. This is a data layer, not code text, so there is no excerpt to match."
+  },
+  "ecology-tribal-lands-layer": {
+   "id": "ecology-tribal-lands-layer",
+   "jurisdiction": "Washington State",
+   "citation": "Ecology Tribal Lands layer",
+   "title": "Tribal Lands in Washington State (map service)",
+   "url": "https://gis.ecology.wa.gov/serverext/rest/services/Authoritative/ECY/MapServer/10",
+   "excerpt": "",
+   "summary": "State compilation distinguishing reservations (RES), off-reservation trust lands (OOF) and ceded areas (CED). Reference only; not a title record.",
+   "key_values": {
+    "LAND_TYPE": {
+     "RES": "Reservation",
+     "OOF": "Off-Reservation Trust Lands",
+     "CED": "Ceded Lands"
+    }
+   },
+   "verified": false,
+   "fetched": "2026-11-12",
+   "source_currency": "map service read on fetch date",
+   "notes": "Data layer, not code text."
   }
  },
  "fees": {

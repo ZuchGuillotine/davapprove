@@ -16,6 +16,10 @@ The key problem identified in this conversation is the disjointed septic–civil
 
 The graph distinguishes inputs, hard prerequisites, consultations, conditions, property rights, change propagation and recommended coordination gates. Approval should be tied to a specific design revision, scope and work stage. Septic design approval and septic installation authorization are separate nodes.
 
+## Bid assistant (added November 12, 2026)
+
+A narrower first product built as a separate feature in `bid-assistant/`: parcel in, agencies and a sourced permitting cost range out, with a constraint map. It reads public map layers and published code and fees, and does not depend on parsing a parcel's document history. See `docs/BID_ASSISTANT.md`. It was built without sight of the desktop application code, so it does not reuse or modify that code; reconciling the two is still open.
+
 ## Status and limits
 
 This is research and a workflow specification, not a deployed application. At the time of this sync, GitHub main contained only the initial README. Any application code, local changes or additional decisions in the desktop checkout were not visible from this session and have not been reconciled.

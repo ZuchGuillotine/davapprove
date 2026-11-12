@@ -4,6 +4,8 @@ Property-development feasibility and approval coordination, starting with Kitsap
 
 ## Start here
 
+- **[Bid Assistant](docs/BID_ASSISTANT.md)**: put in a Kitsap parcel and a project type, get the agencies involved, a sourced permitting cost range and a constraint map. Run `node bid-assistant/server.js` and open http://localhost:8080.
+
 - [Project context and desktop handoff](docs/PROJECT_CONTEXT.md)
 - [Interactive Kitsap approval dependency report](docs/research/Davapprove_Kitsap_Approval_Dependency_Graph.html)
 - [Node register and sources (JSON)](docs/research/kitsap-node-register.json)
@@ -23,6 +25,14 @@ node tests/report_logic.test.cjs
 ```
 
 The generator writes the HTML and JSON under `docs/research/`. The checks verify synthetic blocker behavior, IDs, source references, internal links and consistency between embedded and exported data. They do not validate law or browser layout.
+
+Bid assistant checks (no dependencies; the last one needs network):
+
+```sh
+node tests/bid_assistant_geo.test.cjs
+node tests/bid_assistant_engine.test.cjs
+node tests/bid_assistant_live.cjs
+```
 
 ## Sync the existing desktop checkout
 

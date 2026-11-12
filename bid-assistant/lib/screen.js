@@ -179,6 +179,29 @@
     });
   }
 
+  /** Raster layers answer /identify one point at a time; sample a few interior points and keep every value. */
+  function runIdentifyLayer(layer, parcel) {
+    var pts = [parcel.centroid_ll].concat(parcel.interior_points).slice(0, layer.samples || 5);
+    var e = expandEnvelope(parcel.envelope, 200, parcel.centroid_ll[1]);
+    var tasks = pts.map(function (p) {
+      return function () {
+        return Arc.getJson(layer.url.replace(/\/\d+$/, '') + '/identify', {
+          f: 'json', geometry: { x: p[0], y: p[1], spatialReference: { wkid: 4326 } }, geometryType: 'esriGeometryPoint', sr: 4326,
+          tolerance: 1, mapExtent: [e.xmin, e.ymin, e.xmax, e.ymax].join(','), imageDisplay: '400,400,96',
+          layers: 'all:' + layer.url.match(/\/(\d+)$/)[1], returnGeometry: false
+        }, { timeoutMs: layer.timeout_ms }).then(function (j) {
+          return (j.results || []).map(function (r) { return r.attributes && (r.attributes['Raster.Value'] || r.attributes['Pixel Value'] || r.attributes['UniqueValue.Pixel Value'] || r.value); });
+        });
+      };
+    });
+    return Arc.pool(tasks, 3).then(function (lists) {
+      var vals = [];
+      lists.forEach(function (l) { l.forEach(function (v) { var n = Number(v); if (isFinite(n)) vals.push(n); }); });
+      if (!vals.length) return { id: layer.id, kind: 'identify', status: 'unknown', error: 'The raster service returned no value at the sampled points.', features: [], values: [] };
+      return { id: layer.id, kind: 'identify', status: 'on_parcel', features: [], values: vals, max: Math.max.apply(null, vals), search_ft: 0 };
+    });
+  }
+
   function uniq(a) { var s = {}; return a.filter(function (v) { return s[v] ? false : (s[v] = true); }); }
 
   function runTable(table, parcel) {
@@ -211,7 +234,7 @@
 
     var layerTasks = layers.map(function (layer) {
       return function () {
-        var run = layer.kind === 'attributes' ? runAttributeLayer : layer.kind === 'probe' ? runProbeLayer : runFeatureLayer;
+        var run = layer.kind === 'attributes' ? runAttributeLayer : layer.kind === 'probe' ? runProbeLayer : layer.kind === 'identify' ? runIdentifyLayer : runFeatureLayer;
         return guard(layer.id, layer.kind, run(layer, parcel)).then(function (res) {
           res.layer = layer;
           res.checked_at = new Date().toISOString();
