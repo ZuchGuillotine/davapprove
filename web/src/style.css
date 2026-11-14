@@ -1378,6 +1378,22 @@ input[type="checkbox"] {
 .welcome-form form .primary {
   margin-top: 4px;
 }
+.auth-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line, #dce3db);
+  gap: 20px;
+  margin-top: 20px;
+}
+.auth-tabs button {
+  padding: 10px 0;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+}
+.auth-tabs button.active { color: var(--teal); border-bottom-color: var(--teal); }
+.welcome-form .auth-panel form { margin-top: 18px; }
+.auth-panel .small, .password-form .small { margin: 0 0 16px; line-height: 1.6; }
+.auth-reset { margin-top: 12px; }
+.auth-panel .notice, .auth-panel .error { margin-top: 14px; }
 .welcome-form > .small {
   font-size: 10px;
   text-align: center;

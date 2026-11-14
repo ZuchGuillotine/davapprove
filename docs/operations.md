@@ -35,14 +35,25 @@ Frontend: put the current HTTPS API origin in ignored `web/.env.production` as `
 
 Cloudflare Quick Tunnels are temporary development endpoints with no uptime guarantee. On a tunnel restart, inspect `docker compose ... logs tunnel` for the new `trycloudflare.com` URL, update `web/.env.production`, and redeploy the frontend. The app URL remains stable, but live API access is interrupted until this update. Replace this with a controlled hostname before a dependable external beta.
 
-Supabase's allowed redirect includes the frontend URL. Email confirmation, refresh-token rotation and TOTP options remain enabled. The frontend does not claim to send login emails while SMTP is unconfigured. Operators can generate a one-use sign-in link without sending email:
+The frontend supports Supabase email/password sign-in, email/password registration, recovery links, and an **Account & password** panel for existing users, including users who originally signed in with an operator link. Password sign-in works independently of email delivery. Sessions restore on reload; sign-out clears private workspace state and discards outstanding project requests. New accounts receive no existing project membership automatically.
+
+**Current delivery limitation:** custom SMTP is not configured and `EMAIL_DELIVERY_ENABLED=false`. Public account creation and recovery forms explain this and do not submit an email request. Existing confirmed accounts can use passwords. Supabase's default sender only delivers to organization team members; an Auth user is not automatically an organization member. Do not turn off email confirmation to work around this. See [Supabase password authentication](https://supabase.com/docs/guides/auth/passwords) and [custom SMTP](https://supabase.com/docs/guides/auth/auth-smtp), reviewed November 14, 2026.
+
+To activate self-service registration and recovery:
+
+1. Configure the approved sender/provider in Supabase Auth SMTP (or a verified Send Email hook). Keep email confirmation enabled and signup enabled.
+2. Set the site URL to the frontend origin and allow both `https://davapprove-preview.delicacybydesign.workers.dev/` and `https://davapprove-preview.delicacybydesign.workers.dev/?auth=recovery` as redirects. The client also handles Supabase's `PASSWORD_RECOVERY` event and `type=recovery` fragment.
+3. Verify delivery, confirmation, sign-in and recovery with an authorized beta recipient. Then set `EMAIL_DELIVERY_ENABLED=true` in the protected deployment environment and recreate the API container, preserving the worker and tunnel. Set the public build fallback `VITE_EMAIL_DELIVERY_ENABLED=true` and rebuild/redeploy the frontend. The API flag takes precedence.
+4. Verify a new account starts with an empty private workspace and cannot read another member's projects. Test an expired link and logout as well as the successful flows.
+
+Until the sender is ready, operators can generate a one-use sign-in link without sending email:
 
 ```sh
 # Supply server-only credentials through the environment, not command arguments.
 python3 scripts/create_beta_link.py person@example.com --output .data/private-beta-access.html
 ```
 
-The generated HTML contains a login credential. Open or share it privately with the intended recipient; it expires and is single-use. Never commit it or add it to a public site. To invite collaborators to an existing project, an owner uses the membership API with the recipient's Supabase user ID and `editor` or `reviewer`; a friendly invitation-management UI is not yet implemented.
+The generated HTML contains a login credential. Open or share it privately with the intended recipient; it expires and is single-use. After opening it, use **Account & password** to set a password for subsequent sign-ins. Never commit it or add it to a public site. To invite collaborators to an existing project, an owner uses the membership API with the recipient's Supabase user ID and `editor` or `reviewer`; a friendly invitation-management UI is not yet implemented.
 
 ## Health and recovery
 

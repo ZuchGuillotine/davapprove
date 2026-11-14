@@ -21,7 +21,7 @@ November 7, 2026. This is an operational prototype for early feedback, not a ful
 | Automated documents | KPHD selected PDFs are automated. Auditor, SmartGov permit attachments and utility letters use assisted links/uploads. A search is not exhaustive title or permit research. |
 | Geometry | GeoJSON input with a source reference; no CAD import, automated survey georeferencing or drawing interface. Computed areas remain partial and code-unchecked. |
 | AI | Platform OpenAI processing is deployed with server-only authentication, page/chunk coverage and a $5/month allowance. Text quotations are checked; visual observations remain explicitly unverified proposals. See processing implementation notes below. |
-| Auth/onboarding | Manual one-time beta links work without email delivery. Custom SMTP and a project invitation UI remain. Do not promise automated email signup yet. |
+| Auth/onboarding | Email/password sign-in, registration, recovery and account password UI implemented. Existing accounts and project memberships preserved. Public signup and recovery remain disabled until a sender is configured and verified; operator links still work. Custom SMTP and a project invitation UI remain. |
 | Uploads | Current Free Supabase limit is 50 MiB. The planned 100 MB interrupted-upload test and 250 MB ceiling need a paid tier and verification. |
 | Operations | API tunnel URL can change on restart. Independent backups, restore/rollback drills and stable API domain remain before dependable client use. |
 | Product validation | Sponsor-reviewed six-parcel acceptance cohort and measured research-time savings remain. Live technical samples do not replace professional review. |

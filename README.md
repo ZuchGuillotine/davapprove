@@ -4,7 +4,7 @@ Property-development feasibility and approval coordination, starting with Kitsap
 
 ## Hosted MVP
 
-Open [Davapprove beta](https://davapprove-preview.delicacybydesign.workers.dev) to explore the labeled sample. Real projects use private authenticated workspaces; an operator currently provides one-time beta sign-in links.
+Open [Davapprove beta](https://davapprove-preview.delicacybydesign.workers.dev) to explore the labeled sample or sign in with email and password. Real projects use private authenticated workspaces. Public signup and password-reset emails await a configured sender; operator-provided links still work, and existing users can set a password in **Account & password**. See [authentication operations](docs/operations.md#preview-hostname-and-sign-in).
 
 See [implementation status](docs/IMPLEMENTATION_STATUS.md) for delivered features and limits, and [operations](docs/operations.md) for deployment, access and local development. The API currently uses a temporary preview hostname.
 

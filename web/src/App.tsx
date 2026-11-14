@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense, type FormEvent } from "react";
+import { useEffect, useState, useRef, lazy, Suspense, type FormEvent } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -34,6 +34,7 @@ import {
   request,
   safeUrl,
   setSampleMode,
+  invalidateRequests,
   documentUrl,
 } from "./api";
 import { Upload as TusUpload } from "tus-js-client";
@@ -41,6 +42,7 @@ import WorkflowEvidence, { statusTone } from "./WorkflowEvidence";
 import DocumentCoverage from "./DocumentCoverage";
 import FactEvidence from "./FactEvidence";
 import BidWorkspace from "./BidWorkspace";
+import AuthPanel, { PasswordForm } from "./AuthPanel";
 import type {
   Assessment,
   Candidate,
@@ -100,11 +102,16 @@ function Empty({
   );
 }
 export default function App() {
+  const [accountOpen, setAccountOpen] = useState(false);
+  const [accountEmail, setAccountEmail] = useState("");
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
+  const authLinkError = useRef(new URLSearchParams(window.location.hash.slice(1)).has("error"));
+  const recoveryGate = useRef(new URLSearchParams(window.location.hash.slice(1)).get("type") === "recovery" || new URLSearchParams(window.location.search).get("auth") === "recovery");
+  const workspaceGeneration = useRef(0);
   const [bidsOpen, setBidsOpen] = useState(false);
   const [config, setConfig] = useState<Json | null>(null),
     [entered, setEntered] = useState(false),
     [sample, setSample] = useState(false),
-    [email, setEmail] = useState(""),
     [notice, setNotice] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState("");
@@ -132,6 +139,32 @@ export default function App() {
     ),
     [geometryOpen, setGeometryOpen] = useState(false),
     [editingFact, setEditingFact] = useState<Fact | null>(null);
+  function clearWorkspace() {
+    workspaceGeneration.current++;
+    invalidateRequests();
+    setEntered(false); setSample(false); setSampleMode(false);
+    setProjects([]); setProject(null); setCandidates([]); setCoverage([]);
+    setDocuments([]); setFacts([]); setAssessment(null); setComments([]); setJobs([]);
+    setSelected(new Set()); setComment(""); setBidsOpen(false); setProjectLoading(false);
+    setNewOpen(false); setEditIntent(false); setViewDoc(null); setGeometryOpen(false); setEditingFact(null);
+    setAccountOpen(false); setAccountEmail(""); setNotice(""); setError(""); setBusy("");
+  }
+  function finishRecovery() {
+    recoveryGate.current = false;
+    setPasswordRecovery(false);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("auth");
+    window.history.replaceState(null, "", url.pathname + url.search);
+  }
+  async function leaveWorkspace() {
+    const auth = getAuth();
+    if (!sample && auth) {
+      const { error } = await auth.auth.signOut({ scope: "local" });
+      if (error) throw error;
+    }
+    finishRecovery();
+    clearWorkspace();
+  }
   useEffect(() => {
     let active = true;
     let cleanup = () => {};
@@ -141,24 +174,46 @@ export default function App() {
       const auth = getAuth();
       if (auth) {
         let openedUser: string | null = null;
-        const openSession = (session: { user: { id: string } } | null) => {
-          if (!active || !session || openedUser === session.user.id) return;
+        const openSession = (session: { user: { id: string; email?: string } } | null) => {
+          if (!active || !session) return;
+          if (recoveryGate.current) {
+            openedUser = session.user.id;
+            setAccountEmail(session.user.email || "");
+            setPasswordRecovery(true);
+            return;
+          }
+          if (openedUser === session.user.id) return;
           openedUser = session.user.id;
+          clearWorkspace();
+          setAccountEmail(session.user.email || "");
           setEntered(true);
           setProjectLoading(true);
+          const generation = workspaceGeneration.current;
           setTimeout(() => {
-            if (active) void run("Opening workspace", loadProjects);
+            if (active && generation === workspaceGeneration.current) void run("Opening workspace", loadProjects);
           }, 0);
         };
         const { data } = auth.auth.onAuthStateChange((event, session) => {
           if (event === "SIGNED_OUT") {
             openedUser = null;
+            finishRecovery();
+            clearWorkspace();
             return;
+          }
+          if (event === "PASSWORD_RECOVERY") {
+            openedUser = null;
+            recoveryGate.current = true;
+            clearWorkspace();
           }
           openSession(session);
         });
         cleanup = () => data.subscription.unsubscribe();
         const session = await auth.auth.getSession();
+        if (session.error || authLinkError.current || (recoveryGate.current && !session.data.session)) {
+          authLinkError.current = false;
+          finishRecovery();
+          setError("This sign-in or recovery link is invalid or expired. Sign in with your password or request a new link.");
+        }
         openSession(session.data.session);
       }
     });
@@ -168,7 +223,7 @@ export default function App() {
     };
   }, []);
   useEffect(() => {
-    if (!newOpen && !editIntent && !viewDoc && !geometryOpen && !editingFact)
+    if (!newOpen && !editIntent && !viewDoc && !geometryOpen && !editingFact && !accountOpen)
       return;
     const previous = document.activeElement as HTMLElement | null;
     const dialog = document.querySelector<HTMLElement>('[role="dialog"]');
@@ -186,6 +241,7 @@ export default function App() {
         setGeometryOpen(false);
         setEditingFact(null);
         setViewDoc(null);
+        setAccountOpen(false);
       }
       if (event.key === "Tab") {
         const controls = focusable(),
@@ -205,31 +261,35 @@ export default function App() {
       document.removeEventListener("keydown", handle);
       previous?.focus();
     };
-  }, [newOpen, editIntent, viewDoc, geometryOpen, editingFact]);
+  }, [newOpen, editIntent, viewDoc, geometryOpen, editingFact, accountOpen]);
   async function run(label: string, fn: () => Promise<void>) {
+    const generation = workspaceGeneration.current;
     setBusy(label);
     setError("");
     try {
       await fn();
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      if (generation === workspaceGeneration.current) setError(e instanceof Error ? e.message : String(e));
     } finally {
-      setBusy("");
+      if (generation === workspaceGeneration.current) setBusy("");
     }
   }
   async function loadProjects() {
+    const generation = workspaceGeneration.current;
     setProjectLoading(true);
     setLoadingProjectName("your workspace");
     try {
       const r = await request<{ projects: Project[] }>("/projects");
+      if (generation !== workspaceGeneration.current) return;
       setProjects(r.projects);
       if (r.projects.length) await loadProject(r.projects[0]);
     } finally {
-      setProjectLoading(false);
+      if (generation === workspaceGeneration.current) setProjectLoading(false);
     }
   }
   const [selectedWorkflowNode, setSelectedWorkflowNode] = useState<string>();
   async function loadProject(p: Project) {
+    const generation = workspaceGeneration.current;
     if (p.id !== project?.id) { setSelectedWorkflowNode(undefined); setEditingName(false); }
     setProjectLoading(true);
     setLoadingProjectName(p.name);
@@ -243,6 +303,7 @@ export default function App() {
         request(base + "/assessment"),
         request(base + "/comments"),
       ]);
+      if (generation !== workspaceGeneration.current) return;
       setCandidates(c.candidates || []);
       setCoverage(c.coverage || []);
       setDocuments(d.documents || []);
@@ -251,7 +312,7 @@ export default function App() {
       setComments(m.comments || []);
       setProject(p);
     } finally {
-      setProjectLoading(false);
+      if (generation === workspaceGeneration.current) setProjectLoading(false);
     }
   }
   function enterDemo() {
@@ -265,33 +326,6 @@ export default function App() {
     setSample(false);
     setEntered(true);
     run("Opening workspace", loadProjects);
-  }
-  async function signin(e: FormEvent) {
-    e.preventDefault();
-    if (!config?.email_delivery_enabled) {
-      setNotice(
-        "Beta access is provided by the project owner through a one-time invitation link. Email link requests are not enabled yet.",
-      );
-      return;
-    }
-    await run("Sending sign-in link", async () => {
-      const auth = getAuth();
-      if (!auth)
-        throw Error(
-          "The live workspace is not connected yet. You can explore the clearly labeled sample.",
-        );
-      const { error } = await auth.auth.signInWithOtp({
-        email,
-        options: {
-          shouldCreateUser: false,
-          emailRedirectTo: window.location.origin,
-        },
-      });
-      if (error) throw error;
-      setNotice(
-        "Check your email for a secure sign-in link. Beta access is by invitation.",
-      );
-    });
   }
   async function poll(p: Project, queued: Job[]) {
     setJobs(queued);
@@ -504,7 +538,7 @@ export default function App() {
   const unreviewed = facts.filter(
     (f) => f.review_status !== "accepted" && f.review_status !== "rejected" && (!f.classification || f.classification.bucket === "review_now"),
   );
-  if (!entered)
+  if (!entered || passwordRecovery)
     return (
       <div className="welcome">
         <div className="welcome-art">
@@ -543,33 +577,14 @@ export default function App() {
             <br />
             project workspace.
           </h2>
-          <p>
-            Beta invitations are supplied by the project owner. Open your
-            one-time invitation link to access your workspace.
-          </p>
-          <form onSubmit={signin}>
-            <label>
-              Email address
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@yourstudio.com"
-              />
-            </label>
-            <button
-              className="primary full"
-              disabled={
-                !!busy ||
-                !config?.authAvailable ||
-                !config?.email_delivery_enabled
-              }
-            >
-              {busy || "Send sign-in link"}
-              <ArrowRight size={17} />
-            </button>
-          </form>
+          {passwordRecovery ? <>
+            <p>Choose a new password for {accountEmail || "your account"}.</p>
+            <PasswordForm onSaved={() => { finishRecovery(); enterLocal(); setNotice("Password updated."); }} />
+            <button className="text-button" onClick={() => run("Signing out", leaveWorkspace)}>Cancel and sign out</button>
+          </> : <>
+            <p>Sign in with your email and password, or create a beta account.</p>
+            <AuthPanel available={!!config?.authAvailable} emailEnabled={!!config?.email_delivery_enabled} />
+          </>}
           {notice && <p className="notice">{notice}</p>}
           {error && (
             <p role="alert" className="error">
@@ -581,13 +596,7 @@ export default function App() {
               Live sign-in is awaiting the connected deployment.
             </p>
           )}
-          {config?.authAvailable && !config.email_delivery_enabled && (
-            <p className="small muted">
-              Email delivery is not enabled yet. Ask the project owner for a
-              one-time sign-in link; existing invitation links still work.
-            </p>
-          )}
-          <div className="or">
+          {!passwordRecovery && <><div className="or">
             <span />
             or explore first
             <span />
@@ -606,6 +615,7 @@ export default function App() {
               Open local development workspace →
             </button>
           )}
+          </>}
           <div className="privacy">
             <ShieldCheck size={17} /> Project documents stay private to your
             team.
@@ -661,14 +671,11 @@ export default function App() {
               starting point.
             </span>
           </div>
+          {!sample && config?.authAvailable && <button className="nav-item" onClick={() => setAccountOpen(true)}><ShieldCheck size={16} />Account & password</button>}
           <button
             className="nav-item"
-            onClick={async () => {
-              if (!sample) await getAuth()?.auth.signOut();
-              setEntered(false);
-              setSampleMode(false);
-              setSample(false);
-            }}
+            disabled={!!busy}
+            onClick={() => run("Signing out", leaveWorkspace)}
           >
             <LogOut size={16} />
             Leave workspace
@@ -1604,6 +1611,15 @@ export default function App() {
           }}
         />
       )}
+      {accountOpen && <div className="modal-backdrop">
+        <section className="modal" role="dialog" aria-modal="true" aria-labelledby="account-title">
+          <button className="close" aria-label="Close account settings" onClick={() => setAccountOpen(false)}><X /></button>
+          <span className="eyebrow">YOUR ACCOUNT</span>
+          <h2 id="account-title">Set or change your password.</h2>
+          <p>{accountEmail}</p>
+          <PasswordForm onSaved={() => { setAccountOpen(false); setNotice("Password updated. Use your email and password next time you sign in."); }} />
+        </section>
+      </div>}
       {editIntent && project && (
         <div className="modal-backdrop">
           <section

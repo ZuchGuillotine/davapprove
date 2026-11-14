@@ -5,7 +5,12 @@ export const apiBase =
   (import.meta.env.VITE_API_URL || "").replace(/\/$/, "") + "/api/v1";
 let sample = false;
 let client: SupabaseClient | null = null;
+let requestGeneration = 0;
+export function invalidateRequests() {
+  requestGeneration++;
+}
 export function setSampleMode(value: boolean) {
+  if (sample !== value) invalidateRequests();
   sample = value;
 }
 export function getAuth() {
@@ -40,9 +45,11 @@ export async function request<T = any>(
   method = "GET",
   body?: any,
 ): Promise<T> {
+  const generation = requestGeneration;
   if (sample) return demoRequest(path, method, body);
   const session = client ? await client.auth.getSession() : null;
   const token = session?.data.session?.access_token;
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
   const headers: Record<string, string> = {};
   if (token) headers.Authorization = `Bearer ${token}`;
   if (body && !(body instanceof FormData))
@@ -53,6 +60,7 @@ export async function request<T = any>(
     body:
       body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
   });
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
   if (!r.ok) {
     let error: Json = {};
     try {
@@ -66,7 +74,9 @@ export async function request<T = any>(
         : `Request failed (${r.status}). Please try again.`,
     );
   }
-  return r.status === 204 ? (undefined as T) : await r.json();
+  const result = r.status === 204 ? undefined : await r.json();
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
+  return result as T;
 }
 export function safeUrl(value: unknown) {
   if (typeof value !== "string") return undefined;

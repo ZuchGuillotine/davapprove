@@ -141,11 +141,11 @@ describe("project workspace", () => {
       "Live sign-in is awaiting the connected deployment.",
     );
     expect(
-      screen.getByRole("button", { name: "Send sign-in link" }),
+      screen.getByRole("button", { name: "Sign in to workspace" }),
     ).toBeDisabled();
     expect(screen.queryByText("PRIVATE BETA")).not.toBeInTheDocument();
   });
-  it("keeps email requests disabled until delivery is configured and reflects the server upload limit", async () => {
+  it("allows password sign-in without email delivery and reflects the server upload limit", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue({
@@ -161,12 +161,10 @@ describe("project workspace", () => {
     );
     const user = userEvent.setup();
     render(<App />);
-    expect(
-      await screen.findByText(/Email delivery is not enabled yet/),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Send sign-in link" }),
-    ).toBeDisabled();
+    await waitFor(() => expect(screen.getByRole("button", { name: "Sign in to workspace" })).toBeEnabled());
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+    expect(screen.getByRole("button", { name: "Create beta account" })).toBeDisabled();
+    expect(screen.getByText(/Email confirmation and recovery are being set up/)).toBeInTheDocument();
     await user.click(
       screen.getByRole("button", { name: /Explore the sample project/ }),
     );
