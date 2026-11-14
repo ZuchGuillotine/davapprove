@@ -328,11 +328,14 @@ export default function App() {
     run("Opening workspace", loadProjects);
   }
   async function poll(p: Project, queued: Job[]) {
+    const generation = workspaceGeneration.current;
     setJobs(queued);
     for (let attempt = 0; attempt < 180; attempt++) {
+      if (generation !== workspaceGeneration.current) return;
       const current = await Promise.all(
         queued.map((j) => request<Job>("/jobs/" + j.id)),
       );
+      if (generation !== workspaceGeneration.current) return;
       setJobs(current);
       if (
         current.every((j) =>
@@ -349,7 +352,7 @@ export default function App() {
           const progress = await request<{ documents: DocumentRecord[] }>(
             `/projects/${p.id}/documents`,
           );
-          setDocuments(progress.documents || []);
+          if (generation === workspaceGeneration.current) setDocuments(progress.documents || []);
         } catch {
           // Retain the last known coverage if this optional refresh fails.
           // Job polling remains authoritative and continues independently.
@@ -357,6 +360,7 @@ export default function App() {
       }
       await new Promise((r) => setTimeout(r, 2000));
     }
+    if (generation !== workspaceGeneration.current) return;
     setNotice(
       "Processing continues in the background. Refresh this project to see the latest results.",
     );

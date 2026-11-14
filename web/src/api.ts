@@ -88,9 +88,11 @@ export function safeUrl(value: unknown) {
   }
 }
 export async function documentUrl(projectId: string, documentId: string) {
+  const generation = requestGeneration;
   const { data } = getAuth()
     ? await getAuth()!.auth.getSession()
     : { data: { session: null } };
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
   const r = await fetch(
     `${apiBase}/projects/${projectId}/documents/${documentId}/file`,
     {
@@ -99,22 +101,31 @@ export async function documentUrl(projectId: string, documentId: string) {
         : {},
     },
   );
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
   if (!r.ok) throw Error("The document could not be opened.");
   if (r.headers.get("content-type")?.includes("application/json")) {
     const value = await r.json();
+    if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
     const url = safeUrl(value.url);
     if (!url) throw Error("Invalid document URL.");
     return url;
   }
-  return URL.createObjectURL(await r.blob());
+  const blob = await r.blob();
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
+  return URL.createObjectURL(blob);
 }
 
 export async function loadSheetImage(projectId: string, documentId: string, page: number, signal?: AbortSignal): Promise<string> {
+  const generation = requestGeneration;
   const session = client ? await client.auth.getSession() : null;
   const token = session?.data.session?.access_token;
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
   const r = await fetch(`${apiBase}/projects/${projectId}/documents/${documentId}/pages/${page}/image`, {
     headers: token ? {Authorization: `Bearer ${token}`} : {}, signal,
   });
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
   if (!r.ok) throw Error("Unable to render this source page. Check that document processing has finished.");
-  return URL.createObjectURL(await r.blob());
+  const blob = await r.blob();
+  if (generation !== requestGeneration) throw Error("Workspace changed. Please try again.");
+  return URL.createObjectURL(blob);
 }
