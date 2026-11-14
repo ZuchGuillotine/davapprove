@@ -46,7 +46,7 @@ To disable email workflows, first turn off the API/frontend delivery flags. Then
 
 Cloudflare reports `haidaa.com` sending enabled, DNS status ready, arbitrary recipients allowed and a 1,000-email daily account quota. No DNS, domain purchase or billing-plan upgrade was needed. Email Sending usage shares the account's existing plan: the published Workers Paid allowance is 3,000 messages/month, then $0.35 per 1,000; this is not an unlimited free-mail claim.
 
-Validation: 30 unit tests, TypeScript, deployment build and a successful local Workers-runtime recovery-message handoff. The deployed hook returns 200 for health, 401 for an invalid signature and 422 for a correctly signed invalid payload without sending. Real inbox delivery and a full emailed signup/recovery round trip are pending an authorized recipient test. See [operations](../docs/operations.md) for the release record.
+Validation: 30 unit tests, TypeScript, deployment build and a successful local Workers-runtime recovery-message handoff. The deployed hook returns 200 for health, 401 for an invalid signature and 422 for a correctly signed invalid payload without sending. An authorized recovery-email request through the production Supabase client succeeded on November 14 at 18:17 UTC, and the live hook recorded Cloudflare provider acceptance. Recipient-server delivery, inbox placement and a full emailed signup/recovery round trip remain unverified. See [operations](../docs/operations.md) for the release record.
 
 Official references reviewed November 14, 2026:
 

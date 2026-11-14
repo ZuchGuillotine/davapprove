@@ -4,7 +4,7 @@ Property-development feasibility and approval coordination, starting with Kitsap
 
 ## Hosted MVP
 
-Open [Davapprove beta](https://davapprove-preview.delicacybydesign.workers.dev) to explore the labeled sample, create an account, or sign in with email and password. Real projects use private authenticated workspaces. Confirmation and password-reset emails are configured through Cloudflare as **Davapprove <davapprove@haidaa.com>**; an authorized inbox delivery test is still pending. Existing users can set a password in **Account & password**. See [authentication operations](docs/operations.md#preview-hostname-and-sign-in).
+Open [Davapprove beta](https://davapprove-preview.delicacybydesign.workers.dev) to explore the labeled sample, create an account, or sign in with email and password. Real projects use private authenticated workspaces. Confirmation and password-reset emails are configured through Cloudflare as **Davapprove <davapprove@haidaa.com>**; an authorized recovery-email test reached Cloudflare successfully; inbox receipt is not yet confirmed. Existing users can set a password in **Account & password**. See [authentication operations](docs/operations.md#preview-hostname-and-sign-in).
 
 See [implementation status](docs/IMPLEMENTATION_STATUS.md) for delivered features and limits, and [operations](docs/operations.md) for deployment, access and local development. The API currently uses a temporary preview hostname.
 
