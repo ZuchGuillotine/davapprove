@@ -2730,6 +2730,19 @@
    "fetched": "2026-11-14",
    "notes": "",
    "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "bi-fees-2026": {
+   "id": "bi-fees-2026",
+   "jurisdiction": "City of Bainbridge Island",
+   "citation": "2026 Fee Schedule, section 9; BIMC 15.04.050 B and F",
+   "title": "Bainbridge building, planning and site-review fee schedule",
+   "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Building permit fees are based on valuation, which is determined from the type of construction and square footage",
+   "summary": "Building permit valuation uses the greater of the city calculation and contractor bid. Separate building plan check, planning/engineering review and site-specific applications may apply.",
+   "key_values": {},
+   "notes": "Pages 16–26. Fee schedule establishes prices, not parcel-specific applicability; city buffers and zoning are not modelled."
   }
  },
  "fees": {
@@ -4462,6 +4475,321 @@
     "epa-wa-construction-stormwater"
    ],
    "source": null
+  },
+  "bi-building": {
+   "id": "bi-building",
+   "label": "Bainbridge building permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Requires estimated construction valuation. City uses the greater of its ICC-based valuation and contractor bid; confirm city valuation before relying on this allowance.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "brackets": [
+     [
+      500,
+      0,
+      41.46,
+      0,
+      1
+     ],
+     [
+      2000,
+      500,
+      41.46,
+      5.37,
+      100
+     ],
+     [
+      25000,
+      2000,
+      122.12,
+      24.69,
+      1000
+     ],
+     [
+      50000,
+      25000,
+      690.24,
+      17.82,
+      1000
+     ],
+     [
+      100000,
+      50000,
+      1135.9,
+      12.34,
+      1000
+     ],
+     [
+      500000,
+      100000,
+      1753.43,
+      9.87,
+      1000
+     ],
+     [
+      1000000,
+      500000,
+      5705.56,
+      8.37,
+      1000
+     ],
+     [
+      null,
+      1000000,
+      9897.63,
+      6.42,
+      1000
+     ]
+    ]
+   }
+  },
+  "bi-plan-check": {
+   "id": "bi-plan-check",
+   "label": "Bainbridge building plan check",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "rate": 0.65
+   }
+  },
+  "bi-planning-review": {
+   "id": "bi-planning-review",
+   "label": "Bainbridge planning / engineering review of building permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Applies where no prior planning or zoning review occurred. Unknown prior review carries a range from no added review fee to the full charge; confirm applicability with the city.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "rate": 0.2,
+    "adu_rate": 0.1
+   }
+  },
+  "bi-admin": {
+   "id": "bi-admin",
+   "label": "Bainbridge administrative / technology fee — building permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 125,
+   "high": 125,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "One building permit only. Separate permits each add this fee; do not assume this covers every application.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "bi-sbcc": {
+   "id": "bi-sbcc",
+   "label": "State building code surcharge — residential permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 6.5,
+   "high": 6.5,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "bi-grading": {
+   "id": "bi-grading",
+   "label": "Bainbridge grading permit and plan review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Fee schedule based on reported grading quantity; permit applicability and exemptions require city confirmation. Includes one administrative fee when a grading fee applies.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "bands": [
+     [
+      100,
+      0,
+      0
+     ],
+     [
+      1000,
+      2002,
+      1138
+     ],
+     [
+      10000,
+      4128,
+      4609
+     ],
+     [
+      100000,
+      7345,
+      6890
+     ]
+    ],
+    "large_base": 546,
+    "large_rate": 0.07,
+    "admin": 125
+   }
+  },
+  "bi-transport": {
+   "id": "bi-transport",
+   "label": "Bainbridge transportation impact fee",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Includes administrative fee. Prior-use credits and exemptions require confirmation. Replacement homes are not automatically charged.",
+   "source": {
+    "title": "Bainbridge Island 2026 transportation impact fee rate table",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/22012/2026-Transportation-Impact-Fee-Memorandum-and-Rate-Table",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "sfr": 6959.31,
+    "adu": 3775.79,
+    "admin_rate": 0.02
+   }
+  },
+  "bi-shoreline": {
+   "id": "bi-shoreline",
+   "label": "Bainbridge shoreline application — exemption or administrative review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 2231,
+   "high": 12072,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Conditional alternatives, not cumulative fees. Includes one administrative fee. Exemption eligibility requires city review; conditional-use permits, variances and third-party review can cost more.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "bi-critical": {
+   "id": "bi-critical",
+   "label": "Bainbridge critical-area permit — minor or major",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 2585,
+   "high": 5115,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Conditional minor/major application range including one administrative fee; map overlap does not establish the permit classification. Studies, third-party review and reasonable-use exceptions are additional.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "bi-land-use": {
+   "id": "bi-land-use",
+   "label": "Additional city land-use applications / review scope",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source for a project-specific total has been established. Quote needed: confirm applicable applications, equipment or utility provider; add an allowance here. Published schedule is linked for reference.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "bi-trades": {
+   "id": "bi-trades",
+   "label": "City mechanical and plumbing permits",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source for a project-specific total has been established. Quote needed: confirm applicable applications, equipment or utility provider; add an allowance here. Published schedule is linked for reference.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "bi-connections": {
+   "id": "bi-connections",
+   "label": "City / serving-provider utility connection charges",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "City of Bainbridge Island",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source for a project-specific total has been established. Quote needed: confirm applicable applications, equipment or utility provider; add an allowance here. Published schedule is linked for reference.",
+   "source": {
+    "title": "Bainbridge Island 2026 fee schedule",
+    "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
   }
  },
  "agencies": {

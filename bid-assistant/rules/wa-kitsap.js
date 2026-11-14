@@ -183,7 +183,7 @@
       level: 'required', basis: 'documented', agency: CITY_AGENCY[city],
       title: 'Inside the City of ' + city + ': the city is the permitting authority',
       why: 'The parcel is inside city limits, so land use, critical areas, shoreline and building permits come from the city under its own code (critical areas: ' + kv.critical_areas + '; shoreline: ' + kv.shoreline_master_program + '; zoning: ' + kv.zoning + '). County code sections, county fees and county buffer widths in this tool do not apply. Mapped features are still shown because state and federal rules follow the feature, not the city line.',
-      confirm: 'This version does not model city fees or city buffer widths. Use the city fee schedule for the bid.',
+      confirm: city === 'Bainbridge Island' ? 'Bainbridge fee allowances are listed separately. Enter construction valuation; confirm additional applications and city buffer widths.' : 'This version does not model this city’s fees or buffer widths. Use the city fee schedule for the bid.',
       flag: 'This lot is in the City of ' + city + '. Bid from the city fee schedule and code, not the county figures.',
       flag_weight: 20,
       citations: [CITY_CITE[city]]
@@ -213,6 +213,42 @@
   rules[rules.length - 1].independent = true;
   rules[rules.length - 1].check_label = 'Tribal land jurisdiction';
   rules[rules.length - 1].citations = ['ecology-tribal-lands-layer', 'usace-tribal-consultation'];
+
+  rule('kitsap.bainbridge_costs', 'city-bainbridge', 'City permitting costs', function (ctx) {
+    if (ctx.facts.jurisdiction.city !== 'Bainbridge Island') return null;
+    var p = ctx.project, f = ctx.facts, fees = ctx.data.fees, land = ctx.helpers.landContext(f, p);
+    if (f.jurisdiction.status === 'unknown' || land.mode === 'tribal' || land.mode === 'federal' || land.conflict) return null;
+    var out = [], costs = [];
+    function finding(title, why, items, level) {
+      return { title: title, why: why, costs: items, level: level || 'likely', basis: 'confirm', citations: ['bi-fees-2026'] };
+    }
+    if (STRUCTURE[p.type]) {
+      var value = p.construction_value, permit = 0;
+      if (value > 0) {
+        var b = fees['bi-building'].method.brackets.find(function (row) { return row[0] == null || value <= row[0]; });
+        permit = b[2] + Math.ceil(Math.max(0, value - b[1]) / b[4]) * b[3];
+      }
+      var note = value > 0 ? 'Calculated from your construction valuation of ' + money(value) + '. City ICC-based valuation may be higher; this is not a city quote.' : 'Enter estimated construction valuation in Project assumptions to calculate this fee. Not zero; excluded until priced.';
+      costs.push({ fee: 'bi-building', low: permit, high: permit, unpriced: !value, note: note });
+      costs.push({ fee: 'bi-plan-check', low: permit * fees['bi-plan-check'].method.rate, high: permit * fees['bi-plan-check'].method.rate, unpriced: !value, note: note });
+      var review = permit * (p.type === 'adu' ? fees['bi-planning-review'].method.adu_rate : fees['bi-planning-review'].method.rate);
+      if (p.prior_planning_review !== 'yes') costs.push({ fee: 'bi-planning-review', low: p.prior_planning_review === 'no' ? review : 0, high: review, unpriced: !value });
+      costs.push('bi-admin', 'bi-sbcc', 'bi-trades');
+      out.push(finding('Bainbridge building, plan check and planning / engineering review', 'Separate city charges were previously missing from the subtotal. Building and plan-check fees depend on valuation. Planning/engineering review applies without prior planning or zoning review; confirm any credit. Separate trade permits are not included in the building fee.', costs));
+    }
+    if (p.type === 'new_sfr' || p.type === 'adu') {
+      var tm = fees['bi-transport'].method, impact = (p.type === 'adu' ? tm.adu : tm.sfr) * (1 + tm.admin_rate);
+      out.push(finding('Bainbridge transportation impact fee', 'New dwelling allowance before any prior-use credit or exemption. Confirm the final net fee with the city; this is separate from building and land-use application fees.', [{ fee: 'bi-transport', low: impact, high: impact }]));
+    }
+    var gm = fees['bi-grading'].method, band = gm.bands.find(function (row) { return p.grading_cy <= row[0]; });
+    var grading = band ? band[1] + band[2] : (gm.large_base + gm.large_rate * p.grading_cy) * 2;
+    if (grading > 0) out.push(finding('Bainbridge grading permit and plan review', 'Allowance from the reported grading volume. City must confirm grading scope, permit applicability and exemptions.', [{ fee: 'bi-grading', low: grading + gm.admin, high: grading + gm.admin }]));
+    if (f.wetland.status === 'on_parcel' || f.geohazard.status === 'on_parcel' || (f.stream.streams || []).some(function (s) { return s.on_parcel; })) {
+      out.push(finding('Possible Bainbridge critical-area application', 'Mapped features require a city applicability check. This range covers a minor or major application only; third-party review deposits, professional studies, exceptions and consolidated-review adjustments are additional.', ['bi-critical'], 'possible'));
+    }
+    out.push(finding('Confirm additional Bainbridge land-use and utility costs', 'A separate land-use application is not automatically required for every new home. Confirm site-specific approvals, pre-application meetings, stormwater, access, tree work, review deposits and utility connection charges. These missing scope items are editable allowances, not zero-cost clearances.', p.new_dwelling ? ['bi-land-use', 'bi-connections'] : ['bi-land-use'], 'possible'));
+    return out;
+  });
 
   // ================= base county permits =================
   rule('kitsap.building', 'kitsap-dcd', 'Building permit', function (ctx) {
@@ -470,7 +506,7 @@
       return null;
     }
     if (!county(ctx)) {
-      return { level: 'required', basis: 'documented', agency: CITY_AGENCY[ctx.facts.jurisdiction.city], title: 'Shoreline permit or exemption from the city', why: 'Part of the lot is in shoreline jurisdiction. The city administers its own shoreline master program under the state Shoreline Management Act.', citations: ['rcw-90.58.140', 'rcw-90.58.030-shorelands'], costs: [] };
+      return { level: 'required', basis: 'documented', agency: CITY_AGENCY[ctx.facts.jurisdiction.city], title: 'Shoreline permit or exemption from the city', why: 'Part of the lot is in shoreline jurisdiction. The city administers its own shoreline master program under the state Shoreline Management Act.', citations: ['rcw-90.58.140', 'rcw-90.58.030-shorelands'], costs: ctx.facts.jurisdiction.city === 'Bainbridge Island' ? [{ fee: 'bi-shoreline', bucket: 'contingent' }] : [] };
     }
     var up = s.upland_designations, buf = shorelineBuffer(d, up), ss = shorelineSetback(d);
     var sp = 0; if (ctx.grid) ctx.grid.constraints.forEach(function (c) { if (c.id === 'shore_buffer') sp = c.pct; });

@@ -2693,5 +2693,18 @@
   "fetched": "2026-11-14",
   "notes": "",
   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+ },
+ {
+  "id": "bi-fees-2026",
+  "jurisdiction": "City of Bainbridge Island",
+  "citation": "2026 Fee Schedule, section 9; BIMC 15.04.050 B and F",
+  "title": "Bainbridge building, planning and site-review fee schedule",
+  "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Building permit fees are based on valuation, which is determined from the type of construction and square footage",
+  "summary": "Building permit valuation uses the greater of the city calculation and contractor bid. Separate building plan check, planning/engineering review and site-specific applications may apply.",
+  "key_values": {},
+  "notes": "Pages 16–26. Fee schedule establishes prices, not parcel-specific applicability; city buffers and zoning are not modelled."
  }
 ]

@@ -220,8 +220,8 @@
 
   function readProject() {
     var p = { type: $('ptype').value };
-    ['new_sqft', 'hard_surface_sqft', 'disturbance_sqft', 'grading_cy', 'bedrooms', 'lots'].forEach(function (k) { p[k] = $('a-' + k).value; });
-    ['wastewater', 'water'].forEach(function (k) { p[k] = $('a-' + k).value; });
+    ['new_sqft', 'construction_value', 'hard_surface_sqft', 'disturbance_sqft', 'grading_cy', 'bedrooms', 'lots'].forEach(function (k) { p[k] = $('a-' + k).value; });
+    ['wastewater', 'water', 'prior_planning_review'].forEach(function (k) { p[k] = $('a-' + k).value; });
     ['demo', 'in_water', 'tree_clearing', 'state_highway_access'].forEach(function (k) { p[k] = $('a-' + k).checked; });
     Object.keys(Engine.SCOPE_FIELDS).forEach(function (k) { p[k] = $('a-' + k).value; });
     ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(function (k) { p[k] = $('a-' + k).checked; });
@@ -230,9 +230,9 @@
   }
   function fillAssumptions(type, saved) {
     var p = Engine.normaliseProject(saved || { type: type });
-    ['new_sqft', 'hard_surface_sqft', 'disturbance_sqft', 'grading_cy', 'bedrooms', 'lots'].forEach(function (k) { $('a-' + k).value = p[k]; });
+    ['new_sqft', 'construction_value', 'hard_surface_sqft', 'disturbance_sqft', 'grading_cy', 'bedrooms', 'lots'].forEach(function (k) { $('a-' + k).value = p[k]; });
     ['demo', 'in_water', 'tree_clearing', 'state_highway_access'].forEach(function (k) { $('a-' + k).checked = !!p[k]; });
-    ['water', 'wastewater'].forEach(function (k) { $('a-' + k).value = p[k]; });
+    ['water', 'wastewater', 'prior_planning_review'].forEach(function (k) { $('a-' + k).value = p[k]; });
     Object.keys(Engine.SCOPE_FIELDS).forEach(function (k) { $('a-' + k).value = p[k]; });
     ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(function (k) { $('a-' + k).checked = p[k]; });
     $('a-flood_rise_ft').value = p.flood_rise_ft == null ? '' : p.flood_rise_ft;

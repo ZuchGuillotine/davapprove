@@ -306,3 +306,34 @@ assert.equal(Engine.normaliseProject({flood_rise_ft:''}).flood_rise_ft,null);
 assert.equal(Engine.normaliseProject({land_status:'invalid'}).land_status,'unknown');
 
 console.log('PASS: bid assistant engine (' + RULES.length + ' rules, ' + n + ' project and site combinations, ' + cites.length + ' citations, ' + fees.length + ' cost lines).');
+
+// Bainbridge city fees must be visible independently of county permitting.
+const biFacts = facts({ jurisdiction: { city: 'Bainbridge Island' } });
+let bi = run(biFacts, { type: 'new_sfr', construction_value: 600000, prior_planning_review: 'no' });
+assert.equal(cost(bi, 'dcd-building-permit'), undefined);
+assert.equal(cost(bi, 'bi-building').low, 6542.56);
+assert(Math.abs(cost(bi, 'bi-plan-check').low - 4252.664) < .001);
+assert(Math.abs(cost(bi, 'bi-planning-review').low - 1308.512) < .001);
+assert(Math.abs(cost(bi, 'bi-transport').low - 7098.4962) < .001);
+assert.equal(cost(bi, 'bi-grading').low, 3265);
+assert(bi.costs.totals.unpriced.includes('bi-trades'));
+assert(bi.costs.totals.unpriced.includes('bi-land-use'));
+assert(bi.costs.totals.unpriced.includes('bi-connections'));
+bi = run(biFacts, { type: 'new_sfr' });
+assert(bi.costs.totals.unpriced.includes('bi-building'), 'missing valuation is not a free building permit');
+assert(bi.costs.totals.unpriced.includes('bi-planning-review'));
+const supplied = Engine.applyOverrides(bi, { 'bi-building': { low: 6000, high: 8000 } });
+assert(!supplied.costs.totals.unpriced.includes('bi-building'));
+bi = run(biFacts, { type: 'new_sfr', construction_value: 600000 });
+assert.equal(cost(bi, 'bi-planning-review').low, 0);
+assert(cost(bi, 'bi-planning-review').high > 0);
+bi = run(biFacts, { type: 'new_sfr', construction_value: 600000, prior_planning_review: 'yes', grading_cy: 100 });
+assert.equal(cost(bi, 'bi-planning-review'), undefined);
+assert.equal(cost(bi, 'bi-grading'), undefined);
+for (const [value, expected] of [[500,41.46],[500.01,46.83],[2000,122.01],[2000.01,146.81],[500000,5701.43],[500000.01,5713.93],[1000000.01,9904.05]]) {
+ assert(Math.abs(cost(run(biFacts,{type:'new_sfr',construction_value:value}),'bi-building').low-expected)<.001,'valuation band '+value);
+}
+assert.equal(cost(run(biFacts,{type:'rebuild',construction_value:600000}),'bi-transport'),undefined,'replacement-home impact exemption is not ignored');
+assert.equal(cost(run(facts({jurisdiction:{city:'Poulsbo'}}),{type:'new_sfr',construction_value:600000}),'bi-building'),undefined);
+assert.equal(cost(run(biFacts,{type:'new_sfr',land_status:'tribal',construction_value:600000}),'bi-building'),undefined);
+console.log('PASS: Bainbridge fees, valuation bands, missing inputs, prior review, jurisdiction and replacements.');

@@ -55,6 +55,8 @@
       type: type,
       label: d.label,
       new_sqft: num(input.new_sqft, d.new_sqft),
+      construction_value: num(input.construction_value, 0),
+      prior_planning_review: ['yes', 'no'].indexOf(input.prior_planning_review) >= 0 ? input.prior_planning_review : 'unknown',
       hard_surface_sqft: num(input.hard_surface_sqft, d.hard_surface_sqft),
       disturbance_sqft: num(input.disturbance_sqft, d.disturbance_sqft),
       grading_cy: num(input.grading_cy, d.grading_cy),
@@ -197,7 +199,7 @@
       note: spec.note || fee.note || null,
       source: fee.source || null,
       confidence: fee.confidence || (fee.basis === 'published' ? 'high' : 'medium'),
-      unpriced: fee.confidence === 'unsourced',
+      unpriced: spec.unpriced === true || fee.confidence === 'unsourced',
       // Required and likely items go in the base estimate; possible and unknown are contingencies.
       bucket: spec.bucket || (finding.level === 'required' || finding.level === 'likely' ? 'base' : 'contingent'),
       finding: finding.id,

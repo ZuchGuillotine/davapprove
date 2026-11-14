@@ -86,6 +86,7 @@
       report.project.disturbance_sqft ? report.project.disturbance_sqft.toLocaleString() + ' sq ft disturbed' : null,
       report.project.grading_cy ? report.project.grading_cy + ' cu yd grading' : null
     ].filter(Boolean).join(', ') + ')');
+    if (report.project.construction_value) L.push('- Supplied construction valuation: ' + money(report.project.construction_value) + '; city valuation not confirmed. Prior planning review: ' + report.project.prior_planning_review + '.');
     L.push('- Screened: ' + screening.screened_at.slice(0, 10) + '. Code and fees checked ' + data.meta.research_date + '.');
     L.push('- Independent agency-routing sources checked: ' + data.routing.checked + '. No county permit record is used to clear tribal, state or federal requirements.');
     L.push('- Agency-scope answers are bid assumptions, not verified agency determinations.');
