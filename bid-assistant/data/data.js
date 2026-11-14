@@ -32,7 +32,8 @@
     "name": "King County, WA",
     "available": false
    }
-  ]
+  ],
+  "agency_routing_checked": "2026-11-14"
  },
  "citations": {
   "kcc-19.100.110": {
@@ -2088,7 +2089,9 @@
    "key_values": {
     "small_construction_acres": ">= 1 and < 5",
     "large_construction_acres": ">= 5 (40 CFR 122.26(b)(14)(x))",
-    "common_plan": "less than one acre counts if part of a larger common plan of development or sale that will disturb 1+ acres"
+    "common_plan": "less than one acre counts if part of a larger common plan of development or sale that will disturb 1+ acres",
+    "disturbance_acres": 1,
+    "square_feet_per_acre": 43560
    },
    "verified": true,
    "fetched": "2026-11-12",
@@ -2504,6 +2507,229 @@
    "fetched": "2026-11-12",
    "source_currency": "map service read on fetch date",
    "notes": "Data layer, not code text."
+  },
+  "kitsap-permit-reactivation": {
+   "id": "kitsap-permit-reactivation",
+   "jurisdiction": "Kitsap County, WA",
+   "citation": "DCD1014POL §§ 4.2–4.3, 6–7",
+   "title": "Extension and Reactivation Policy",
+   "url": "https://www.kitsap.gov/dcd/Documents/Reactivation%20and%20Extension%20Policy.pdf",
+   "fetched": "2026-11-13",
+   "verified": true,
+   "excerpt": "Expired permits may be reactivated in accordance with this policy.",
+   "source_currency": "Policy revised September 24, 2024; linked from current DCD Payments page",
+   "summary": "Eligibility, associated permits and permit type determine extension or reactivation. An agency decision is required; otherwise a new application may be needed."
+  },
+  "kitsap-bid-site-limits": {
+   "id": "kitsap-bid-site-limits",
+   "jurisdiction": "Kitsap County, WA",
+   "citation": "KCC 17.410, 17.420 and 17.455 — applicability to confirm",
+   "title": "Kitsap Before You Buy or Build; zoning and agriculture reference",
+   "url": "https://kitsap.gov/dcd/Pages/Before-You-Buy-or-Build.aspx",
+   "fetched": "2026-11-13",
+   "verified": false,
+   "summary": "Confirm legal lot status, allowed use, setbacks and property restrictions with DCD. Agricultural uses and nearby resource lands need site-specific review; this screening has no complete agricultural-buffer model.",
+   "source_currency": "County guidance checked November 13, 2026; code applicability not determined",
+   "related_url": "https://kitsap.gov/dcd/Pages/Rural_Residential_Zone.aspx"
+  },
+  "usace-section10-scope": {
+   "id": "usace-section10-scope",
+   "jurisdiction": "United States",
+   "citation": "33 CFR 322.3(a) — Section 10 structures and work",
+   "title": "33 CFR 322.3(a) — Section 10 structures and work",
+   "url": "https://www.ecfr.gov/current/title-33/chapter-II/part-322/section-322.3",
+   "excerpt": "DA permits are required under section 10 for structures and/or work in or affecting navigable waters of the United States",
+   "summary": "Section 10 addresses structures and work in or affecting navigable waters. Marine water and legally navigable inland water must be considered separately from dredged/fill discharge.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "usace-section404-scope": {
+   "id": "usace-section404-scope",
+   "jurisdiction": "United States",
+   "citation": "33 CFR 323.3(a) — Section 404 dredged or fill discharge",
+   "title": "33 CFR 323.3(a) — Section 404 dredged or fill discharge",
+   "url": "https://www.ecfr.gov/current/title-33/chapter-II/part-323/section-323.3",
+   "excerpt": "DA permits will be required for the discharge of dredged or fill material into waters of the United States.",
+   "summary": "Section 404 concerns dredged/fill discharge into jurisdictional waters, subject to exemptions and applicable authorizations. A dock or a mapped wetland alone does not establish this trigger.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "usace-tribal-consultation": {
+   "id": "usace-tribal-consultation",
+   "jurisdiction": "United States / Tribal governments",
+   "citation": "USACE Tribal Consultation Policy (December 5, 2023), consultation elements",
+   "title": "USACE Tribal Consultation Policy (December 5, 2023), consultation elements",
+   "url": "https://planning.erdc.dren.mil/toolbox/library/MemosandLetters/Memo_TribalConsultationPolicyUpdate_5Dec2023.pdf",
+   "excerpt": "Each Tribal Nation or ANC shall be consulted with separately, unless Tribal Nations or ANCs agree to act collectively",
+   "summary": "The federal lead assesses tribal implications of permit decisions regardless of land status. Affected Tribes can hold protected interests beyond reservation boundaries. Applicant coordination does not replace government-to-government consultation.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "Read policy text on PDF pages 6–7 and discussion of interests beyond reservations; no treaty boundary is inferred.",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "ecology-401-authority": {
+   "id": "ecology-401-authority",
+   "jurisdiction": "Washington / Tribal governments / United States",
+   "citation": "Clean Water Act Section 401 — certifying authorities in Washington",
+   "title": "Clean Water Act Section 401 — certifying authorities in Washington",
+   "url": "https://www.ecology.wa.gov/regulations-permits/permits-certifications/401-water-quality-certification",
+   "excerpt": "Tribal governments and the EPA also have this authority on Tribal and nonstate lands.",
+   "summary": "Ecology, an authorized Tribe or EPA may be the certifier, depending on discharge location and jurisdiction. Existing general-permit certification must be checked for conditions and coverage.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "epa-401-authority": {
+   "id": "epa-401-authority",
+   "jurisdiction": "United States / Tribal governments",
+   "citation": "EPA role as Section 401 certifying authority",
+   "title": "EPA role as Section 401 certifying authority",
+   "url": "https://www.epa.gov/cwa-401/resources-when-epa-acts-certifying-authority-under-section-401",
+   "excerpt": "The EPA acts as the certifying authority on behalf of states or Tribes that do not have",
+   "summary": "EPA acts where a state or Tribe lacks certification authority, including tribal situations without the necessary authority and lands of exclusive federal jurisdiction. Determine authority at the discharge location, not from the upland address.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "pgst-401-authority": {
+   "id": "pgst-401-authority",
+   "jurisdiction": "Port Gamble S’Klallam Tribe",
+   "citation": "EPA approval of Port Gamble S’Klallam water-quality and certification authority",
+   "title": "EPA approval of Port Gamble S’Klallam water-quality and certification authority",
+   "url": "https://www.epa.gov/wqs-tech/water-quality-standards-regulations-port-gamble-sklallam-tribe",
+   "excerpt": "This tribe was granted treatment in a manner similar to a state (TAS) on September 24, 2003.",
+   "summary": "EPA recognizes the Tribe’s water-quality standards authority. The associated EPA approval letter confirms Section 401 authority for reservation and trust-land waters; it does not extend that approval to all off-reservation treaty waters.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "Related EPA November 21, 2024 action: https://www.epa.gov/system/files/documents/2025-01/pgs_let_0002_112124_508.pdf",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "fema-hydraulic-review": {
+   "id": "fema-hydraulic-review",
+   "jurisdiction": "United States",
+   "citation": "44 CFR 60.3(c)(10), (d)(3)–(4) — encroachment analysis",
+   "title": "44 CFR 60.3(c)(10), (d)(3)–(4) — encroachment analysis",
+   "url": "https://www.ecfr.gov/current/title-44/chapter-I/subchapter-B/part-60/subpart-A/section-60.3",
+   "excerpt": "the proposed encroachment would not result in any increase in flood levels within the community",
+   "summary": "Floodway encroachments need hydraulic demonstration of no increase unless the conditional revision route applies. For specified studied flood zones before a floodway is designated, the rule limits cumulative increases. Community standards may be stricter.",
+   "key_values": {
+    "floodway_max_rise_ft": 0,
+    "without_floodway_max_rise_ft": 1
+   },
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "fema-conditional-revision": {
+   "id": "fema-conditional-revision",
+   "jurisdiction": "United States",
+   "citation": "44 CFR 65.12(a)–(c) — conditional and final map revision",
+   "title": "44 CFR 65.12(a)–(c) — conditional and final map revision",
+   "url": "https://www.ecfr.gov/current/title-44/chapter-I/subchapter-B/part-65/section-65.12",
+   "excerpt": "the community shall apply to the Federal Insurance Administrator for conditional approval of such action prior to permitting the encroachments to occur",
+   "summary": "For encroachments exceeding the applicable flood-elevation limits, the community must obtain FEMA conditional approval before permitting. Completed changes require as-built information for final revision. FEMA review does not replace local permitting.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "dnr-aquatic-scope": {
+   "id": "dnr-aquatic-scope",
+   "jurisdiction": "Washington",
+   "citation": "DNR aquatic lands — marine and freshwater use authorization",
+   "title": "DNR aquatic lands — marine and freshwater use authorization",
+   "url": "https://dnr.wa.gov/sites/default/files/2025-03/em_fs11_018.pdf",
+   "excerpt": "",
+   "summary": "DNR’s aquatic-land role includes state-owned beds and shores of lakes and rivers as well as marine waters. Confirm title and proposed footprint; a nearby state aquatic polygon is a lead, not an ownership decision.",
+   "key_values": {},
+   "verified": false,
+   "fetched": "2026-11-14",
+   "notes": "Official DNR fact sheet indexed text checked; direct retrieval refused. No bypass attempted. Rent-free recreational permission is separately governed by RCW 79.105.430 and WAC 332-30-144.",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "suquamish-resource-programs": {
+   "id": "suquamish-resource-programs",
+   "jurisdiction": "Suquamish Tribe",
+   "citation": "Suquamish Fisheries — treaty resources, environment and historic preservation",
+   "title": "Suquamish Fisheries — treaty resources, environment and historic preservation",
+   "url": "https://suquamish.nsn.us/home/departments/",
+   "excerpt": "Preserving and enhancing treaty-reserved resources. The fisheries department includes all fisheries management, environmental programs, historic preservation and more.",
+   "summary": "Official starting contact for treaty-resource and cultural-resource questions; this directory does not establish project-specific jurisdiction or an exhaustive consultation area.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "pgst-environmental-program": {
+   "id": "pgst-environmental-program",
+   "jurisdiction": "Port Gamble S’Klallam Tribe",
+   "citation": "Port Gamble S’Klallam Environmental Program",
+   "title": "Port Gamble S’Klallam Environmental Program",
+   "url": "https://pgst.nsn.us/environmental/",
+   "excerpt": "We monitor water quality and water resources, conduct restoration projects to improve key habitats and review project permits.",
+   "summary": "Official environmental-permit and treaty-resource contact, with a separately published Section 401 policy. Contact selection is preliminary until the activity and affected waters are established.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "skokomish-fishing-maps": {
+   "id": "skokomish-fishing-maps",
+   "jurisdiction": "Skokomish Indian Tribe",
+   "citation": "Skokomish fishing maps — Hood Canal and Port Gamble Bay",
+   "title": "Skokomish fishing maps — Hood Canal and Port Gamble Bay",
+   "url": "https://skokomish.org/skok-fishing-maps/",
+   "excerpt": "",
+   "summary": "The Tribe publishes Hood Canal fishing maps and an Area 9A Port Gamble Bay map. This supports including Skokomish as a regional contact candidate, not an assertion of permitting authority or a complete treaty-rights map.",
+   "key_values": {},
+   "verified": false,
+   "fetched": "2026-11-14",
+   "notes": "Official map index reviewed; no private cultural-resource map requested.",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "epa-wa-construction-stormwater": {
+   "id": "epa-wa-construction-stormwater",
+   "jurisdiction": "United States / Washington Indian Country",
+   "citation": "EPA Region 10 construction stormwater jurisdiction",
+   "title": "EPA Region 10 construction stormwater jurisdiction",
+   "url": "https://www.epa.gov/npdes-permits/stormwater-discharges-construction-activities-region-10",
+   "excerpt": "In Region 10, EPA is the NPDES stormwater permitting authority for:",
+   "summary": "EPA handles construction stormwater for Indian lands and federal operators in Washington. Ecology’s fee schedule must not be applied automatically to these projects.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
+  },
+  "sepa-lead-routing": {
+   "id": "sepa-lead-routing",
+   "jurisdiction": "Washington",
+   "citation": "Ecology SEPA lead-agency guidance",
+   "title": "Ecology SEPA lead-agency guidance",
+   "url": "https://www.ecology.wa.gov/regulations-permits/sepa/environmental-review/sepa-lead-agency-contacts",
+   "excerpt": "While this is typically a city or county government, other entities such as ports, transit authorities, local clean air agencies",
+   "summary": "The lead agency can be a city, county, state agency or other eligible entity. County records do not establish the lead for every proposal; confirm before applying county review fees.",
+   "key_values": {},
+   "verified": true,
+   "fetched": "2026-11-14",
+   "notes": "",
+   "source_currency": "Official source checked 2026-11-14; site applicability remains to be confirmed"
   }
  },
  "fees": {
@@ -3668,16 +3894,18 @@
    "kind": "professional",
    "basis": "market",
    "payee": "Geotechnical engineer",
-   "low": 2500,
-   "high": 6000,
+   "low": 5300,
+   "high": 9000,
    "unit": "per project",
    "confidence": "medium",
-   "note": null,
+   "note": "Kitsap residential geotechnical design report; extensive drilling can exceed this range. Obtain a site-specific quote.",
    "source": {
-    "title": "Blue Landscaping Services (Seattle-area contractor) - Retaining Wall Cost in Seattle: 2026",
-    "url": "https://bluelandscapingservices.com/blog/retaining-wall-cost-seattle",
-    "date": "2026",
-    "excerpt": "Geotechnical report on a mapped steep slope $2,500-$6,000 per parcel"
+    "title": "Studio Kamppari — typical professional fees in Kitsap County",
+    "url": "https://www.studiokamppari.com/articles/soft-costs",
+    "date": "Publication shows January 8; year not specified on page",
+    "checked": "2026-11-13",
+    "region": "Kitsap County, Washington",
+    "summary": "Kitsap residential geotechnical design report; extensive drilling can exceed this range. Obtain a site-specific quote."
    },
    "sources": [
     {
@@ -3698,7 +3926,8 @@
      "date": "2026",
      "quote": "A geotechnical survey costs $1,000 to $5,000 on average."
     }
-   ]
+   ],
+   "components": []
   },
   "pro-geo-assessment": {
    "id": "pro-geo-assessment",
@@ -3706,12 +3935,19 @@
    "kind": "professional",
    "basis": "market",
    "payee": "Geologist or geotechnical engineer",
-   "low": 1000,
-   "high": 2500,
+   "low": 3500,
+   "high": 4000,
    "unit": "per project",
-   "confidence": "unsourced",
-   "note": "Placeholder estimate with no published source. Get a quote.",
-   "source": null,
+   "confidence": "medium",
+   "note": "Kitsap geological assessment for hazards and site suitability; confirm the required scope with DCD and the consultant.",
+   "source": {
+    "title": "Studio Kamppari — typical professional fees in Kitsap County",
+    "url": "https://www.studiokamppari.com/articles/soft-costs",
+    "date": "Publication shows January 8; year not specified on page",
+    "checked": "2026-11-13",
+    "region": "Kitsap County, Washington",
+    "summary": "Kitsap geological assessment for hazards and site suitability; confirm the required scope with DCD and the consultant."
+   },
    "sources": [
     {
      "title": "HomeGuide - Geotechnical report cost (2026)",
@@ -3719,7 +3955,8 @@
      "date": "2026",
      "quote": "Average Range $1,000 to $5,000"
     }
-   ]
+   ],
+   "components": []
   },
   "pro-wetland-delineation": {
    "id": "pro-wetland-delineation",
@@ -3765,16 +4002,18 @@
    "kind": "professional",
    "basis": "market",
    "payee": "Wetland specialist",
-   "low": 3500,
-   "high": 6500,
+   "low": 3000,
+   "high": 6000,
    "unit": "per project",
    "confidence": "medium",
-   "note": null,
+   "note": "Kitsap wetland mitigation plan allowance; delineation, construction and monitoring are separate.",
    "source": {
-    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
-    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
-    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
-    "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+    "title": "Studio Kamppari — typical professional fees in Kitsap County",
+    "url": "https://www.studiokamppari.com/articles/soft-costs",
+    "date": "Publication shows January 8; year not specified on page",
+    "checked": "2026-11-13",
+    "region": "Kitsap County, Washington",
+    "summary": "Kitsap wetland mitigation plan allowance; delineation, construction and monitoring are separate."
    },
    "sources": [
     {
@@ -3789,7 +4028,8 @@
      "date": "Last verified March 2026",
      "quote": "Mitigation (if required) $10,000-100,000+"
     }
-   ]
+   ],
+   "components": []
   },
   "pro-stream-typing": {
    "id": "pro-stream-typing",
@@ -3867,16 +4107,18 @@
    "kind": "professional",
    "basis": "market",
    "payee": "Shoreline consultant",
-   "low": 2500,
-   "high": 8000,
+   "low": 3000,
+   "high": 6000,
    "unit": "per project",
    "confidence": "low",
-   "note": null,
+   "note": "Shoreline buffer mitigation planning is a budgeting proxy for this study. Confirm no-net-loss reporting scope and monitoring separately.",
    "source": {
-    "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
-    "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
-    "date": "July 28, 2020 (form date; 2020 dollars, King County)",
-    "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+    "title": "Studio Kamppari — typical professional fees in Kitsap County",
+    "url": "https://www.studiokamppari.com/articles/soft-costs",
+    "date": "Publication shows January 8; year not specified on page",
+    "checked": "2026-11-13",
+    "region": "Kitsap County, Washington",
+    "summary": "Shoreline buffer mitigation planning is a budgeting proxy for this study. Confirm no-net-loss reporting scope and monitoring separately."
    },
    "sources": [
     {
@@ -3897,7 +4139,8 @@
      "date": "Updated 2026-04-23",
      "quote": "Habitat assessment: $2,000-$8,000."
     }
-   ]
+   ],
+   "components": []
   },
   "pro-bio-eval": {
    "id": "pro-bio-eval",
@@ -3952,15 +4195,17 @@
    "basis": "market",
    "payee": "Land surveyor",
    "low": 2000,
-   "high": 5000,
+   "high": 6000,
    "unit": "per project",
    "confidence": "medium",
-   "note": null,
+   "note": "Kitsap survey allowance covering site topography and existing features; size, access and required deliverables affect pricing.",
    "source": {
-    "title": "Peninsula Construction Services (Kitsap County builder) - Custom Home Building in Kitsap County, WA: costs, process, what to expect",
-    "url": "https://peninsulaconstructionservices.net/custom-home-building-in-kitsap-county-wa-costs-process-what-to-expect/",
-    "date": "2026 ('current 2026 market data')",
-    "excerpt": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
+    "title": "Studio Kamppari — typical professional fees in Kitsap County",
+    "url": "https://www.studiokamppari.com/articles/soft-costs",
+    "date": "Publication shows January 8; year not specified on page",
+    "checked": "2026-11-13",
+    "region": "Kitsap County, Washington",
+    "summary": "Kitsap survey allowance covering site topography and existing features; size, access and required deliverables affect pricing."
    },
    "sources": [
     {
@@ -3969,7 +4214,8 @@
      "date": "2026 ('current 2026 market data')",
      "quote": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
     }
-   ]
+   ],
+   "components": []
   },
   "pro-elevation-cert": {
    "id": "pro-elevation-cert",
@@ -4024,12 +4270,19 @@
    "kind": "professional",
    "basis": "market",
    "payee": "Septic designer",
-   "low": 2000,
-   "high": 5000,
+   "low": 3000,
+   "high": 6000,
    "unit": "per project",
-   "confidence": "unsourced",
-   "note": "Placeholder estimate with no published source. Get a quote.",
-   "source": null,
+   "confidence": "medium",
+   "note": "Kitsap septic design allowance; installation, excavation and agency charges are separate.",
+   "source": {
+    "title": "Studio Kamppari — typical professional fees in Kitsap County",
+    "url": "https://www.studiokamppari.com/articles/soft-costs",
+    "date": "Publication shows January 8; year not specified on page",
+    "checked": "2026-11-13",
+    "region": "Kitsap County, Washington",
+    "summary": "Kitsap septic design allowance; installation, excavation and agency charges are separate."
+   },
    "sources": [
     {
      "title": "HomeGuide - How Much Does a Septic Tank System Cost? (2026)",
@@ -4043,7 +4296,8 @@
      "date": "2026",
      "quote": "A perc test costs $200 to $1,500 to hand-dig test holes and measure the soil's drainage for a septic system."
     }
-   ]
+   ],
+   "components": []
   },
   "pro-civil-sdap": {
    "id": "pro-civil-sdap",
@@ -4144,6 +4398,70 @@
    "note": "Placeholder estimate with no published source. Get a quote.",
    "source": null,
    "sources": []
+  },
+  "pro-hydraulic-analysis": {
+   "id": "pro-hydraulic-analysis",
+   "label": "Floodway / flood-elevation hydraulic analysis",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Civil / hydraulic engineer",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+   "scope_citations": [
+    "fema-hydraulic-review"
+   ],
+   "source": null
+  },
+  "fema-map-review": {
+   "id": "fema-map-review",
+   "label": "FEMA conditional or final map-revision review",
+   "kind": "agency_fee",
+   "basis": "market",
+   "payee": "FEMA",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+   "scope_citations": [
+    "fema-conditional-revision"
+   ],
+   "source": null
+  },
+  "pro-water-quality": {
+   "id": "pro-water-quality",
+   "label": "Water-quality certification application support",
+   "kind": "professional",
+   "basis": "market",
+   "payee": "Environmental consultant",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+   "scope_citations": [
+    "ecology-401-authority"
+   ],
+   "source": null
+  },
+  "epa-cgp-review": {
+   "id": "epa-cgp-review",
+   "label": "EPA construction stormwater application costs",
+   "kind": "agency_fee",
+   "basis": "market",
+   "payee": "EPA / applicant support",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+   "scope_citations": [
+    "epa-wa-construction-stormwater"
+   ],
+   "source": null
   }
  },
  "agencies": {
@@ -4365,7 +4683,59 @@
    "name": "AHERA-certified building inspector",
    "role": "Asbestos survey before demolition or renovation",
    "url": ""
+  },
+  "epa": {
+   "id": "epa",
+   "name": "U.S. Environmental Protection Agency, Region 10",
+   "tier": "federal",
+   "role": "Water-quality certification or construction stormwater authority where applicable",
+   "url": "https://www.epa.gov/aboutepa/epa-region-10-pacific-northwest",
+   "phone": null
+  },
+  "skokomish": {
+   "id": "skokomish",
+   "name": "Skokomish Indian Tribe",
+   "tier": "tribal",
+   "role": "Treaty-resource and consultation contact; project role to confirm",
+   "url": "https://skokomish.org/natural-resources/",
+   "phone": null
   }
+ },
+ "routing": {
+  "checked": "2026-11-14",
+  "jurisdiction": "Kitsap County, Washington; independent tribal, state and federal screening",
+  "tribal_contacts": [
+   {
+    "agency": "suquamish",
+    "citation": "suquamish-resource-programs",
+    "reason": "The Tribe identifies fisheries, environmental programs and historic preservation as treaty-resource responsibilities."
+   },
+   {
+    "agency": "pgst",
+    "citation": "pgst-environmental-program",
+    "reason": "The Tribe reviews environmental permits and protects treaty, natural and cultural resources."
+   },
+   {
+    "agency": "skokomish",
+    "citation": "skokomish-fishing-maps",
+    "reason": "The Tribe publishes fishing maps for Hood Canal and Port Gamble Bay; check effects on treaty resources beyond reservation boundaries."
+   }
+  ],
+  "tribal_contact_limit": "Regional starting contacts, not a complete affected-tribe list or a finding that each Tribe must approve this project. Ask the federal lead agency and Tribes to identify all affected Tribes for the waterbody and activity, including cultural interests outside mapped reservations.",
+  "tribal_name_matches": [
+   {
+    "agency": "suquamish",
+    "pattern": "suquamish|port madison"
+   },
+   {
+    "agency": "pgst",
+    "pattern": "port gamble|^s.?klallam$"
+   },
+   {
+    "agency": "skokomish",
+    "pattern": "skokomish"
+   }
+  ]
  }
 };
 });

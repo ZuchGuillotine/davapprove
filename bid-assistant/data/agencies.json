@@ -217,5 +217,21 @@
   "name": "AHERA-certified building inspector",
   "role": "Asbestos survey before demolition or renovation",
   "url": ""
+ },
+ {
+  "id": "epa",
+  "name": "U.S. Environmental Protection Agency, Region 10",
+  "tier": "federal",
+  "role": "Water-quality certification or construction stormwater authority where applicable",
+  "url": "https://www.epa.gov/aboutepa/epa-region-10-pacific-northwest",
+  "phone": null
+ },
+ {
+  "id": "skokomish",
+  "name": "Skokomish Indian Tribe",
+  "tier": "tribal",
+  "role": "Treaty-resource and consultation contact; project role to confirm",
+  "url": "https://skokomish.org/natural-resources/",
+  "phone": null
  }
 ]

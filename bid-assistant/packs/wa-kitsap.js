@@ -106,9 +106,9 @@
     { id: 'eelgrass', group: 'shoreline', kind: 'features', label: 'Eelgrass', publisher: 'Kitsap County DCD',
       url: ENVIRO + '22', fields: [], search_ft: 150, style: { color: '#2da44e', weight: 4 } },
 
-    { id: 'aquatic_own', group: 'shoreline', kind: 'features', label: 'Aquatic land ownership (tidelands and bedlands)', publisher: 'WA Department of Natural Resources',
-      url: 'https://gis.dnr.wa.gov/site3/rest/services/Aquatics/Washington_State_Aquatic_Lands_and_Boundaries/MapServer/1', fields: ['OWNER_AGENT_NM', 'AQPRCL_TYPE_CD'], search_ft: 150, max_offset_ft: 3, timeout_ms: 45000,
-      caveat: 'Compiled from deeds and plats, not survey grade. Tideland ownership must be confirmed on title.' },
+    { id: 'aquatic_own', group: 'shoreline', kind: 'features', label: 'Mapped state aquatic lands (tidelands and bedlands)', publisher: 'WA Department of Natural Resources',
+      url: 'https://gis.dnr.wa.gov/site3/rest/services/Aquatics/Washington_State_Aquatic_Lands_and_Boundaries/MapServer/1', where: "OWNER_AGENT_NM LIKE '%STATE OF WASHINGTON%'", fields: ['AQPRCL_TYPE_CD'], search_ft: 150, max_offset_ft: 3, timeout_ms: 45000,
+      caveat: 'Marine and freshwater aquatic lands, compiled from deeds and plats, not survey grade. Ownership at the proposed work footprint must be confirmed on title.' },
 
     // ---- flood ----------------------------------------------------------------------------
     { id: 'flood', group: 'flood', kind: 'features', label: 'FEMA special flood hazard areas', publisher: 'FEMA National Flood Hazard Layer',
@@ -129,7 +129,7 @@
       where: function (p) { return p.rp_acct_id ? 'RP_ACCT_ID = ' + Number(p.rp_acct_id) : null; } },
     // Applicant names are deliberately not requested.
     { id: 'permits', label: 'County permit history', url: fs('Permits'),
-      fields: ['PERMIT_NO', 'TYPE_CODE', 'STATUS', 'STATUS_DATE', 'SUBMITTED_DATE', 'ISSUED_DATE', 'EXPIRATION_DATE', 'PROJECT_NAME', 'PARENT_PERMIT_NO'],
+      fields: ['PERMIT_NO', 'TYPE_CODE', 'STATUS', 'STATUS_DATE', 'SUBMITTED_DATE', 'ISSUED_DATE', 'EXPIRATION_DATE', 'PARENT_PERMIT_NO'],
       order_by: 'SUBMITTED_DATE DESC',
       where: function (p) { return p.rp_acct_id ? 'RP_ACCT_ID = ' + Number(p.rp_acct_id) + ' OR LD_ACCT_ID = ' + Number(p.rp_acct_id) : null; } }
   ];
@@ -245,8 +245,9 @@
     // one source answering is enough to report a mapped wetland; "unknown" only if nothing was found and a source failed
     if (wetAll.length) wetStatus = wetAll[0].on_parcel ? 'on_parcel' : 'nearby';
     var trust = attrsOf(L.tribal_lands);
+    var tribalNames = uniq(trust.reduce(function (out, a) { return out.concat([a.TRIBAL_NM1, a.TRIBAL_NM2].filter(Boolean)); }, []));
     var routes = (L.state_route && L.state_route.features || []);
-    var owners = uniq((L.aquatic_own && L.aquatic_own.features || []).map(function (f) { return f.attrs.OWNER_AGENT_NM; }));
+    var stateAquatic = (L.aquatic_own && L.aquatic_own.features || []).length > 0;
 
     var facts = {
       parcel: {
@@ -254,6 +255,7 @@
         account_no: addr.ACCT_NO || null,
         situs: addr.SITUS_ADDR ? addr.SITUS_ADDR + (addr.SITUS_CITY ? ', ' + addr.SITUS_CITY : '') : null,
         acres: land.ACRES || round(p.acres_gis, 2),
+        assessor_acres: land.ACRES || null,
         acres_gis: round(p.acres_gis, 2),
         area_sqft: Math.round(p.area_sqft),
         zone_code: (zoning[0] && zoning[0].ZONEBREV) || land.ZONE_CODE || null,
@@ -280,6 +282,7 @@
         water_district: attrsOf(L.water_district).map(function (a) { return 'Water District ' + a.DISTRICT; })[0] || null,
         airport_overlay: attrsOf(L.airport).map(function (a) { return a.airportnam; })[0] || null,
         trust_status: st(L.tribal_lands),
+        tribal_names: tribalNames,
         off_reservation_trust: trust.filter(function (a) { return a.LAND_TYPE === 'OOF'; }).map(function (a) { return a.TRIBAL_NM1; })[0] || null
       },
       sewer: {
@@ -328,9 +331,8 @@
         forage_fish: ['smelt', 'sandlance', 'herring'].filter(function (k) { return L[k] && L[k].features.length; }),
         forage_fish_status: worst([st(L.smelt), st(L.sandlance), st(L.herring)]),
         eelgrass: !!(L.eelgrass && L.eelgrass.features.length),
-        aquatic_owners: owners,
         aquatic_status: st(L.aquatic_own),
-        state_aquatic: owners.some(function (o) { return /STATE OF WASHINGTON/i.test(o || ''); })
+        state_aquatic: stateAquatic
       },
       geohazard: {
         status: st(L.geohazard),
@@ -367,7 +369,7 @@
     var items = t.rows.map(function (r) {
       var expired = r.STATUS === 'EXPIRED' || (r.EXPIRATION_DATE && r.EXPIRATION_DATE < now && OPEN[r.STATUS] && r.STATUS !== 'APPROVED');
       return {
-        number: r.PERMIT_NO, type: r.TYPE_CODE, status: r.STATUS, project: r.PROJECT_NAME || null,
+        number: r.PERMIT_NO, type: r.TYPE_CODE, status: r.STATUS,
         submitted: iso(r.SUBMITTED_DATE), issued: iso(r.ISSUED_DATE), status_date: iso(r.STATUS_DATE), expires: iso(r.EXPIRATION_DATE),
         lapsed: !!expired,
         open: !!OPEN[r.STATUS] && !expired,

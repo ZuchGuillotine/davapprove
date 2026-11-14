@@ -2180,3 +2180,13 @@ input[type="checkbox"] {
 .drawing-scroll svg {display:block;height:auto;}
 .drawing-scroll path {cursor:pointer;}
 .drawing-workspace select {max-width:100%;}
+
+.bid-entry { display: flex; text-decoration: none; justify-content: space-between; margin-bottom: 10px; }
+.bid-content { padding: 24px; }
+.bid-workspace { width: 100%; }
+.bid-workspace-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+.bid-workspace-heading h1 { font-size: 28px; margin: 8px 0; }
+.bid-workspace-heading p { margin: 0; color: #68766f; font-size: 13px; }
+.bid-workspace-heading a { color: #315b47; font-size: 12px; white-space: nowrap; }
+.bid-workspace iframe { display: block; width: 100%; height: calc(100vh - 235px); min-height: 650px; border: 1px solid #dce3d9; border-radius: 12px; background: #f5f6f1; }
+@media (max-width: 900px) { .bid-content { padding: 12px; } .bid-workspace-heading { align-items: flex-start; flex-direction: column; gap: 10px; } .bid-workspace iframe { height: 85vh; min-height: 600px; } }

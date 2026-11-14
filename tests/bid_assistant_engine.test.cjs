@@ -91,7 +91,7 @@ assert.equal(has(run(facts(), { type: 'clearing', disturbance_sqft: 43000 }), /C
 r = run(facts({ geohazard: { status: 'on_parcel', classes: ['High', 'Moderate'], high: true, moderate: true } }), { type: 'new_sfr' }, grid(30, 0, [{ id: 'geo_high', pct: 30 }, { id: 'geo_moderate', pct: 50 }]));
 assert.equal(has(r, /Geotechnical report/).level, 'required');
 assert.equal(cost(r, 'pro-geotech-report').bucket, 'base');
-assert(Report.flags(r, facts(), grid(30, 0)).some((f) => /geotechnical report/.test(f.text) && /\$2,500 to \$6,000/.test(f.text)), 'geotech cost reaches the meeting flags');
+assert(Report.flags(r, facts(), grid(30, 0)).some((f) => /geotechnical report/.test(f.text) && f.text.includes(Report.range(DATA.fees['pro-geotech-report'].low, DATA.fees['pro-geotech-report'].high))), 'geotech cost reaches the meeting flags');
 r = run(facts({ geohazard: { status: 'on_parcel', classes: ['Moderate'], moderate: true } }), { type: 'new_sfr' });
 assert.equal(cost(r, 'pro-geo-assessment').bucket, 'base');
 assert.equal(cost(r, 'pro-geotech-report').bucket, 'contingent', 'full report is a contingency on moderate hazard');
@@ -105,7 +105,7 @@ assert.equal(has(r, /Wetland mitigation report/).level, 'possible', 'room on the
 r = run(facts({ wetland: { status: 'on_parcel', on_parcel: true, min_distance_ft: 0, bearing: 'east', count: 1 } }), { type: 'new_sfr' }, grid(40, 50));
 assert.equal(has(r, /Wetland mitigation report/).level, 'likely', 'tight lot: mitigation moves into the base estimate');
 assert.equal(cost(r, 'dcd-buffer-reduction').bucket, 'base');
-assert(has(r, /Corps permit if any wetland is filled/));
+assert(has(r, /Corps Section 404: dredged or fill discharge/));
 r = run(facts({ wetland: { status: 'nearby', min_distance_ft: 180, bearing: 'north', count: 1 } }), { type: 'new_sfr' });
 assert.equal(has(r, /Wetland delineation/).level, 'likely', 'off-site wetland within the largest buffer');
 r = run(facts({ wetland: { status: 'nearby', min_distance_ft: 290, bearing: 'north', count: 1 } }), { type: 'new_sfr' });
@@ -145,7 +145,7 @@ assert.equal(cost(r, 'dcd-building-permit'), undefined, 'no county fees inside a
 assert(agency(r, 'geotech') && agency(r, 'wetland-biologist'), 'mapped features still drive studies inside a city');
 r = run(facts({ jurisdiction: { reservation: { tribe: 'suquamish', name: 'Port Madison Indian Reservation' } } }), { type: 'new_sfr' });
 assert.equal(agency(r, 'suquamish').level, 'required');
-assert.equal(has(r, /establish land status/).basis, 'confirm', 'reservation land status is a question, not a determination');
+assert.equal(has(r, /Establish land status/).basis, 'confirm', 'reservation land status is a question, not a determination');
 r = run(facts({ jurisdiction: { reservation: { tribe: 'pgst', name: "Port Gamble S'Klallam Reservation" } } }), { type: 'new_sfr' });
 assert(agency(r, 'pgst'));
 
@@ -182,7 +182,7 @@ for (const f of settings) for (const type of Object.keys(Engine.PROJECT_TYPES)) 
   for (const x of rep.findings) { assert(DATA.agencies[x.agency], x.id); assert(['documented', 'workflow', 'confirm'].includes(x.basis), x.id + ' has no basis'); assert(x.why && x.title); }
   for (const c of rep.costs.items) assert(c.high >= c.low && c.low >= 0 && isFinite(c.high), c.fee);
   const t = rep.costs.totals;
-  assert(Math.abs(t.base.low + t.contingent.low - rep.costs.items.reduce((s, c) => s + c.low, 0)) < 0.01);
+  assert(Math.abs(t.base.low + t.contingent.low - rep.costs.items.filter(c => !c.unpriced).reduce((s, c) => s + c.low, 0)) < 0.01);
   n++;
 }
 // a study triggered twice is counted once, and in the base estimate if any trigger is firm
@@ -192,5 +192,117 @@ assert.equal(cost(r, 'pro-geotech-report').bucket, 'base');
 // memo renders and carries the disclaimer
 const memo = Report.memo(r, settings[3], grid(50, 45), { screened_at: '2026-11-12T00:00:00Z', layers: {} }, DATA);
 assert(/Screening only/.test(memo) && /\| \*\*Base total\*\*/.test(memo));
+
+// ---- early-bid overrides, gaps and provenance ---------------------------------------------------
+const priced = run(facts({ geohazard: { status: 'on_parcel', high: true, classes: ['High'] } }), { type: 'new_sfr', hard_surface_sqft: 10000 });
+const before = priced.costs.totals.base.low;
+const originalGeotech = cost(priced, 'pro-geotech-report').low;
+const edited = Engine.applyOverrides(priced, {
+  'pro-geotech-report': { low: 4200, high: 4200, note: 'Local firm quote, scope includes borings' },
+  'pro-civil-sdap': { low: 7000, high: 8500, note: 'Project allowance' }
+});
+assert.equal(edited.costs.totals.base.low, before - originalGeotech + 4200 + 7000);
+assert.equal(cost(priced, 'pro-geotech-report').low, DATA.fees['pro-geotech-report'].low, 'reference report is immutable');
+assert(Report.flags(edited, facts(), grid(30, 0)).some(f => f.text.includes('$4,200') && !f.text.includes('$5,300')), 'meeting notes use the edited allowance');
+assert(edited.findings.flatMap(f => f.costs).filter(c => c.fee === 'pro-geotech-report').every(c => c.low === 4200));
+assert(!edited.costs.totals.unpriced.includes('pro-civil-sdap'), 'a user allowance prices an otherwise unsourced item');
+assert(priced.costs.totals.unpriced.includes('pro-civil-sdap'));
+for (const range of [{low: -1, high: 1}, {low: 3, high: 2}, {low: Infinity, high: Infinity}, {low: 2}]) {
+  assert.throws(() => Engine.applyOverrides(priced, {'pro-geotech-report': range}), /nonnegative/);
+}
+const excluded = Engine.applyOverrides(priced, { 'pro-geotech-report': { excluded: true, note: 'Client procures separately' } });
+assert(excluded.findings.some(f => f.title.includes('Geotechnical report')), 'excluding a price must not remove its requirement');
+assert.equal(excluded.costs.totals.base.low, before - originalGeotech);
+const editedMemo = Report.memo(excluded, facts(), grid(0, 0), { screened_at: '2026-11-13T00:00:00Z', layers: {}, tables: {} }, DATA, { notes: 'Client procures geotech separately.' });
+assert(editedMemo.includes('(EXCLUDED)') && editedMemo.includes('Client procures separately') && editedMemo.includes('Quote needed'));
+assert(editedMemo.includes('EARLY BID') && editedMemo.includes('No approved design revision'));
+assert(priced.findings.every(f => f.work_stage === 'early_bid' && f.approved_revision === null && f.research_date));
+assert.equal(Engine.roundMoney(6.5), 6.5, 'small fees must not display as zero');
+assert.equal(cost(run(facts({ jurisdiction: { status: 'unknown' } }), { type: 'new_sfr' }), 'dcd-building-permit'), undefined, 'unknown jurisdiction cannot authorize county pricing');
+const reuse = run(facts({ permits: { status: 'found', items: [lapsed] } }), { type: 'new_sfr' });
+assert(has(reuse, /earlier permit/).citations.includes('kitsap-permit-reactivation'));
+assert(has(reuse, /earlier permit/).why.includes('reactivation'));
+assert(!has(reuse, /earlier permit/).why.includes('needs a new application'));
+const pack = require(B + '/packs/wa-kitsap.js');
+assert(pack.layers.concat(pack.tables).every(l => (l.fields || []).every(f => !/OWNER|APPLICANT|PROJECT_NAME/.test(f))), 'screening never requests personal owner or applicant fields');
+const partialScreen = { screened_at: '2026-11-13T00:00:00Z', layers: { wetland: { status: 'nearby', truncated: true, layer: { label: 'Wetland inventory' } } } };
+const partialFlags = Report.flags({ findings: [] }, facts(), grid(0, 0), partialScreen);
+assert(!partialFlags.some(f => f.text.includes('No mapped')) && partialFlags.some(f => f.level === 'unknown'), 'truncated maps cannot produce a clean meeting flag');
+assert(Report.memo(reuse, facts(), grid(0, 0), partialScreen, DATA).includes('Wetland inventory: partial result'), 'memo retains incomplete map coverage');
+
+
+// ---- independently sourced agency routing; no county records required ---------------------------
+const byRule = (report, id) => report.findings.filter(f => f.rule === id);
+const independentFacts = facts({ jurisdiction: { status: 'unknown', trust_status: 'unknown' }, permits: { status: 'unknown', items: [] }, shoreline: { status: 'unknown' }, wetland: { status: 'unknown' }, stream: { status: 'unknown' } });
+const dock = { type: 'shoreline_structure', waterbody: 'marine', fill_discharge: 'no' };
+let independent = run(independentFacts, dock);
+assert.equal(byRule(independent, 'us.section10')[0].level, 'required', 'activity routes to the Corps despite county outages');
+assert.equal(byRule(independent, 'us.section404').length, 0, 'a no-fill dock does not automatically require Section 404');
+for (const id of ['usace', 'wdfw', 'dnr', 'services', 'ecology', 'epa', 'treaty-tribes', 'skokomish']) assert(agency(independent, id), 'missing independent dock route '+id);
+assert(byRule(independent, 'us.tribal').every(f => f.level === 'possible'), 'regional contacts are not mandatory tribal approvals');
+assert(byRule(independent, 'us.water_quality').some(f => f.agency === 'epa'));
+assert(!independent.findings.some(f => /^Rule could not/.test(f.title)), 'missing county data cannot break independent rules');
+const fresh = run(independentFacts, { ...dock, waterbody: 'freshwater', navigability: 'unknown' });
+assert(agency(fresh, 'dnr'), 'freshwater docks retain DNR title/use screening');
+assert.equal(byRule(fresh, 'us.section10')[0].level, 'possible', 'freshwater navigability must be established');
+assert.equal(byRule(run(independentFacts, {...dock, waterbody:'freshwater', navigability:'no'}), 'us.section10').length,0);
+assert.equal(byRule(run(facts(), {type:'new_sfr', fill_discharge:'yes', waters_us:'yes'}), 'us.section404')[0].level,'required','explicit wetland fill works without a county map hit');
+assert.equal(byRule(run(facts(), {type:'new_sfr', fill_discharge:'yes', waters_us:'unknown'}), 'us.section404')[0].level,'possible');
+assert.equal(byRule(run(facts(), {type:'new_sfr', fill_discharge:'yes', waters_us:'no'}), 'us.section404')[0].authority_role,'Jurisdiction check');
+// A less constrained wetland also merits a discharge question; no arbitrary coverage cutoff.
+assert(byRule(run(facts({wetland:{on_parcel:true,status:'on_parcel'}}),{type:'new_sfr'},grid(1,0)),'us.section404').length);
+const stateWaters = run(facts({jurisdiction:{trust_status:'none'}}),dock);
+assert.deepStrictEqual(byRule(stateWaters,'us.water_quality').map(f=>f.agency),['ecology']);
+const pgstWaters = run(facts({jurisdiction:{status:'unknown',trust_status:'on_parcel',tribal_names:["Port Gamble S'Klallam Tribe"]}}),dock);
+assert.deepStrictEqual(byRule(pgstWaters,'us.water_quality').map(f=>f.agency),['pgst'],'independent state tribal layer supplies the certifier candidate even if county boundaries fail');
+assert(byRule(pgstWaters,'kitsap.reservation').some(f=>f.agency==='pgst'));
+assert.equal(cost(pgstWaters,'dcd-building-permit'),undefined);
+const federalWaters = run(facts(),{...dock,land_status:'exclusive_federal'});
+assert.deepStrictEqual(byRule(federalWaters,'us.water_quality').map(f=>f.agency),['epa']);
+const unrecognizedTribe = run(facts({jurisdiction:{tribal_names:["Jamestown S'Klallam Tribe"],trust_status:'on_parcel'}}),dock);
+assert.equal(byRule(unrecognizedTribe,'kitsap.reservation')[0].agency,'treaty-tribes','unrecognized tribal names must not silently become Port Gamble or Suquamish');
+const conflict = run(facts({jurisdiction:{tribal_names:['Suquamish Tribe'],trust_status:'on_parcel'}}),{...dock,land_status:'state_local'});
+assert.equal(byRule(conflict,'us.water_quality').length,3,'conflicting land status leaves authority alternatives open');
+assert(byRule(conflict,'kitsap.reservation')[0].why.includes('conflicts'));
+// EPA stormwater and common-plan triggers are independent of county and state fee schedules.
+const tribalStorm = run(independentFacts,{type:'clearing',land_status:'tribal',disturbance_sqft:43560});
+assert(byRule(tribalStorm,'wa.cswgp').every(f=>f.agency==='epa'));
+assert.equal(cost(tribalStorm,'ecology-cswgp'),undefined);
+const commonPlan = run(facts(),{type:'clearing',disturbance_sqft:3000,common_plan:true,federal_operator:true});
+assert(byRule(commonPlan,'wa.cswgp').some(f=>f.agency==='epa'));
+// FEMA must run without county zoning/history and distinguish the conditional revision threshold.
+const floodFacts = facts({jurisdiction:{status:'unknown'},flood:{status:'on_parcel',sfha_on_parcel:true,floodway:true,zones:['AE']}});
+const floodScope = {type:'new_sfr',flood_work:'yes',floodway_work:'yes',flood_rise_ft:0.1};
+let floodReport = run(floodFacts,floodScope);
+assert.equal(has(floodReport,/FEMA conditional map revision/).level,'required');
+assert.equal(has(floodReport,/Hydraulic analysis/).level,'required');
+assert(floodReport.costs.totals.unpriced.includes('pro-hydraulic-analysis'));
+assert(floodReport.costs.totals.unpriced.includes('fema-map-review'));
+assert.equal(has(run(floodFacts,{...floodScope,flood_rise_ft:0}),/FEMA conditional map revision/).level,'possible','supplied no-rise does not certify approval');
+const noWay = facts({flood:{status:'on_parcel',sfha_on_parcel:true,floodway:false,zones:['AE']}});
+assert.equal(has(run(noWay,{...floodScope,floodway_work:'no',floodway_designation:'no',flood_rise_ft:1.1}),/FEMA conditional map revision/).level,'required');
+assert.equal(has(run(noWay,{...floodScope,floodway_work:'no',floodway_designation:'no',flood_rise_ft:1}),/FEMA conditional map revision/).level,'possible');
+assert.equal(has(run(noWay,{...floodScope,floodway_work:'no',flood_rise_ft:1.1}),/FEMA conditional map revision/).level,'possible','absence of a parcel floodway hit does not prove that no regulatory floodway was adopted');
+assert(!has(run(noWay,{type:'new_sfr',flood_work:'no',floodway_work:'no'}),/Hydraulic analysis/),'outside-footprint input does not automatically price hydraulic work');
+assert.equal(byRule(run(facts({flood:{status:'unknown'}}),{type:'new_sfr'}),'us.fema')[0].level,'unknown');
+assert(agency(run(facts(),{type:'new_sfr',floodplain_modification:true}),'fema'),'reported floodplain alteration triggers review without a map hit');
+const noNexus=run(facts(),{type:'new_sfr'}), withNexus=run(facts(),{type:'new_sfr',federal_nexus:true});
+assert.equal(byRule(noNexus,'us.consultations').length,0);
+assert(byRule(withNexus,'us.consultations').length && byRule(withNexus,'us.tribal').length);
+for (const report of [independent,fresh,stateWaters,pgstWaters,federalWaters,tribalStorm,floodReport]) {
+  for (const finding of report.findings.filter(f=>f.independent)) {
+    assert(finding.citations.length && finding.research_date && finding.jurisdiction && finding.work_stage==='early_bid');
+    assert.equal(finding.approved_revision,null);
+  }
+  assert(report.independent_checks.length>=10);
+}
+assert(noNexus.independent_checks.some(c=>c.id==='us.section10' && c.status==='no_trigger'));
+const scopeMemo=Report.memo(independent,independentFacts,grid(0,0),{screened_at:'2026-11-14T00:00:00Z',layers:{}},DATA);
+assert(scopeMemo.includes('Regional starting contacts') && scopeMemo.includes('Permit authority') && scopeMemo.includes('https://www.epa.gov/'));
+const cli=require(B+'/cli.js');
+const cliArgs=cli.parseArgs(['--waterbody','freshwater','--fill-discharge','no','--land-status','tribal','--flood-rise-ft','0.2','--common-plan']);
+assert.equal(cliArgs.project.fill_discharge,'no'); assert(cliArgs.project.common_plan);
+assert.equal(Engine.normaliseProject({flood_rise_ft:''}).flood_rise_ft,null);
+assert.equal(Engine.normaliseProject({land_status:'invalid'}).land_status,'unknown');
 
 console.log('PASS: bid assistant engine (' + RULES.length + ' rules, ' + n + ' project and site combinations, ' + cites.length + ' citations, ' + fees.length + ' cost lines).');

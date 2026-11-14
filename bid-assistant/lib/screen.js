@@ -135,6 +135,7 @@
       outFields: (layer.fields || ['*']).join(','),
       returnGeometry: false
     }, { timeoutMs: layer.timeout_ms }).then(function (r) {
+      if (r.exceeded) throw new Error('Jurisdiction or district result truncated by the map service.');
       var seen = {}, feats = [];
       r.features.forEach(function (f) {
         var key = JSON.stringify(f.attributes);
@@ -206,11 +207,12 @@
 
   function runTable(table, parcel) {
     var where = table.where(parcel);
-    if (!where) return Promise.resolve({ id: table.id, status: 'none', rows: [] });
+    if (!where) return Promise.resolve({ id: table.id, status: 'unknown', rows: [], error: 'No account key available for this lookup.' });
     return Arc.query(table.url, {
       where: where, outFields: (table.fields || ['*']).join(','), returnGeometry: false,
       orderByFields: table.order_by
     }).then(function (r) {
+      if (r.exceeded && !r.features.length) throw new Error('Record lookup was truncated; absence cannot be determined.');
       return { id: table.id, status: r.features.length ? 'found' : 'none', rows: r.features.map(function (f) { return f.attributes; }), truncated: r.exceeded };
     });
   }

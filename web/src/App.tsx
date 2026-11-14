@@ -40,6 +40,7 @@ import { Upload as TusUpload } from "tus-js-client";
 import WorkflowEvidence, { statusTone } from "./WorkflowEvidence";
 import DocumentCoverage from "./DocumentCoverage";
 import FactEvidence from "./FactEvidence";
+import BidWorkspace from "./BidWorkspace";
 import type {
   Assessment,
   Candidate,
@@ -99,6 +100,7 @@ function Empty({
   );
 }
 export default function App() {
+  const [bidsOpen, setBidsOpen] = useState(false);
   const [config, setConfig] = useState<Json | null>(null),
     [entered, setEntered] = useState(false),
     [sample, setSample] = useState(false),
@@ -590,6 +592,8 @@ export default function App() {
             or explore first
             <span />
           </div>
+          <a className="primary full bid-entry" href="/bid-assistant/index.html">Start a bid assessment <ArrowUpRight size={17} /></a>
+          <p className="small muted">Public parcel screening. Saved drafts stay in this browser.</p>
           <button className="secondary full" onClick={enterDemo}>
             Explore the sample project
             <ArrowUpRight size={17} />
@@ -622,11 +626,14 @@ export default function App() {
           <ChevronDown size={14} />
         </div>
         <div className="sidebar-label">WORKSPACE</div>
-        <button className="nav-item active" onClick={() => setTab("Overview")}>
+        <button className={`nav-item ${!bidsOpen ? "active" : ""}`} onClick={() => { setBidsOpen(false); setTab("Overview"); }}>
           <FolderOpen size={18} />
           Projects<span>{projects.length}</span>
         </button>
-        <button className="nav-item" onClick={() => setNewOpen(true)}>
+        <button className={`nav-item ${bidsOpen ? "active" : ""}`} onClick={() => setBidsOpen(true)}>
+          <Compass size={18} /> Bids &amp; assessments
+        </button>
+        <button className="nav-item" onClick={() => { setBidsOpen(false); setNewOpen(true); }}>
           <Plus size={18} />
           New project
         </button>
@@ -636,7 +643,7 @@ export default function App() {
             key={p.id}
             className={`project-nav ${project?.id === p.id ? "selected" : ""}`}
             disabled={!!busy}
-            onClick={() => run("Loading project", () => loadProject(p))}
+            onClick={() => { setBidsOpen(false); run("Loading project", () => loadProject(p)); }}
           >
             <span className="project-dot" />
             <span>
@@ -673,11 +680,11 @@ export default function App() {
           <div>
             <span className="muted">Workspace</span>
             <ChevronRight size={14} />
-            <span>{project?.name || "Projects"}</span>
+            <span>{bidsOpen ? "Bids & assessments" : project?.name || "Projects"}</span>
           </div>
           <div>
             <Badge tone={sample ? "amber" : "green"}>
-              {sample
+              {bidsOpen ? "EARLY BID · PUBLIC MAPS" : sample
                 ? "SAMPLE · SYNTHETIC DATA"
                 : config?.mode === "demo"
                   ? "LOCAL DEVELOPMENT"
@@ -686,13 +693,13 @@ export default function App() {
             <span className="user-avatar">{sample ? "DS" : "You"}</span>
           </div>
         </header>
-        {sample && (
+        {sample && !bidsOpen && (
           <div className="sample-strip">
             You’re exploring an illustrative project. Records, geometry and
             results are synthetic; changes stay in this browser.
           </div>
         )}
-        <main className="content">
+        <main className={`content ${bidsOpen ? "bid-content" : ""}`}>
           {error && (
             <div role="alert" className="alert error">
               <AlertCircle size={18} />
@@ -714,7 +721,7 @@ export default function App() {
               </button>
             </div>
           )}
-          {projectLoading ? (
+          {bidsOpen ? <BidWorkspace /> : projectLoading ? (
             <section
               className="project-loading panel"
               role="status"

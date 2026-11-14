@@ -22,7 +22,7 @@
   var ACRE = 43560;
 
   function ft(n) { return Math.round(n) + ' ft'; }
-  function county(ctx) { return !ctx.facts.jurisdiction.city; }
+  function county(ctx) { var land = ctx.helpers.landContext(ctx.facts, ctx.project); return !ctx.facts.jurisdiction.city && ctx.facts.jurisdiction.status !== 'unknown' && land.mode !== 'tribal' && land.mode !== 'federal' && !land.conflict; }
   function unknownFinding(topic, what, citations) {
     return { level: 'unknown', basis: 'confirm', topic: topic, title: what + ': map layer could not be read', why: 'The map service behind this check did not answer, so the question is open. Run the screening again or check the county map viewer before relying on this report.', citations: citations || [] };
   }
@@ -64,9 +64,9 @@
   }
 
   // ---- map constraints for the grid --------------------------------------------------------------
-  function constraints(screening, facts, data) {
+  function constraints(screening, facts, data, project) {
     var L = screening.layers, out = [];
-    var inCity = !!facts.jurisdiction.city;
+    var inCity = !!facts.jurisdiction.city || facts.jurisdiction.status === 'unknown' || !!facts.jurisdiction.reservation || !!facts.jurisdiction.off_reservation_trust || (facts.jurisdiction.tribal_names || []).length > 0 || ['tribal', 'exclusive_federal'].indexOf((project || {}).land_status) >= 0;
     function shapes(id, filter) {
       return (L[id] && L[id].features || []).filter(filter || function () { return true; }).map(function (f) { return f.shape; });
     }
@@ -147,7 +147,7 @@
     var sfha = shapes('flood', function (f) { return !/FLOODWAY/i.test(f.attrs.ZONE_SUBTY || ''); });
     if (floodway.length) out.push({ id: 'floodway', short: 'floodway', label: 'FEMA regulatory floodway', tier: 'core', shapes: floodway, buffer_ft: 0, basis: 'FEMA National Flood Hazard Layer, effective data.' });
     if (sfha.length) out.push({ id: 'sfha', short: 'flood zone', label: 'FEMA special flood hazard area', tier: 'review', shapes: sfha, buffer_ft: 0,
-      basis: 'Building is allowed with a flood hazard permit, elevation above base flood and a habitat plan (KCC 15.12, 15.13).' });
+      basis: 'Floodplain development needs review by the local authority. County requirements are described in KCC 15.12 and 15.13; this layer is not a buildability decision.' });
     return out;
   }
 
@@ -160,11 +160,19 @@
     if (clear == null) return false;
     return clear < Math.max(6000, 2.5 * ctx.project.disturbance_sqft * 0.5) || constrainedPct(ctx) >= 80;
   }
-  function range(ctx, id) { var f = ctx.data.fees[id]; return money(f.low) + ' to ' + money(f.high); }
+  function range(ctx, id) { var f = ctx.data.fees[id]; return f.confidence === 'unsourced' ? 'quote needed' : money(f.low) + ' to ' + money(f.high); }
   function money(n) { var s = n < 2000 ? 50 : n < 20000 ? 100 : 500; return '$' + (Math.round(n / s) * s).toLocaleString('en-US'); }
 
   var rules = [];
   function rule(id, agency, topic, fn) { rules.push({ id: id, agency: agency, topic: topic, evaluate: fn }); }
+
+  rule('kitsap.bid_scope', 'kitsap-dcd', 'Site feasibility', function (ctx) {
+    if (ctx.facts.jurisdiction.city) return null;
+    return { level: 'possible', basis: 'confirm', title: 'Confirm zoning, agricultural restrictions and recorded site limits',
+      why: 'The map screens environmental constraints. It does not establish a legal building envelope or check all allowed uses, agricultural or resource-land buffers, easements, plat conditions, access rights, or septic reserve areas.',
+      confirm: 'Before fixing a bid, confirm the proposed use and setbacks with the planning authority and ask about nearby agricultural or resource land. Record the resulting allowance or exclusion in this bid.',
+      citations: ['kitsap-bid-site-limits'], costs: [] };
+  });
 
   // ================= jurisdiction =================
   rule('kitsap.city', 'kitsap-dcd', 'Jurisdiction', function (ctx) {
@@ -182,34 +190,29 @@
     };
   });
 
-  rule('kitsap.reservation', 'suquamish', 'Jurisdiction', function (ctx) {
-    var j = ctx.facts.jurisdiction;
-    if (j.status === 'unknown') return unknownFinding('Jurisdiction', 'City limits, reservation boundary or zoning');
-    if (!j.reservation) {
-      if (!j.off_reservation_trust) return null;
-      return {
-        level: 'required', basis: 'confirm', agency: /Klallam/i.test(j.off_reservation_trust) ? 'pgst' : 'suquamish',
-        title: 'Mapped as off-reservation trust land (' + j.off_reservation_trust + ')',
-        why: 'The state tribal lands compilation maps this location as off-reservation trust land. Land held in trust is generally under tribal and federal jurisdiction rather than county permitting. The layer is reference scale and is not a title record.',
-        confirm: 'Confirm the trust status on title and with the tribe before quoting any county permit scope.',
-        flag: 'Mapped as tribal trust land: county permitting may not apply at all. Confirm before quoting.', flag_weight: 25,
-        citations: ['ecology-tribal-lands-layer', 'tribe-trust-vs-fee-permitting']
-      };
+  rule('kitsap.reservation', 'treaty-tribes', 'Tribal land jurisdiction', function (ctx) {
+    var j = ctx.facts.jurisdiction, land = ctx.helpers.landContext(ctx.facts, ctx.project);
+    if (land.mode !== 'tribal' && !land.conflict) {
+      if (j.trust_status === 'unknown' || j.status === 'unknown') return {
+        level: 'unknown', basis: 'confirm', authority_role: 'Jurisdiction confirmation',
+        title: 'Tribal / local land jurisdiction is unresolved',
+        why: 'A boundary source did not answer. County zoning and missing permit records do not establish tribal jurisdiction, title or the absence of off-reservation rights.',
+        confirm: 'Confirm land status and relevant permitting offices. Independent activity checks continue despite the missing county or tribal boundary source.',
+        citations: ['ecology-tribal-lands-layer', 'usace-tribal-consultation'], costs: [] };
+      return null;
     }
-    var tribe = j.reservation.tribe === 'pgst' ? 'pgst' : 'suquamish';
-    var name = tribe === 'pgst' ? "Port Gamble S'Klallam Tribe" : 'Suquamish Tribe';
-    return {
-      level: 'required', basis: 'confirm', agency: tribe,
-      title: 'Inside the ' + j.reservation.name + ': establish land status before pricing permits',
-      why: 'The parcel is inside the reservation boundary. The county boundary layer does not show whether a parcel is held in trust or in fee, and that decides which government issues which permit. ' +
-        (j.tribal_zoning ? 'County zoning shows this parcel as Tribal Land, which points to tribal rather than county permitting. ' : 'County zoning shows a county zone here, which usually indicates fee land under county permitting, with the Tribe as an interested government. ') +
-        'Neither tribe publishes a simple rule for this online, so it has to be confirmed directly.',
-      confirm: 'Ask the ' + name + ' community development or planning office and the title company: is the parcel trust or fee, and which permits does the Tribe issue or review for it?',
-      flag: 'The lot is inside the ' + j.reservation.name + '. Confirm trust or fee status with the ' + name + ' before quoting permit scope.',
-      flag_weight: 18,
-      citations: [tribe === 'pgst' ? 'tribe-pgst-planning' : 'tribe-suquamish-planning', 'tribe-trust-vs-fee-permitting']
-    };
+    return { agency: land.tribes.length === 1 ? land.tribes[0] : 'treaty-tribes', level: 'required', basis: 'confirm', authority_role: 'Tribal permit / land consent — determine jurisdiction',
+      title: 'Establish land status and tribal permitting jurisdiction',
+      why: (land.names.length ? 'Mapped tribal jurisdiction indicators: ' + land.names.join('; ') + '. ' : 'The intake reports tribal / Indian Country land. ') +
+        'A reservation polygon, county zoning or trust-versus-fee label alone does not decide every permitting authority. ' + (land.conflict ? 'The reported jurisdiction conflicts with mapped tribal indicators. ' : '') +
+        'Tribal land-use permission, federal approvals and treaty consultation are separate questions.',
+      confirm: 'Ask the identified Tribe and relevant federal/local offices which permits and land consents apply at the proposed footprint. Record that answer before treating county fees or approvals as applicable.',
+      flag: 'Confirm tribal land status and permitting authority before pricing the project; independent federal and state checks still apply as screening questions.',
+      flag_weight: 18, citations: ['ecology-tribal-lands-layer', 'tribe-trust-vs-fee-permitting', 'usace-tribal-consultation'], costs: [] };
   });
+  rules[rules.length - 1].independent = true;
+  rules[rules.length - 1].check_label = 'Tribal land jurisdiction';
+  rules[rules.length - 1].citations = ['ecology-tribal-lands-layer', 'usace-tribal-consultation'];
 
   // ================= base county permits =================
   rule('kitsap.building', 'kitsap-dcd', 'Building permit', function (ctx) {
@@ -718,16 +721,22 @@
     var redo = P.items.filter(function (i) { return (i.lapsed || /CANCELLED|WITHDRAWN|DENIED|RETURNED|REVOKED/.test(i.status)) && /site_development|shoreline|critical_area|land_use|land_division|residential_building|sepa|forest/.test(i.family); });
     var validity = ctx.data.citations['kcc-19.700.705'].key_values.report_validity_years;
     var out = [];
+    if (P.items.some(function (i) { return i.open; })) {
+      out.push({ level: 'possible', basis: 'confirm', title: 'Open permit records: confirm validity and approved scope',
+        why: 'A county table lists open or issued permits. That status alone does not establish present validity, current inspection history, an approved design revision or coverage of the proposed work.',
+        confirm: 'Ask DCD which existing permits still cover this proposal and whether revised plans, reactivation or replacement applications are needed. Carry new-permit allowances until reuse is confirmed.',
+        citations: ['kitsap-permit-reactivation'], costs: [] });
+    }
     if (redo.length) {
       var list = redo.slice(0, 5).map(function (i) { return i.type + ' ' + i.number + ' (' + i.status.toLowerCase() + (i.status_date ? ' ' + i.status_date.slice(0, 4) : '') + ')'; }).join('; ');
       out.push({
         level: 'likely', basis: 'workflow',
         title: redo.length + ' earlier permit' + (redo.length === 1 ? '' : 's') + ' on this lot lapsed or did not complete',
-        why: 'County records show: ' + list + (redo.length > 5 ? '; and ' + (redo.length - 5) + ' more' : '') + '. An expired or withdrawn permit does not carry forward, so the work it covered needs a new application under current code, including the larger stream buffers in effect since April 2025. Critical area reports are valid for ' + validity + ' years, so studies done for those applications may also need to be redone.',
-        confirm: 'Ask the owner for the old file: surveys and soil logs are often reusable even when the permit is not.',
-        flag: redo.length + ' earlier permit' + (redo.length === 1 ? '' : 's') + ' on this lot lapsed or did not complete (' + redo[0].type + (redo.length > 1 ? ' and others' : '') + '). Assume a fresh application under current code.',
+        why: 'County records show: ' + list + (redo.length > 5 ? '; and ' + (redo.length - 5) + ' more' : '') + '. Budget for a reuse check. Extension, reactivation, revision or a new application depends on permit type, timing, associated approvals and the proposed scope. The table alone cannot decide which route applies. The critical-area report rule lists a ' + validity + '-year validity period; the agency must confirm whether an earlier study is reusable.',
+        confirm: 'Ask DCD whether each relevant permit can be reactivated or revised and whether its studies cover this proposal. Do not deduct new-permit fees until that answer is documented.',
+        flag: redo.length + ' earlier permit' + (redo.length === 1 ? '' : 's') + ' on this lot lapsed or did not complete. Confirm reactivation or a new application with DCD before allowing any reuse credit.',
         flag_weight: 4,
-        citations: ['kcc-19.700.705'],
+        citations: ['kcc-19.700.705', 'kitsap-permit-reactivation'],
         costs: []
       });
     }

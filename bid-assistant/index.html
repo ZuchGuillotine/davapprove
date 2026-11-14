@@ -12,8 +12,8 @@
   <div class="brand">
     <span class="logo" aria-hidden="true"></span>
     <div>
-      <h1>Davapprove <span>Bid Assistant</span></h1>
-      <p>Who you will deal with, what it will cost, and where on the lot it bites.</p>
+      <h1>Davapprove <span>Bids &amp; assessments</span></h1>
+      <p>Know the scope before you price the project.</p>
     </div>
   </div>
   <div class="topbar-right">
@@ -24,9 +24,22 @@
   </div>
 </header>
 
+<div class="bidbar">
+  <span class="stage">Early bid · unconfirmed</span>
+  <label for="saved-bids" class="sr-only">Saved bids</label>
+  <select id="saved-bids"><option value="">Open a saved bid…</option></select>
+  <button id="btn-new" type="button" class="secondary">New assessment</button>
+  <button id="btn-save" type="button" disabled>Save bid</button>
+  <button id="btn-refresh" type="button" class="secondary" disabled>Refresh maps</button>
+  <span id="save-status" class="hint" role="status">Drafts stay in this browser</span>
+</div>
+
 <main class="layout">
   <section class="panel" id="panel">
     <form id="search-form" class="card search" autocomplete="off">
+      <span class="eyebrow">A clearer second meeting</span>
+      <h2>Start with the site.</h2>
+      <p class="hint">Public maps, code and permit summaries. No document uploads or evidence-review queue.</p>
       <label for="q">Parcel</label>
       <div class="search-row">
         <input id="q" type="search" placeholder="Street address, tax account number, or click the map" aria-describedby="q-help">
@@ -39,7 +52,7 @@
       <select id="ptype"></select>
 
       <details id="assumptions">
-        <summary>Project assumptions <span class="hint">(defaults are typical; adjust if you know better)</span></summary>
+        <summary>Project assumptions <span class="hint">(editable planning scenario)</span></summary>
         <div class="grid2">
           <label>New building area (sq ft)<input type="number" min="0" step="50" id="a-new_sqft"></label>
           <label>New or replaced hard surface (sq ft)<input type="number" min="0" step="100" id="a-hard_surface_sqft"></label>
@@ -71,25 +84,48 @@
           <label><input type="checkbox" id="a-state_highway_access"> Driveway connects to a state highway</label>
         </div>
       </details>
+      <details id="agency-assumptions">
+        <summary>Agency scope · water, tribal land &amp; floodplain</summary>
+        <p class="hint">Optional bid assumptions, not agency determinations. Leave unknown answers open; these checks do not depend on county permit records.</p>
+        <div class="grid2" id="agency-scope-fields"></div>
+        <div class="grid2"><label>Estimated flood-elevation change (ft), if studied<input id="a-flood_rise_ft" type="number" step="any" placeholder="Not established"></label></div>
+        <div class="checks">
+          <label><input id="a-federal_nexus" type="checkbox"> Other federal permit, funding or action</label>
+          <label><input id="a-federal_operator" type="checkbox"> Project operated by a federal agency</label>
+          <label><input id="a-common_plan" type="checkbox"> Part of a larger common development plan</label>
+          <label><input id="a-floodplain_modification" type="checkbox"> Altering a floodplain or watercourse</label>
+        </div>
+      </details>
     </form>
 
-    <div id="status" class="status" hidden></div>
+    <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+    <section id="bid-details" class="card" hidden>
+      <label for="bid-title">Assessment title</label>
+      <input id="bid-title" maxlength="160" placeholder="Site address or bid reference">
+      <label for="bid-notes">Bid assumptions &amp; exclusions</label>
+      <textarea id="bid-notes" rows="3" placeholder="Record scope, quote references, client-supplied work and items to confirm. Avoid personal names."></textarea>
+      <p class="hint" id="snapshot-status"></p>
+      <nav class="section-nav" aria-label="Assessment sections">
+        <a href="#bid-summary">Overview</a><a href="#bid-costs">Estimate</a><a href="#bid-independent">Agency checks</a><a href="#bid-agencies">Agencies &amp; code</a><a href="#bid-constraints">Site screen</a><a href="#bid-permits">Permit reuse</a>
+      </nav>
+    </section>
     <div id="results" hidden></div>
 
     <div id="intro" class="card intro">
-      <h2>What this does</h2>
-      <p>Enter a parcel and a project type. The assistant reads the public map layers that regulators use, then tells you:</p>
+      <h2>Turn a parcel into a better bid.</h2>
+      <p>A focused scope for the first client conversations:</p>
       <ul>
         <li><strong>Which agencies</strong> the project will route through, and why, with the code section behind each one.</li>
         <li><strong>What to add to the bid</strong> for permit fees and studies, as a low to high range with a source for every line.</li>
         <li><strong>Where the lot is constrained</strong> by mapped critical areas, buffers, shoreline and flood zones.</li>
-        <li><strong>What has been permitted before</strong> on the parcel, and what has lapsed.</li>
+        <li><strong>What may need to be redone</strong>, using permit summaries and specific questions for the issuing agency.</li>
       </ul>
       <p class="hint">This is a screening tool for early client conversations. It reads maps and code; it does not replace a site visit, a delineation, a survey or an agency determination.</p>
     </div>
   </section>
 
   <section class="mapwrap">
+    <div class="map-heading"><span class="eyebrow">Preliminary site envelope</span><strong>Early bid · buffers &amp; layout unconfirmed</strong><p id="map-coverage">Choose a parcel to see mapped constraints and potential siting areas.</p></div>
     <div id="map" role="application" aria-label="Parcel map"></div>
     <div id="legend" class="legend" hidden></div>
   </section>
@@ -103,6 +139,7 @@
 <script src="lib/screen.js"></script>
 <script src="lib/engine.js"></script>
 <script src="lib/report.js"></script>
+<script src="lib/drafts.js"></script>
 <script src="data/data.js"></script>
 <script src="packs/wa-kitsap.js"></script>
 <script src="rules/federal.js"></script>

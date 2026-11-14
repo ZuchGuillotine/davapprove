@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "predev": "node ../scripts/sync_bid_assets.mjs",
+    "prebuild": "node ../scripts/sync_bid_assets.mjs",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",

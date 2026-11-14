@@ -8,6 +8,16 @@ November 7 follow-up decision: [Document processing v2 and model funding](DOCUME
 
 Updated: November 7, 2026. Research baseline: November 5, 2026.
 
+## November 13 product priority
+
+The first paying-customer feature is **Bids & assessments**: parcel screening for early client meetings, agency/code routing, approximate permitting and technical-study allowances, and an explicitly unconfirmed site map. It must not depend on document ingestion or bulk fact review. The existing project records, evidence processing, site-envelope coordination and dependency graph remain the deeper workflow product.
+
+The local application branch and standalone bid research branch have now been reconciled on `codex/bid-assessment-workspace`. The web sidebar and welcome screen expose the bid tool. Drafts and price overrides persist in this browser; no team synchronization, approval status or approved design revision is implied. See [Bid Assistant](BID_ASSISTANT.md) for implementation, sources, validation and unresolved coverage. This priority supersedes the earlier document-first beachhead direction, while retaining that work.
+
+## November 14 agency coverage
+
+Bid assessments now check Corps, tribal consultation and land jurisdiction, state/tribal/EPA certification, DNR freshwater/marine use, FEMA hydraulic/map revisions and stormwater authority independently of county permit history. Optional scope answers persist with the bid. Sources and unresolved questions remain visible; the regional tribal contact list is preliminary, with full affected-tribe identification assigned to the lead agency and Tribes. See [Bid Assistant](BID_ASSISTANT.md) for source dates and validation.
+
 ## Objective
 
 Help owners, architects, engineers and developers identify site constraints and coordinate approvals early enough to avoid expensive redesign. Kitsap County is the first target, with separate routing for incorporated cities, tribes, utilities, state and federal authorities.
@@ -24,7 +34,7 @@ The graph distinguishes inputs, hard prerequisites, consultations, conditions, p
 
 ## Bid assistant (added November 12, 2026)
 
-A narrower first product built as a separate feature in `bid-assistant/`: parcel in, agencies and a sourced permitting cost range out, with a constraint map. It reads public map layers and published code and fees, and does not depend on parsing a parcel's document history. See `docs/BID_ASSISTANT.md`. It was built without sight of the desktop application code, so it does not reuse or modify that code; reconciling the two is still open.
+A narrower first product built as a separate feature in `bid-assistant/`: parcel in, agencies and a sourced permitting cost range out, with a constraint map. It reads public map layers and published code and fees, and does not depend on parsing a parcel's document history. See `docs/BID_ASSISTANT.md`. The November 13 integration makes this available from the desktop application navigation while keeping its data and execution separate from document processing.
 
 ## Status and limits
 

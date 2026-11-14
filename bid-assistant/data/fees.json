@@ -1160,16 +1160,18 @@
   "kind": "professional",
   "basis": "market",
   "payee": "Geotechnical engineer",
-  "low": 2500,
-  "high": 6000,
+  "low": 5300,
+  "high": 9000,
   "unit": "per project",
   "confidence": "medium",
-  "note": null,
+  "note": "Kitsap residential geotechnical design report; extensive drilling can exceed this range. Obtain a site-specific quote.",
   "source": {
-   "title": "Blue Landscaping Services (Seattle-area contractor) - Retaining Wall Cost in Seattle: 2026",
-   "url": "https://bluelandscapingservices.com/blog/retaining-wall-cost-seattle",
-   "date": "2026",
-   "excerpt": "Geotechnical report on a mapped steep slope $2,500-$6,000 per parcel"
+   "title": "Studio Kamppari — typical professional fees in Kitsap County",
+   "url": "https://www.studiokamppari.com/articles/soft-costs",
+   "date": "Publication shows January 8; year not specified on page",
+   "checked": "2026-11-13",
+   "region": "Kitsap County, Washington",
+   "summary": "Kitsap residential geotechnical design report; extensive drilling can exceed this range. Obtain a site-specific quote."
   },
   "sources": [
    {
@@ -1190,7 +1192,8 @@
     "date": "2026",
     "quote": "A geotechnical survey costs $1,000 to $5,000 on average."
    }
-  ]
+  ],
+  "components": []
  },
  {
   "id": "pro-geo-assessment",
@@ -1198,12 +1201,19 @@
   "kind": "professional",
   "basis": "market",
   "payee": "Geologist or geotechnical engineer",
-  "low": 1000,
-  "high": 2500,
+  "low": 3500,
+  "high": 4000,
   "unit": "per project",
-  "confidence": "unsourced",
-  "note": "Placeholder estimate with no published source. Get a quote.",
-  "source": null,
+  "confidence": "medium",
+  "note": "Kitsap geological assessment for hazards and site suitability; confirm the required scope with DCD and the consultant.",
+  "source": {
+   "title": "Studio Kamppari — typical professional fees in Kitsap County",
+   "url": "https://www.studiokamppari.com/articles/soft-costs",
+   "date": "Publication shows January 8; year not specified on page",
+   "checked": "2026-11-13",
+   "region": "Kitsap County, Washington",
+   "summary": "Kitsap geological assessment for hazards and site suitability; confirm the required scope with DCD and the consultant."
+  },
   "sources": [
    {
     "title": "HomeGuide - Geotechnical report cost (2026)",
@@ -1211,7 +1221,8 @@
     "date": "2026",
     "quote": "Average Range $1,000 to $5,000"
    }
-  ]
+  ],
+  "components": []
  },
  {
   "id": "pro-wetland-delineation",
@@ -1257,16 +1268,18 @@
   "kind": "professional",
   "basis": "market",
   "payee": "Wetland specialist",
-  "low": 3500,
-  "high": 6500,
+  "low": 3000,
+  "high": 6000,
   "unit": "per project",
   "confidence": "medium",
-  "note": null,
+  "note": "Kitsap wetland mitigation plan allowance; delineation, construction and monitoring are separate.",
   "source": {
-   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
-   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
-   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
-   "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+   "title": "Studio Kamppari — typical professional fees in Kitsap County",
+   "url": "https://www.studiokamppari.com/articles/soft-costs",
+   "date": "Publication shows January 8; year not specified on page",
+   "checked": "2026-11-13",
+   "region": "Kitsap County, Washington",
+   "summary": "Kitsap wetland mitigation plan allowance; delineation, construction and monitoring are separate."
   },
   "sources": [
    {
@@ -1281,7 +1294,8 @@
     "date": "Last verified March 2026",
     "quote": "Mitigation (if required) $10,000-100,000+"
    }
-  ]
+  ],
+  "components": []
  },
  {
   "id": "pro-stream-typing",
@@ -1359,16 +1373,18 @@
   "kind": "professional",
   "basis": "market",
   "payee": "Shoreline consultant",
-  "low": 2500,
-  "high": 8000,
+  "low": 3000,
+  "high": 6000,
   "unit": "per project",
   "confidence": "low",
-  "note": null,
+  "note": "Shoreline buffer mitigation planning is a budgeting proxy for this study. Confirm no-net-loss reporting scope and monitoring separately.",
   "source": {
-   "title": "City of Bellevue Development Services - Environmental Consulting Services form (on-call consultant 'Anticipated Price Range')",
-   "url": "https://bellevuewa.gov/sites/default/files/media/document/dept-development-services/permits/Environmental%20Consulting%20Services%20Form.pdf",
-   "date": "July 28, 2020 (form date; 2020 dollars, King County)",
-   "excerpt": "Prepare mitigation and restoration plans $3,618.00 to $6,211"
+   "title": "Studio Kamppari — typical professional fees in Kitsap County",
+   "url": "https://www.studiokamppari.com/articles/soft-costs",
+   "date": "Publication shows January 8; year not specified on page",
+   "checked": "2026-11-13",
+   "region": "Kitsap County, Washington",
+   "summary": "Shoreline buffer mitigation planning is a budgeting proxy for this study. Confirm no-net-loss reporting scope and monitoring separately."
   },
   "sources": [
    {
@@ -1389,7 +1405,8 @@
     "date": "Updated 2026-04-23",
     "quote": "Habitat assessment: $2,000-$8,000."
    }
-  ]
+  ],
+  "components": []
  },
  {
   "id": "pro-bio-eval",
@@ -1444,15 +1461,17 @@
   "basis": "market",
   "payee": "Land surveyor",
   "low": 2000,
-  "high": 5000,
+  "high": 6000,
   "unit": "per project",
   "confidence": "medium",
-  "note": null,
+  "note": "Kitsap survey allowance covering site topography and existing features; size, access and required deliverables affect pricing.",
   "source": {
-   "title": "Peninsula Construction Services (Kitsap County builder) - Custom Home Building in Kitsap County, WA: costs, process, what to expect",
-   "url": "https://peninsulaconstructionservices.net/custom-home-building-in-kitsap-county-wa-costs-process-what-to-expect/",
-   "date": "2026 ('current 2026 market data')",
-   "excerpt": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
+   "title": "Studio Kamppari — typical professional fees in Kitsap County",
+   "url": "https://www.studiokamppari.com/articles/soft-costs",
+   "date": "Publication shows January 8; year not specified on page",
+   "checked": "2026-11-13",
+   "region": "Kitsap County, Washington",
+   "summary": "Kitsap survey allowance covering site topography and existing features; size, access and required deliverables affect pricing."
   },
   "sources": [
    {
@@ -1461,7 +1480,8 @@
     "date": "2026 ('current 2026 market data')",
     "quote": "A boundary survey is required to establish setbacks, and a topographic survey is typically needed for permit applications. Budget $2,000–$5,000 for survey costs, depending on lot size and complexity."
    }
-  ]
+  ],
+  "components": []
  },
  {
   "id": "pro-elevation-cert",
@@ -1516,12 +1536,19 @@
   "kind": "professional",
   "basis": "market",
   "payee": "Septic designer",
-  "low": 2000,
-  "high": 5000,
+  "low": 3000,
+  "high": 6000,
   "unit": "per project",
-  "confidence": "unsourced",
-  "note": "Placeholder estimate with no published source. Get a quote.",
-  "source": null,
+  "confidence": "medium",
+  "note": "Kitsap septic design allowance; installation, excavation and agency charges are separate.",
+  "source": {
+   "title": "Studio Kamppari — typical professional fees in Kitsap County",
+   "url": "https://www.studiokamppari.com/articles/soft-costs",
+   "date": "Publication shows January 8; year not specified on page",
+   "checked": "2026-11-13",
+   "region": "Kitsap County, Washington",
+   "summary": "Kitsap septic design allowance; installation, excavation and agency charges are separate."
+  },
   "sources": [
    {
     "title": "HomeGuide - How Much Does a Septic Tank System Cost? (2026)",
@@ -1535,7 +1562,8 @@
     "date": "2026",
     "quote": "A perc test costs $200 to $1,500 to hand-dig test holes and measure the soil's drainage for a septic system."
    }
-  ]
+  ],
+  "components": []
  },
  {
   "id": "pro-civil-sdap",
@@ -1636,5 +1664,69 @@
   "note": "Placeholder estimate with no published source. Get a quote.",
   "source": null,
   "sources": []
+ },
+ {
+  "id": "pro-hydraulic-analysis",
+  "label": "Floodway / flood-elevation hydraulic analysis",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Civil / hydraulic engineer",
+  "low": 0,
+  "high": 0,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+  "scope_citations": [
+   "fema-hydraulic-review"
+  ],
+  "source": null
+ },
+ {
+  "id": "fema-map-review",
+  "label": "FEMA conditional or final map-revision review",
+  "kind": "agency_fee",
+  "basis": "market",
+  "payee": "FEMA",
+  "low": 0,
+  "high": 0,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+  "scope_citations": [
+   "fema-conditional-revision"
+  ],
+  "source": null
+ },
+ {
+  "id": "pro-water-quality",
+  "label": "Water-quality certification application support",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Environmental consultant",
+  "low": 0,
+  "high": 0,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+  "scope_citations": [
+   "ecology-401-authority"
+  ],
+  "source": null
+ },
+ {
+  "id": "epa-cgp-review",
+  "label": "EPA construction stormwater application costs",
+  "kind": "agency_fee",
+  "basis": "market",
+  "payee": "EPA / applicant support",
+  "low": 0,
+  "high": 0,
+  "unit": "per project",
+  "confidence": "unsourced",
+  "note": "No published source for a project-specific price has been checked. Quote needed; excluded from priced totals until supplied.",
+  "scope_citations": [
+   "epa-wa-construction-stormwater"
+  ],
+  "source": null
  }
 ]

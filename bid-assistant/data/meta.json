@@ -1,10 +1,31 @@
 {
   "research_date": "2026-11-12",
   "jurisdictions": [
-    { "id": "wa-kitsap", "name": "Kitsap County, WA", "available": true },
-    { "id": "wa-mason", "name": "Mason County, WA", "available": false },
-    { "id": "wa-jefferson", "name": "Jefferson County, WA", "available": false },
-    { "id": "wa-pierce", "name": "Pierce County, WA", "available": false },
-    { "id": "wa-king", "name": "King County, WA", "available": false }
-  ]
+    {
+      "id": "wa-kitsap",
+      "name": "Kitsap County, WA",
+      "available": true
+    },
+    {
+      "id": "wa-mason",
+      "name": "Mason County, WA",
+      "available": false
+    },
+    {
+      "id": "wa-jefferson",
+      "name": "Jefferson County, WA",
+      "available": false
+    },
+    {
+      "id": "wa-pierce",
+      "name": "Pierce County, WA",
+      "available": false
+    },
+    {
+      "id": "wa-king",
+      "name": "King County, WA",
+      "available": false
+    }
+  ],
+  "agency_routing_checked": "2026-11-14"
 }

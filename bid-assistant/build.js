@@ -35,7 +35,11 @@ function load() {
     if (!['local', 'tribal', 'state', 'federal', 'utility', 'professional'].includes(a.tier)) throw new Error('Agency ' + a.id + ' has unknown tier');
     agencies[a.id] = a;
   }
-  return { meta, citations, fees, agencies };
+  const routing = read('agency-routing.json');
+  for (const contact of routing.tribal_contacts) {
+    if (!agencies[contact.agency] || !citations[contact.citation]) throw new Error('Unresolved tribal contact source: ' + contact.agency);
+  }
+  return { meta, citations, fees, agencies, routing };
 }
 
 function render(data) {

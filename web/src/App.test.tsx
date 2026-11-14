@@ -46,6 +46,17 @@ async function openSample() {
   return user;
 }
 describe("project workspace", () => {
+  it("opens the separate bid workspace and preserves the selected project", async () => {
+    const user = await openSample();
+    await user.click(screen.getByRole("button", { name: "Bids & assessments" }));
+    expect(screen.getByTitle("Early bid assessment workspace")).toHaveAttribute("src", "/bid-assistant/index.html");
+    expect(screen.getByText("EARLY BID · PUBLIC MAPS")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Import selected" })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /^Projects/ }));
+    expect(screen.getByRole("heading", { name: "Cedar House · Concept study" })).toBeInTheDocument();
+    expect(screen.getByText("Revision 1")).toBeInTheDocument();
+  });
+
   it("renames the project without changing its design revision", async () => {
     const user = await openSample();
     await user.click(screen.getByRole("button", { name: "Edit project name" }));

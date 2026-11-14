@@ -8,6 +8,12 @@ Open [Davapprove beta](https://davapprove-preview.delicacybydesign.workers.dev) 
 
 See [implementation status](docs/IMPLEMENTATION_STATUS.md) for delivered features and limits, and [operations](docs/operations.md) for deployment, access and local development. The API currently uses a temporary preview hostname.
 
+## Bid-first workflow
+
+Use **Bids & assessments** in the application sidebar, or run the standalone tool below. It screens public parcel maps and permit summaries, keeps agency requirements tied to code, builds editable cost allowances, saves browser-local drafts and exports a client memo. The map is explicitly an **early bid** screen with unconfirmed buffers/layout. Records, Site envelope, Workflow and Activity remain the separate project workflow.
+
+Run the integrated application with `cd web && npm run dev` (install its dependencies first if needed). Read the current coverage and verification limits in [Bid Assistant](docs/BID_ASSISTANT.md).
+
 ## Start here
 
 - **[Bid Assistant](docs/BID_ASSISTANT.md)**: put in a Kitsap parcel and a project type, get the agencies involved, a sourced permitting cost range and a constraint map. Run `node bid-assistant/server.js` and open http://localhost:8080.
@@ -44,6 +50,8 @@ Bid assistant checks (no dependencies; the last one needs network):
 ```sh
 node tests/bid_assistant_geo.test.cjs
 node tests/bid_assistant_engine.test.cjs
+node tests/bid_assistant_drafts.test.cjs
+node tests/bid_assistant_ui.test.cjs # requires web dependencies
 node tests/bid_assistant_live.cjs
 ```
 

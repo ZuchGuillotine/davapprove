@@ -7,7 +7,6 @@
   else (root.BidRuleSets = root.BidRuleSets || {})['wa-state'] = factory();
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
-  var ACRE = 43560;
   var rules = [];
   function rule(id, agency, topic, fn) { rules.push({ id: id, agency: agency, topic: topic, evaluate: fn }); }
   function ft(n) { return Math.round(n) + ' ft'; }
@@ -15,11 +14,13 @@
   rule('wa.hpa', 'wdfw', 'Work in or near water', function (ctx) {
     var p = ctx.project, f = ctx.facts;
     if (p.in_water) {
+      var land = ctx.helpers.landContext(f, p);
       var fish = f.shoreline.forage_fish || [];
       var names = { smelt: 'surf smelt', sandlance: 'Pacific sand lance', herring: 'Pacific herring' };
       return {
-        level: 'required', basis: 'documented',
+        level: land.mode === 'tribal' || land.mode === 'federal' ? 'possible' : 'required', basis: land.mode === 'tribal' || land.mode === 'federal' ? 'confirm' : 'documented', authority_role: 'Hydraulic / fish habitat permit',
         title: 'Hydraulic Project Approval',
+        confirm: 'Confirm WDFW jurisdiction and the hydraulic scope, especially on tribal or federal lands. Applies to freshwater as well as marine work; county permit history is not the trigger.',
         why: 'Work that uses, diverts, obstructs or changes the natural flow or bed of state waters needs a Hydraulic Project Approval from WDFW before construction. There is no application fee.' +
           (fish.length ? ' The county habitat layers show documented ' + fish.map(function (k) { return names[k]; }).join(' and ') + ' spawning on or next to this shoreline, which usually means restricted in-water work windows and a spawning survey.' : '') +
           (f.shoreline.eelgrass ? ' Eelgrass is mapped along this shoreline, which constrains dock location and design.' : ''),
@@ -42,15 +43,16 @@
   });
 
   rule('wa.aquatic_lands', 'dnr', 'Work in or near water', function (ctx) {
-    if (!ctx.project.in_water || !ctx.facts.shoreline.marine) return null;
-    var sh = ctx.facts.shoreline, owners = (sh.aquatic_owners || []).filter(Boolean);
-    var mapped = owners.length ? ' The DNR aquatic ownership layer shows these owners for aquatic parcels within 150 ft of the lot: ' + owners.join('; ').toLowerCase() + '.' : sh.aquatic_status === 'unknown' ? ' The DNR aquatic ownership layer could not be read.' : '';
+    if (!ctx.project.in_water) return null;
+    var sh = ctx.facts.shoreline;
+    var mapped = sh.state_aquatic ? ' The DNR layer maps state aquatic land near the lot. This does not establish ownership at the proposed work location.' : sh.aquatic_status === 'unknown' ? ' The DNR aquatic land layer could not be read.' : ' No state aquatic land was returned by this screening; title still needs confirmation.';
     return {
-      level: sh.state_aquatic ? 'required' : owners.length ? 'possible' : 'likely', basis: 'documented',
-      title: 'State-owned aquatic lands: authorization or recreational dock registration',
-      why: 'Tidelands and bedlands waterward of private ownership are generally state-owned and managed by DNR. A private recreational dock for an abutting residential owner can use them without rent under the statute, subject to its conditions; other structures and uses need a DNR use authorization. Whether the tidelands here are privately owned has to be checked on title.' + mapped,
-      confirm: 'Who owns the tidelands in front of the lot? Many Puget Sound tidelands were sold into private ownership.',
-      citations: ['rcw-79.105.430'],
+      level: sh.state_aquatic ? 'likely' : 'possible', basis: 'confirm',
+      authority_role: 'Aquatic land-use permission',
+      title: 'State-owned aquatic lands: marine or freshwater authorization',
+      why: 'DNR manages state-owned aquatic lands in marine waters, lakes and rivers. Permission to occupy those lands is separate from construction permits. Private recreational docks may qualify for conditional rent-free use, but that does not waive other approvals.' + mapped,
+      confirm: 'Ask DNR which bedlands or shorelands the proposed footprint occupies, whether recreational permission applies and what title, registration or use-authorization evidence is needed. No mapped state land is not a title clearance.',
+      citations: ['dnr-aquatic-scope', 'rcw-79.105.430'],
       costs: ['dnr-aquatic']
     };
   });
@@ -77,23 +79,33 @@
     };
   });
 
-  rule('wa.cswgp', 'ecology', 'Site development and stormwater', function (ctx) {
-    var p = ctx.project;
-    if (p.disturbance_sqft < ACRE) return null;
-    return {
-      level: 'required', basis: 'documented',
-      title: 'Construction Stormwater General Permit',
-      why: 'The project disturbs ' + (p.disturbance_sqft / ACRE).toFixed(1) + ' acres. Construction that disturbs one acre or more and can discharge stormwater to surface waters needs coverage under Ecology\'s Construction Stormwater General Permit, including sites under an acre that are part of a larger common plan of development.',
-      confirm: 'The one-acre trigger was verified against the federal rule; Ecology\'s own permit page could not be read when this was checked.',
-      flag: 'Over one acre disturbed: add Ecology construction stormwater permit coverage and a stormwater pollution prevention plan.',
-      citations: ['cfr-40-122.26', 'ecology-cswgp'],
-      costs: ['ecology-cswgp']
-    };
+  rule('wa.cswgp', 'ecology', 'Construction stormwater authority', function (ctx) {
+    var p = ctx.project, land = ctx.helpers.landContext(ctx.facts, p);
+    var kv = ctx.data.citations['cfr-40-122.26'].key_values;
+    if (p.disturbance_sqft < kv.disturbance_acres * kv.square_feet_per_acre && !p.common_plan) return null;
+    var out = [];
+    function route(agency, label, fee, level) {
+      out.push({ agency: agency, level: level, basis: 'confirm', authority_role: 'Construction stormwater permit',
+        title: label + ' Construction Stormwater General Permit',
+        why: 'The disturbance or larger common-plan assumption triggers a stormwater coverage check. EPA handles Indian Country and federal operators in Washington; Ecology handles applicable state-jurisdiction projects. Surface-water discharge and permit eligibility still need confirmation.',
+        confirm: 'Confirm the operator, Indian Country status, discharge route and common-plan acreage. These are alternative authorities; do not add both permit routes to the bid.',
+        citations: ['cfr-40-122.26', 'ecology-cswgp', 'epa-wa-construction-stormwater'], costs: [fee] });
+    }
+    if (p.federal_operator || land.mode === 'tribal') route('epa', 'EPA', 'epa-cgp-review', 'likely');
+    else if (land.mode === 'state') route('ecology', 'Ecology', 'ecology-cswgp', 'likely');
+    else { route('ecology', 'Ecology: confirm authority for', 'ecology-cswgp', 'possible'); route('epa', 'EPA: confirm authority for', 'epa-cgp-review', 'possible'); }
+    return out;
   });
 
   rule('wa.sepa', 'kitsap-dcd', 'Environmental review', function (ctx) {
     var p = ctx.project, f = ctx.facts, d = ctx.data;
-    if (f.jurisdiction.city) return null;
+    var land = ctx.helpers.landContext(f, p);
+    if (f.jurisdiction.city || land.mode === 'tribal' || land.mode === 'federal' || f.jurisdiction.status === 'unknown') {
+      if (!p.in_water && !p.common_plan && p.type !== 'short_plat') return null;
+      return { agency: 'ecology', level: 'possible', basis: 'confirm', authority_role: 'Lead-agency identification', title: 'Confirm environmental-review lead and jurisdiction',
+        why: 'County records do not establish the SEPA lead or the applicability of state review on tribal or federal land. A city, state or other eligible entity may lead; a federal action may also have its own review.',
+        confirm: 'Ask the relevant permitting authorities which environmental-review process and lead apply before pricing a county checklist.', citations: ['sepa-lead-routing', 'rcw-43.21C.030'], costs: [] };
+    }
     var local = d.citations['kcc-18.04.090'].key_values;
     var reasons = [];
     if (p.in_water) reasons.push('the work is wholly or partly on lands covered by water, where the minor new construction exemptions do not apply');
@@ -104,7 +116,7 @@
     return {
       level: 'required', basis: 'documented',
       title: 'SEPA environmental checklist',
-      why: 'State environmental review applies because ' + reasons.join('; and ') + '. The county is lead agency and issues a threshold determination before permits can be decided.',
+      why: 'State environmental review applies because ' + reasons.join('; and ') + '. Confirm the lead agency; county fees below are a preliminary allowance for a county-led review.',
       confirm: 'Local thresholds were checked against the 2019 county code text. Confirm they are current.',
       citations: ['wac-197-11-800-1', 'wac-197-11-800-1b', 'kcc-18.04.090', 'rcw-43.21C.030'],
       costs: ['dcd-sepa', 'pro-sepa']
@@ -245,5 +257,13 @@
     };
   });
 
+  var independent = {
+    'wa.hpa': ['rcw-77.55.021', 'rcw-77.55.011'],
+    'wa.aquatic_lands': ['dnr-aquatic-scope', 'rcw-79.105.430'],
+    'wa.cswgp': ['epa-wa-construction-stormwater', 'cfr-40-122.26'],
+    'wa.shoreline_ecology': ['wac-173-27-190', 'rcw-90.58.140'],
+    'wa.sepa': ['sepa-lead-routing']
+  };
+  rules.forEach(function (r) { if (independent[r.id]) { r.independent = true; r.citations = independent[r.id]; r.check_label = r.topic + ' (' + r.agency + ')'; } });
   return { rules: rules };
 });

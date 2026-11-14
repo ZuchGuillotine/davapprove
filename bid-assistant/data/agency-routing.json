@@ -1,0 +1,15 @@
+{
+  "checked": "2026-11-14",
+  "jurisdiction": "Kitsap County, Washington; independent tribal, state and federal screening",
+  "tribal_contacts": [
+    { "agency": "suquamish", "citation": "suquamish-resource-programs", "reason": "The Tribe identifies fisheries, environmental programs and historic preservation as treaty-resource responsibilities." },
+    { "agency": "pgst", "citation": "pgst-environmental-program", "reason": "The Tribe reviews environmental permits and protects treaty, natural and cultural resources." },
+    { "agency": "skokomish", "citation": "skokomish-fishing-maps", "reason": "The Tribe publishes fishing maps for Hood Canal and Port Gamble Bay; check effects on treaty resources beyond reservation boundaries." }
+  ],
+  "tribal_contact_limit": "Regional starting contacts, not a complete affected-tribe list or a finding that each Tribe must approve this project. Ask the federal lead agency and Tribes to identify all affected Tribes for the waterbody and activity, including cultural interests outside mapped reservations.",
+  "tribal_name_matches": [
+    { "agency": "suquamish", "pattern": "suquamish|port madison" },
+    { "agency": "pgst", "pattern": "port gamble|^s.?klallam$" },
+    { "agency": "skokomish", "pattern": "skokomish" }
+  ]
+}

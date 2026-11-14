@@ -25,7 +25,9 @@ const RULESETS = {
 function parseArgs(argv) {
   const out = { _: [], project: {} };
   const map = { 'new-sqft': 'new_sqft', 'hard-surface': 'hard_surface_sqft', disturbance: 'disturbance_sqft', grading: 'grading_cy', bedrooms: 'bedrooms', lots: 'lots', wastewater: 'wastewater', water: 'water', type: 'type' };
+  Object.keys(Engine.SCOPE_FIELDS).concat(['flood_rise_ft']).forEach(key => { map[key.replace(/_/g, '-')] = key; });
   const flags = { demo: 'demo', 'in-water': 'in_water', 'tree-clearing': 'tree_clearing', 'state-highway': 'state_highway_access' };
+  ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(key => { flags[key.replace(/_/g, '-')] = key; });
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (!a.startsWith('--')) { out._.push(a); continue; }
@@ -57,7 +59,7 @@ async function run(argv) {
   if (!parcel) throw new Error('No tax parcel found');
   const screening = await Screen.screenParcel(pack, parcel, {});
   const facts = pack.deriveFacts(screening);
-  const constraints = RULESETS[pack.id].constraints(screening, facts, DATA);
+  const constraints = RULESETS[pack.id].constraints(screening, facts, DATA, Engine.normaliseProject(args.project));
   const grid = Geo.gridAnalyze(parcel.shape, constraints, { targetSamples: 3000 });
   const rules = pack.rule_sets.flatMap((id) => RULESETS[id].rules);
   const report = Engine.evaluate({ facts, project: args.project, grid, rules, data: DATA });
