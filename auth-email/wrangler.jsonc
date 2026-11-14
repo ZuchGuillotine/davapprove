@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "davapprove-auth-email",
+  "account_id": "0a62cf3c87f54de05ca4ff2f7ba149f7",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "send_email": [{
+    "name": "EMAIL",
+    "allowed_sender_addresses": ["davapprove@haidaa.com"]
+  }],
+  "secrets": { "required": ["SEND_EMAIL_HOOK_SECRET"] },
+  "vars": {
+    "APP_URL": "https://davapprove-preview.delicacybydesign.workers.dev",
+    "SUPABASE_URL": "https://znoysvmruyzlfllqblpi.supabase.co",
+    "FROM_EMAIL": "davapprove@haidaa.com"
+  },
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "invocation_logs": false },
+    "traces": { "enabled": true, "head_sampling_rate": 0.01 }
+  }
+}

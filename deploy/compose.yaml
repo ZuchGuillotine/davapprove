@@ -11,6 +11,7 @@ services:
       CORS_ORIGINS: ${CORS_ORIGINS:?Set the frontend HTTPS origin}
       DATA_DIR: /data
       MAX_PDF_BYTES: ${MAX_PDF_BYTES:-52428800}
+      EMAIL_DELIVERY_ENABLED: ${EMAIL_DELIVERY_ENABLED:-false}
     volumes:
       - temporary:/data
     expose:

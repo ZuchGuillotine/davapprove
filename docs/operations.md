@@ -1,6 +1,6 @@
 # Davapprove pilot operations
 
-Updated November 7, 2026. See [implementation status](IMPLEMENTATION_STATUS.md) for release limits. Secrets are stored in ignored, permission-restricted files and on the dedicated host; never copy them into frontend variables or this document.
+Updated November 14, 2026. See [implementation status](IMPLEMENTATION_STATUS.md) for release limits. Secrets are stored in ignored, permission-restricted files and on the dedicated host; never copy them into frontend variables or this document.
 
 ## Deployed resources
 
@@ -16,7 +16,7 @@ Verified account quote: server $6.49/month + IPv4 $0.60/month = **$7.09/month**,
 
 `deploy/compose.yaml` runs isolated API and worker containers. `--profile preview` also runs a Cloudflare Quick Tunnel; `--profile domain` runs Caddy instead when a controlled hostname is available. Do not activate both profiles accidentally. API has only the publishable key; worker has the service-role key. Both use `DAVAPPROVE_MODE=supabase` in hosted deployment.
 
-Required protected environment in `deploy/.env`: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CORS_ORIGINS`. Current `MAX_PDF_BYTES=52428800` matches the Free storage limit. `EMAIL_DELIVERY_ENABLED=false` until a sender is configured. OpenAI configuration is documented below. The legacy proxy remains deployed for rollback but is no longer the default processing provider. Do not set guessed model prices.
+Required protected environment in `deploy/.env`: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CORS_ORIGINS`. Current `MAX_PDF_BYTES=52428800` matches the Free storage limit. `EMAIL_DELIVERY_ENABLED=true` now uses the configured Cloudflare Auth email hook; see the delivery verification status below. OpenAI configuration is documented below. The legacy proxy remains deployed for rollback but is no longer the default processing provider. Do not set guessed model prices.
 
 On the dedicated host:
 
@@ -37,16 +37,11 @@ Cloudflare Quick Tunnels are temporary development endpoints with no uptime guar
 
 The frontend supports Supabase email/password sign-in, email/password registration, recovery links, and an **Account & password** panel for existing users, including users who originally signed in with an operator link. Password sign-in works independently of email delivery. Sessions restore on reload; sign-out clears private workspace state and discards outstanding project requests. New accounts receive no existing project membership automatically.
 
-**Current delivery limitation:** custom SMTP is not configured and `EMAIL_DELIVERY_ENABLED=false`. Public account creation and recovery forms explain this and do not submit an email request. Existing confirmed accounts can use passwords. Supabase's default sender only delivers to organization team members; an Auth user is not automatically an organization member. Do not turn off email confirmation to work around this. See [Supabase password authentication](https://supabase.com/docs/guides/auth/passwords) and [custom SMTP](https://supabase.com/docs/guides/auth/auth-smtp), reviewed November 14, 2026.
+**Current email configuration:** the Supabase Send Email hook sends through Cloudflare as **Davapprove <davapprove@haidaa.com>**, using the already verified domain. The hook and `EMAIL_DELIVERY_ENABLED=true` are deployed, with signup and password-reset controls enabled. Email confirmation remains required; new accounts receive no existing project access. No domain purchase, DNS change, Resend account or plan upgrade was needed. The real inbox delivery/confirmation/recovery round trip is pending permission for a test recipient; successful configuration and mocked/local tests are not proof of inbox receipt.
 
-To activate self-service registration and recovery:
+The signed hook is `https://davapprove-auth-email.delicacybydesign.workers.dev/auth/send-email`, with a server-only secret shared between Supabase Auth and Cloudflare. Signup and recovery redirects are explicitly allowed at `/` and `/?auth=recovery`. The hook pins both links to the frontend origin, even for local-development requests. Supabase's beta email limit is 30/hour with the existing 60-second per-recipient resend interval. See [email deployment, testing, limits and rollback](../auth-email/README.md).
 
-1. Configure the approved sender/provider in Supabase Auth SMTP (or a verified Send Email hook). Keep email confirmation enabled and signup enabled.
-2. Set the site URL to the frontend origin and allow both `https://davapprove-preview.delicacybydesign.workers.dev/` and `https://davapprove-preview.delicacybydesign.workers.dev/?auth=recovery` as redirects. The client also handles Supabase's `PASSWORD_RECOVERY` event and `type=recovery` fragment.
-3. Verify delivery, confirmation, sign-in and recovery with an authorized beta recipient. Then set `EMAIL_DELIVERY_ENABLED=true` in the protected deployment environment and recreate the API container, preserving the worker and tunnel. Set the public build fallback `VITE_EMAIL_DELIVERY_ENABLED=true` and rebuild/redeploy the frontend. The API flag takes precedence.
-4. Verify a new account starts with an empty private workspace and cannot read another member's projects. Test an expired link and logout as well as the successful flows.
-
-Until the sender is ready, operators can generate a one-use sign-in link without sending email:
+Password sign-in works independently of email delivery. If mail delivery fails, turn off the API/frontend delivery flags while diagnosing it. Keep confirmation enabled. Operators can still generate a one-use sign-in link without sending email:
 
 ```sh
 # Supply server-only credentials through the environment, not command arguments.
@@ -171,6 +166,14 @@ Frontend version `0e5733d7-a8d8-46a3-abc0-37685cb22c03` adds email/password acco
 
 Both existing confirmed beta accounts retain their original IDs. The requested existing-account password was updated through the Auth admin API and verified by an actual hosted password sign-in, existing-project load and sign-out. No credential is stored in the repository. Operator-generated private links remain available for existing users to choose their own password in **Account & password**.
 
-Validation: 42 frontend tests pass, including registration/confirmation messaging, password recovery, rejected credentials, existing-user password changes, session restoration, logout and stale project/document/image response isolation. Production build and Wrangler dry-run pass; the hosted page loads the final build asset `/assets/index-CmILt4hM.js`. Direct automated HTTP verification returned 403, so browser verification was used; a remote byte-for-byte comparison was not completed. Live signup and emailed recovery have **not** been verified or enabled: the sender/provider is still needed, and the UI keeps these requests unavailable rather than claiming delivery.
+Validation: 42 frontend tests pass, including registration/confirmation messaging, password recovery, rejected credentials, existing-user password changes, session restoration, logout and stale project/document/image response isolation. Production build and Wrangler dry-run pass; the hosted page loads the final build asset `/assets/index-CmILt4hM.js`. Direct automated HTTP verification returned 403, so browser verification was used; a remote byte-for-byte comparison was not completed. At this initial release, live signup and emailed recovery were not enabled; the Cloudflare email release below supersedes that configuration.
 
 Build note: iCloud offloaded files in the Documents workspace during this release and stalled file reads in Git and Wrangler. The release was built from an isolated temporary local checkout outside iCloud, with the same pinned dependencies and public frontend configuration. Only static production assets were deployed.
+
+## November 14 Cloudflare authentication email release
+
+Deployed `davapprove-auth-email` version `962d77ae-e669-4ea2-ab43-7c3f2a2725e3` and connected the signed Supabase Send Email hook. The existing `haidaa.com` sender is verified and permits arbitrary recipients. Sender: **Davapprove <davapprove@haidaa.com>**. No new domain, DNS changes or billing-plan upgrade. Cloudflare Email Sending uses the account's existing allowances and quotas; see [email operations and pricing sources](../auth-email/README.md).
+
+Frontend version `37fc6b72-3e96-4846-85c3-46f4fc1766ab` enables the email-delivery fallback; prior version `0e5733d7-a8d8-46a3-abc0-37685cb22c03`. Added the missing Compose mapping for `EMAIL_DELIVERY_ENABLED` and recreated only the API container. The background worker and tunnel container IDs stayed unchanged. Protected host rollback configuration is under `/opt/davapprove-releases/auth-email-before/`. The pre-change Supabase configuration and hook secret are stored only in ignored, permission-restricted operator files. No migration, account deletion, password change or project-membership change occurred in this release. Both existing confirmed beta account IDs were checked and preserved.
+
+Validation: 30 hook tests, TypeScript, a successful local Workers-runtime message handoff, 42 frontend tests, production build and deployment dry-run. Hosted hook health and rejection of invalid/incorrectly signed requests pass; valid signatures with invalid payloads return 422 without sending. API health and `email_delivery_enabled=true` verified. Hosted registration/recovery forms are available, and `/assets/index-7LRpzaBc.js` matches the local release bytes. Actual inbox delivery and a complete emailed signup/recovery round trip remain unverified pending permission for a real-recipient test. No test email was sent during this configuration release.
