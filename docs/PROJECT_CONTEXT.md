@@ -20,6 +20,8 @@ Bid assessments now check Corps, tribal consultation and land jurisdiction, stat
 
 ## Objective
 
+November 14 municipal fee extension: early-bid estimates now include selected official schedules for Poulsbo, Port Orchard and Bremerton alongside Bainbridge. Silverdale/Kingston remain county jurisdictions; unincorporated Poulsbo adds a city-development-standards confirmation. Sources, future rate changes and unresolved totals are documented in [Bid Assistant](BID_ASSISTANT.md#november-14-remaining-municipal-coverage). City envelope geometry remains unconfirmed and deeper approval logic is unchanged.
+
 Help owners, architects, engineers and developers identify site constraints and coordinate approvals early enough to avoid expensive redesign. Kitsap County is the first target, with separate routing for incorporated cities, tribes, utilities, state and federal authorities.
 
 The key problem identified in this conversation is the disjointed septic–civil–wetland–shoreline–designer loop: disciplines optimize their own plans while shared geometry, capacity and conditions remain inconsistent.

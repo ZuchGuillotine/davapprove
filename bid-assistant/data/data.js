@@ -33,7 +33,8 @@
     "available": false
    }
   ],
-  "agency_routing_checked": "2026-11-14"
+  "agency_routing_checked": "2026-11-14",
+  "municipal_fees_checked": "2026-11-14"
  },
  "citations": {
   "kcc-19.100.110": {
@@ -2743,6 +2744,222 @@
    "summary": "Building permit valuation uses the greater of the city calculation and contractor bid. Separate building plan check, planning/engineering review and site-specific applications may apply.",
    "key_values": {},
    "notes": "Pages 16–26. Fee schedule establishes prices, not parcel-specific applicability; city buffers and zoning are not modelled."
+  },
+  "kitsap-municipal-boundaries": {
+   "id": "kitsap-municipal-boundaries",
+   "jurisdiction": "Kitsap County",
+   "citation": "Kitsap DCD: incorporated cities and unincorporated urban growth areas",
+   "title": "Kitsap DCD: incorporated cities and unincorporated urban growth areas",
+   "url": "https://www.kitsap.gov/dcd/Pages/Community_Development_Maps.aspx",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Incorporated Cities: Bremerton, Port Orchard, Poulsbo and Bainbridge Island Unincorporated Urban Growth Areas:",
+   "summary": "Four incorporated cities have city permitting. Silverdale and Kingston are unincorporated UGAs. Mailing addresses and UGA labels do not establish city jurisdiction.",
+   "key_values": {
+    "cities": [
+     "Bremerton",
+     "Port Orchard",
+     "Poulsbo",
+     "Bainbridge Island"
+    ],
+    "county_ugas": [
+     "Silverdale",
+     "Kingston",
+     "Poulsbo",
+     "Central Kitsap",
+     "Bremerton East",
+     "Bremerton West",
+     "Gorst",
+     "Port Orchard"
+    ]
+   },
+   "notes": "Official map index inspected. Parcel city-limit layer, not situs city, selects fees. A boundary screen is not an annexation/title determination."
+  },
+  "kitsap-poulsbo-transition": {
+   "id": "kitsap-poulsbo-transition",
+   "jurisdiction": "Kitsap County / Poulsbo",
+   "citation": "KCC 16.68: Poulsbo Urban Transition Area (county quick reference)",
+   "title": "KCC 16.68: Poulsbo Urban Transition Area (county quick reference)",
+   "url": "https://www.kitsap.gov/dcd/Pages/Poulsbo_Urban_Transition_Area.aspx",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "In all permit-related decisions, the Official Kitsap County Code governs.",
+   "summary": "County permitting in the Poulsbo UGA incorporates city development standards. Confirm applicable uses, site planning and design standards with Kitsap DCD; do not automatically impose incorporated-city fees.",
+   "key_values": {},
+   "notes": "Official county summary references KCC 16.68 and PMC zoning. Not a complete code verification."
+  },
+  "pb-building-fees": {
+   "id": "pb-building-fees",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "Resolution 2025-02: building fees, Table 1-A",
+   "title": "Resolution 2025-02: building fees, Table 1-A",
+   "url": "https://poulsbo.gov/wp-content/uploads/2025/02/BLDG-FEES_CURRENT-2025.pdf",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Permit fees include the initial submittal and two revisions (three submittals total).",
+   "summary": "Valuation bands, plan review and technology surcharge. Effective February 12, 2025; still linked by city on research date.",
+   "key_values": {},
+   "source_currency": "2025-02-12; checked current city fee index 2026-11-14"
+  },
+  "pb-planning-fees": {
+   "id": "pb-planning-fees",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "Resolution 2025-01: planning fee schedule",
+   "title": "Resolution 2025-01: planning fee schedule",
+   "url": "https://poulsbo.gov/wp-content/uploads/2025/02/Fee-Schedule_2025-Updates_Clean-Copy-for-Web.pdf",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Unused consultant deposits will be refunded after permit issuance (per PMC 3.12.010).",
+   "summary": "Separate site-plan, critical-area, shoreline and subdivision applications; consultant and hearing deposits are not final costs.",
+   "key_values": {},
+   "source_currency": "2025-02-12; linked by city 2026-11-14"
+  },
+  "pb-engineering-fees": {
+   "id": "pb-engineering-fees",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "Resolution 2025-07: engineering fee schedule",
+   "title": "Resolution 2025-07: engineering fee schedule",
+   "url": "https://poulsbo.gov/wp-content/uploads/2025/07/Engineering-Fee-Schedule-2025-updated-7-17-25-final-1.pdf",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "A 3.5% technology fee will be added to all permits.",
+   "summary": "Engineering review is additional to planning. Grading, drainage, public property work and refundable deposits depend on scope.",
+   "key_values": {},
+   "source_currency": "Published sheet effective 2025-07-17"
+  },
+  "pb-residential-charges": {
+   "id": "pb-residential-charges",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "Poulsbo building department: residential impact and connection fees",
+   "title": "Poulsbo building department: residential impact and connection fees",
+   "url": "https://poulsbo.gov/building-department/",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Traffic and Park impact fees are due at building permit issuance",
+   "summary": "Published new single-family park and traffic fees and 2026 city utility connection charges. Utilities apply only to the actual provider and new capacity; not all parcels connect to city utilities.",
+   "key_values": {},
+   "notes": "Official tables inspected. The school link points to a county table, not a verified Poulsbo school rate; it is not imported."
+  },
+  "pb-impact-transition": {
+   "id": "pb-impact-transition",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "Poulsbo impact-fee update: current rates and adopting ordinances",
+   "title": "Poulsbo impact-fee update: current rates and adopting ordinances",
+   "url": "https://poulsbo.gov/ped-2026-impact-fee-update/",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Accordingly, school impact fees are not included in the current scope of work or Council consideration.",
+   "summary": "Building and planning pages disagree about school fees. Do not import the linked county school table. Confirm with city / North Kitsap. Adopted fire and park changes are effective January 1, 2027; the fire program also requires an executed interlocal agreement.",
+   "key_values": {
+    "change_date": "2027-01-01"
+   },
+   "notes": "Adopting links are mislabeled: Fire links to unsigned text, Park links to signed fire ordinance, Traffic links to signed park ordinance. Read underlying documents, not labels."
+  },
+  "pb-future-fire": {
+   "id": "pb-future-fire",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "Ordinance 2026-07, sections 4 and 8: fire impact fee effective date",
+   "title": "Ordinance 2026-07, sections 4 and 8: fire impact fee effective date",
+   "url": "https://poulsbo.gov/wp-content/uploads/2026/06/2026-07-Fire-Impact-Fee-Update.pdf",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "This Ordinance shall become effective January 1, 2027, Fire Impact Fees shall be assessed",
+   "summary": "Fire fee cannot be collected before effective date and executed interlocal agreement. Future project timing is unresolved.",
+   "key_values": {
+    "effective_date": "2027-01-01"
+   }
+  },
+  "pb-future-park": {
+   "id": "pb-future-park",
+   "jurisdiction": "City of Poulsbo",
+   "citation": "Ordinance 2026-08, section 8: park impact fee effective date",
+   "title": "Ordinance 2026-08, section 8: park impact fee effective date",
+   "url": "https://poulsbo.gov/wp-content/uploads/2026/06/2026-08-Park-Impact-Fee-Update.pdf",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "This ordinance shall become effective January 1, 2027. Park impact fees shall be assessed",
+   "summary": "Park fees change for later projects. Current-rate estimate must be rechecked against project timing.",
+   "key_values": {
+    "effective_date": "2027-01-01"
+   }
+  },
+  "po-fees": {
+   "id": "po-fees",
+   "jurisdiction": "City of Port Orchard",
+   "citation": "Resolution 022-25: DCD / Public Works fee schedules",
+   "title": "Resolution 022-25: DCD / Public Works fee schedules",
+   "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Some projects require more than one permit. A project may require the payment of numerous fees from the tables below.",
+   "summary": "Tables 1, 9–15 and 24: valuation, planning, shoreline, disturbance, drainage and per-application technology fees. Valuation for new construction uses adopted IBC BVD; entered value is provisional.",
+   "key_values": {},
+   "source_currency": "Effective 2025-05-03; current city fee index checked 2026-11-14"
+  },
+  "po-impact-2026": {
+   "id": "po-impact-2026",
+   "jurisdiction": "City of Port Orchard",
+   "citation": "Residential impact fees effective March 1, 2026",
+   "title": "Residential impact fees effective March 1, 2026",
+   "url": "https://www.portorchardwa.gov/DocumentCenter/View/548",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "The square footage of the principal residence must be provided with the ADU permit application",
+   "summary": "Detached-home traffic fee, bedroom-scaled parks and floor-area-scaled schools. ADUs require principal-dwelling data for caps. Credits and exemptions require city confirmation.",
+   "key_values": {},
+   "source_currency": "2026-03-01"
+  },
+  "br-fees-2026": {
+   "id": "br-fees-2026",
+   "jurisdiction": "City of Bremerton",
+   "citation": "Ordinance 5526: 2026 Rates & Fees, Table C and Exhibits 1–4",
+   "title": "Ordinance 5526: 2026 Rates & Fees, Table C and Exhibits 1–4",
+   "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Technology Surcharge added to all DCD rates & fees 5% of Established Fee",
+   "summary": "Building, plan review, energy surcharge, site development, grading, land-use and shoreline fees. DCD fees receive technology surcharge. Critical-area and third-party reviews have no fixed project total.",
+   "key_values": {},
+   "source_currency": "2026 schedule; checked 2026-11-14"
+  },
+  "br-site-review": {
+   "id": "br-site-review",
+   "jurisdiction": "City of Bremerton",
+   "citation": "BMC 20.58.090: city site development application",
+   "title": "BMC 20.58.090: city site development application",
+   "url": "https://www.bremertonwa.gov/DocumentCenter/View/1740/Site-Development-Permit-PDF",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "Please fill out the entire form. If a subject is not applicable, please indicate on this form.",
+   "summary": "City application identifies site development review under BMC 20.58.090, separate grading / stormwater documents and critical-area screening. Confirm residential exemptions and consolidation; not every house gets a commercial site-plan charge.",
+   "key_values": {},
+   "notes": "July 2021 form remains linked on current city application page; used as screening guidance, not fully verified current code."
+  },
+  "lni-city-jurisdictions": {
+   "id": "lni-city-jurisdictions",
+   "jurisdiction": "Washington",
+   "citation": "L&I: city electrical permit and inspection jurisdictions",
+   "title": "L&I: city electrical permit and inspection jurisdictions",
+   "url": "https://www.lni.wa.gov/licensing-permits/electrical/electrical-permits-fees-and-inspections/city-electrical-permits-inspections",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "If your jobsite is not within the city limits of one of the following cities or with Tacoma Power",
+   "summary": "None of the four Kitsap incorporated cities appears on L&I’s municipal inspection list. Continue L&I electrical allowance for normal state/local projects.",
+   "key_values": {}
+  },
+  "rcw-19.27.085": {
+   "id": "rcw-19.27.085",
+   "jurisdiction": "Washington",
+   "citation": "RCW 19.27.085(3): residential building permit surcharge",
+   "title": "RCW 19.27.085(3): residential building permit surcharge",
+   "url": "https://app.leg.wa.gov/rcw/default.aspx?cite=19.27.085",
+   "verified": true,
+   "fetched": "2026-11-14",
+   "excerpt": "There is imposed a fee of six dollars and fifty cents on each residential building permit",
+   "summary": "State building-code surcharge collected on residential city or county building permits.",
+   "key_values": {
+    "residential_fee": 6.5
+   }
   }
  },
  "fees": {
@@ -4787,6 +5004,1138 @@
    "source": {
     "title": "Bainbridge Island 2026 fee schedule",
     "url": "https://www.bainbridgewa.gov/DocumentCenter/View/21993/2026-Fee-Schedule",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-building": {
+   "id": "pb-building",
+   "label": "Poulsbo building permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Calculated from supplied valuation; city valuation, exemptions and plan classification must be confirmed. Technology surcharge included where applicable.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo building permit",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/BLDG-FEES_CURRENT-2025.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "brackets": [
+     [
+      500,
+      0,
+      36.26,
+      0,
+      1
+     ],
+     [
+      2000,
+      500,
+      36.26,
+      4,
+      100
+     ],
+     [
+      25000,
+      2000,
+      96.26,
+      17,
+      1000
+     ],
+     [
+      50000,
+      25000,
+      487.26,
+      12,
+      1000
+     ],
+     [
+      100000,
+      50000,
+      787.26,
+      9,
+      1000
+     ],
+     [
+      500000,
+      100000,
+      1237.26,
+      7,
+      1000
+     ],
+     [
+      1000000,
+      500000,
+      4037.26,
+      6,
+      1000
+     ],
+     [
+      null,
+      1000000,
+      7037.26,
+      4,
+      1000
+     ]
+    ],
+    "technology_rate": 0.035
+   }
+  },
+  "pb-plan-review": {
+   "id": "pb-plan-review",
+   "label": "Poulsbo building plan review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Standard plan-review allowance, including technology surcharge where applicable. Basic or pre-approved plans may qualify for reduced review.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo building plan review",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/BLDG-FEES_CURRENT-2025.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "rate": 0.65
+   }
+  },
+  "pb-trades": {
+   "id": "pb-trades",
+   "label": "Poulsbo plumbing / mechanical / fire permits",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Fixture, appliance and fire-system counts are needed. Separate from L&I electrical; enter contractor or city quote.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo plumbing / mechanical / fire permits",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/BLDG-FEES_CURRENT-2025.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-additional-review": {
+   "id": "pb-additional-review",
+   "label": "Poulsbo additional applications, deposits and review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Confirm special-use approvals, SEPA, variances, public notices, hearings, re-review, access and civil/fire requirements. Refundable deposits are cash-flow allowances, not fixed final fees. Excludes any separately priced application rows.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo additional applications, deposits and review",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/BLDG-FEES_CURRENT-2025.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-connections": {
+   "id": "pb-connections",
+   "label": "Poulsbo utility connections and capacity",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Confirm actual water/sewer provider, new capacity versus existing credits, meter, stormwater, inspections and right-of-way costs. City limits do not prove city utility service. Excludes separately listed city general facility charges; do not enter them again in this remaining-cost allowance.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo utility connections and capacity",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/BLDG-FEES_CURRENT-2025.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-building": {
+   "id": "po-building",
+   "label": "Port Orchard building permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Calculated from supplied valuation; city valuation, exemptions and plan classification must be confirmed. Technology surcharge included where applicable.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard building permit",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "brackets": [
+     [
+      500,
+      0,
+      36,
+      0,
+      1
+     ],
+     [
+      2000,
+      500,
+      36,
+      4,
+      100
+     ],
+     [
+      25000,
+      2000,
+      96,
+      17,
+      1000
+     ],
+     [
+      50000,
+      25000,
+      487,
+      12,
+      1000
+     ],
+     [
+      100000,
+      50000,
+      787,
+      9,
+      1000
+     ],
+     [
+      500000,
+      100000,
+      1237,
+      7,
+      1000
+     ],
+     [
+      1000000,
+      500000,
+      4037,
+      6,
+      1000
+     ],
+     [
+      null,
+      1000000,
+      7037,
+      5,
+      1000
+     ]
+    ],
+    "technology_rate": 0
+   }
+  },
+  "po-plan-review": {
+   "id": "po-plan-review",
+   "label": "Port Orchard building plan review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Standard plan-review allowance, including technology surcharge where applicable. Basic or pre-approved plans may qualify for reduced review.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard building plan review",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "rate": 0.65
+   }
+  },
+  "po-trades": {
+   "id": "po-trades",
+   "label": "Port Orchard plumbing / mechanical / fire permits",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Fixture, appliance and fire-system counts are needed. Separate from L&I electrical; enter contractor or city quote.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard plumbing / mechanical / fire permits",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-additional-review": {
+   "id": "po-additional-review",
+   "label": "Port Orchard additional applications, deposits and review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Confirm special-use approvals, SEPA, variances, public notices, hearings, re-review, access and civil/fire requirements. Refundable deposits are cash-flow allowances, not fixed final fees. Excludes any separately priced application rows.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard additional applications, deposits and review",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-connections": {
+   "id": "po-connections",
+   "label": "Port Orchard utility connections and capacity",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Confirm actual water/sewer provider, new capacity versus existing credits, meter, stormwater, inspections and right-of-way costs. City limits do not prove city utility service.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard utility connections and capacity",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-building": {
+   "id": "br-building",
+   "label": "Bremerton building permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Calculated from supplied valuation; city valuation, exemptions and plan classification must be confirmed. Technology surcharge included where applicable.",
+   "source": {
+    "title": "City of Bremerton — Bremerton building permit",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "brackets": [
+     [
+      500,
+      0,
+      35,
+      0,
+      1
+     ],
+     [
+      2000,
+      500,
+      35,
+      3,
+      100
+     ],
+     [
+      40000,
+      2000,
+      80,
+      11,
+      1000
+     ],
+     [
+      100000,
+      40000,
+      498,
+      9,
+      1000
+     ],
+     [
+      500000,
+      100000,
+      1038,
+      7,
+      1000
+     ],
+     [
+      1000000,
+      500000,
+      3838,
+      5,
+      1000
+     ],
+     [
+      5000000,
+      1000000,
+      6338,
+      3,
+      1000
+     ],
+     [
+      null,
+      5000000,
+      18338,
+      1,
+      1000
+     ]
+    ],
+    "technology_rate": 0.05
+   }
+  },
+  "br-plan-review": {
+   "id": "br-plan-review",
+   "label": "Bremerton building plan review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Standard plan-review allowance, including technology surcharge where applicable. Basic or pre-approved plans may qualify for reduced review.",
+   "source": {
+    "title": "City of Bremerton — Bremerton building plan review",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "rate": 0.65
+   }
+  },
+  "br-trades": {
+   "id": "br-trades",
+   "label": "Bremerton plumbing / mechanical / fire permits",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Fixture, appliance and fire-system counts are needed. Separate from L&I electrical; enter contractor or city quote.",
+   "source": {
+    "title": "City of Bremerton — Bremerton plumbing / mechanical / fire permits",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-additional-review": {
+   "id": "br-additional-review",
+   "label": "Bremerton additional applications, deposits and review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Confirm special-use approvals, SEPA, variances, public notices, hearings, re-review, access and civil/fire requirements. Refundable deposits are cash-flow allowances, not fixed final fees. Excludes any separately priced application rows.",
+   "source": {
+    "title": "City of Bremerton — Bremerton additional applications, deposits and review",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-connections": {
+   "id": "br-connections",
+   "label": "Bremerton utility connections and capacity",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Confirm actual water/sewer provider, new capacity versus existing credits, meter, stormwater, inspections and right-of-way costs. City limits do not prove city utility service.",
+   "source": {
+    "title": "City of Bremerton — Bremerton utility connections and capacity",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "city-sbcc": {
+   "id": "city-sbcc",
+   "label": "Residential state building-code surcharge",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City collection for Washington SBCC",
+   "low": 6.5,
+   "high": 6.5,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "One residential building permit; separate permits or multi-unit buildings may add charges.",
+   "source": {
+    "title": "City collection for Washington SBCC — Residential state building-code surcharge",
+    "url": "https://app.leg.wa.gov/rcw/default.aspx?cite=19.27.085",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-technology": {
+   "id": "po-technology",
+   "label": "Port Orchard building application technology fee",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 10,
+   "high": 10,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "One electronic building application. Other modeled application fees include their own technology charge; additional permits add charges.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard building application technology fee",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-energy": {
+   "id": "br-energy",
+   "label": "Bremerton new-home energy code review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 52.5,
+   "high": 52.5,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Published $50 energy-code review surcharge plus 5% DCD technology surcharge.",
+   "source": {
+    "title": "City of Bremerton — Bremerton new-home energy code review",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-planning-review": {
+   "id": "pb-planning-review",
+   "label": "Poulsbo planning building-design review allowance",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 341.55,
+   "high": 341.55,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Miscellaneous building-design/construction-drawing review: $330 plus 3.5%. Conditional allowance; additional time beyond included hours and overlap with land-use review require confirmation.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo planning building-design review allowance",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/Fee-Schedule_2025-Updates_Clean-Copy-for-Web.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-site-plan": {
+   "id": "pb-site-plan",
+   "label": "Poulsbo separate site-plan application and engineering",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Only if a separate site-plan review applies. Range is minor vs full planning review plus corresponding engineering review and 3.5% technology. Not a universal new-home permit; drainage and deposits additional.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo separate site-plan application and engineering",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/Fee-Schedule_2025-Updates_Clean-Copy-for-Web.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "minor": 710,
+    "full": 2830,
+    "per_sqft": 0.25,
+    "engineering_minor": 270,
+    "engineering_full": 935,
+    "technology_rate": 0.035,
+    "engineering_source": "https://poulsbo.gov/wp-content/uploads/2025/07/Engineering-Fee-Schedule-2025-updated-7-17-25-final-1.pdf"
+   }
+  },
+  "pb-critical": {
+   "id": "pb-critical",
+   "label": "Poulsbo critical-area exemption or permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 181.125,
+   "high": 734.85,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Alternative exemption $175 or permit $710, plus 3.5%. Not an exception/variance or consultant review budget.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo critical-area exemption or permit",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/Fee-Schedule_2025-Updates_Clean-Copy-for-Web.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-shoreline": {
+   "id": "pb-shoreline",
+   "label": "Poulsbo shoreline application allowance",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Exemption or substantial-development application; unit/area charges, engineering and technology included as an allowance. Hearing, conditional use, variance and consultant charges additional.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo shoreline application allowance",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/02/Fee-Schedule_2025-Updates_Clean-Copy-for-Web.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "exemption": 225,
+    "ssdp": 1410,
+    "unit": 75,
+    "per_sqft": 0.25,
+    "engineering": 270,
+    "technology_rate": 0.035,
+    "engineering_source": "https://poulsbo.gov/wp-content/uploads/2025/07/Engineering-Fee-Schedule-2025-updated-7-17-25-final-1.pdf"
+   }
+  },
+  "pb-site-work": {
+   "id": "pb-site-work",
+   "label": "Poulsbo grading, drainage and public-property review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Engineering schedule refers grading to a separate worksheet. Drainage review is $575 per basin plus 3.5%; total requires drainage area, infrastructure and review scope. Include required civil plans separately.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo grading, drainage and public-property review",
+    "url": "https://poulsbo.gov/wp-content/uploads/2025/07/Engineering-Fee-Schedule-2025-updated-7-17-25-final-1.pdf",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-impacts": {
+   "id": "pb-impacts",
+   "label": "Poulsbo current new-home park and traffic impacts",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 6443.09,
+   "high": 6443.09,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Current city building page: parks $1,316.33 and traffic $5,126.76 per new single-family home before credits. Not county impact fees. Recheck rates for projects extending into 2027.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo current new-home park and traffic impacts",
+    "url": "https://poulsbo.gov/building-department/",
+    "date": "Current city page checked 2026-11-14; 2027 changes separately flagged",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "park": 1316.33,
+    "traffic": 5126.76
+   }
+  },
+  "pb-school": {
+   "id": "pb-school",
+   "label": "Poulsbo school fee applicability / quote",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. City planning page says school mitigation is no longer collected; building page still requests payment and links a county table. Confirm with city and North Kitsap; do not apply county rates.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo school fee applicability / quote",
+    "url": "https://poulsbo.gov/ped-2026-impact-fee-update/",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-adu-impacts": {
+   "id": "pb-adu-impacts",
+   "label": "Poulsbo ADU impact-fee quote",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Confirm current ADU treatment, principal-unit caps, credits and collection date; no full-size new-home fee is imposed automatically.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo ADU impact-fee quote",
+    "url": "https://poulsbo.gov/ped-2026-impact-fee-update/",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-impact-transition": {
+   "id": "pb-impact-transition",
+   "label": "Poulsbo future impact-fee adjustment",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Fire and park ordinances change fees from January 1, 2027; fire collection also requires an executed interlocal agreement. Current priced fees are a research-date baseline. Confirm application / occupancy timing and replace current rows with city quote, avoiding double counting.",
+   "source": {
+    "title": "City of Poulsbo — Poulsbo future impact-fee adjustment",
+    "url": "https://poulsbo.gov/ped-2026-impact-fee-update/",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-traffic": {
+   "id": "po-traffic",
+   "label": "Port Orchard detached-home transportation impact",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 7678.34,
+   "high": 7678.34,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "March 1, 2026 rate per detached home, before credits/exemptions; recheck annual adjustment.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard detached-home transportation impact",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/548",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-parks": {
+   "id": "po-parks",
+   "label": "Port Orchard park impact fee",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Per bedroom; studio minimum is one bedroom charge. ADU principal-dwelling cap requires additional inputs.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard park impact fee",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/548",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "per_bedroom": 1655.53,
+    "minimum_bedrooms": 1
+   }
+  },
+  "po-school": {
+   "id": "po-school",
+   "label": "Port Orchard school impact fee",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Per square foot, bounded by the published minimum/maximum. ADU principal-dwelling cap requires additional inputs.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard school impact fee",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/548",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "per_sqft": 0.56,
+    "min": 546.62,
+    "max": 2009.27
+   }
+  },
+  "po-adu-impacts": {
+   "id": "po-adu-impacts",
+   "label": "Port Orchard ADU impact-fee quote",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. Principal-home floor area and bedrooms are needed for the school/park caps; traffic depends on ADU size and principal-unit cap. Obtain city calculation rather than charging detached-home fees.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard ADU impact-fee quote",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/548",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-adu-review": {
+   "id": "po-adu-review",
+   "label": "Port Orchard ADU planning review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 85,
+   "high": 85,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Table 13 ADU review $75 plus electronic application $10. Confirm consolidation with building application.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard ADU planning review",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-critical": {
+   "id": "po-critical",
+   "label": "Port Orchard critical-area application allowance",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 145,
+   "high": 1285,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Exemption request $135 or exception/variance $1,275, each plus $10 technology. Alternatives only; exception/variance hearing and consultant costs additional.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard critical-area application allowance",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-shoreline": {
+   "id": "po-shoreline",
+   "label": "Port Orchard shoreline exemption / development permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 160,
+   "high": 910,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Exemption $150, administrative SSDP $600, or SSDP $900, plus $10 technology. Hearing, variance and conditional-use fees additional.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard shoreline exemption / development permit",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "po-site-work": {
+   "id": "po-site-work",
+   "label": "Port Orchard land disturbance review and permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Table 15 allowance from disturbed area; includes one electronic application fee. City must confirm exemption and whether this is a separate permit.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard land disturbance review and permit",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "minor_sqft": 1000,
+    "minor_fee": 50,
+    "review_base": 100,
+    "review_first_acre": 100,
+    "review_additional_acre": 25,
+    "permit_first_acre": 100,
+    "permit_additional_acre": 50,
+    "acre_sqft": 43560,
+    "technology_flat": 10
+   }
+  },
+  "po-stormwater": {
+   "id": "po-stormwater",
+   "label": "Port Orchard drainage review and permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Port Orchard",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Table 15 allowance from new/replaced hard surface, plus one electronic application fee. Confirm drainage permit applicability and consolidation.",
+   "source": {
+    "title": "City of Port Orchard — Port Orchard drainage review and permit",
+    "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "step_sqft": 3000,
+    "review_base": 100,
+    "review_step": 25,
+    "permit_base": 100,
+    "permit_step": 50,
+    "technology_flat": 10
+   }
+  },
+  "br-site-development": {
+   "id": "br-site-development",
+   "label": "Bremerton site development permit allowance",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 1050,
+   "high": 1050,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Site development permit $1,000 plus 5%. Conditional pending residential exemptions/consolidation. Does not add commercial/multifamily site-plan review to a single-family bid.",
+   "source": {
+    "title": "City of Bremerton — Bremerton site development permit allowance",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-critical": {
+   "id": "br-critical",
+   "label": "Bremerton critical-area review",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. City critical-area review is $93/hour plus 5% technology; third-party technical review is actual cost. City hours and consultant scope are unknown, not a zero fee.",
+   "source": {
+    "title": "City of Bremerton — Bremerton critical-area review",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-shoreline": {
+   "id": "br-shoreline",
+   "label": "Bremerton shoreline exemption / development permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 105,
+   "high": 1365,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Exemption $100 or SSDP $1,300, plus 5%. Conditional-use, variance and third-party review costs are additional, not included in this alternative range.",
+   "source": {
+    "title": "City of Bremerton — Bremerton shoreline exemption / development permit",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-impacts": {
+   "id": "br-impacts",
+   "label": "Bremerton impact / mitigation fee confirmation",
+   "kind": "impact_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "unsourced",
+   "note": "No published source establishes this project total. The DCD schedule does not establish a complete residential impact/mitigation total. Confirm applicable school district and project mitigation; no county rate is substituted.",
+   "source": {
+    "title": "City of Bremerton — Bremerton impact / mitigation fee confirmation",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "br-grading": {
+   "id": "br-grading",
+   "label": "Bremerton grading plan review and permit",
+   "kind": "agency_fee",
+   "basis": "published",
+   "payee": "City of Bremerton",
+   "low": 0,
+   "high": 0,
+   "unit": "per project",
+   "confidence": "high",
+   "note": "Exhibit 4 grading-volume allowance plus 5% DCD technology; exemptions and additional site-development scope need confirmation.",
+   "source": {
+    "title": "City of Bremerton — Bremerton grading plan review and permit",
+    "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+    "date": "Published schedule; checked November 14, 2026",
+    "checked": "2026-11-14"
+   },
+   "method": {
+    "technology_rate": 0.05,
+    "review_brackets": [
+     [
+      50,
+      0,
+      0,
+      0,
+      1
+     ],
+     [
+      100,
+      0,
+      23.5,
+      0,
+      1
+     ],
+     [
+      1000,
+      0,
+      37,
+      0,
+      1
+     ],
+     [
+      10000,
+      0,
+      49.25,
+      0,
+      1
+     ],
+     [
+      100000,
+      10000,
+      49.25,
+      24.5,
+      10000
+     ],
+     [
+      200000,
+      100000,
+      269.75,
+      13.25,
+      10000
+     ],
+     [
+      null,
+      200000,
+      402.25,
+      7.25,
+      10000
+     ]
+    ],
+    "permit_brackets": [
+     [
+      50,
+      0,
+      23.5,
+      0,
+      1
+     ],
+     [
+      100,
+      0,
+      37,
+      0,
+      1
+     ],
+     [
+      1000,
+      100,
+      37,
+      17.5,
+      100
+     ],
+     [
+      10000,
+      1000,
+      194.5,
+      14.5,
+      1000
+     ],
+     [
+      100000,
+      10000,
+      325,
+      66,
+      10000
+     ],
+     [
+      null,
+      100000,
+      919,
+      36.5,
+      10000
+     ]
+    ]
+   }
+  },
+  "pb-capacity-water": {
+   "id": "pb-capacity-water",
+   "label": "Poulsbo city water general facility charge, if applicable",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 6808.97,
+   "high": 6808.97,
+   "unit": "per single-family connection",
+   "confidence": "high",
+   "note": "2026 single-family city water facility charge only. Conditional on provider, new capacity and existing credits. Meter, labor, extensions, permits and other connection charges are additional.",
+   "source": {
+    "title": "Poulsbo single-family connection fees",
+    "url": "https://poulsbo.gov/building-department/",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-capacity-sewer": {
+   "id": "pb-capacity-sewer",
+   "label": "Poulsbo city sewer general facility charge, if applicable",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 15529.99,
+   "high": 15529.99,
+   "unit": "per single-family connection",
+   "confidence": "high",
+   "note": "2026 single-family city sewer facility charge only. Conditional on provider, new capacity and existing credits. Meter, labor, extensions, permits and other connection charges are additional.",
+   "source": {
+    "title": "Poulsbo single-family connection fees",
+    "url": "https://poulsbo.gov/building-department/",
+    "date": "Effective January 1, 2026",
+    "checked": "2026-11-14"
+   }
+  },
+  "pb-capacity-storm": {
+   "id": "pb-capacity-storm",
+   "label": "Poulsbo city stormwater general facility charge, if applicable",
+   "kind": "utility",
+   "basis": "published",
+   "payee": "City of Poulsbo",
+   "low": 1854.67,
+   "high": 1854.67,
+   "unit": "per single-family connection",
+   "confidence": "high",
+   "note": "2026 single-family city stormwater facility charge only. Conditional on provider, new capacity and existing credits. Meter, labor, extensions, permits and other connection charges are additional.",
+   "source": {
+    "title": "Poulsbo single-family connection fees",
+    "url": "https://poulsbo.gov/building-department/",
     "date": "Effective January 1, 2026",
     "checked": "2026-11-14"
    }

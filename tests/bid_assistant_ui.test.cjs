@@ -85,6 +85,21 @@ async function boot(saved, hash='') {
  b.change('#a-construction_value','');
  assert.equal(b.$('tr[data-fee="bi-building"] .lo').value,'');
  assert.match(b.$('#bid-costs').textContent,/items need a quote/);
+ for(const [city,prefix,price] of [['Poulsbo','pb','4799.56'],['Port Orchard','po','4637'],['Bremerton','br','4554.9']]) {
+  b.w.BidApp.state.facts.jurisdiction.city=city;
+  b.change('#a-construction_value','600000');
+  assert.equal(b.$('tr[data-fee="'+prefix+'-building"] .lo').value,price);
+  assert(!b.$('tr[data-fee="dcd-building-permit"]'));
+  assert(!b.$('tr[data-fee="bi-building"]'));
+  assert(b.$('#bid-agencies').textContent.includes(city));
+  b.$('tr[data-fee="'+prefix+'-trades"] .lo').value='600';
+  b.change('tr[data-fee="'+prefix+'-trades"] .hi','800');
+  assert(!b.w.BidApp.state.report.costs.totals.unpriced.includes(prefix+'-trades'));
+  b.$('#btn-copy').click(); await pause();
+  assert(b.copied().includes(b.w.BID_DATA.fees[prefix+'-building'].source.url));
+  b.change('#a-construction_value','');
+  assert.equal(b.$('tr[data-fee="'+prefix+'-building"] .lo').value,'');
+ }
  b.$('#btn-new').click(); assert(b.$('#results').hidden); assert(b.$('#btn-copy').disabled);
  b.w.BidPacks['wa-kitsap'].parcelById=async()=>{throw Error('Synthetic failed lookup');};
  b.$('#q').value='missing'; b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true})); await pause();

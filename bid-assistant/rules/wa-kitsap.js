@@ -121,7 +121,7 @@
       out.push({ id: high ? 'geo_high' : 'geo_moderate', short: high ? 'high geologic hazard' : 'moderate geologic hazard',
         label: high ? 'Mapped high geologic hazard area' : 'Mapped moderate geologic hazard area',
         tier: high ? 'core' : 'review', shapes: g[c].full, partial_shapes: g[c].partial, buffer_ft: 0,
-        basis: (high ? 'Building here depends on a geotechnical report and the slope setbacks in KCC 19.400.435. ' : 'A geological assessment is required (KCC 19.400.440); the area is not presumptively unbuildable. ') +
+        basis: (inCity ? 'Mapped geologic hazard: confirm the governing authority’s study and slope-setback requirements. County setbacks are not applied here. ' : high ? 'Building here depends on a geotechnical report and the slope setbacks in KCC 19.400.435. ' : 'A geological assessment is required (KCC 19.400.440); the area is not presumptively unbuildable. ') +
           'Sampled in cells of about ' + Math.round(L.geohazard.cell_ft) + ' ft because the county publishes this layer as one county-wide shape.' });
     });
 
@@ -178,16 +178,33 @@
   rule('kitsap.city', 'kitsap-dcd', 'Jurisdiction', function (ctx) {
     var city = ctx.facts.jurisdiction.city;
     if (!city) return null;
-    var kv = ctx.data.citations[CITY_CITE[city]].key_values;
+    var land = ctx.helpers.landContext(ctx.facts, ctx.project);
+    if (!CITY_AGENCY[city] || ctx.facts.jurisdiction.status === 'unknown' || land.mode === 'tribal' || land.mode === 'federal' || land.conflict) return {
+      level: 'unknown', basis: 'confirm', agency: CITY_AGENCY[city] || 'kitsap-dcd',
+      title: 'Confirm local permitting jurisdiction at the proposed footprint',
+      why: 'A city boundary candidate does not settle missing, conflicting, tribal or federal jurisdiction. City and county fee calculations are withheld until local authority is established.',
+      citations: ['kitsap-municipal-boundaries'], costs: []
+    };
     return {
       level: 'required', basis: 'documented', agency: CITY_AGENCY[city],
       title: 'Inside the City of ' + city + ': the city is the permitting authority',
-      why: 'The parcel is inside city limits, so land use, critical areas, shoreline and building permits come from the city under its own code (critical areas: ' + kv.critical_areas + '; shoreline: ' + kv.shoreline_master_program + '; zoning: ' + kv.zoning + '). County code sections, county fees and county buffer widths in this tool do not apply. Mapped features are still shown because state and federal rules follow the feature, not the city line.',
-      confirm: city === 'Bainbridge Island' ? 'Bainbridge fee allowances are listed separately. Enter construction valuation; confirm additional applications and city buffer widths.' : 'This version does not model this city’s fees or buffer widths. Use the city fee schedule for the bid.',
+      why: 'The parcel is inside mapped city limits. Use city land-use, critical-area, shoreline and building regulations. The county permit schedule and county buffer widths are not substituted. State, federal, tribal and utility checks remain separate. A fee schedule establishes a price, not whether every listed permit applies to this parcel.',
+      confirm: 'City fee allowances are listed separately. Enter estimated city permit valuation and confirm site-specific applications, allowed use, setbacks, buffers, agricultural/resource-land restrictions and plat conditions. City buffer geometry and full zoning applicability remain unconfirmed.',
       flag: 'This lot is in the City of ' + city + '. Bid from the city fee schedule and code, not the county figures.',
       flag_weight: 20,
-      citations: [CITY_CITE[city]]
+      citations: ['kitsap-municipal-boundaries', CITY_CITE[city]]
     };
+  });
+
+  rule('kitsap.uga_jurisdiction', 'kitsap-dcd', 'Jurisdiction', function (ctx) {
+    if (!county(ctx) || !ctx.facts.jurisdiction.uga) return null;
+    var uga = ctx.facts.jurisdiction.uga, poulsbo = /poulsbo/i.test(uga);
+    return { level: 'likely', basis: poulsbo ? 'confirm' : 'documented',
+      title: 'Unincorporated ' + uga + ': county permit routing',
+      why: 'The urban growth area is not incorporated city territory. Kitsap DCD remains the local permitting starting point; a city mailing address does not select city fees. ' + (poulsbo ? 'The Poulsbo urban transition area incorporates city development standards under county code. Confirm zoning, uses, site planning and design standards with DCD and Poulsbo before fixing the bid.' : 'County regulations and applicable UGA standards apply. Silverdale and Kingston do not have separate city permit schedules.'),
+      citations: poulsbo ? ['kitsap-municipal-boundaries', 'kitsap-poulsbo-transition'] : ['kitsap-municipal-boundaries'],
+      flag: poulsbo ? 'Poulsbo UGA: county permit routing includes a city development-standards check; do not assume ordinary county zoning alone.' : null,
+      flag_weight: poulsbo ? 15 : 0, costs: [] };
   });
 
   rule('kitsap.reservation', 'treaty-tribes', 'Tribal land jurisdiction', function (ctx) {
@@ -247,6 +264,109 @@
       out.push(finding('Possible Bainbridge critical-area application', 'Mapped features require a city applicability check. This range covers a minor or major application only; third-party review deposits, professional studies, exceptions and consolidated-review adjustments are additional.', ['bi-critical'], 'possible'));
     }
     out.push(finding('Confirm additional Bainbridge land-use and utility costs', 'A separate land-use application is not automatically required for every new home. Confirm site-specific approvals, pre-application meetings, stormwater, access, tree work, review deposits and utility connection charges. These missing scope items are editable allowances, not zero-cost clearances.', p.new_dwelling ? ['bi-land-use', 'bi-connections'] : ['bi-land-use'], 'possible'));
+    return out;
+  });
+
+  // City schedules stay separate from county fees and from the approval dependency model.
+  // Numeric rates, thresholds and valuation bands live exclusively in the fee library.
+  function bracketFee(value, brackets) {
+    var b = brackets.find(function (row) { return row[0] == null || value <= row[0]; });
+    return b[2] + Math.ceil(Math.max(0, value - b[1]) / b[4]) * b[3];
+  }
+
+  rule('kitsap.municipal_costs', 'kitsap-dcd', 'City permitting costs', function (ctx) {
+    var f = ctx.facts, p = ctx.project, city = f.jurisdiction.city;
+    var prefix = { Poulsbo: 'pb', 'Port Orchard': 'po', Bremerton: 'br' }[city];
+    if (!prefix) return null;
+    var land = ctx.helpers.landContext(f, p), fees = ctx.data.fees;
+    if (f.jurisdiction.status === 'unknown' || land.mode === 'tribal' || land.mode === 'federal' || land.conflict) return null;
+    var cites = { pb: ['pb-building-fees', 'pb-planning-fees', 'pb-engineering-fees'], po: ['po-fees'], br: ['br-fees-2026', 'br-site-review'] }[prefix];
+    var out = [];
+    function add(title, why, items, level, sources) {
+      out.push({ agency: CITY_AGENCY[city], title: city + ': ' + title, why: why,
+        costs: items, level: level || 'likely', basis: 'confirm', citations: sources || cites,
+        confirm: 'Verify applicability, credits and fee collection date with the city. Replace allowances with your own quotes as the scope becomes clearer.' });
+    }
+    function exact(id, value, note, unpriced) {
+      return { fee: id, low: value, high: value, note: note, unpriced: !!unpriced };
+    }
+    if (STRUCTURE[p.type]) {
+      var m = fees[prefix + '-building'].method, valuation = p.construction_value;
+      var permit = valuation > 0 ? bracketFee(valuation, m.brackets) * (1 + m.technology_rate) : 0;
+      var note = valuation > 0 ? 'Provisional fee from supplied valuation. Confirm the city’s adopted valuation and construction class; this is not a city quote.' : 'Enter estimated city permit valuation to price this line. Missing valuation is not a zero fee.';
+      var building = [exact(prefix + '-building', permit, note, !valuation),
+        exact(prefix + '-plan-review', permit * fees[prefix + '-plan-review'].method.rate, note, !valuation), 'city-sbcc', prefix + '-trades'];
+      if (prefix === 'po') building.push('po-technology');
+      if (prefix === 'br' && p.type === 'new_sfr') building.push('br-energy');
+      add('building permit and plan review', 'Separate city building and plan-review allowances. Technology charges are included where published; separate trade and fire permits still need scope. Prior planning review does not waive building review. ' +
+        (prefix === 'po' ? 'New construction uses the city-adopted IBC valuation table; a contractor price alone does not establish that valuation.' : 'The city may adjust the supplied valuation or approve a reduced basic-plan fee.'), building, 'likely', cites.concat(['rcw-19.27.085']));
+    }
+
+    if (p.type === 'new_sfr') {
+      if (prefix === 'po') {
+        var park = fees['po-parks'].method, school = fees['po-school'].method;
+        add('new-home transportation, park and school impacts', 'Detached-home rates before prior-use credits or exemptions. Parks use bedrooms; school fees use floor area. Annual changes and project timing can change the amount.',
+          ['po-traffic', exact('po-parks', Math.max(park.minimum_bedrooms, p.bedrooms) * park.per_bedroom),
+            exact('po-school', Math.max(school.min, Math.min(school.max, p.new_sqft * school.per_sqft)))], 'likely', ['po-impact-2026']);
+      } else if (prefix === 'pb') {
+        add('current new-home impact fees', 'Current published city park and traffic allowance. School applicability has conflicting city guidance and remains a separate quote-needed question; the linked county table is not a city rate.', ['pb-impacts', 'pb-school'], 'likely', ['pb-residential-charges', 'pb-impact-transition']);
+      } else add('impact and mitigation fee check', 'Confirm the applicable school district, any impact or mitigation charges and credits. County impact rates are not applied inside the city.', ['br-impacts'], 'possible');
+    } else if (p.type === 'adu') {
+      add('ADU impact-fee confirmation', 'ADU treatment and principal-dwelling caps need city confirmation. A full detached-home impact fee is not automatically charged.', [prefix === 'br' ? 'br-impacts' : prefix + '-adu-impacts'], 'possible', prefix === 'po' ? ['po-impact-2026'] : prefix === 'pb' ? ['pb-impact-transition'] : cites);
+      if (prefix === 'po') add('ADU planning application', 'Separate planning-review allowance; confirm whether the electronic application charge is consolidated with the building application.', ['po-adu-review']);
+    } else if (p.type === 'rebuild') {
+      add('replacement-home impact credits', 'A replacement may receive existing-use credit. Confirm net new demand and any remaining impact or mitigation charge; no full new-home amount is automatically imposed.', [prefix + '-additional-review'], 'possible');
+    }
+    if (prefix === 'pb' && p.new_dwelling) {
+      add('impact-fee changes and project timing', 'The research-date rates are a baseline. Adopted fire and park changes start on ' + ctx.data.citations['pb-impact-transition'].key_values.change_date + '; fire collection also depends on an executed interlocal agreement. Confirm rates for the actual permit / occupancy timing and replace current allowances with the city calculation.', ['pb-impact-transition'], 'possible', ['pb-impact-transition', 'pb-future-fire', 'pb-future-park']);
+    }
+    if (prefix === 'pb' && p.type === 'new_sfr') {
+      var capacity = ['pb-capacity-storm'];
+      if (p.water === 'public' || p.water === 'unknown') capacity.push('pb-capacity-water');
+      if (p.wastewater === 'sewer' || p.wastewater === 'unknown') capacity.push('pb-capacity-sewer');
+      add('city utility capacity charges, if served', 'Published single-family facility charges are conditional on actual city service and new capacity without prior credit. A city boundary alone does not establish utility service. Meter, extensions, connection work and other charges remain in the separate utility quote allowance.', capacity, 'possible', ['pb-residential-charges']);
+    }
+
+    if (prefix === 'pb') {
+      if (STRUCTURE[p.type]) add('planning / building-design review', 'The planning schedule has a miscellaneous building-design and construction-drawing review fee. Carry it conditionally until the city confirms whether review is separate or covered by another application.', ['pb-planning-review'], 'possible');
+      if (STRUCTURE[p.type] || p.type === 'short_plat') {
+        var spr = fees['pb-site-plan'].method;
+        add('separate land-use site-plan review, if applicable', 'Minor and full site-plan review are alternatives. This is a conditional allowance, not a claim that every single-family home needs a separate site-plan permit. Planning and engineering are separate charges; drainage, hearing and consultant costs can add to them.',
+          [{ fee: 'pb-site-plan', low: (spr.minor + spr.per_sqft * p.new_sqft + spr.engineering_minor) * (1 + spr.technology_rate),
+            high: (spr.full + spr.per_sqft * p.new_sqft + spr.engineering_full) * (1 + spr.technology_rate) }], 'possible');
+      }
+      if (p.disturbance_sqft > 0 || p.grading_cy > 0 || p.hard_surface_sqft > 0) add('grading, drainage and infrastructure review', 'Engineering review, grading, drainage, public-property work and civil plans depend on the proposed improvements. Keep this unresolved total visible until the site-work scope is priced.', ['pb-site-work'], 'likely');
+    }
+    if (prefix === 'po') {
+      if (p.disturbance_sqft > 0) {
+        var dm = fees['po-site-work'].method, extraAcres = Math.max(0, Math.ceil(p.disturbance_sqft / dm.acre_sqft) - 1);
+        var disturbanceFee = p.disturbance_sqft < dm.minor_sqft ? dm.minor_fee : dm.review_base + dm.review_first_acre + dm.permit_first_acre + extraAcres * (dm.review_additional_acre + dm.permit_additional_acre);
+        add('land-disturbance application and review', 'Allowance from the reported disturbed area. Confirm whether a minor or standard permit applies, available exemptions and any prior minor permit on the property.', [exact('po-site-work', disturbanceFee + dm.technology_flat)]);
+      }
+      if (p.hard_surface_sqft > 0) {
+        var sm = fees['po-stormwater'].method, steps = Math.max(0, Math.ceil(p.hard_surface_sqft / sm.step_sqft) - 1);
+        add('stormwater drainage application and review', 'Allowance from reported new/replaced hard surface. City must confirm drainage permit applicability, consolidation, infrastructure and civil design requirements; consultant design is additional.', [exact('po-stormwater', sm.review_base + sm.permit_base + steps * (sm.review_step + sm.permit_step) + sm.technology_flat)]);
+      }
+    }
+    if (prefix === 'br' && (p.disturbance_sqft > 0 || p.grading_cy > 0)) {
+      add('site-development review, if applicable', 'Check city site-development review and residential exemptions under the city application guidance. This conditional allowance does not impose the separate commercial/multifamily site-plan fee on a house.', ['br-site-development'], 'possible');
+      if (p.grading_cy > 0) {
+        var gm = fees['br-grading'].method;
+        add('grading permit and plan review', 'Allowance from the stated grading volume. Confirm exemptions and any separate site-development, stormwater or engineering review scope.',
+          [exact('br-grading', (bracketFee(p.grading_cy, gm.review_brackets) + bracketFee(p.grading_cy, gm.permit_brackets)) * (1 + gm.technology_rate))]);
+      }
+    }
+    var mappedCritical = [f.wetland.status, f.geohazard.status, f.stream.status].some(function (s) { return s === 'on_parcel' || s === 'nearby'; });
+    if (mappedCritical) add('critical-area application / city review', 'Mapped wetlands, streams or geologic hazards warrant city review. The footprint, exemption, consultant report and city determination decide the application. Published application alternatives do not include all hearing or third-party review costs.', [prefix + '-critical'], 'possible');
+    if (f.shoreline.in_jurisdiction || f.shoreline.waterfront || p.type === 'shoreline_structure') {
+      var shorelineCosts = [prefix + '-shoreline'];
+      if (prefix === 'pb') {
+        var sh = fees['pb-shoreline'].method;
+        shorelineCosts = [{ fee: 'pb-shoreline', low: sh.exemption * (1 + sh.technology_rate), high: (sh.ssdp + (p.new_dwelling ? sh.unit : 0) + p.new_sqft * sh.per_sqft + sh.engineering) * (1 + sh.technology_rate) }];
+      }
+      add('shoreline permit or exemption allowance', 'A city shoreline decision is separate from state and federal approvals. Range covers alternative application paths, not cumulative permits or a maximum project cost. Confirm additional conditional-use, variance, hearing and consultant charges.', shorelineCosts, 'possible');
+    }
+    add('remaining site-specific applications and utilities', 'Confirm allowed use, setbacks, resource-land restrictions, plat conditions, tree work, access, floodplain review, SEPA and special applications before fixing the bid. Separate utility capacity and connection charges depend on the serving provider and existing credits. Quote-needed items are not included in the priced subtotal.', p.new_dwelling ? [prefix + '-additional-review', prefix + '-connections'] : [prefix + '-additional-review'], 'possible');
     return out;
   });
 

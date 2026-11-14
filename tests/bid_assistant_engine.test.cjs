@@ -337,3 +337,101 @@ assert.equal(cost(run(biFacts,{type:'rebuild',construction_value:600000}),'bi-tr
 assert.equal(cost(run(facts({jurisdiction:{city:'Poulsbo'}}),{type:'new_sfr',construction_value:600000}),'bi-building'),undefined);
 assert.equal(cost(run(biFacts,{type:'new_sfr',land_status:'tribal',construction_value:600000}),'bi-building'),undefined);
 console.log('PASS: Bainbridge fees, valuation bands, missing inputs, prior review, jurisdiction and replacements.');
+
+// Municipal prices must follow city boundaries, not county documents or mailing addresses.
+const cityCases = [['Poulsbo','pb',4799.5641],['Port Orchard','po',4637],['Bremerton','br',4554.9]];
+for (const [city, prefix, expected] of cityCases) {
+  const f = facts({jurisdiction:{city}});
+  const report = run(f,{type:'new_sfr',construction_value:600000});
+  assert(Math.abs(cost(report,prefix+'-building').low-expected)<.001,city+' valuation with technology');
+  assert(Math.abs(cost(report,prefix+'-plan-review').low-expected*.65)<.001);
+  assert.equal(cost(report,'city-sbcc').low,6.5);
+  assert(!cost(report,'dcd-building-permit') && !cost(report,'kitsap-impact-fees'));
+  assert(cost(report,'lni-electrical'),'L&I remains separate in '+city);
+  assert(report.costs.totals.unpriced.includes(prefix+'-trades'));
+  assert(report.costs.totals.unpriced.includes(prefix+'-connections'));
+  assert(!report.findings.some(f=>f.title.startsWith('Rule could not')));
+  assert(run(f,{type:'new_sfr'}).costs.totals.unpriced.includes(prefix+'-building'));
+  for (const other of cityCases.filter(c=>c[0]!==city)) assert(!cost(report,other[1]+'-building'));
+  for (const land_status of ['tribal','exclusive_federal']) assert(!cost(run(f,{type:'new_sfr',construction_value:600000,land_status}),prefix+'-building'));
+  const missing = run(facts({jurisdiction:{city,status:'unknown'}}),{type:'new_sfr',construction_value:600000});
+  assert(!cost(missing,prefix+'-building') && !cost(missing,'dcd-building-permit'));
+  assert(has(missing,/Confirm local permitting jurisdiction/).level==='unknown');
+  const critical = run(facts({jurisdiction:{city},wetland:{status:'on_parcel',on_parcel:true},shoreline:{in_jurisdiction:true}}),{type:'new_sfr',construction_value:600000});
+  assert(cost(critical,prefix+'-critical').bucket==='contingent');
+  assert(cost(critical,prefix+'-shoreline').bucket==='contingent');
+  assert(cost(critical,'pro-wetland-delineation'),'professional costs remain alongside agency fees');
+  for(const finding of report.findings.filter(f=>f.rule==='kitsap.municipal_costs')) {
+    assert(finding.citations.length && finding.research_date==='2026-11-14');
+    assert.equal(finding.work_stage,'early_bid'); assert.equal(finding.approved_revision,null);
+  }
+  const custom=Engine.applyOverrides(report,{[prefix+'-trades']:{low:500,high:900}});
+  assert.equal(cost(custom,prefix+'-trades').low,500);
+  assert(!custom.costs.totals.unpriced.includes(prefix+'-trades'));
+  assert(cost(custom,prefix+'-trades').source.url.startsWith('https://'));
+  const memo=Report.memo(report,f,grid(0,0),{screened_at:'2026-11-14T00:00:00Z',layers:{}},DATA);
+  assert(memo.includes('Municipal fee sources checked: 2026-11-14'));
+  assert(memo.includes(DATA.fees[prefix+'-building'].source.url));
+}
+const poFacts=facts({jurisdiction:{city:'Port Orchard'}});
+let po=run(poFacts,{type:'new_sfr',construction_value:600000,new_sqft:2400,bedrooms:3});
+assert.equal(cost(po,'po-parks').low,4966.59);
+assert(Math.abs(cost(po,'po-school').low-1344)<.001);
+assert.equal(cost(po,'po-traffic').low,7678.34);
+assert.equal(cost(po,'po-site-work').low,310);
+assert.equal(cost(po,'po-stormwater').low,285);
+assert.equal(cost(run(poFacts,{new_sqft:10,bedrooms:0}),'po-parks').low,1655.53);
+assert.equal(cost(run(poFacts,{new_sqft:10}),'po-school').low,546.62);
+assert.equal(cost(run(poFacts,{new_sqft:10000}),'po-school').low,2009.27);
+for(const [sqft,expected] of [[999,60],[1000,310],[43560,310],[43561,385]]) assert.equal(cost(run(poFacts,{disturbance_sqft:sqft}),'po-site-work').low,expected);
+for(const [sqft,expected] of [[3000,210],[3001,285],[6001,360]]) assert.equal(cost(run(poFacts,{hard_surface_sqft:sqft}),'po-stormwater').low,expected);
+assert(!cost(run(poFacts,{disturbance_sqft:0,hard_surface_sqft:0}),'po-site-work'));
+assert(!cost(run(poFacts,{disturbance_sqft:0,hard_surface_sqft:0}),'po-stormwater'));
+for(const type of ['adu','rebuild']) for(const id of ['po-parks','po-school','po-traffic']) assert(!cost(run(poFacts,{type}),id));
+assert(run(poFacts,{type:'adu'}).costs.totals.unpriced.includes('po-adu-impacts'));
+const pbFacts=facts({jurisdiction:{city:'Poulsbo'}});
+const pb=run(pbFacts,{type:'new_sfr',new_sqft:2400});
+assert.equal(cost(pb,'pb-impacts').low,6443.09);
+assert(Math.abs(cost(pb,'pb-site-plan').low-1635.3)<.001);
+assert(Math.abs(cost(pb,'pb-site-plan').high-4517.775)<.001);
+assert.equal(cost(pb,'pb-site-plan').bucket,'contingent','separate land-use review is not universal');
+assert(pb.costs.totals.unpriced.includes('pb-school'),'conflicting school guidance is visible');
+assert(pb.costs.totals.unpriced.includes('pb-impact-transition'),'future fees are not silently current fees');
+assert.equal(cost(pb,'pb-capacity-sewer').low,15529.99);
+assert.equal(cost(pb,'pb-capacity-sewer').bucket,'contingent');
+assert(!cost(run(pbFacts,{water:'well_new',wastewater:'septic_new'}),'pb-capacity-water'));
+assert(!cost(run(pbFacts,{water:'well_new',wastewater:'septic_new'}),'pb-capacity-sewer'));
+assert(!cost(run(pbFacts,{type:'rebuild'}),'pb-impacts'));
+const brFacts=facts({jurisdiction:{city:'Bremerton'}});
+assert(Math.abs(cost(run(brFacts,{grading_cy:120}),'br-grading').low-96.075)<.001);
+assert.equal(cost(run(brFacts,{type:'new_sfr'}),'br-energy').low,52.5);
+assert(!cost(run(brFacts,{type:'addition'}),'br-energy'));
+for (const [city,prefix,value,expected] of [['Poulsbo','pb',2000,96.26*1.035],['Poulsbo','pb',2000.01,113.26*1.035],['Port Orchard','po',1000000.01,7042],['Bremerton','br',5000000.01,18339*1.05]]) {
+  assert(Math.abs(cost(run(facts({jurisdiction:{city}}),{construction_value:value}),prefix+'-building').low-expected)<.001);
+}
+for(const uga of ['Silverdale UGA','Kingston UGA','Poulsbo UGA','Poulsbo UTA','Port Orchard UGA','Bremerton East UGA']) {
+  const report=run(facts({jurisdiction:{uga},parcel:{situs:'TEST, POULSBO'}}),{type:'new_sfr',construction_value:600000});
+  assert(cost(report,'dcd-building-permit') && cost(report,'kitsap-impact-fees'));
+  assert(has(report,/county permit routing/));
+  for(const prefix of ['pb','po','br','bi']) assert(!cost(report,prefix+'-building'));
+  if(/Poulsbo/.test(uga)) assert(report.findings.some(f=>f.citations.includes('kitsap-poulsbo-transition')));
+}
+// Public boundary response fixtures: the situs city must never determine permitting.
+function boundaryFacts(names,uga,status='none',truncated=false) {
+  const layers=Object.fromEntries(pack.layers.map(l=>[l.id,{status:'none',features:[],classes:{}}]));
+  layers.city={status,features:names.map(NAME=>({attrs:{NAME}})),truncated};
+  layers.uga={status:'on_parcel',features:[{attrs:{GMA_JURISDICTION:uga}}]};
+  const tables=Object.fromEntries(pack.tables.map(t=>[t.id,{status:'none',rows:[]}]));
+  tables.address.rows=[{SITUS_ADDR:'SYNTHETIC',SITUS_CITY:'POULSBO'}];
+  return pack.deriveFacts({layers,tables,parcel:{parcel_key:'synthetic',area_sqft:10000,acres_gis:.23}});
+}
+assert.equal(boundaryFacts([],'Kingston UGA').jurisdiction.city,null);
+assert.equal(boundaryFacts([],'Silverdale UGA').jurisdiction.city,null);
+for(const [code,city] of [['PB','Poulsbo'],['PO','Port Orchard'],['BR','Bremerton'],['BI','Bainbridge Island']]) assert.equal(boundaryFacts([code],null,'on_parcel').jurisdiction.city,city);
+for(const f of [boundaryFacts([],'Poulsbo UGA','unknown'),boundaryFacts(['PB','PO'],null,'on_parcel'),boundaryFacts(['NEW'],null,'on_parcel'),boundaryFacts([''],null,'on_parcel'),boundaryFacts(['PB'],null,'on_parcel',true)]) {
+  assert.equal(f.jurisdiction.status,'unknown');
+  const report=run(f,{construction_value:600000});
+  assert(!cost(report,'dcd-building-permit'));
+  for(const prefix of ['pb','po','br','bi']) assert(!cost(report,prefix+'-building'));
+}
+console.log('PASS: municipal schedules, impact caps, contingencies, sources, price overrides and city/UGA routing.');

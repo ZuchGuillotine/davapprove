@@ -221,7 +221,14 @@
     var dwellings = bldgs.filter(function (b) { return /DWELL|MH|MOBILE/i.test(String(b.IMPROV_TYP || '') + String(b.BLDG_TYP || '')); });
     var years = bldgs.map(function (b) { return b.YEAR_BUILT; }).filter(Boolean);
 
-    var cityCode = attrsOf(L.city).map(function (a) { return a.NAME; })[0];
+    var cityAttrs = attrsOf(L.city);
+    var cityCodes = uniq(cityAttrs.map(function (a) { return String(a.NAME || '').trim(); }));
+    var cityCode = cityCodes.length === 1 ? cityCodes[0] : null;
+    var cityStatus = st(L.city);
+    // Intersections with more than one city, blank names and partial boundary responses
+    // cannot establish a single fee jurisdiction. Mailing-address city is never a fallback.
+    if ((L.city && L.city.truncated) || cityCodes.length > 1 ||
+        (cityAttrs.length && (!cityCode || !CITY_NAMES[cityCode]))) cityStatus = 'unknown';
     var zoning = attrsOf(L.zoning);
     var res = attrsOf(L.reservation).map(function (a) { return RESERVATIONS[a.RESERVATION] || { tribe: null, name: a.RESERVATION }; })[0];
     var uga = attrsOf(L.uga).map(function (a) { return a.GMA_JURISDICTION; }).filter(function (n) { return !/^City of /.test(n); })[0];
@@ -271,7 +278,7 @@
         assessor_sewer: land.SEWER || null
       },
       jurisdiction: {
-        status: worst([st(L.city), st(L.reservation), st(L.zoning)]),
+        status: worst([cityStatus, st(L.reservation), st(L.zoning)]),
         county: 'Kitsap',
         city: cityCode ? (CITY_NAMES[cityCode] || cityCode) : null,
         uga: uga || null,

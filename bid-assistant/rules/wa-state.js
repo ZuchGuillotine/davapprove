@@ -168,8 +168,8 @@
       level: 'required', basis: 'documented',
       title: 'Electrical permit and inspection',
       why: 'Electrical work is permitted and inspected by the Department of Labor and Industries, not the county. The electrical contractor usually pulls it; it is listed so it is not double-counted or missed.',
-      confirm: 'Some cities run their own electrical inspection. Unincorporated Kitsap uses L&I.',
-      citations: ['rcw-19.28.101'],
+      confirm: 'L&I’s municipal inspection list does not include Bainbridge Island, Bremerton, Poulsbo or Port Orchard. For normal state/local projects here, retain the separate L&I permit; confirm unusual land jurisdiction.',
+      citations: ['rcw-19.28.101', 'lni-city-jurisdictions'],
       costs: [{ fee: 'lni-electrical', low: p.new_dwelling ? fee : m.first_1300 * 0.6, high: fee, note: 'New-residence schedule: $' + m.first_1300 + ' for the first 1,300 sq ft plus $' + m.per_additional_500 + ' per additional 500 sq ft. Temporary power and service changes are extra.' }]
     };
   });

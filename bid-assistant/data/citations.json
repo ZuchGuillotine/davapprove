@@ -2706,5 +2706,221 @@
   "summary": "Building permit valuation uses the greater of the city calculation and contractor bid. Separate building plan check, planning/engineering review and site-specific applications may apply.",
   "key_values": {},
   "notes": "Pages 16–26. Fee schedule establishes prices, not parcel-specific applicability; city buffers and zoning are not modelled."
+ },
+ {
+  "id": "kitsap-municipal-boundaries",
+  "jurisdiction": "Kitsap County",
+  "citation": "Kitsap DCD: incorporated cities and unincorporated urban growth areas",
+  "title": "Kitsap DCD: incorporated cities and unincorporated urban growth areas",
+  "url": "https://www.kitsap.gov/dcd/Pages/Community_Development_Maps.aspx",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Incorporated Cities: Bremerton, Port Orchard, Poulsbo and Bainbridge Island Unincorporated Urban Growth Areas:",
+  "summary": "Four incorporated cities have city permitting. Silverdale and Kingston are unincorporated UGAs. Mailing addresses and UGA labels do not establish city jurisdiction.",
+  "key_values": {
+   "cities": [
+    "Bremerton",
+    "Port Orchard",
+    "Poulsbo",
+    "Bainbridge Island"
+   ],
+   "county_ugas": [
+    "Silverdale",
+    "Kingston",
+    "Poulsbo",
+    "Central Kitsap",
+    "Bremerton East",
+    "Bremerton West",
+    "Gorst",
+    "Port Orchard"
+   ]
+  },
+  "notes": "Official map index inspected. Parcel city-limit layer, not situs city, selects fees. A boundary screen is not an annexation/title determination."
+ },
+ {
+  "id": "kitsap-poulsbo-transition",
+  "jurisdiction": "Kitsap County / Poulsbo",
+  "citation": "KCC 16.68: Poulsbo Urban Transition Area (county quick reference)",
+  "title": "KCC 16.68: Poulsbo Urban Transition Area (county quick reference)",
+  "url": "https://www.kitsap.gov/dcd/Pages/Poulsbo_Urban_Transition_Area.aspx",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "In all permit-related decisions, the Official Kitsap County Code governs.",
+  "summary": "County permitting in the Poulsbo UGA incorporates city development standards. Confirm applicable uses, site planning and design standards with Kitsap DCD; do not automatically impose incorporated-city fees.",
+  "key_values": {},
+  "notes": "Official county summary references KCC 16.68 and PMC zoning. Not a complete code verification."
+ },
+ {
+  "id": "pb-building-fees",
+  "jurisdiction": "City of Poulsbo",
+  "citation": "Resolution 2025-02: building fees, Table 1-A",
+  "title": "Resolution 2025-02: building fees, Table 1-A",
+  "url": "https://poulsbo.gov/wp-content/uploads/2025/02/BLDG-FEES_CURRENT-2025.pdf",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Permit fees include the initial submittal and two revisions (three submittals total).",
+  "summary": "Valuation bands, plan review and technology surcharge. Effective February 12, 2025; still linked by city on research date.",
+  "key_values": {},
+  "source_currency": "2025-02-12; checked current city fee index 2026-11-14"
+ },
+ {
+  "id": "pb-planning-fees",
+  "jurisdiction": "City of Poulsbo",
+  "citation": "Resolution 2025-01: planning fee schedule",
+  "title": "Resolution 2025-01: planning fee schedule",
+  "url": "https://poulsbo.gov/wp-content/uploads/2025/02/Fee-Schedule_2025-Updates_Clean-Copy-for-Web.pdf",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Unused consultant deposits will be refunded after permit issuance (per PMC 3.12.010).",
+  "summary": "Separate site-plan, critical-area, shoreline and subdivision applications; consultant and hearing deposits are not final costs.",
+  "key_values": {},
+  "source_currency": "2025-02-12; linked by city 2026-11-14"
+ },
+ {
+  "id": "pb-engineering-fees",
+  "jurisdiction": "City of Poulsbo",
+  "citation": "Resolution 2025-07: engineering fee schedule",
+  "title": "Resolution 2025-07: engineering fee schedule",
+  "url": "https://poulsbo.gov/wp-content/uploads/2025/07/Engineering-Fee-Schedule-2025-updated-7-17-25-final-1.pdf",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "A 3.5% technology fee will be added to all permits.",
+  "summary": "Engineering review is additional to planning. Grading, drainage, public property work and refundable deposits depend on scope.",
+  "key_values": {},
+  "source_currency": "Published sheet effective 2025-07-17"
+ },
+ {
+  "id": "pb-residential-charges",
+  "jurisdiction": "City of Poulsbo",
+  "citation": "Poulsbo building department: residential impact and connection fees",
+  "title": "Poulsbo building department: residential impact and connection fees",
+  "url": "https://poulsbo.gov/building-department/",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Traffic and Park impact fees are due at building permit issuance",
+  "summary": "Published new single-family park and traffic fees and 2026 city utility connection charges. Utilities apply only to the actual provider and new capacity; not all parcels connect to city utilities.",
+  "key_values": {},
+  "notes": "Official tables inspected. The school link points to a county table, not a verified Poulsbo school rate; it is not imported."
+ },
+ {
+  "id": "pb-impact-transition",
+  "jurisdiction": "City of Poulsbo",
+  "citation": "Poulsbo impact-fee update: current rates and adopting ordinances",
+  "title": "Poulsbo impact-fee update: current rates and adopting ordinances",
+  "url": "https://poulsbo.gov/ped-2026-impact-fee-update/",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Accordingly, school impact fees are not included in the current scope of work or Council consideration.",
+  "summary": "Building and planning pages disagree about school fees. Do not import the linked county school table. Confirm with city / North Kitsap. Adopted fire and park changes are effective January 1, 2027; the fire program also requires an executed interlocal agreement.",
+  "key_values": {
+   "change_date": "2027-01-01"
+  },
+  "notes": "Adopting links are mislabeled: Fire links to unsigned text, Park links to signed fire ordinance, Traffic links to signed park ordinance. Read underlying documents, not labels."
+ },
+ {
+  "id": "pb-future-fire",
+  "jurisdiction": "City of Poulsbo",
+  "citation": "Ordinance 2026-07, sections 4 and 8: fire impact fee effective date",
+  "title": "Ordinance 2026-07, sections 4 and 8: fire impact fee effective date",
+  "url": "https://poulsbo.gov/wp-content/uploads/2026/06/2026-07-Fire-Impact-Fee-Update.pdf",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "This Ordinance shall become effective January 1, 2027, Fire Impact Fees shall be assessed",
+  "summary": "Fire fee cannot be collected before effective date and executed interlocal agreement. Future project timing is unresolved.",
+  "key_values": {
+   "effective_date": "2027-01-01"
+  }
+ },
+ {
+  "id": "pb-future-park",
+  "jurisdiction": "City of Poulsbo",
+  "citation": "Ordinance 2026-08, section 8: park impact fee effective date",
+  "title": "Ordinance 2026-08, section 8: park impact fee effective date",
+  "url": "https://poulsbo.gov/wp-content/uploads/2026/06/2026-08-Park-Impact-Fee-Update.pdf",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "This ordinance shall become effective January 1, 2027. Park impact fees shall be assessed",
+  "summary": "Park fees change for later projects. Current-rate estimate must be rechecked against project timing.",
+  "key_values": {
+   "effective_date": "2027-01-01"
+  }
+ },
+ {
+  "id": "po-fees",
+  "jurisdiction": "City of Port Orchard",
+  "citation": "Resolution 022-25: DCD / Public Works fee schedules",
+  "title": "Resolution 022-25: DCD / Public Works fee schedules",
+  "url": "https://www.portorchardwa.gov/DocumentCenter/View/550",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Some projects require more than one permit. A project may require the payment of numerous fees from the tables below.",
+  "summary": "Tables 1, 9–15 and 24: valuation, planning, shoreline, disturbance, drainage and per-application technology fees. Valuation for new construction uses adopted IBC BVD; entered value is provisional.",
+  "key_values": {},
+  "source_currency": "Effective 2025-05-03; current city fee index checked 2026-11-14"
+ },
+ {
+  "id": "po-impact-2026",
+  "jurisdiction": "City of Port Orchard",
+  "citation": "Residential impact fees effective March 1, 2026",
+  "title": "Residential impact fees effective March 1, 2026",
+  "url": "https://www.portorchardwa.gov/DocumentCenter/View/548",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "The square footage of the principal residence must be provided with the ADU permit application",
+  "summary": "Detached-home traffic fee, bedroom-scaled parks and floor-area-scaled schools. ADUs require principal-dwelling data for caps. Credits and exemptions require city confirmation.",
+  "key_values": {},
+  "source_currency": "2026-03-01"
+ },
+ {
+  "id": "br-fees-2026",
+  "jurisdiction": "City of Bremerton",
+  "citation": "Ordinance 5526: 2026 Rates & Fees, Table C and Exhibits 1–4",
+  "title": "Ordinance 5526: 2026 Rates & Fees, Table C and Exhibits 1–4",
+  "url": "https://www.bremertonwa.gov/DocumentCenter/View/98/Rates-Fees-PDF",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Technology Surcharge added to all DCD rates & fees 5% of Established Fee",
+  "summary": "Building, plan review, energy surcharge, site development, grading, land-use and shoreline fees. DCD fees receive technology surcharge. Critical-area and third-party reviews have no fixed project total.",
+  "key_values": {},
+  "source_currency": "2026 schedule; checked 2026-11-14"
+ },
+ {
+  "id": "br-site-review",
+  "jurisdiction": "City of Bremerton",
+  "citation": "BMC 20.58.090: city site development application",
+  "title": "BMC 20.58.090: city site development application",
+  "url": "https://www.bremertonwa.gov/DocumentCenter/View/1740/Site-Development-Permit-PDF",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "Please fill out the entire form. If a subject is not applicable, please indicate on this form.",
+  "summary": "City application identifies site development review under BMC 20.58.090, separate grading / stormwater documents and critical-area screening. Confirm residential exemptions and consolidation; not every house gets a commercial site-plan charge.",
+  "key_values": {},
+  "notes": "July 2021 form remains linked on current city application page; used as screening guidance, not fully verified current code."
+ },
+ {
+  "id": "lni-city-jurisdictions",
+  "jurisdiction": "Washington",
+  "citation": "L&I: city electrical permit and inspection jurisdictions",
+  "title": "L&I: city electrical permit and inspection jurisdictions",
+  "url": "https://www.lni.wa.gov/licensing-permits/electrical/electrical-permits-fees-and-inspections/city-electrical-permits-inspections",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "If your jobsite is not within the city limits of one of the following cities or with Tacoma Power",
+  "summary": "None of the four Kitsap incorporated cities appears on L&I’s municipal inspection list. Continue L&I electrical allowance for normal state/local projects.",
+  "key_values": {}
+ },
+ {
+  "id": "rcw-19.27.085",
+  "jurisdiction": "Washington",
+  "citation": "RCW 19.27.085(3): residential building permit surcharge",
+  "title": "RCW 19.27.085(3): residential building permit surcharge",
+  "url": "https://app.leg.wa.gov/rcw/default.aspx?cite=19.27.085",
+  "verified": true,
+  "fetched": "2026-11-14",
+  "excerpt": "There is imposed a fee of six dollars and fifty cents on each residential building permit",
+  "summary": "State building-code surcharge collected on residential city or county building permits.",
+  "key_values": {
+   "residential_fee": 6.5
+  }
  }
 ]
