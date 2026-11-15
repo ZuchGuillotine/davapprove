@@ -14,17 +14,19 @@ const Geo = require('./lib/geo.js');
 const Screen = require('./lib/screen.js');
 const Engine = require('./lib/engine.js');
 const Report = require('./lib/report.js');
-const DATA = require('./data/data.js');
+const BASE_DATA = require('./data/data.js');
+const registry = require('./lib/regions.js').create(BASE_DATA, require('./data/regions.js'), async url => ({ok:true,json:async()=>JSON.parse(await require('node:fs/promises').readFile(require('node:path').join(__dirname,url),'utf8'))}));
 const PACKS = { 'wa-kitsap': require('./packs/wa-kitsap.js') };
 const RULESETS = {
   federal: require('./rules/federal.js'),
   'wa-state': require('./rules/wa-state.js'),
-  'wa-kitsap': require('./rules/wa-kitsap.js')
+  'wa-kitsap': require('./rules/wa-kitsap.js'),
+  'wa-regional': require('./rules/wa-regional.js')
 };
 
 function parseArgs(argv) {
   const out = { _: [], project: {} };
-  const map = { 'new-sqft': 'new_sqft', 'hard-surface': 'hard_surface_sqft', disturbance: 'disturbance_sqft', grading: 'grading_cy', bedrooms: 'bedrooms', lots: 'lots', wastewater: 'wastewater', water: 'water', type: 'type' };
+  const map = { 'construction-value':'construction_value', 'new-sqft': 'new_sqft', 'hard-surface': 'hard_surface_sqft', disturbance: 'disturbance_sqft', grading: 'grading_cy', bedrooms: 'bedrooms', lots: 'lots', wastewater: 'wastewater', water: 'water', type: 'type' };
   Object.keys(Engine.SCOPE_FIELDS).concat(['flood_rise_ft']).forEach(key => { map[key.replace(/_/g, '-')] = key; });
   const flags = { demo: 'demo', 'in-water': 'in_water', 'tree-clearing': 'tree_clearing', 'state-highway': 'state_highway_access' };
   ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(key => { flags[key.replace(/_/g, '-')] = key; });
@@ -44,7 +46,8 @@ function parseArgs(argv) {
 
 async function run(argv) {
   const args = parseArgs(argv);
-  const pack = PACKS[args.pack || 'wa-kitsap'];
+  const DATA = await registry.load(args.pack || 'wa-kitsap');
+  const pack = DATA.region ? require('./packs/wa-regional.js').create(DATA.region) : PACKS['wa-kitsap'];
   if (!pack) throw new Error('Unknown pack ' + args.pack);
   let parcel;
   if (args.point) parcel = await pack.parcelAtPoint(args.point[0], args.point[1]);
@@ -58,8 +61,9 @@ async function run(argv) {
   }
   if (!parcel) throw new Error('No tax parcel found');
   const screening = await Screen.screenParcel(pack, parcel, {});
+  screening.reference_revision = DATA.meta.reference_revision || DATA.meta.shared_revision;
   const facts = pack.deriveFacts(screening);
-  const constraints = RULESETS[pack.id].constraints(screening, facts, DATA, Engine.normaliseProject(args.project));
+  const constraints = RULESETS[pack.constraint_ruleset || pack.id].constraints(screening, facts, DATA, Engine.normaliseProject(args.project));
   const grid = Geo.gridAnalyze(parcel.shape, constraints, { targetSamples: 3000 });
   const rules = pack.rule_sets.flatMap((id) => RULESETS[id].rules);
   const report = Engine.evaluate({ facts, project: args.project, grid, rules, data: DATA });

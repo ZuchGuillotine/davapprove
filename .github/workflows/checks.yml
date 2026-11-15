@@ -63,6 +63,7 @@ jobs:
           node ../bid-assistant/build.js --check
           node ../tests/bid_assistant_engine.test.cjs
           node ../tests/bid_assistant_geo.test.cjs
+          node ../tests/bid_assistant_regions.test.cjs
           node ../tests/bid_assistant_drafts.test.cjs
           node ../tests/bid_assistant_ui.test.cjs
       - run: npm run build

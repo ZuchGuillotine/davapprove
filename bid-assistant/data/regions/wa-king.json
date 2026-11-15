@@ -1,0 +1,469 @@
+{
+  "id": "wa-king",
+  "county": "King",
+  "center": [
+    47.5,
+    -121.95
+  ],
+  "zoom": 10,
+  "schema_version": 1,
+  "checked": "2026-11-15",
+  "valid_through": "2026-12-31",
+  "profiles": {
+    "County": {
+      "id": "wa-king-county",
+      "name": "King County",
+      "agency": "wa-king",
+      "citations": [
+        "wa-king-county-source",
+        "wa-king-screening"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-county-building",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-king-county-site",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-king-county-adu",
+          "trigger": "adu"
+        },
+        {
+          "fee": "wa-king-county-sprinkler",
+          "trigger": "conditional_home"
+        },
+        {
+          "fee": "wa-king-county-other",
+          "trigger": "other_structure"
+        },
+        {
+          "fee": "wa-king-county-state",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-county-screening",
+          "trigger": "structure"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://aqua.kingcounty.gov/council/clerk/code/24-30_Title_21A.htm"
+    },
+    "Seattle": {
+      "id": "wa-king-seattle",
+      "name": "Seattle",
+      "agency": "wa-king-seattle",
+      "citations": [
+        "wa-king-seattle-source",
+        "wa-king-seattle-landuse-rate"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-seattle-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-seattle-landuse",
+          "trigger": "conditional_development"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.seattle.gov/sdci/codes/codes-we-enforce-(a-z)/land-use-code"
+    },
+    "Redmond": {
+      "id": "wa-king-redmond",
+      "name": "Redmond",
+      "agency": "wa-king-redmond",
+      "citations": [
+        "wa-king-redmond-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-redmond-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-redmond-planning",
+          "trigger": "new_structure"
+        },
+        {
+          "fee": "wa-king-redmond-engineering",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-king-redmond-fire",
+          "trigger": "structure"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.redmond.gov/DocumentCenter/View/16885/Residential-Fees-2026-PDF"
+    },
+    "Sammamish": {
+      "id": "wa-king-sammamish",
+      "name": "Sammamish",
+      "agency": "wa-king-sammamish",
+      "citations": [
+        "wa-king-sammamish-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-sammamish-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-sammamish-planning",
+          "trigger": "new_structure"
+        },
+        {
+          "fee": "wa-king-sammamish-planning-addition",
+          "trigger": "addition"
+        },
+        {
+          "fee": "wa-king-sammamish-critical",
+          "trigger": "critical"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.sammamish.us/media/204gd3os/2026-development-fee-schedule.pdf"
+    },
+    "Kent": {
+      "id": "wa-king-kent",
+      "name": "Kent",
+      "agency": "wa-king-kent",
+      "citations": [
+        "wa-king-kent-source",
+        "wa-king-kent-planning"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-kent-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-kent-planning",
+          "trigger": "development"
+        },
+        {
+          "fee": "wa-king-kent-critical",
+          "trigger": "critical"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.kentwa.gov/home/showpublisheddocument/24957/639117686153453888"
+    },
+    "Bellevue": {
+      "id": "wa-king-bellevue",
+      "name": "Bellevue",
+      "agency": "wa-king-bellevue",
+      "citations": [
+        "wa-king-bellevue-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-bellevue-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-bellevue-planning",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-king-bellevue-planning-addition",
+          "trigger": "addition"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://bellevuewa.gov/city-government/departments/development/permits/permit-fees-payment"
+    },
+    "Renton": {
+      "id": "wa-king-renton",
+      "name": "Renton",
+      "agency": "wa-king-renton",
+      "citations": [
+        "wa-king-renton-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-renton-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-renton-planning",
+          "trigger": "structure"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.rentonwa.gov/Government/Departments-and-Offices/Finance/Financial-Reports"
+    },
+    "Kirkland": {
+      "id": "wa-king-kirkland",
+      "name": "Kirkland",
+      "agency": "wa-king-kirkland",
+      "citations": [
+        "wa-king-kirkland-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-kirkland-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-kirkland-planning",
+          "trigger": "development"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.kirklandwa.gov/Government/Departments/Development-Services-Center/Tools-and-Resources/All-Forms-Publications-Fees"
+    },
+    "Federal Way": {
+      "id": "wa-king-federal-way",
+      "name": "Federal Way",
+      "agency": "wa-king-federal-way",
+      "citations": [
+        "wa-king-federal-way-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-federal-way-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-federal-way-planning",
+          "trigger": "development"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.federalwaywa.gov/sites/default/files/2026-02/2026%20Fee%20Schedule.pdf"
+    },
+    "Auburn": {
+      "id": "wa-king-auburn",
+      "name": "Auburn",
+      "agency": "wa-king-auburn",
+      "citations": [
+        "wa-king-auburn-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-auburn-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-auburn-planning",
+          "trigger": "development"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.auburnwa.gov/city_hall/documents"
+    },
+    "Shoreline": {
+      "id": "wa-king-shoreline",
+      "name": "Shoreline",
+      "agency": "wa-king-shoreline",
+      "citations": [
+        "wa-king-shoreline-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-shoreline-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-shoreline-planning",
+          "trigger": "development"
+        },
+        {
+          "fee": "wa-king-shoreline-civil",
+          "trigger": "conditional_home"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://ecode360.com/49766332"
+    }
+  },
+  "electrical_cities": [
+    "Bellevue",
+    "Burien",
+    "Des Moines",
+    "Federal Way",
+    "Kirkland",
+    "Mercer Island",
+    "Milton",
+    "Normandy Park",
+    "Redmond",
+    "Renton",
+    "Sammamish",
+    "SeaTac",
+    "Seattle",
+    "Tukwila"
+  ],
+  "tribal_contacts": [],
+  "coverage_note": "Early bid screening. Mapped feature footprints are shown; local setbacks, agricultural buffers, wetland ratings and shoreline setbacks are not confirmed. Permit history is not loaded. Additional city, district, utility and impact fees may apply.",
+  "parcel": {
+    "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Property/KingCo_PropertyInfo/MapServer/2",
+    "key": "PIN",
+    "address": [
+      "ADDR_FULL"
+    ],
+    "fields": [
+      "PIN",
+      "ADDR_FULL"
+    ]
+  },
+  "city": {
+    "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Administration/KingCo_AdministrativeAreas/MapServer/2",
+    "fields": [
+      "NAME",
+      "UNINC"
+    ],
+    "uninc_field": "UNINC"
+  },
+  "health_agency": "wa-king-health",
+  "layers": [
+    {
+      "id": "zoning",
+      "label": "County zoning",
+      "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Planning/KingCo_Zoning/MapServer/1",
+      "fields": [
+        "CURRZONE"
+      ],
+      "kind": "attributes",
+      "group": "jurisdiction",
+      "publisher": "King County GIS"
+    },
+    {
+      "id": "wetland",
+      "label": "King County NWI wetlands (2024)",
+      "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Environment/KingCo_SensitiveAreas/MapServer/22",
+      "fields": [
+        "WETLAND_TYPE"
+      ],
+      "kind": "features",
+      "group": "critical",
+      "publisher": "King County GIS",
+      "search_ft": 400
+    },
+    {
+      "id": "stream",
+      "label": "Mapped stream classification",
+      "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Environment/KingCo_SensitiveAreas/MapServer/21",
+      "fields": [
+        "StreamType",
+        "WTR_NAME"
+      ],
+      "kind": "features",
+      "group": "critical",
+      "publisher": "King County GIS",
+      "search_ft": 400
+    },
+    {
+      "id": "geohazard",
+      "label": "Potential landslide areas",
+      "url": "https://gismaps.kingcounty.gov/arcgis/rest/services/Environment/KingCo_SensitiveAreas/MapServer/1",
+      "fields": [
+        "OBJECTID"
+      ],
+      "kind": "features",
+      "group": "critical",
+      "publisher": "King County GIS",
+      "search_ft": 200
+    }
+  ],
+  "search_distance_note": "Map query distances are screening extents, not adopted regulatory buffers.",
+  "fallback_fee": "wa-king-unpriced-local",
+  "routing": {
+    "checked": "2026-11-15",
+    "jurisdiction": "King independent tribal/state/federal screening",
+    "tribal_contacts": [
+      {
+        "agency": "muckleshoot",
+        "citation": "wa-king-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "snoqualmie",
+        "citation": "wa-king-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "tulalip",
+        "citation": "wa-king-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "puyallup",
+        "citation": "wa-king-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "suquamish",
+        "citation": "wa-king-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      }
+    ],
+    "tribal_name_matches": [
+      {
+        "agency": "muckleshoot",
+        "pattern": "muckleshoot"
+      },
+      {
+        "agency": "snoqualmie",
+        "pattern": "snoqualmie"
+      },
+      {
+        "agency": "tulalip",
+        "pattern": "tulalip"
+      },
+      {
+        "agency": "puyallup",
+        "pattern": "puyallup"
+      },
+      {
+        "agency": "suquamish",
+        "pattern": "suquamish"
+      }
+    ],
+    "tribal_contact_limit": "Regional starting contacts, not an exhaustive affected-tribe list or a finding that every Tribe must approve. Ask the lead agency and Tribes to identify all affected governments, including interests outside reservation boundaries."
+  },
+  "examples": [
+    {
+      "parcel_key": "0942000810",
+      "label": "Seattle civic site",
+      "type": "new_sfr"
+    },
+    {
+      "parcel_key": "3225059199",
+      "label": "Bellevue civic site",
+      "type": "new_sfr"
+    },
+    {
+      "parcel_key": "7202030010",
+      "label": "Redmond civic site",
+      "type": "new_sfr"
+    }
+  ],
+  "critical_area_note": "KCC 21A.24 regulates critical areas, buffers and setbacks even where an inventory map has no feature. The County reports updated rules effective February 18, 2026 outside shoreline jurisdiction. Existing critical-area determinations, application completeness and shoreline rules can change vesting. Confirm the applicable revision before using a prior report or assuming a buffer."
+}

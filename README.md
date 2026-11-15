@@ -16,7 +16,7 @@ Run the integrated application with `cd web && npm run dev` (install its depende
 
 ## Start here
 
-- **[Bid Assistant](docs/BID_ASSISTANT.md)**: put in a Kitsap parcel and a project type, get the agencies involved, a sourced permitting cost range and a constraint map. Run `node bid-assistant/server.js` and open http://localhost:8080.
+- **[Bid Assistant](docs/BID_ASSISTANT.md)**: put in a Kitsap, King or Skagit parcel and a project type, get the agencies involved, a sourced permitting cost range and a constraint map. Run `node bid-assistant/server.js` and open http://localhost:8080.
 
 - [Automation-first permitting pre-check direction](docs/AUTOMATED_PRECHECK_PIPELINE.md)
 - [Test-parcel pipeline results and AI costs](docs/CASCADE_RUN_RESULTS.md)
@@ -51,8 +51,10 @@ Bid assistant checks (no dependencies; the last one needs network):
 node tests/bid_assistant_geo.test.cjs
 node tests/bid_assistant_engine.test.cjs
 node tests/bid_assistant_drafts.test.cjs
+node tests/bid_assistant_regions.test.cjs
 node tests/bid_assistant_ui.test.cjs # requires web dependencies
 node tests/bid_assistant_live.cjs
+node tests/bid_assistant_regions_live.cjs # optional regional GIS checks
 ```
 
 ## Sync the existing desktop checkout

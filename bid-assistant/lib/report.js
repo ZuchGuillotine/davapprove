@@ -19,7 +19,7 @@
     var incomplete = screening && Object.keys(screening.layers || {}).some(function (id) {
       var layer = screening.layers[id]; return layer.status === 'unknown' || layer.truncated;
     });
-    var localUnresolved = facts.jurisdiction && (facts.jurisdiction.status === 'unknown' || facts.jurisdiction.city || facts.jurisdiction.off_reservation_trust);
+    var localUnresolved = facts.regional || facts.jurisdiction && (facts.jurisdiction.status === 'unknown' || facts.jurisdiction.city || facts.jurisdiction.off_reservation_trust);
     // 1. cost flags written by the rules themselves
     report.findings.forEach(function (f) {
       if (!f.flag) return;
@@ -40,12 +40,12 @@
         if (Q.constrained_pct >= 85 && constrained < 85) {
           var top = Q.by[0] ? Q.by[0].id : null;
           out.push({ level: 'likely', weight: 60 + Q.constrained_pct / 10, quadrant: q, top: top,
-            text: 'The ' + QUAD_NAME[q] + ' part of the lot is ' + pct(Q.constrained_pct) + ' inside mapped constraints and standard buffers. Plan the footprint elsewhere unless a study moves the lines.' });
+            text: 'The ' + QUAD_NAME[q] + ' part of the lot is ' + pct(Q.constrained_pct) + (facts.regional ? ' inside mapped inventory footprints. Buffers and the usable layout remain unconfirmed.' : ' inside mapped constraints and standard buffers. Plan the footprint elsewhere unless a study moves the lines.') });
         }
       });
       if (constrained >= 85) {
         out.push({ level: 'required', weight: 95,
-          text: pct(constrained) + ' of the lot is inside mapped constraints and indicative buffers. Confirm a viable layout with the relevant professionals and agency; allow for studies and schedule risk before committing to a design.' });
+          text: pct(constrained) + (facts.regional ? ' of the lot is inside mapped inventory footprints; buffers remain unconfirmed. Confirm a viable layout with the relevant professionals and agency.' : ' of the lot is inside mapped constraints and indicative buffers. Confirm a viable layout with the relevant professionals and agency; allow for studies and schedule risk before committing to a design.') });
       } else if (constrained < 1 && grid.totals.review.pct < 1 && !incomplete && !localUnresolved && !report.findings.some(function (f) { return f.level === 'unknown'; })) {
         out.push({ level: 'possible', weight: 5, text: 'No mapped critical area, shoreline or flood constraint reaches this lot. Maps miss features, so confirm on a site walk.' });
       }
@@ -72,7 +72,7 @@
     draft = draft || {};
     var L = [], p = facts.parcel, j = facts.jurisdiction, t = report.costs.totals;
     var byId = {}; report.findings.forEach(function (f) { byId[f.id] = f; });
-    var where = j.city ? 'City of ' + j.city : 'unincorporated ' + j.county + ' County' + (j.uga ? ' (' + j.uga + ')' : '');
+    var where = j.status === 'unknown' ? j.county + ' County — local jurisdiction unresolved' : j.city ? 'City of ' + j.city : 'unincorporated ' + j.county + ' County' + (j.uga ? ' (' + j.uga + ')' : '');
     L.push('# Permitting scope for bid: ' + (draft.title || p.situs || 'parcel ' + p.key));
     L.push('');
     L.push('EARLY BID · UNCONFIRMED. No approved design revision or construction authorization.');
@@ -86,9 +86,11 @@
       report.project.disturbance_sqft ? report.project.disturbance_sqft.toLocaleString() + ' sq ft disturbed' : null,
       report.project.grading_cy ? report.project.grading_cy + ' cu yd grading' : null
     ].filter(Boolean).join(', ') + ')');
-    if (report.project.construction_value) L.push('- Supplied construction valuation: ' + money(report.project.construction_value) + '; city valuation not confirmed. Prior planning review: ' + report.project.prior_planning_review + '.');
+    if (report.project.construction_value) L.push('- Supplied construction valuation: ' + money(report.project.construction_value) + '; agency valuation not confirmed.' + (data.region ? '' : ' Prior planning review: ' + report.project.prior_planning_review + '.'));
     L.push('- Screened: ' + screening.screened_at.slice(0, 10) + '. Code and fees checked ' + data.meta.research_date + '.');
     if (data.meta.municipal_fees_checked) L.push('- Municipal fee sources checked: ' + data.meta.municipal_fees_checked + '. Published rates are a research-date baseline; confirm collection date, city valuation, credits and unpriced items.');
+    if (data.region) L.push('- County reference revision: ' + data.meta.reference_revision + '; checked ' + data.region.checked + '; review due ' + data.region.valid_through + '. ' + data.region.coverage_note);
+    if (screening.reference_revision && data.region && screening.reference_revision !== data.meta.reference_revision) L.push('- Original snapshot reference revision: ' + screening.reference_revision + '. Allowances were recalculated with the current library; retained custom quotes need review.');
     L.push('- Independent agency-routing sources checked: ' + data.routing.checked + '. No county permit record is used to clear tribal, state or federal requirements.');
     L.push('- Agency-scope answers are bid assumptions, not verified agency determinations.');
     Object.keys(Engine.SCOPE_FIELDS).forEach(function (key) {
@@ -109,7 +111,7 @@
     var split = [part('agency_fee', 'agency fees'), part('professional', 'studies and consultants'), part('impact_fee', 'impact fees'), part('utility', 'utility connections')].filter(Boolean);
     if (split.length > 1) L.push('  - Of which: ' + split.join('; ') + '.');
     if (t.contingent.high) L.push('- Carry **' + range(t.contingent.low, t.contingent.high) + '** as contingency for items that depend on what is found on site.');
-    if (grid && grid.totals.core.pct + grid.totals.buffer.pct < 85 && grid.totals.core.pct + grid.totals.buffer.pct >= 1) L.push('- ' + pct(grid.totals.core.pct + grid.totals.buffer.pct) + ' of the lot is inside mapped constraints and standard buffers.');
+    if (grid && grid.totals.core.pct + grid.totals.buffer.pct < 85 && grid.totals.core.pct + grid.totals.buffer.pct >= 1) L.push('- ' + pct(grid.totals.core.pct + grid.totals.buffer.pct) + (facts.regional ? ' of the lot is inside mapped inventory footprints; regulatory buffers remain unconfirmed.' : ' of the lot is inside mapped constraints and standard buffers.'));
     flags(report, facts, grid, screening).forEach(function (f) { L.push('- ' + f.text); });
     if (draft.notes) { L.push(''); L.push('## Bid assumptions and exclusions'); L.push(''); L.push(draft.notes); }
     L.push(''); L.push('## Agency checks beyond county records'); L.push('');
@@ -154,7 +156,7 @@
       grid.constraints.filter(function (c) { return c.pct > 0; }).sort(function (a, b) { return b.pct - a.pct; }).forEach(function (c) {
         L.push('- ' + c.label + ': ' + pct(c.pct) + ' of the lot');
       });
-      L.push('- By quadrant (share inside mapped features and buffers): ' + ['NW', 'NE', 'SW', 'SE'].filter(function (q) { return grid.quadrants[q].share_of_parcel_pct >= 1; })
+      L.push((facts.regional ? '- By quadrant (inventory footprints only; all siting remains unconfirmed): ' : '- By quadrant (share inside mapped features and buffers): ') + ['NW', 'NE', 'SW', 'SE'].filter(function (q) { return grid.quadrants[q].share_of_parcel_pct >= 1; })
         .map(function (q) { return q + ' ' + pct(grid.quadrants[q].constrained_pct); }).join(', '));
       L.push('');
     }

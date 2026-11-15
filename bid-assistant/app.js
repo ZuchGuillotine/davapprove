@@ -4,6 +4,7 @@
 
   var Geo = window.BidGeo, Screen = window.BidScreen, Engine = window.BidEngine, Report = window.BidReport;
   var DATA = window.BID_DATA, PACKS = window.BidPacks, RULESETS = window.BidRuleSets;
+  var regionLoader = window.BidRegions && window.BidRegions.create(DATA, window.BID_REGIONS, window.fetch.bind(window));
 
   var state = {
     pack: PACKS['wa-kitsap'],
@@ -112,7 +113,7 @@
       var cls = Q.constrained_pct >= 85 ? 'bad' : Q.constrained_pct >= 40 ? 'warn' : 'ok';
       L.marker(ll(p.proj.toLL(pos[q])), {
         interactive: false,
-        icon: L.divIcon({ className: 'quad-label ' + cls, html: '<b>' + q + ' ' + pct(Q.constrained_pct) + '</b>', iconSize: [62, 20], iconAnchor: [31, 10] })
+        icon: L.divIcon({ className: 'quad-label ' + (state.facts.regional ? 'warn' : cls), html: '<b>' + q + ' ' + (state.facts.regional ? '?' : pct(Q.constrained_pct)) + '</b>', iconSize: [62, 20], iconAnchor: [31, 10] })
       }).addTo(quadGroup);
     });
     renderLegend();
@@ -136,7 +137,7 @@
   }
 
   function incompleteMap() {
-    return state.facts.jurisdiction.status === 'unknown' || !!state.facts.jurisdiction.city || !!state.facts.jurisdiction.reservation || !!state.facts.jurisdiction.off_reservation_trust ||
+    return !!state.facts.regional || state.facts.jurisdiction.status === 'unknown' || !!state.facts.jurisdiction.city || !!state.facts.jurisdiction.reservation || !!state.facts.jurisdiction.off_reservation_trust ||
       (state.facts.jurisdiction.tribal_names || []).length > 0 || ['tribal', 'exclusive_federal'].indexOf(readProject().land_status) >= 0 ||
       Object.keys(state.screening.layers).some(function (id) { var r = state.screening.layers[id]; return r.status === 'unknown' || r.truncated; });
   }
@@ -195,15 +196,17 @@
       if (!parcel) { setBusy(false); setStatus('No tax parcel found at ' + esc(what) + '. It may be right-of-way, water or an untaxed tract.', 'warn'); return null; }
       state.parcel = parcel;
       drawParcel(parcel);
-      location.hash = 'parcel=' + encodeURIComponent(parcel.parcel_key) + '&type=' + $('ptype').value;
+      location.hash = 'county=' + state.pack.id + '&parcel=' + encodeURIComponent(parcel.parcel_key) + '&type=' + $('ptype').value;
       return Screen.screenParcel(state.pack, parcel, {
         onProgress: function (done, total, label) {
           setStatus('<div class="bar"><span style="width:' + Math.round((100 * done) / total) + '%"></span></div>Reading map layers: ' + done + ' of ' + total + ' <span class="hint">' + esc(label) + '</span>', 'busy');
         }
       }).then(function (screening) {
         state.screening = screening;
+        state.referenceRevision = DATA.meta.reference_revision || DATA.meta.research_date;
+        screening.reference_revision = state.referenceRevision;
         state.facts = state.pack.deriveFacts(screening);
-        state.constraints = RULESETS[state.pack.id].constraints(screening, state.facts, DATA);
+        state.constraints = RULESETS[state.pack.constraint_ruleset || state.pack.id].constraints(screening, state.facts, DATA);
         state.grid = Geo.gridAnalyze(parcel.shape, state.constraints, { targetSamples: 3000 });
         state.draftId = state.draftId || crypto.randomUUID();
         setBusy(false);
@@ -249,7 +252,7 @@
     if (!state.facts) return;
     var land = readProject().land_status;
     if (state.constraintLand !== land) {
-      state.constraints = RULESETS[state.pack.id].constraints(state.screening, state.facts, DATA, readProject());
+      state.constraints = RULESETS[state.pack.constraint_ruleset || state.pack.id].constraints(state.screening, state.facts, DATA, readProject());
       state.grid = Geo.gridAnalyze(state.parcel.shape, state.constraints, { targetSamples: 3000 });
       state.constraintLand = land;
       drawAnalysis();
@@ -296,7 +299,7 @@
 
   function renderParcelCard(f) {
     var p = f.parcel, j = f.jurisdiction;
-    var where = j.status === 'unknown' ? 'Jurisdiction could not be confirmed' : j.city ? 'City of ' + j.city : 'Unincorporated Kitsap County' + (j.uga ? ' (' + j.uga + ')' : '');
+    var where = j.status === 'unknown' ? 'Jurisdiction could not be confirmed' : j.city ? 'City of ' + j.city : 'Unincorporated ' + j.county + ' County' + (j.uga ? ' (' + j.uga + ')' : '');
     var bits = [
       ['Tax account', p.account_no || p.key],
       ['Size', (p.assessor_acres != null ? p.assessor_acres + ' ac assessor; ' : '') + acres(p.area_sqft) + ' mapped'],
@@ -318,7 +321,7 @@
       tile('Agencies and districts', String(firm), maybe ? 'plus ' + maybe + ' possible' : 'required or likely') +
       tile('Priced base allowance', range(t.base.low, t.base.high), (t.unpriced.length ? t.unpriced.length + ' items still need quotes. ' : '') + (splitText(t) || 'required or likely items with prices')) +
       tile('Additional allowances', t.contingent.high ? range(t.contingent.low, t.contingent.high) : 'None priced', 'possible triggers; alternatives may not all apply') +
-      tile('Lot inside mapped constraints', pct(constrained), acres(g.totals.clear.sqft + g.totals.review.sqft) + ' outside mapped features and buffers') +
+      (DATA.region ? tile('Siting status', 'Unconfirmed', 'Inventory footprints only; regulatory buffers and setbacks need review') : tile('Lot inside mapped constraints', pct(constrained), acres(g.totals.clear.sqft + g.totals.review.sqft) + ' outside mapped features and buffers')) +
       '</div>';
   }
   function splitText(t) {
@@ -367,10 +370,10 @@
     var cites = f.citations.map(function (id) {
       var c = DATA.citations[id];
       return '<details class="cite' + (c.verified ? '' : ' unverified') + '"><summary>' + esc(c.citation) + (!c.verified || /^possibly_outdated/.test(c.source_currency || '') ? ' · verify current text' : '') + '</summary>' +
-        '<blockquote>' + (c.excerpt ? '&ldquo;' + esc(c.excerpt) + '&rdquo;' : esc(c.summary || '')) + '</blockquote>' +
+        '<blockquote>' + (c.excerpt ? (c.excerpt_kind === 'paraphrase' ? esc(c.excerpt) : '&ldquo;' + esc(c.excerpt) + '&rdquo;') : esc(c.summary || '')) + '</blockquote>' +
         '<p><a href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.title || c.citation) + '</a>' +
         (c.verified_against && c.verified_against !== c.url ? ' · <a href="' + esc(c.verified_against) + '" target="_blank" rel="noopener">text as checked</a>' : '') +
-        ' <span class="hint">' + (c.verified ? 'quote matched to source ' + esc(c.fetched || '') : 'not verified against source text') + (c.source_currency && !/^current/.test(c.source_currency) ? ' · ' + esc(c.source_currency.replace(/^possibly_outdated: /, 'may be outdated: ')) : '') + '</span></p></details>';
+        ' <span class="hint">' + (c.verified ? (c.excerpt_kind === 'paraphrase' ? 'source summary checked ' : 'quote matched to source ') + esc(c.fetched || '') : 'not verified against source text') + (c.source_currency && !/^current/.test(c.source_currency) ? ' · ' + esc(c.source_currency.replace(/^possibly_outdated: /, 'may be outdated: ')) : '') + '</span></p></details>';
     }).join('');
     var costs = f.costs.map(function (c) { return '<li>' + esc(c.label) + ' <b>' + (c.excluded ? 'excluded from bid' : c.unpriced ? 'Quote needed' : range(c.low, c.high)) + '</b>' + (c.edited ? ' · your allowance' : '') + (c.bucket === 'contingent' ? ' <span class="hint">contingency' + (c.note ? ': ' + esc(c.note) : '') + '</span>' : '') + '</li>'; }).join('');
     return '<div class="finding">' +
@@ -415,6 +418,7 @@
     var qs = ['NW', 'NE', 'SW', 'SE'].map(function (q) {
       var Q = g.quadrants[q];
       if (Q.share_of_parcel_pct < 1) return '<div class="q empty"><b>' + q + '</b><span>not part of lot</span></div>';
+      if (f.regional) return '<div class="q warn"><b>' + q + '</b><span>Unconfirmed</span><small>' + pct(Q.constrained_pct) + ' mapped footprint; buffers unresolved</small></div>';
       var cls = Q.constrained_pct >= 85 ? 'bad' : Q.constrained_pct >= 40 ? 'warn' : 'ok';
       var top = Q.by.filter(function (b) { return b.pct >= 10; }).slice(0, 2).map(function (b) { return labelOf(b.id); }).join(', ');
       return '<div class="q ' + cls + '"><b>' + q + '</b><span class="big">' + pct(Q.constrained_pct) + '</span><span>constrained</span>' + (top ? '<small>' + esc(top) + '</small>' : '') + '</div>';
@@ -428,14 +432,15 @@
     return '<div class="card constraints" id="bid-constraints"><h2>Preliminary site envelope</h2><p class="hint">Early bid · buffers and layout unconfirmed</p>' +
       (incompleteMap() ? '<p class="coverage-callout">Coverage incomplete. Percentages describe returned features only; remaining areas have not been cleared for siting.</p>' : '') +
       '<div class="quads">' + qs + '</div>' +
-      '<p>' + pct(constrained) + ' of the lot is inside a mapped feature or its standard buffer. About <b>' + acres(g.totals.clear.sqft + g.totals.review.sqft) + '</b> is outside them' +
-      (g.totals.review.pct > 0 ? ', of which ' + acres(g.totals.review.sqft) + ' still triggers a study or review' : '') + '.</p>' +
+      (f.regional ? '<p>Inventory footprints are shown below. Regulatory buffers have not been applied; the remaining area is unresolved.</p>' : '<p>' + pct(constrained) + ' of the lot is inside a mapped feature or its standard buffer. About <b>' + acres(g.totals.clear.sqft + g.totals.review.sqft) + '</b> is outside them' +
+      (g.totals.review.pct > 0 ? ', of which ' + acres(g.totals.review.sqft) + ' still triggers a study or review' : '') + '.</p>') +
       (rows ? '<table><thead><tr><th>Constraint</th><th class="num">Share of lot</th><th class="num">Area</th></tr></thead><tbody>' + rows + '</tbody></table>' : '<p class="hint">' + (incompleteMap() ? 'No constraints returned from the completed checks; other coverage remains unresolved.' : 'No mapped constraint reaches this lot.') + '</p>') +
-      '<p class="hint">Quadrants split the lot at its centre point. Buffers are the standard code widths measured from mapped features, before any averaging, reduction or increase. Zoning setbacks, septic and drainfield reserve areas, easements and slopes not on the hazard map are not included. This is not a buildable-area determination.</p></div>';
+      '<p class="hint">Quadrants split the lot at its centre point. ' + (f.regional ? 'Local regulatory buffers are not yet modeled for this county pack. ' : 'Buffers are the standard code widths measured from mapped features, before any averaging, reduction or increase. ') + 'Zoning setbacks, septic and drainfield reserve areas, easements and slopes not on the hazard map are not included. This is not a buildable-area determination.</p></div>';
   }
 
   function renderPermits(f) {
     var P = f.permits;
+    if (f.regional) return '<div class="card permits" id="bid-permits"><h2>Permit reuse check</h2><p>Permit history is outside this lightweight county screening. Ask the issuing city, county, health authority or other agency to confirm existing approvals, expiry, scope and reuse before crediting prior work.</p></div>';
     if (P.status === 'unknown') return '<div class="card permits" id="bid-permits"><h2>Permit reuse check</h2><p class="unknown">County permit records could not be read' + (P.error ? ': ' + esc(P.error) : '') + '. Check the county permit portal.</p></div>';
     if (!P.items.length) return '<div class="card permits" id="bid-permits"><h2>Permit reuse check</h2><p>No county permit records are linked to this tax account. City permits, health district records and state or federal approvals are not in this dataset.</p></div>';
     var rows = P.items.slice(0, 40).map(function (i) {
@@ -469,7 +474,7 @@
       '<li><b>Required</b> means a code trigger is met by the project itself or by a feature mapped on the lot. <b>Likely</b> means a mapped feature is close enough that the code calls for review. <b>Possible</b> depends on something maps cannot show.</li>' +
       '<li>Agency fees are copied from published fee schedules with their effective dates. Consultant costs are market ranges, not quotes.</li>' +
       '<li>Nothing here is an approval, a determination or legal advice. Agencies decide; maps are often wrong at the scale of a single lot.</li>' +
-      '<li>Research baseline ' + esc(DATA.meta.research_date) + '; individual sources show later checks. Maps use the dated snapshot above; refresh for current coverage.</li>' +
+      (DATA.region ? '<li>County source revision ' + esc(DATA.meta.reference_revision) + '; reviewed ' + esc(DATA.region.checked) + '; review due ' + esc(DATA.region.valid_through) + '.</li>' : '') + '<li>Research baseline ' + esc(DATA.meta.research_date) + '; individual sources show later checks. Maps use the dated snapshot above; refresh for current coverage.</li>' +
       '</ul></div>';
   }
 
@@ -508,23 +513,25 @@
       history.replaceState(null, '', '#draft=' + encodeURIComponent(state.draftId));
     } catch (err) { $('save-status').textContent = 'Not saved: ' + err.message + ' Use Copy bid memo to keep a copy.'; }
   }
-  function openDraft(id) {
+  async function openDraft(id) {
     if (state.busy) return;
     try {
       var d = window.BidDrafts.list(localStorage).find(function (x) { return x.id === id; });
-      if (!d || !PACKS[d.screening.pack_id]) throw new Error('This saved bid or jurisdiction is unavailable.');
+      if (!d) throw new Error('This saved bid is unavailable.');
+      await selectCounty(d.screening.pack_id, false);
       state.pack = PACKS[d.screening.pack_id]; state.draftId = d.id;
+      state.referenceRevision = DATA.meta.reference_revision || DATA.meta.research_date;
       state.parcel = Screen.buildParcel([{ geometry: d.parcel.geometry }], d.parcel);
       state.screening = d.screening; state.screening.parcel = state.parcel; state.constraintLand = null;
       state.overrides = d.overrides || {};
       state.facts = state.pack.deriveFacts(state.screening);
-      state.constraints = RULESETS[state.pack.id].constraints(state.screening, state.facts, DATA);
+      state.constraints = RULESETS[state.pack.constraint_ruleset || state.pack.id].constraints(state.screening, state.facts, DATA);
       state.grid = Geo.gridAnalyze(state.parcel.shape, state.constraints, { targetSamples: 3000 });
       $('ptype').value = d.project.type; fillAssumptions(d.project.type, d.project);
       $('q').value = state.facts.parcel.situs || state.parcel.parcel_key;
       $('bid-title').value = d.title; $('bid-notes').value = d.notes;
       $('intro').hidden = true;
-      setStatus('Saved map snapshot reopened; refresh maps for current coverage. Prices use the loaded source library.', 'warn');
+      setStatus('Saved map snapshot reopened; refresh maps for current coverage. Prices use the loaded source library.' + (d.screening.reference_revision && d.screening.reference_revision !== state.referenceRevision ? ' The reference revision has changed since this snapshot; review recalculated allowances and retained custom quotes.' : ''), 'warn');
       evaluate(); drawParcel(state.parcel); drawAnalysis();
     } catch (err) { setStatus('Could not reopen this bid: ' + esc(err.message), 'error'); }
   }
@@ -554,6 +561,27 @@
     }
   }
 
+  async function selectCounty(id, reset) {
+    if (state.busy) throw new Error('Wait for the current screening to finish.');
+    var previous = state.pack.id;
+    if (id === previous && (id === 'wa-kitsap' || DATA.region)) return;
+    if (reset) newBid();
+    setBusy(true); setStatus('Loading county sources…', 'busy');
+    try {
+      var d = regionLoader ? await regionLoader.load(id) : window.BID_DATA;
+      if (id !== 'wa-kitsap' && (!d.region || d.region.id !== id)) throw new Error('County sources unavailable.');
+      if (id !== 'wa-kitsap') PACKS[id] = window.BidRegionalPack.create(d.region);
+      DATA = d; state.pack = PACKS[id];
+      $('a-prior_planning_review').closest('label').hidden = !!d.region;
+      $('jurisdiction').value = id;
+      $('examples').innerHTML = state.pack.examples.map(function(x,i){return '<a href="#" data-example="'+i+'">'+esc(x.label)+'</a>';}).join(' · ');
+      map.setView(state.pack.center, state.pack.zoom);
+      $('q').placeholder = id === 'wa-skagit' ? 'Street address or P-number' : 'Street address or parcel number';
+      setStatus(d.region ? esc(d.region.coverage_note) : '', d.region ? 'warn' : '');
+    } catch (err) { $('jurisdiction').value = previous; throw err; }
+    finally { setBusy(false); }
+  }
+
   function init() {
     $('agency-scope-fields').innerHTML = Object.keys(Engine.SCOPE_FIELDS).map(function (key) {
       var field = Engine.SCOPE_FIELDS[key];
@@ -578,6 +606,7 @@
       fetch('proxy/ping').then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { if (t === 'ok') window.BidArcgis.setProxy('proxy?url='); }).catch(function () {});
     }
 
+    js.addEventListener('change', function(){ selectCounty(js.value, true).catch(function(e){setStatus('County sources could not be loaded: '+esc(e.message), 'error');}); });
     $('search-form').addEventListener('submit', onSearch);
     sel.addEventListener('change', function () { fillAssumptions(sel.value); evaluate(); });
     $('assumptions').addEventListener('change', evaluate);
@@ -613,7 +642,7 @@
       loadParcel(function () { return state.pack.parcelById(x.parcel_key); }, x.label);
     });
     if (params.draft) openDraft(params.draft);
-    else if (params.parcel) loadParcel(function () { return state.pack.parcelById(params.parcel); }, 'parcel ' + params.parcel);
+    else if (params.parcel) selectCounty(params.county || 'wa-kitsap', false).then(function(){loadParcel(function () { return state.pack.parcelById(params.parcel); }, 'parcel ' + params.parcel);}).catch(function(e){setStatus(esc(e.message),'error');});
     window.BidApp = { state: state };
   }
 

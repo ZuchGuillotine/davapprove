@@ -30,11 +30,17 @@
    {
     "id": "wa-king",
     "name": "King County, WA",
-    "available": false
+    "available": true
+   },
+   {
+    "id": "wa-skagit",
+    "name": "Skagit County, WA",
+    "available": true
    }
   ],
   "agency_routing_checked": "2026-11-14",
-  "municipal_fees_checked": "2026-11-14"
+  "municipal_fees_checked": "2026-11-14",
+  "shared_revision": "ab93d4f16457a612"
  },
  "citations": {
   "kcc-19.100.110": {
@@ -6376,6 +6382,13 @@
    "role": "Treaty-resource and consultation contact; project role to confirm",
    "url": "https://skokomish.org/natural-resources/",
    "phone": null
+  },
+  "tulalip": {
+   "id": "tulalip",
+   "name": "Tulalip Tribes",
+   "tier": "tribal",
+   "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+   "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
   }
  },
  "routing": {

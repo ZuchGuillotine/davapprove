@@ -75,3 +75,7 @@ For the desktop checkout: verify its remote and working-tree state, fetch origin
 ## Drawing coordination follow-up
 
 Parcel identifiers require provider-specific formatting; see the onboarding and sprint-plan regression guidance. The shared-reference/sheet-registration implementation is in `backend/app/alignment.py` and `web/src/SheetAlignment.tsx`. It uses imported page images, persisted controls, a similarity transform and independent checks. Its database migration must accompany deployment. Source alignment, feature review and agency approval remain separate. See `docs/SITE_ENVELOPE_VIEWER.md` for current behavior and limitations.
+
+## November 15 regional bid expansion
+
+King and Skagit now have separate lazy-loaded, versioned public reference packs and county/city GIS routing. Selected municipal/county fees and independent agency checks support editable early bids. The map remains explicitly provisional; regional regulatory buffers are not inferred. Kirkland primary pricing, many utility/impact/trade scopes and additional cities remain quote-needed. See [regional coverage, storage and verification](BID_ASSISTANT.md#november-15-2026-king-and-skagit-beta-packs). Approval graph, auth and private records are unchanged.

@@ -206,3 +206,68 @@ Poulsbo has conflicting official school guidance: its building page requests sch
 Port Orchard new construction uses its adopted IBC valuation data; a supplied contractor price is provisional. ADU impact caps need principal-home area/bedroom data, so ADU impacts remain quote-needed instead of inheriting full detached-home fees. Replacement homes are not automatically charged full new-home impacts. Bremerton's commercial/multifamily site-plan fee is not applied to single-family homes, and hourly critical-area review is not converted to an invented total.
 
 Data remains in `citations.json` / `fees.json`, with source dates attached to findings, fee rows and the memo. No document ingestion, owner/applicant fields, new approvals or dependency-graph changes were added. Regression checks cover all cities, UGA routing, valuation boundaries, impact caps, grading/drainage thresholds, missing inputs, uncertain boundaries, tribal/federal exceptions, price overrides, memo sources and DOM rendering.
+
+## November 15, 2026: King and Skagit beta packs
+
+The county selector now supports King and Skagit without importing permit histories. County GIS resolves the tax parcel and municipal boundary; a postal city is not jurisdiction evidence. Unincorporated Vashon uses King County. Unincorporated Skagit communities use the county. A mapped city without a transcribed schedule stays city-routed with **quote needed**, rather than inheriting county prices. Failed, blank, conflicting or truncated boundary evidence withholds county/city fee calculations. Tribal land and uncertain land status retain independent routing and do not receive both full local fee schedules.
+
+### Selected fee coverage
+
+The checked sources and formula parameters are in the master citation and fee JSON, with `region` tags. Check date: **2026-11-15**. These are selected permit components, never a complete fixed-price approval package.
+
+| Jurisdiction | Transcribed bidding components | Material remaining scope |
+| --- | --- | --- |
+| Unincorporated King | Custom-home review and area-based inspection; site review; ADU; application screening; conditional sprinkler review | Other building types, impact/utility/trade scope and site-specific reviews |
+| Seattle | Building/plan review; conditional MUP allowance using the published land-use hourly rate | Actual MUP category/hours, intake/notices, civil/trade and service charges |
+| Bellevue | Building/plan review, new-dwelling adjustment, operation fee and residential planning review | Impact/service/trade and special site reviews |
+| Redmond | Building/plan review, technology, selected planning/engineering/fire reviews | Impact/service and project-specific specialist reviews |
+| Sammamish | Building/plan review, technology, selected planning and critical-area review | Impact/service and additional review scope |
+| Kent | Building permit; critical-area delineation review range | Plan review and other civil/land-use charges remain quote-needed |
+| Renton | Building/plan review, technology, planning/engineering percentage components | Separate trades, impact/service and additional reviews |
+| Federal Way | Building/plan review, automation minimum/percentage and digitization | Confirm automation assessment base; planning/impact/service scope |
+| Auburn | Building/plan review (published technology already included) | Planning/civil/impact/service scope |
+| Shoreline | Building/plan review, technology, zoning minimum and conditional civil-review minimum | Actual additional hours and service/impact scope |
+| Kirkland | City routing, municipal electrical authority and linked official source directory | Building/planning totals remain quote-needed: primary fee text was inaccessible; no secondary rate was silently treated as an adopted schedule |
+| Unincorporated Skagit | Building/plan review/technology; zoning/fire/public-works review; drainage/grading bands; flood fee | District, service/impact and specialist scope |
+| Mount Vernon | Building/plan review/technology from currently linked June 2025 handout | City warns online fees may lag; confirm current schedule and planning/civil charges |
+| Burlington | Building/plan review and application fee; planning; conditional site/driveway review | Utility/impact and additional review scope |
+| Sedro-Woolley | Building/plan review; selected home/ADU planning fees | Civil/service/impact and special reviews |
+| Anacortes | Building/plan review; selected July 2026 planning, ADU and shoreline fees | Actual planning category and service/impact scope |
+
+Municipal electrical inspectors are routed independently of county permitting. Skagit demolition goes to Northwest Clean Air Agency, not PSCAA. County health authorities handle septic feasibility and water availability; the Skagit water check links Ecology's basin restrictions. Regional tribal contacts are **starting contacts, not a complete affected-Tribe list or a finding that each Tribe must approve**. The existing Corps, FEMA, EPA, Ecology, DNR, WDFW, DAHP and other independent activity checks remain active. A mapped Skagit dike/drainage district generates a separate review and quote item, including inside cities.
+
+The ecologist allowance uses a consultant's published rate for both counties and an explicitly assumed hours range. Seattle's land-use range similarly combines the official hourly rate with an editable assumed review duration. Neither is an agency/consultant quote or a maximum. Regional geotechnical studies remain quote-needed rather than reusing Kitsap market prices. All allowances retain their sources after a user override. Impact, utility and trade gaps are explicitly excluded from priced subtotals until the user supplies numbers.
+
+### Maps and legal limits
+
+Each pack queries a small set of county and independent state/federal layers, with bounded concurrency and eight-second request timeouts (one retry). No owner/applicant fields, permit documents, OCR or status reconciliation are requested. Skagit and King address abbreviations are normalized for their different situs formats. Missing or unmatched assessor addresses can be located by parcel ID or clicking the map.
+
+The map shows parcel and available inventory footprints, with **all regional siting cells unresolved**. County/city regulatory buffers, ordinary setbacks and a surveyed buildable envelope have not been implemented for these packs. No empty inventory or failed request is displayed as a buildable clearance. In particular:
+
+- King reports updated critical-area rules effective February 18, 2026 outside shoreline jurisdiction, with vesting dependent on the application and any effective critical-area determination. The linked guidance explains why an old report does not automatically preserve old buffers.
+- Skagit reports a July 2026 hearings-board decision concerning riparian buffers and a pending amendment process. Proposed changes are not adopted rules; the county finding attaches the current notice and code review source.
+- Agricultural/resource zoning, shoreline rules, dike/drainage restrictions, water availability and project-specific studies can materially reduce the usable area. GIS coverage is incomplete and city zoning layers have not all been integrated.
+
+This is beta bidding coverage, not an exhaustive municipal code implementation or a production permit-authorizing engine. Existing approval/workflow logic and Kitsap screening are retained.
+
+### Storage and retrieval
+
+`data/citations.json`, `fees.json` and `agencies.json` remain the reviewable source of truth. A regional record has a globally unique ID and a `region` tag. `data/regions/<county>.json` declares parcel/boundary endpoints, allowlisted fields, municipality profiles, fee triggers, contact routing, check/review dates and explicit coverage limits. Add a county by adding data, not another copy of the rule engine.
+
+`node bid-assistant/build.js` validates references, duplicate IDs, supported formula methods, fee ranges/bands, trigger names and tribal routing. It emits:
+
+1. The existing shared/Kitsap `data.js`, with a content revision.
+2. A small `regions.js` manifest.
+3. One content-addressed JSON supplement per county under `data/bundles/`. The hash includes the shared-data revision, so shared evidence updates invalidate the dependent county revision too.
+
+The browser fetches only the selected supplement, coalesces concurrent requests, memoizes successful loads and permits retry after failure. A mismatched shared/county revision is rejected with a refresh instruction. Cloudflare serves hashed supplements with immutable cache headers; the manifest and shared data must revalidate. Initial supplements are roughly 40–55 KB uncompressed. Public regulatory references do not need per-parcel database queries or a backend round trip. Existing private project/records storage is unchanged.
+
+Saved bids retain the county and reference revision with their map snapshot. Reopening selects the correct pack, recalculates against the loaded library, preserves user quotes and warns when the source revision changed. It does not rerun maps automatically. Sources have a review horizon and an overdue warning; the warning does not certify current prices. Before publishing annual schedules, review effective dates, regenerate, test and retain previously published hashed supplements for clients still holding an older manifest. Do not edit a published hashed file in place.
+
+### Verification
+
+`tests/bid_assistant_regions.test.cjs` covers pack isolation, one-fetch caching, load failure/retry, shared/county revision mismatch, unknown/tribal/boundary routing, uppercase municipal names, all supported project types, representative price fixtures and every valuation-band endpoint, conditional versus base allowances, district involvement, safe query fields and address normalization. It runs in frontend CI. Synthetic DOM tests cover switching counties, screening, saving/reopening regional drafts, source revisions and editable quotes. Existing engine, geometry, drafts and report checks continue to run.
+
+`node tests/bid_assistant_regions_live.cjs` is an opt-in public GIS smoke test, kept out of deterministic CI. It checks city/unincorporated routing for twelve parcels across both counties without requesting owner data. Live civic-site screening in Seattle and Mount Vernon completed in approximately 17 seconds during verification: local layers responded quickly, while FEMA timed out and was correctly retained as **unknown**. This is an observed sample, not a latency guarantee or legal verification. Direct service CORS was checked for the new county hosts.
+
+CLI example: `node bid-assistant/cli.js 0942000810 --pack wa-king --type new_sfr --construction-value 550000`.

@@ -13,7 +13,7 @@ const TYPES = {
 
 // Relay for map servers that refuse cross-origin browser requests. Only the public data hosts
 // the packs use are allowed, so this cannot be used as an open proxy.
-const ALLOWED = new Set(['services6.arcgis.com', 'services.arcgis.com', 'psearch.kitsap.gov', 'hazards.fema.gov', 'gis.ecology.wa.gov',
+const ALLOWED = new Set(['services6.arcgis.com', 'services.arcgis.com', 'psearch.kitsap.gov', 'gismaps.kingcounty.gov', 'gis.skagitcountywa.gov', 'geo.skagitcountywa.gov', 'hazards.fema.gov', 'gis.ecology.wa.gov',
   'fwspublicservices.wim.usgs.gov', 'data.wsdot.wa.gov', 'gis.dnr.wa.gov', 'wisaard.dahp.wa.gov', 'elevation.nationalmap.gov']);
 
 async function relay(req, res, target) {

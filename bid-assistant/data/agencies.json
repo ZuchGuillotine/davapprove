@@ -233,5 +233,209 @@
   "role": "Treaty-resource and consultation contact; project role to confirm",
   "url": "https://skokomish.org/natural-resources/",
   "phone": null
+ },
+ {
+  "id": "wa-king",
+  "name": "King County permitting",
+  "tier": "local",
+  "url": "https://kingcounty.gov/depts/local-services/permits.aspx",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-health",
+  "name": "King County Public Health",
+  "tier": "local",
+  "url": "https://kingcounty.gov/en/dept/dph",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-skagit",
+  "name": "Skagit County permitting",
+  "tier": "local",
+  "url": "https://www.skagitcountywa.gov/services/planning-and-building/",
+  "region": "wa-skagit"
+ },
+ {
+  "id": "wa-skagit-health",
+  "name": "Skagit County Public Health",
+  "tier": "local",
+  "url": "https://www.skagitcountywa.gov/services/public-health/",
+  "region": "wa-skagit"
+ },
+ {
+  "id": "wa-king-seattle",
+  "name": "Seattle permitting",
+  "tier": "local",
+  "url": "https://www.seattle.gov/documents/Departments/SDCI/Codes/2026FeeSubtitle.pdf",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-redmond",
+  "name": "Redmond permitting",
+  "tier": "local",
+  "url": "https://www.redmond.gov/DocumentCenter/View/16885/Residential-Fees-2026-PDF",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-sammamish",
+  "name": "Sammamish permitting",
+  "tier": "local",
+  "url": "https://www.sammamish.us/media/204gd3os/2026-development-fee-schedule.pdf",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-kent",
+  "name": "Kent permitting",
+  "tier": "local",
+  "url": "https://www.kentwa.gov/home/showpublisheddocument/24957/639117686153453888",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-bellevue",
+  "name": "Bellevue permitting",
+  "tier": "local",
+  "url": "https://bellevuewa.gov/city-government/departments/development/permits/permit-fees-payment",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-renton",
+  "name": "Renton permitting",
+  "tier": "local",
+  "url": "https://www.rentonwa.gov/Government/Departments-and-Offices/Finance/Financial-Reports",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-kirkland",
+  "name": "Kirkland permitting",
+  "tier": "local",
+  "url": "https://www.kirklandwa.gov/Government/Departments/Development-Services-Center/Tools-and-Resources/All-Forms-Publications-Fees",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-federal-way",
+  "name": "Federal Way permitting",
+  "tier": "local",
+  "url": "https://www.federalwaywa.gov/sites/default/files/2026-02/2026%20Fee%20Schedule.pdf",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-auburn",
+  "name": "Auburn permitting",
+  "tier": "local",
+  "url": "https://www.auburnwa.gov/city_hall/documents",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-king-shoreline",
+  "name": "Shoreline permitting",
+  "tier": "local",
+  "url": "https://ecode360.com/49766332",
+  "region": "wa-king"
+ },
+ {
+  "id": "wa-skagit-mount-vernon",
+  "name": "Mount Vernon permitting",
+  "tier": "local",
+  "url": "https://www.mountvernonwa.gov/DocumentCenter/View/17086/Fee-Schedule-2025",
+  "region": "wa-skagit"
+ },
+ {
+  "id": "wa-skagit-burlington",
+  "name": "Burlington permitting",
+  "tier": "local",
+  "url": "https://www.burlingtonwa.gov/DocumentCenter/View/7233",
+  "region": "wa-skagit"
+ },
+ {
+  "id": "wa-skagit-sedro-woolley",
+  "name": "Sedro-Woolley permitting",
+  "tier": "local",
+  "url": "https://cms5.revize.com/revize/cityofsedrowoolley/Departments/Finance/Policies_Procedures/Master%20Fee%20Schedule.pdf",
+  "region": "wa-skagit"
+ },
+ {
+  "id": "wa-skagit-anacortes",
+  "name": "Anacortes permitting",
+  "tier": "local",
+  "url": "https://www.anacorteswa.gov/DocumentCenter/View/37044/2026-Unified-Fee-Schedule--Effective-07132026",
+  "region": "wa-skagit"
+ },
+ {
+  "id": "nwcaa",
+  "name": "Northwest Clean Air Agency",
+  "tier": "local",
+  "url": "https://nwcleanairwa.gov",
+  "region": "wa-skagit"
+ },
+ {
+  "id": "muckleshoot",
+  "region": "wa-king",
+  "name": "Muckleshoot Indian Tribe",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "snoqualmie",
+  "region": "wa-king",
+  "name": "Snoqualmie Indian Tribe",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "tulalip",
+  "name": "Tulalip Tribes",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "puyallup",
+  "region": "wa-king",
+  "name": "Puyallup Tribe",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "swinomish",
+  "region": "wa-skagit",
+  "name": "Swinomish Indian Tribal Community",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "samish",
+  "region": "wa-skagit",
+  "name": "Samish Indian Nation",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "upper-skagit",
+  "region": "wa-skagit",
+  "name": "Upper Skagit Indian Tribe",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "sauk-suiattle",
+  "region": "wa-skagit",
+  "name": "Sauk-Suiattle Indian Tribe",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "stillaguamish",
+  "region": "wa-skagit",
+  "name": "Stillaguamish Tribe",
+  "tier": "tribal",
+  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
  }
 ]

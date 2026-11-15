@@ -100,7 +100,7 @@
   rule('wa.sepa', 'kitsap-dcd', 'Environmental review', function (ctx) {
     var p = ctx.project, f = ctx.facts, d = ctx.data;
     var land = ctx.helpers.landContext(f, p);
-    if (f.jurisdiction.city || land.mode === 'tribal' || land.mode === 'federal' || f.jurisdiction.status === 'unknown') {
+    if (ctx.data.region || f.jurisdiction.city || land.mode === 'tribal' || land.mode === 'federal' || f.jurisdiction.status === 'unknown') {
       if (!p.in_water && !p.common_plan && p.type !== 'short_plat') return null;
       return { agency: 'ecology', level: 'possible', basis: 'confirm', authority_role: 'Lead-agency identification', title: 'Confirm environmental-review lead and jurisdiction',
         why: 'County records do not establish the SEPA lead or the applicability of state review on tribal or federal land. A city, state or other eligible entity may lead; a federal action may also have its own review.',
@@ -125,7 +125,7 @@
 
   rule('wa.forest', 'dnr', 'Tree clearing', function (ctx) {
     if (!ctx.project.tree_clearing) return null;
-    var county = !ctx.facts.jurisdiction.city;
+    var county = !ctx.data.region && !ctx.facts.jurisdiction.city;
     return {
       level: 'likely', basis: 'documented',
       title: 'Forest practices: conversion to a non-forestry use',
@@ -136,12 +136,13 @@
       flag: 'Forested lot: clear trees under a conversion approval, not an ordinary harvest notice, or the parcel can be locked out of permits for six years.',
       flag_weight: 6,
       citations: ['rcw-76.09.050', 'wac-222-16-050', 'rcw-76.09.460', 'rcw-76.09.470'].concat(county ? ['kcc-18.16.180'] : []),
-      costs: county ? ['dcd-timber-harvest', { fee: 'dnr-fpa-conversion', bucket: 'contingent', note: 'if DNR rather than the county processes the application' }] : ['dnr-fpa-conversion']
+      costs: county ? ['dcd-timber-harvest', { fee: 'dnr-fpa-conversion', bucket: 'contingent', note: 'if DNR rather than the county processes the application' }] : [{fee:'dnr-fpa-conversion',bucket:'contingent',note:'DNR processing allowance only if DNR is the permitting authority; local conversion/clearing review and fees must be confirmed.'}]
     };
   });
 
   rule('wa.demolition', 'pscaa', 'Demolition', function (ctx) {
     if (!ctx.project.demo) return null;
+    if (ctx.data.region && ctx.data.region.id === 'wa-skagit') return {agency:'nwcaa',level:'likely',basis:'confirm',title:'Northwest Clean Air Agency demolition / asbestos review',why:'Skagit is served by NWCAA. Confirm survey, notification, waiting period and asbestos scope before demolition; Puget Sound Clean Air Agency fees do not apply here.',citations:['wa-skagit-air'],costs:[{fee:'wa-skagit-demolition',unpriced:true}, {fee:'pro-asbestos-survey',unpriced:true}]};
     var yr = ctx.facts.parcel.oldest_year_built;
     return [{
       level: 'required', basis: 'documented',
@@ -162,13 +163,16 @@
   rule('wa.electrical', 'lni', 'Trade permits', function (ctx) {
     var p = ctx.project;
     if (!(p.new_sqft > 0)) return null;
+    var region=ctx.data.region, j=ctx.facts.jurisdiction;
+    if (region && (ctx.helpers.landContext(ctx.facts,p).mode==='unknown' || j.status==='unknown' || (j.tribal_names||[]).length || ['tribal','exclusive_federal'].indexOf(p.land_status)>=0)) return {agency:region.id,level:'unknown',basis:'confirm',title:'Electrical inspection authority unresolved',why:'Confirm municipal, tribal or state inspection authority before pricing the electrical permit.',citations:['lni-city-jurisdictions'],costs:[{fee:region.id+'-electrical',unpriced:true}]};
+    if (region && region.electrical_cities.indexOf(j.city)>=0) return {agency:(region.profiles[j.city]||{}).agency||region.id,level:'required',basis:'documented',title:j.city+' electrical permit and inspection',why:'L&I lists this city as issuing electrical permits and performing inspections. A separate municipal electrical estimate is needed.',citations:['lni-city-jurisdictions'],costs:[{fee:region.id+'-electrical',unpriced:true}]};
     var m = ctx.data.fees['lni-electrical'].method;
     var fee = m.first_1300 + Math.max(0, Math.ceil((p.new_sqft - 1300) / 500)) * m.per_additional_500;
     return {
       level: 'required', basis: 'documented',
       title: 'Electrical permit and inspection',
       why: 'Electrical work is permitted and inspected by the Department of Labor and Industries, not the county. The electrical contractor usually pulls it; it is listed so it is not double-counted or missed.',
-      confirm: 'L&I’s municipal inspection list does not include Bainbridge Island, Bremerton, Poulsbo or Port Orchard. For normal state/local projects here, retain the separate L&I permit; confirm unusual land jurisdiction.',
+      confirm: region ? 'The checked L&I municipal list does not identify this location as a city electrical authority. Confirm the work address and land status.' : 'L&I’s municipal inspection list does not include Bainbridge Island, Bremerton, Poulsbo or Port Orchard. For normal state/local projects here, retain the separate L&I permit; confirm unusual land jurisdiction.',
       citations: ['rcw-19.28.101', 'lni-city-jurisdictions'],
       costs: [{ fee: 'lni-electrical', low: p.new_dwelling ? fee : m.first_1300 * 0.6, high: fee, note: 'New-residence schedule: $' + m.first_1300 + ' for the first 1,300 sq ft plus $' + m.per_additional_500 + ' per additional 500 sq ft. Temporary power and service changes are extra.' }]
     };
@@ -202,6 +206,7 @@
     var p = ctx.project, f = ctx.facts;
     if (!p.new_dwelling) return null;
     var mode = p.water;
+    if(ctx.data.region) return {agency:ctx.data.region.health_agency,level:'required',basis:'documented',title:'Legal and physical water availability',why:'A home needs evidence of adequate potable water. A permit-exempt well is not proof of legal water availability. Confirm service, watershed/instream-flow restrictions, mitigation and health approval before drilling or bidding a new dwelling.',confirm:'Obtain the water purveyor commitment or agency-confirmed well/mitigation route. Connection, drilling and water-right mitigation costs require a site-specific quote.',citations:['rcw-19.27.097',ctx.data.region.id+'-water'],costs:[]};
     if (mode === 'well_new' || mode === 'well_existing') {
       return {
         level: 'required', basis: 'documented', agency: f.jurisdiction.city ? 'water-purveyor' : 'kphd',

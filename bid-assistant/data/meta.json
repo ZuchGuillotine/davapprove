@@ -24,7 +24,12 @@
     {
       "id": "wa-king",
       "name": "King County, WA",
-      "available": false
+      "available": true
+    },
+    {
+      "id": "wa-skagit",
+      "name": "Skagit County, WA",
+      "available": true
     }
   ],
   "agency_routing_checked": "2026-11-14",

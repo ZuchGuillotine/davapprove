@@ -1,0 +1,314 @@
+{
+  "id": "wa-skagit",
+  "county": "Skagit",
+  "center": [
+    48.45,
+    -122.2
+  ],
+  "zoom": 10,
+  "schema_version": 1,
+  "checked": "2026-11-15",
+  "valid_through": "2026-12-31",
+  "profiles": {
+    "County": {
+      "id": "wa-skagit-county",
+      "name": "Skagit County",
+      "agency": "wa-skagit",
+      "citations": [
+        "wa-skagit-county-source",
+        "wa-skagit-critical-review"
+      ],
+      "fees": [
+        {
+          "fee": "wa-skagit-county-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-skagit-county-zoning",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-skagit-county-fire",
+          "trigger": "new_structure"
+        },
+        {
+          "fee": "wa-skagit-county-publicworks",
+          "trigger": "new_structure"
+        },
+        {
+          "fee": "wa-skagit-county-drainage",
+          "trigger": "development"
+        },
+        {
+          "fee": "wa-skagit-county-flood",
+          "trigger": "flood"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://ecode360.com/SK5020"
+    },
+    "Mount Vernon": {
+      "id": "wa-skagit-mount-vernon",
+      "name": "Mount Vernon",
+      "agency": "wa-skagit-mount-vernon",
+      "citations": [
+        "wa-skagit-mount-vernon-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-skagit-mount-vernon-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-skagit-mount-vernon-planning",
+          "trigger": "development"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://ecode360.com/50292070"
+    },
+    "Burlington": {
+      "id": "wa-skagit-burlington",
+      "name": "Burlington",
+      "agency": "wa-skagit-burlington",
+      "citations": [
+        "wa-skagit-burlington-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-skagit-burlington-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-skagit-burlington-siteplan",
+          "trigger": "conditional_development"
+        },
+        {
+          "fee": "wa-skagit-burlington-driveway",
+          "trigger": "conditional_home"
+        },
+        {
+          "fee": "wa-skagit-burlington-planning",
+          "trigger": "home"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.codepublishing.com/WA/Burlington/"
+    },
+    "Sedro-Woolley": {
+      "id": "wa-skagit-sedro-woolley",
+      "name": "Sedro-Woolley",
+      "agency": "wa-skagit-sedro-woolley",
+      "citations": [
+        "wa-skagit-sedro-woolley-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-skagit-sedro-woolley-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-skagit-sedro-woolley-planning",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-skagit-sedro-woolley-adu",
+          "trigger": "adu"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.codepublishing.com/WA/SedroWoolley/"
+    },
+    "Anacortes": {
+      "id": "wa-skagit-anacortes",
+      "name": "Anacortes",
+      "agency": "wa-skagit-anacortes",
+      "citations": [
+        "wa-skagit-anacortes-source",
+        "wa-skagit-anacortes-building-code",
+        "wa-skagit-anacortes-plan-code"
+      ],
+      "fees": [
+        {
+          "fee": "wa-skagit-anacortes-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-skagit-anacortes-site",
+          "trigger": "conditional_development"
+        },
+        {
+          "fee": "wa-skagit-anacortes-shoreline",
+          "trigger": "shoreline"
+        },
+        {
+          "fee": "wa-skagit-anacortes-adu",
+          "trigger": "adu"
+        }
+      ],
+      "coverage": "published components; additional charges require confirmation",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://anacortes.municipal.codes/AMC/19"
+    }
+  },
+  "electrical_cities": [],
+  "tribal_contacts": [],
+  "coverage_note": "Early bid screening. Mapped feature footprints are shown; local setbacks, agricultural buffers, wetland ratings and shoreline setbacks are not confirmed. Permit history is not loaded. Additional city, district, utility and impact fees may apply.",
+  "parcel": {
+    "url": "https://gis.skagitcountywa.gov/arcgis/rest/services/Assessor/PropertyMap/MapServer/5",
+    "key": "PARCELID",
+    "address": [
+      "SitusStNo",
+      "SitusStName"
+    ],
+    "fields": [
+      "PARCELID",
+      "SitusStNo",
+      "SitusStName"
+    ]
+  },
+  "city": {
+    "url": "https://geo.skagitcountywa.gov/server/rest/services/PortalServiceLayers/City_Limits/MapServer/0",
+    "fields": [
+      "NAME"
+    ]
+  },
+  "health_agency": "wa-skagit-health",
+  "layers": [
+    {
+      "id": "zoning",
+      "label": "Comprehensive plan / zoning designations",
+      "url": "https://geo.skagitcountywa.gov/server/rest/services/PortalServiceLayers/Comprehensive_Plan/MapServer/0",
+      "fields": [
+        "ZONING_CODE",
+        "ZONING_LABEL",
+        "LUD_ZONING",
+        "FEDERAL"
+      ],
+      "kind": "attributes",
+      "group": "jurisdiction",
+      "publisher": "Skagit County GIS"
+    },
+    {
+      "id": "stream",
+      "label": "Mapped rivers and streams (untyped)",
+      "url": "https://geo.skagitcountywa.gov/server/rest/services/PortalServiceLayers/Rivers_and_Streams/MapServer/0",
+      "fields": [
+        "NAME"
+      ],
+      "kind": "features",
+      "group": "critical",
+      "publisher": "Skagit County GIS",
+      "search_ft": 400
+    },
+    {
+      "id": "dike",
+      "label": "Dike district assessment parcels",
+      "url": "https://geo.skagitcountywa.gov/server/rest/services/PortalServiceLayers/Dike_District_Assessment_Parcels/MapServer/0",
+      "fields": [
+        "Code_Description"
+      ],
+      "kind": "attributes",
+      "group": "jurisdiction",
+      "publisher": "Skagit County GIS"
+    },
+    {
+      "id": "drainage",
+      "label": "Drainage district assessment parcels",
+      "url": "https://geo.skagitcountywa.gov/server/rest/services/PortalServiceLayers/Drainage_District_Assessment_Parcels/MapServer/0",
+      "fields": [
+        "Code_Description"
+      ],
+      "kind": "attributes",
+      "group": "jurisdiction",
+      "publisher": "Skagit County GIS"
+    }
+  ],
+  "search_distance_note": "Map query distances are screening extents, not adopted regulatory buffers.",
+  "fallback_fee": "wa-skagit-unpriced-local",
+  "routing": {
+    "checked": "2026-11-15",
+    "jurisdiction": "Skagit independent tribal/state/federal screening",
+    "tribal_contacts": [
+      {
+        "agency": "swinomish",
+        "citation": "wa-skagit-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "samish",
+        "citation": "wa-skagit-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "upper-skagit",
+        "citation": "wa-skagit-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "sauk-suiattle",
+        "citation": "wa-skagit-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "stillaguamish",
+        "citation": "wa-skagit-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      },
+      {
+        "agency": "tulalip",
+        "citation": "wa-skagit-tribal-contacts",
+        "reason": "Regional consultation starting contact; verify project-specific involvement."
+      }
+    ],
+    "tribal_name_matches": [
+      {
+        "agency": "swinomish",
+        "pattern": "swinomish"
+      },
+      {
+        "agency": "samish",
+        "pattern": "samish"
+      },
+      {
+        "agency": "upper-skagit",
+        "pattern": "upper.?skagit"
+      },
+      {
+        "agency": "sauk-suiattle",
+        "pattern": "sauk.?suiattle"
+      },
+      {
+        "agency": "stillaguamish",
+        "pattern": "stillaguamish"
+      },
+      {
+        "agency": "tulalip",
+        "pattern": "tulalip"
+      }
+    ],
+    "tribal_contact_limit": "Regional starting contacts, not an exhaustive affected-tribe list or a finding that every Tribe must approve. Ask the lead agency and Tribes to identify all affected governments, including interests outside reservation boundaries."
+  },
+  "examples": [
+    {
+      "parcel_key": "P54174",
+      "label": "Mount Vernon civic site",
+      "type": "new_sfr"
+    },
+    {
+      "parcel_key": "P55008",
+      "label": "Anacortes civic site",
+      "type": "new_sfr"
+    }
+  ],
+  "critical_area_note": "SCC 14.24.080 requires critical-area review; wetland, habitat, geologic and flood provisions can require site assessment and protective areas. The County reports a July 2026 hearings-board decision against its riparian-buffer provisions and pending amendments to SCC 14.24.530. Proposed amendments are not adopted requirements. Confirm current effective rules and site-specific buffer dimensions; no fixed riparian width is assumed here."
+}

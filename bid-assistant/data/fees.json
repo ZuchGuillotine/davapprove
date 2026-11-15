@@ -3175,5 +3175,2284 @@
    "date": "Effective January 1, 2026",
    "checked": "2026-11-14"
   }
+ },
+ {
+  "id": "wa-king-county-building",
+  "region": "wa-king",
+  "label": "King County: custom-home review and inspection",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King County",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/fee-guides/02-fee-2026-single-family-residential-construction.pdf",
+   "title": "King County: custom-home review and inspection",
+   "checked": "2026-11-15"
+  },
+  "note": "Custom new home: application review plus inspection by floor area. Basic/registered plans and remodels use other schedules; excludes site and sprinkler review.",
+  "method": {
+   "type": "area",
+   "base": 8128,
+   "per_sqft": 2.46
+  }
+ },
+ {
+  "id": "wa-king-county-site",
+  "region": "wa-king",
+  "label": "King County: custom-home site review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King County",
+  "low": 4639,
+  "high": 4639,
+  "confidence": "published",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/fee-guides/02-fee-2026-single-family-residential-construction.pdf",
+   "title": "King County: custom-home site review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-county-adu",
+  "region": "wa-king",
+  "label": "King County: ADU review, site review and inspection",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King County",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/fee-guides/02-fee-2026-single-family-residential-construction.pdf",
+   "title": "King County: ADU review, site review and inspection",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged.",
+  "method": {
+   "type": "area",
+   "base": 8174,
+   "per_sqft": 2.46
+  }
+ },
+ {
+  "id": "wa-king-county-sprinkler",
+  "region": "wa-king",
+  "label": "King County: sprinkler review and inspection if required",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King County",
+  "low": 3116,
+  "high": 3116,
+  "confidence": "published",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/fee-guides/02-fee-2026-single-family-residential-construction.pdf",
+   "title": "King County: sprinkler review and inspection if required",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-county-other",
+  "region": "wa-king",
+  "label": "King County: addition/accessory review and inspections",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King County",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/fee-guides/02-fee-2026-single-family-residential-construction.pdf",
+   "title": "King County: addition/accessory review and inspections",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-county-state",
+  "region": "wa-king",
+  "label": "King County: residential state building surcharge",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King County",
+  "low": 6.5,
+  "high": 6.5,
+  "confidence": "published",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/fee-guides/02-fee-2026-single-family-residential-construction.pdf",
+   "title": "King County: residential state building surcharge",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-seattle-building",
+  "region": "wa-king",
+  "label": "Seattle: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Seattle",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.seattle.gov/documents/Departments/SDCI/Codes/2026FeeSubtitle.pdf",
+   "title": "Seattle: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Enter construction valuation to price the published building and plan-review schedule. Valuation may be adjusted by the jurisdiction. Does not include separate planning, utilities, impact, trade or civil permits.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 1000,
+     "over": 0,
+     "base": 325,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 25000,
+     "over": 1000,
+     "base": 325,
+     "step": 100,
+     "rate": 1.6
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 709,
+     "step": 100,
+     "rate": 1.55
+    },
+    {
+     "up_to": 75000,
+     "over": 50000,
+     "base": 1096.5,
+     "step": 100,
+     "rate": 1.5
+    },
+    {
+     "up_to": 100000,
+     "over": 75000,
+     "base": 1471.5,
+     "step": 100,
+     "rate": 1.4
+    },
+    {
+     "up_to": 175000,
+     "over": 100000,
+     "base": 1821.5,
+     "step": 1000,
+     "rate": 7.75
+    },
+    {
+     "up_to": 250000,
+     "over": 175000,
+     "base": 2402.75,
+     "step": 1000,
+     "rate": 7.75
+    },
+    {
+     "up_to": 500000,
+     "over": 250000,
+     "base": 2984,
+     "step": 1000,
+     "rate": 7.5
+    },
+    {
+     "up_to": 750000,
+     "over": 500000,
+     "base": 4859,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 1000000,
+     "over": 750000,
+     "base": 6609,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 1500000,
+     "over": 1000000,
+     "base": 8359,
+     "step": 1000,
+     "rate": 6.75
+    }
+   ],
+   "plan_ratio": 1,
+   "technology_ratio": 0,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-king-seattle-landuse",
+  "region": "wa-king",
+  "label": "Seattle: conditional MUP / land-use review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Seattle",
+  "low": 0,
+  "high": 0,
+  "confidence": "allowance",
+  "source": {
+   "url": "https://www.seattle.gov/documents/Departments/SDCI/Codes/2026FeeSubtitle.pdf",
+   "title": "Seattle: land-use / environmental review scope",
+   "checked": "2026-11-15"
+  },
+  "note": "SMC 22.900B.010 and Table C-1: $551/hour; general MUP review minimum covers 10 hours. This editable 10–30-hour bidding allowance is an assumed review scope, not an agency quote or maximum. Only applies if this type of land-use review is required; routine code-compliant homes may not need a MUP. Intake, notice, specialized exceptions and other charges are additional; confirm category and hours with SDCI.",
+  "method": {
+   "type": "hourly_allowance",
+   "rate": 551,
+   "hours_low": 10,
+   "hours_high": 30
+  }
+ },
+ {
+  "id": "wa-king-redmond-building",
+  "region": "wa-king",
+  "label": "Redmond: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Redmond",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.redmond.gov/DocumentCenter/View/16885/Residential-Fees-2026-PDF",
+   "title": "Redmond: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Enter construction valuation to price the published building and plan-review schedule. Valuation may be adjusted by the jurisdiction. Does not include separate planning, utilities, impact, trade or civil permits.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 46.89,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 46.89,
+     "step": 100,
+     "rate": 6.08
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 138.26,
+     "step": 1000,
+     "rate": 27.9
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 781.12,
+     "step": 1000,
+     "rate": 20.17
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1285.25,
+     "step": 1000,
+     "rate": 14.01
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1984.02,
+     "step": 1000,
+     "rate": 11.2
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 6456.21,
+     "step": 1000,
+     "rate": 9.49
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 11197.86,
+     "step": 1000,
+     "rate": 7.29
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0.04,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-king-redmond-planning",
+  "region": "wa-king",
+  "label": "Redmond: new residential planning review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Redmond",
+  "low": 858.156,
+  "high": 858.156,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.redmond.gov/DocumentCenter/View/16885/Residential-Fees-2026-PDF",
+   "title": "Redmond: new residential planning review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-redmond-engineering",
+  "region": "wa-king",
+  "label": "Redmond: new detached home engineering/transportation incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Redmond",
+  "low": 1543.464,
+  "high": 1543.464,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.redmond.gov/DocumentCenter/View/16885/Residential-Fees-2026-PDF",
+   "title": "Redmond: new detached home engineering/transportation incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-redmond-fire",
+  "region": "wa-king",
+  "label": "Redmond: residential fire review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Redmond",
+  "low": 828.3392,
+  "high": 828.3392,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.redmond.gov/DocumentCenter/View/16885/Residential-Fees-2026-PDF",
+   "title": "Redmond: residential fire review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-sammamish-building",
+  "region": "wa-king",
+  "label": "Sammamish: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sammamish",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.sammamish.us/media/204gd3os/2026-development-fee-schedule.pdf",
+   "title": "Sammamish: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Enter construction valuation to price the published building and plan-review schedule. Valuation may be adjusted by the jurisdiction. Does not include separate planning, utilities, impact, trade or civil permits.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 142.05,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 142.05,
+     "step": 100,
+     "rate": 6.31
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 236.77,
+     "step": 1000,
+     "rate": 20.59
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 710.28,
+     "step": 1000,
+     "rate": 11.37
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 994.39,
+     "step": 1000,
+     "rate": 5.68
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1278.51,
+     "step": 1000,
+     "rate": 8.65
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 4735.21,
+     "step": 1000,
+     "rate": 2.65
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 6061.07,
+     "step": 1000,
+     "rate": 7.37
+    },
+    {
+     "up_to": 10000000,
+     "over": 5000000,
+     "base": 35514.05,
+     "step": 1000,
+     "rate": 5.92
+    },
+    {
+     "up_to": null,
+     "over": 10000000,
+     "base": 65109.08,
+     "step": 1000,
+     "rate": 2.96
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0.15,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-king-sammamish-planning",
+  "region": "wa-king",
+  "label": "Sammamish: new construction planning review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sammamish",
+  "low": 1814.6999999999998,
+  "high": 1814.6999999999998,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.sammamish.us/media/204gd3os/2026-development-fee-schedule.pdf",
+   "title": "Sammamish: new construction planning review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-sammamish-planning-addition",
+  "region": "wa-king",
+  "label": "Sammamish: addition/remodel planning review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sammamish",
+  "low": 865.9499999999999,
+  "high": 865.9499999999999,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.sammamish.us/media/204gd3os/2026-development-fee-schedule.pdf",
+   "title": "Sammamish: addition/remodel planning review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-sammamish-critical",
+  "region": "wa-king",
+  "label": "Sammamish: critical-area engineering base review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sammamish",
+  "low": 2585.2,
+  "high": 2585.2,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.sammamish.us/media/204gd3os/2026-development-fee-schedule.pdf",
+   "title": "Sammamish: critical-area engineering base review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Base fee for new single-family home/ADU critical-area engineering review; additional hourly review may apply."
+ },
+ {
+  "id": "wa-king-kent-building",
+  "region": "wa-king",
+  "label": "Kent: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kent",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kentwa.gov/home/showpublisheddocument/24957/639117686153453888",
+   "title": "Kent: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Building permit and state surcharge only. The published bracket bases contain discontinuities; retained as printed. Plan-check, planning and engineering charges remain separate and quote-needed.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 52.82,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 52.82,
+     "step": 100,
+     "rate": 6.69
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 155.95,
+     "step": 1000,
+     "rate": 30.72
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 881.32,
+     "step": 1000,
+     "rate": 22.15
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1450.35,
+     "step": 1000,
+     "rate": 15.36
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 2238.81,
+     "step": 1000,
+     "rate": 10.38
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 7294.24,
+     "step": 1000,
+     "rate": 10.38
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 12618.81,
+     "step": 1000,
+     "rate": 6.92
+    }
+   ],
+   "plan_ratio": 0,
+   "technology_ratio": 0,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-king-kent-planning",
+  "region": "wa-king",
+  "label": "Kent: plan-check and planning/engineering review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kent",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.kentwa.gov/home/showpublisheddocument/24957/639117686153453888",
+   "title": "Kent: plan-check and planning/engineering review",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-kent-critical",
+  "region": "wa-king",
+  "label": "Kent: critical-area delineation report review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kent",
+  "low": 2191.59,
+  "high": 2922.13,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kentwa.gov/home/showpublisheddocument/24867/639112348603670000",
+   "title": "Kent: critical-area delineation report review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published category range; confirm residential classification and mitigation review scope."
+ },
+ {
+  "id": "wa-king-bellevue-building",
+  "region": "wa-king",
+  "label": "Bellevue: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Bellevue",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://bellevue.legistar.com/View.ashx?GUID=FE785901-FD91-4B7B-A16B-A7B36590E46C&ID=14950723&M=F",
+   "title": "Bellevue: building and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "2026 ordinance: new dwelling building inspection and plan review are discounted to 85%; amounts rounded to whole dollars. Includes operations and residential state fee; excludes trade, utility and civil review.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 44,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 44,
+     "step": 100,
+     "rate": 6.39
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 139.85,
+     "step": 1000,
+     "rate": 25.6
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 728.65,
+     "step": 1000,
+     "rate": 19.06
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1205.15,
+     "step": 1000,
+     "rate": 12.33
+    },
+    {
+     "up_to": 1000000,
+     "over": 100000,
+     "base": 1821.65,
+     "step": 1000,
+     "rate": 10.77
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 11514.65,
+     "step": 1000,
+     "rate": 6.39
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 59.5,
+   "prorated": true,
+   "new_dwelling_factor": 0.85,
+   "round_components": true
+  }
+ },
+ {
+  "id": "wa-king-bellevue-planning",
+  "region": "wa-king",
+  "label": "Bellevue: planning and civil review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Bellevue",
+  "low": 2432,
+  "high": 2432,
+  "confidence": "published",
+  "source": {
+   "url": "https://bellevue.legistar.com/View.ashx?GUID=FE785901-FD91-4B7B-A16B-A7B36590E46C&ID=14950723&M=F",
+   "title": "Bellevue: planning and civil review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published new single-family residence planning review. Addition, remodel, critical-area and shoreline permits have separate schedules."
+ },
+ {
+  "id": "wa-king-renton-building",
+  "region": "wa-king",
+  "label": "Renton: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Renton",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://rentonrfa.com/wp-content/uploads/2026/02/2025-2026-Fee-Schedule-_2025-Mid-Bi1.pdf",
+   "title": "Renton: building and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "2026 column of city schedule published by Renton RFA; review 65% plus technology. Confirm later amendments, adopted valuation and rounding with the permit technician.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 44,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 44,
+     "step": 100,
+     "rate": 7.98
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 119.66,
+     "step": 1000,
+     "rate": 22.99
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 648.47,
+     "step": 1000,
+     "rate": 16.55
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1062.23,
+     "step": 1000,
+     "rate": 11.53
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1638.89,
+     "step": 1000,
+     "rate": 9.17
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 5308.23,
+     "step": 1000,
+     "rate": 7.79
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 9205.04,
+     "step": 1000,
+     "rate": 6.02
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0.05,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-king-renton-planning",
+  "region": "wa-king",
+  "label": "Renton: planning and civil review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Renton",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://rentonrfa.com/wp-content/uploads/2026/02/2025-2026-Fee-Schedule-_2025-Mid-Bi1.pdf",
+   "title": "Renton: planning and civil review",
+   "checked": "2026-11-15"
+  },
+  "note": "Site-plan/zoning review 5% and engineering review 5% of building permit fee, plus technology; civil construction permits are additional.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 44,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 44,
+     "step": 100,
+     "rate": 7.98
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 119.66,
+     "step": 1000,
+     "rate": 22.99
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 648.47,
+     "step": 1000,
+     "rate": 16.55
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1062.23,
+     "step": 1000,
+     "rate": 11.53
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1638.89,
+     "step": 1000,
+     "rate": 9.17
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 5308.23,
+     "step": 1000,
+     "rate": 7.79
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 9205.04,
+     "step": 1000,
+     "rate": 6.02
+    }
+   ],
+   "plan_ratio": 0,
+   "technology_ratio": 0.05,
+   "flat": 0,
+   "permit_factor": 0.1
+  }
+ },
+ {
+  "id": "wa-king-kirkland-building",
+  "region": "wa-king",
+  "label": "Kirkland: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Development-Services-Center/Tools-and-Resources/All-Forms-Publications-Fees",
+   "title": "Kirkland: building and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-kirkland-planning",
+  "region": "wa-king",
+  "label": "Kirkland: planning and civil review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Development-Services-Center/Tools-and-Resources/All-Forms-Publications-Fees",
+   "title": "Kirkland: planning and civil review",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-federal-way-building",
+  "region": "wa-king",
+  "label": "Federal Way: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Federal Way",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.federalwaywa.gov/sites/default/files/2026-02/2026%20Fee%20Schedule.pdf",
+   "title": "Federal Way: building and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Building and plan-review fees, automation allowance, residential digitizing and state surcharge. Verify automation assessment base and separate land-use/civil review.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 1000,
+     "over": 0,
+     "base": 89.54,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 1000,
+     "base": 89.54,
+     "step": 100,
+     "rate": 6.75
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 157.11,
+     "step": 1000,
+     "rate": 33.68
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 931.63,
+     "step": 1000,
+     "rate": 24
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1531.67,
+     "step": 1000,
+     "rate": 16.24
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 2343.58,
+     "step": 1000,
+     "rate": 13.17
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 7609.44,
+     "step": 1000,
+     "rate": 10.81
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 13016.54,
+     "step": 1000,
+     "rate": 8.52
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 66.5,
+   "automation_ratio": 0.05,
+   "automation_min": 43
+  }
+ },
+ {
+  "id": "wa-king-federal-way-planning",
+  "region": "wa-king",
+  "label": "Federal Way: planning and civil review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Federal Way",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.federalwaywa.gov/sites/default/files/2026-02/2026%20Fee%20Schedule.pdf",
+   "title": "Federal Way: planning and civil review",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-auburn-building",
+  "region": "wa-king",
+  "label": "Auburn: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Auburn",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_11470554/File/City%20Hall/Documents/2026FeeSchedule.pdf",
+   "title": "Auburn: building and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published 2026 table plus 65% plan review and state surcharge. Technology is already included in the listed fees; do not add it again. Land-use, engineering and fire review are additional.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 32,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 32,
+     "step": 100,
+     "rate": 6
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 122,
+     "step": 1000,
+     "rate": 18.6
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 549.8,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 899.8,
+     "step": 1000,
+     "rate": 10
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1399.8,
+     "step": 1000,
+     "rate": 9
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 4999.8,
+     "step": 1000,
+     "rate": 8
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 8999.8,
+     "step": 1000,
+     "rate": 6
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-king-auburn-planning",
+  "region": "wa-king",
+  "label": "Auburn: planning and civil review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Auburn",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.auburnwa.gov/city_hall/documents",
+   "title": "Auburn: planning and civil review",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-shoreline-building",
+  "region": "wa-king",
+  "label": "Shoreline: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Shoreline",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://ecode360.com/49766332",
+   "title": "Shoreline: building and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Adopted building valuation schedule + plan review + technology + residential state fee; separate zoning/civil review is additional.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 16000,
+     "over": 0,
+     "base": 267,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 75,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 397,
+     "step": 1000,
+     "rate": 11
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 672,
+     "step": 1000,
+     "rate": 9
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1122,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3922,
+     "step": 1000,
+     "rate": 5
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 6422,
+     "step": 1000,
+     "rate": 4
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0.04,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-king-shoreline-planning",
+  "region": "wa-king",
+  "label": "Shoreline: planning and civil review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Shoreline",
+  "low": 277.68,
+  "high": 277.68,
+  "confidence": "published",
+  "source": {
+   "url": "https://ecode360.com/49766332",
+   "title": "Shoreline: planning and civil review",
+   "checked": "2026-11-15"
+  },
+  "note": "Zoning review one-hour minimum at the adopted rate, plus technology. This is a minimum, not a cap; civil review is separate."
+ },
+ {
+  "id": "wa-skagit-county-building",
+  "region": "wa-skagit",
+  "label": "Skagit County: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit County",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "title": "Skagit County: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Enter construction valuation to price the published building and plan-review schedule. Valuation may be adjusted by the jurisdiction. Does not include separate planning, utilities, impact, trade or civil permits.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 33,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 33,
+     "step": 100,
+     "rate": 3.85
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 90.75,
+     "step": 1000,
+     "rate": 15.15
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 439.2,
+     "step": 1000,
+     "rate": 11
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 714.2,
+     "step": 1000,
+     "rate": 9.25
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1176.7,
+     "step": 1000,
+     "rate": 6.68
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3848.7,
+     "step": 1000,
+     "rate": 5.53
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 6613.7,
+     "step": 1000,
+     "rate": 4.04
+    },
+    {
+     "up_to": null,
+     "over": 5000000,
+     "base": 22773.7,
+     "step": 1000,
+     "rate": 2.57
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0.075,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-skagit-county-zoning",
+  "region": "wa-skagit",
+  "label": "Skagit County: zoning review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit County",
+  "low": 166.625,
+  "high": 166.625,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "title": "Skagit County: zoning review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-county-fire",
+  "region": "wa-skagit",
+  "label": "Skagit County: fire site/access review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit County",
+  "low": 166.625,
+  "high": 166.625,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "title": "Skagit County: fire site/access review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-county-publicworks",
+  "region": "wa-skagit",
+  "label": "Skagit County: Public Works land-use review incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit County",
+  "low": 194.575,
+  "high": 194.575,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "title": "Skagit County: Public Works land-use review incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-county-drainage",
+  "region": "wa-skagit",
+  "label": "Skagit County: land disturbance drainage/grading review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit County",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "title": "Skagit County: land disturbance drainage/grading review",
+   "checked": "2026-11-15"
+  },
+  "note": "Schedule uses new impervious surface and grading volume; bid hard-surface input is an approximation. Confirm exemptions and disturbed area before final pricing.",
+  "method": {
+   "type": "skagit_disturbance",
+   "technology_ratio": 0.075,
+   "levels": [
+    {
+     "surface": 1999,
+     "volume": 500,
+     "drainage": 360,
+     "grading": 360,
+     "both": 750
+    },
+    {
+     "surface": 4999,
+     "volume": 500,
+     "fee": 1250
+    },
+    {
+     "surface": 9999,
+     "volume": 4999,
+     "fee": 2475
+    },
+    {
+     "surface": 39999,
+     "volume": 14999,
+     "fee": 4980
+    },
+    {
+     "surface": 99999,
+     "volume": 69999,
+     "fee": 12350
+    }
+   ]
+  }
+ },
+ {
+  "id": "wa-skagit-county-flood",
+  "region": "wa-skagit",
+  "label": "Skagit County: flood area development permit incl. technology",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit County",
+  "low": 537.5,
+  "high": 537.5,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "title": "Skagit County: flood area development permit incl. technology",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-mount-vernon-building",
+  "region": "wa-skagit",
+  "label": "Mount Vernon: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Mount Vernon",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.mountvernonwa.gov/DocumentCenter/View/17086/Fee-Schedule-2025",
+   "title": "Mount Vernon: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "City-linked June 2025 handout checked November 2026; city warns website amounts may lag amendments. Building + 85% review + 6% technology, plus state fee. Confirm current quote before bid commitment.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 23.5,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 23.5,
+     "step": 100,
+     "rate": 3.05
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 69.25,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 391.75,
+     "step": 1000,
+     "rate": 10.1
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 643.75,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 993.75,
+     "step": 1000,
+     "rate": 5.6
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3233.75,
+     "step": 1000,
+     "rate": 4.75
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 5608.75,
+     "step": 1000,
+     "rate": 3.65
+    }
+   ],
+   "plan_ratio": 0.85,
+   "technology_ratio": 0.06,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-skagit-mount-vernon-planning",
+  "region": "wa-skagit",
+  "label": "Mount Vernon: planning and engineering review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Mount Vernon",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.mountvernonwa.gov/DocumentCenter/View/17086/Fee-Schedule-2025",
+   "title": "Mount Vernon: planning and engineering review",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-burlington-building",
+  "region": "wa-skagit",
+  "label": "Burlington: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Burlington",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.burlingtonwa.gov/DocumentCenter/View/7233",
+   "title": "Burlington: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published valuation table bases retained as printed, including discontinuities. Includes plan review, application minimum and state surcharge; separate planning and engineering review remain additional.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 32.25,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 32.25,
+     "step": 100,
+     "rate": 4.45
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 94.51,
+     "step": 1000,
+     "rate": 18.91
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 637.86,
+     "step": 1000,
+     "rate": 13.34
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 872.81,
+     "step": 1000,
+     "rate": 10.01
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1347.57,
+     "step": 1000,
+     "rate": 7.78
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 4386.26,
+     "step": 1000,
+     "rate": 6.68
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 7607.92,
+     "step": 1000,
+     "rate": 5.57
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 38.75
+  }
+ },
+ {
+  "id": "wa-skagit-burlington-siteplan",
+  "region": "wa-skagit",
+  "label": "Burlington: Type I site-plan review if separately required",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Burlington",
+  "low": 813.88,
+  "high": 813.88,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.burlingtonwa.gov/DocumentCenter/View/7233",
+   "title": "Burlington: Type I site-plan review if separately required",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-burlington-driveway",
+  "region": "wa-skagit",
+  "label": "Burlington: residential driveway permit if required",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Burlington",
+  "low": 406.94,
+  "high": 406.94,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.burlingtonwa.gov/DocumentCenter/View/7233",
+   "title": "Burlington: residential driveway permit if required",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-sedro-woolley-building",
+  "region": "wa-skagit",
+  "label": "Sedro-Woolley: building permit and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sedro-Woolley",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://cms5.revize.com/revize/cityofsedrowoolley/Departments/Finance/Policies_Procedures/Master%20Fee%20Schedule.pdf",
+   "title": "Sedro-Woolley: building permit and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "Adopted 2026 schedule: building permit plus 65% plan review and residential state fee.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 23.5,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 23.5,
+     "step": 100,
+     "rate": 3.05
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 69.25,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 391.75,
+     "step": 1000,
+     "rate": 10.1
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 643.75,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 993.75,
+     "step": 1000,
+     "rate": 5.6
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3233.75,
+     "step": 1000,
+     "rate": 4.75
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 5608.75,
+     "step": 1000,
+     "rate": 3.65
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-skagit-sedro-woolley-planning",
+  "region": "wa-skagit",
+  "label": "Sedro-Woolley: new single-family/duplex planning review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sedro-Woolley",
+  "low": 70,
+  "high": 70,
+  "confidence": "published",
+  "source": {
+   "url": "https://cms5.revize.com/revize/cityofsedrowoolley/Departments/Finance/Policies_Procedures/Master%20Fee%20Schedule.pdf",
+   "title": "Sedro-Woolley: new single-family/duplex planning review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-sedro-woolley-adu",
+  "region": "wa-skagit",
+  "label": "Sedro-Woolley: ADU review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sedro-Woolley",
+  "low": 250,
+  "high": 250,
+  "confidence": "published",
+  "source": {
+   "url": "https://cms5.revize.com/revize/cityofsedrowoolley/Departments/Finance/Policies_Procedures/Master%20Fee%20Schedule.pdf",
+   "title": "Sedro-Woolley: ADU review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-sedro-woolley-plancheck",
+  "region": "wa-skagit",
+  "label": "Sedro-Woolley: building plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sedro-Woolley",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://cms5.revize.com/revize/cityofsedrowoolley/Departments/Finance/Policies_Procedures/Master%20Fee%20Schedule.pdf",
+   "title": "Sedro-Woolley: building plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-anacortes-building",
+  "region": "wa-skagit",
+  "label": "Anacortes: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Anacortes",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://anacortes.municipal.codes/AMC/19.14.150",
+   "title": "Anacortes: building and plan review",
+   "checked": "2026-11-15"
+  },
+  "note": "AMC Table B building valuation schedule plus 65% plan review under R108 and state surcharge. Separate planning and utility charges are additional.",
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 23.5,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 23.5,
+     "step": 100,
+     "rate": 3.05
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 69.25,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 391.75,
+     "step": 1000,
+     "rate": 10.1
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 643.75,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 993.75,
+     "step": 1000,
+     "rate": 5.6
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3233.75,
+     "step": 1000,
+     "rate": 4.75
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 5608.75,
+     "step": 1000,
+     "rate": 3.65
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 6.5
+  }
+ },
+ {
+  "id": "wa-skagit-anacortes-site",
+  "region": "wa-skagit",
+  "label": "Anacortes: Type I site-plan review if required",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Anacortes",
+  "low": 360,
+  "high": 360,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.anacorteswa.gov/DocumentCenter/View/37044/2026-Unified-Fee-Schedule--Effective-07132026",
+   "title": "Anacortes: Type I site-plan review if required",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-anacortes-shoreline",
+  "region": "wa-skagit",
+  "label": "Anacortes: shoreline exemption or Type II substantial development review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Anacortes",
+  "low": 240,
+  "high": 1630,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.anacorteswa.gov/DocumentCenter/View/37044/2026-Unified-Fee-Schedule--Effective-07132026",
+   "title": "Anacortes: shoreline exemption or Type II substantial development review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-skagit-anacortes-adu",
+  "region": "wa-skagit",
+  "label": "Anacortes: ADU review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Anacortes",
+  "low": 120,
+  "high": 120,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.anacorteswa.gov/DocumentCenter/View/37044/2026-Unified-Fee-Schedule--Effective-07132026",
+   "title": "Anacortes: ADU review",
+   "checked": "2026-11-15"
+  },
+  "note": "Published schedule applied to stated bid assumptions; additional services may be charged."
+ },
+ {
+  "id": "wa-king-unpriced-local",
+  "region": "wa-king",
+  "label": "King municipalities: local permit quote",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King municipalities",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://kingcounty.gov/en/dept/local-services",
+   "title": "King municipalities: local permit quote",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-impact",
+  "region": "wa-king",
+  "label": "King: school, park, fire and transportation impact fees",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "King",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://aqua.kingcounty.gov/council/clerk/code/24-30_Title_21A.htm",
+   "title": "King: school, park, fire and transportation impact fees",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-utility",
+  "region": "wa-king",
+  "label": "King: water / sewer connection and capacity charges",
+  "kind": "utility",
+  "basis": "published",
+  "payee": "King",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://aqua.kingcounty.gov/council/clerk/code/24-30_Title_21A.htm",
+   "title": "King: water / sewer connection and capacity charges",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-trades",
+  "region": "wa-king",
+  "label": "King: mechanical, plumbing and civil permits",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://aqua.kingcounty.gov/council/clerk/code/24-30_Title_21A.htm",
+   "title": "King: mechanical, plumbing and civil permits",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-electrical",
+  "region": "wa-king",
+  "label": "King: municipal electrical permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "King",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.lni.wa.gov/licensing-permits/electrical/electrical-permits-fees-and-inspections/city-electrical-permits-inspections",
+   "title": "King: municipal electrical permit",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-unpriced-local",
+  "region": "wa-skagit",
+  "label": "Skagit municipalities: local permit quote",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit municipalities",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/planning-and-building/",
+   "title": "Skagit municipalities: local permit quote",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-impact",
+  "region": "wa-skagit",
+  "label": "Skagit: school, park, fire and transportation impact fees",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Skagit",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://ecode360.com/SK5020",
+   "title": "Skagit: school, park, fire and transportation impact fees",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-utility",
+  "region": "wa-skagit",
+  "label": "Skagit: water / sewer connection and capacity charges",
+  "kind": "utility",
+  "basis": "published",
+  "payee": "Skagit",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://ecode360.com/SK5020",
+   "title": "Skagit: water / sewer connection and capacity charges",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-trades",
+  "region": "wa-skagit",
+  "label": "Skagit: mechanical, plumbing and civil permits",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://ecode360.com/SK5020",
+   "title": "Skagit: mechanical, plumbing and civil permits",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-electrical",
+  "region": "wa-skagit",
+  "label": "Skagit: municipal electrical permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Skagit",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.lni.wa.gov/licensing-permits/electrical/electrical-permits-fees-and-inspections/city-electrical-permits-inspections",
+   "title": "Skagit: municipal electrical permit",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-skagit-demolition",
+  "region": "wa-skagit",
+  "label": "NWCAA: demolition/asbestos notification",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "NWCAA",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://nwcleanairwa.gov/resources/asbestos-demolition/",
+   "title": "NWCAA: demolition/asbestos notification",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete project price; obtain an agency quote."
+ },
+ {
+  "id": "wa-king-bellevue-planning-addition",
+  "region": "wa-king",
+  "label": "Bellevue: addition planning review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Bellevue",
+  "low": 1216,
+  "high": 1216,
+  "confidence": "published",
+  "source": {
+   "url": "https://bellevue.legistar.com/View.ashx?GUID=FE785901-FD91-4B7B-A16B-A7B36590E46C&ID=14950723&M=F",
+   "title": "Bellevue: addition planning review",
+   "checked": "2026-11-15"
+  },
+  "note": "Ordinary single-family addition; quick-review eligibility can reduce the charge."
+ },
+ {
+  "id": "wa-king-shoreline-civil",
+  "region": "wa-king",
+  "label": "Shoreline: residential civil review minimum",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Shoreline",
+  "low": 1110.72,
+  "high": 1110.72,
+  "confidence": "published",
+  "source": {
+   "url": "https://ecode360.com/49766332",
+   "title": "Shoreline: residential civil review minimum",
+   "checked": "2026-11-15"
+  },
+  "note": "If applicable, residential civil plan review minimum; smaller-project schedule and further review may differ."
+ },
+ {
+  "id": "wa-skagit-burlington-planning",
+  "region": "wa-skagit",
+  "label": "Burlington: single-family/duplex planning review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Burlington",
+  "low": 203.47,
+  "high": 203.47,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.burlingtonwa.gov/DocumentCenter/View/7233",
+   "title": "Burlington: single-family/duplex planning review",
+   "checked": "2026-11-15"
+  },
+  "note": "Planning review of construction/development plans; separate land-use permit may also be required."
+ },
+ {
+  "id": "wa-king-ecologist",
+  "region": "wa-king",
+  "label": "King: ecological consultant allowance",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "King",
+  "low": 2520,
+  "high": 6300,
+  "confidence": "medium",
+  "source": {
+   "url": "https://wetlands-wildlife.com/rates.htm",
+   "title": "King: ecological consultant allowance",
+   "checked": "2026-11-15"
+  },
+  "note": "Published consultant rate $210/hour serving King and Skagit. Bid assumption: 12–30 hours including fieldwork/report/travel; hours are a workflow allowance, not a consultant quote. Complex delineation/mitigation can exceed this range.",
+  "method": {
+   "type": "hourly_allowance",
+   "rate": 210,
+   "hours_low": 12,
+   "hours_high": 30,
+   "assumption_basis": "workflow"
+  }
+ },
+ {
+  "id": "wa-king-geotech",
+  "region": "wa-king",
+  "label": "King: site-specific geotechnical investigation",
+  "kind": "professional",
+  "basis": "published",
+  "payee": "King",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/building-land-use-permits/s/b-select-geotech-pdf.pdf",
+   "title": "King: site-specific geotechnical investigation",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete local investigation price. Obtain a site-specific proposal for drilling, slope stability and foundation recommendations."
+ },
+ {
+  "id": "wa-skagit-ecologist",
+  "region": "wa-skagit",
+  "label": "Skagit: ecological consultant allowance",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Skagit",
+  "low": 2520,
+  "high": 6300,
+  "confidence": "medium",
+  "source": {
+   "url": "https://wetlands-wildlife.com/rates.htm",
+   "title": "Skagit: ecological consultant allowance",
+   "checked": "2026-11-15"
+  },
+  "note": "Published consultant rate $210/hour serving King and Skagit. Bid assumption: 12–30 hours including fieldwork/report/travel; hours are a workflow allowance, not a consultant quote. Complex delineation/mitigation can exceed this range.",
+  "method": {
+   "type": "hourly_allowance",
+   "rate": 210,
+   "hours_low": 12,
+   "hours_high": 30,
+   "assumption_basis": "workflow"
+  }
+ },
+ {
+  "id": "wa-skagit-geotech",
+  "region": "wa-skagit",
+  "label": "Skagit: site-specific geotechnical investigation",
+  "kind": "professional",
+  "basis": "published",
+  "payee": "Skagit",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/local-services/permits/building-land-use-permits/s/b-select-geotech-pdf.pdf",
+   "title": "Skagit: site-specific geotechnical investigation",
+   "checked": "2026-11-15"
+  },
+  "note": "No published source for a complete local investigation price. Obtain a site-specific proposal for drilling, slope stability and foundation recommendations."
+ },
+ {
+  "id": "wa-king-septic",
+  "region": "wa-king",
+  "label": "King: septic review and installation approval",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "County public health",
+  "low": 1800,
+  "high": 2362,
+  "confidence": "published",
+  "source": {
+   "url": "https://cdn.kingcounty.gov/-/media/king-county/depts/dph/documents/health-safety/environmental-health/fees/oss-service-fees-through-2026.pdf",
+   "checked": "2026-11-15"
+  },
+  "note": "New gravity design plus installation: $731 + $1,069; pressurized: $1,181 + $1,181. Winter monitoring, site conditions and consultant design are additional. Existing-system reuse requires its own review."
+ },
+ {
+  "id": "wa-skagit-septic",
+  "region": "wa-skagit",
+  "label": "Skagit: septic review and installation approval",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "County public health",
+  "low": 1030,
+  "high": 1030,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "checked": "2026-11-15"
+  },
+  "note": "2026 new-system design review $620 plus initial site evaluation $410. Additional hourly work, wet-season review, private design and construction are additional. Existing-system reuse is not priced by this line."
+ },
+ {
+  "id": "wa-king-county-screening",
+  "region": "wa-king",
+  "label": "King County: application screening",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "wa-king",
+  "low": 126,
+  "high": 126,
+  "confidence": "published",
+  "source": {
+   "url": "https://aqua.kingcounty.gov/council/clerk/code/36_Title_27.htm",
+   "title": "King County: application screening",
+   "checked": "2026-11-15"
+  },
+  "note": "KCC 27.10.015: one application requiring plan review/completeness screening. Additional separate applications may each incur this fee; confirm consolidated application scope."
+ },
+ {
+  "id": "wa-skagit-district",
+  "region": "wa-skagit",
+  "label": "Dike / drainage district permissions and engineering",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "wa-skagit",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.skagitcountywa.gov/services/permit-fee-schedule/",
+   "title": "Dike / drainage district permissions and engineering",
+   "checked": "2026-11-15"
+  },
+  "note": "District-specific charges are not included in county/city building fees. Contact the mapped district for its authorization, connection and engineering scope."
  }
 ]
