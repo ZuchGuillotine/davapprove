@@ -25,6 +25,7 @@ vi.mock("./WorkflowGraph", () => ({
 }));
 beforeEach(() => {
   cleanup();
+  window.history.replaceState(null, "", "/");
   localStorage.clear();
   resetDemo();
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
@@ -49,12 +50,47 @@ describe("project workspace", () => {
   it("opens the separate bid workspace and preserves the selected project", async () => {
     const user = await openSample();
     await user.click(screen.getByRole("button", { name: "Bids & assessments" }));
-    expect(screen.getByTitle("Early bid assessment workspace")).toHaveAttribute("src", "/bid-assistant/index.html");
+    expect(screen.getByTitle("Early bid assessment workspace")).toHaveAttribute("src", "/bid-assistant/index.html?embedded=1");
     expect(screen.getByText("EARLY BID · PUBLIC MAPS")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Import selected" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /^Projects/ }));
     expect(screen.getByRole("heading", { name: "Cedar House · Concept study" })).toBeInTheDocument();
     expect(screen.getByText("Revision 1")).toBeInTheDocument();
+  });
+
+  it("returns from bids to the selected project tab using the breadcrumb", async () => {
+    const user = await openSample();
+    await user.click(screen.getByRole("tab", { name: "Activity" }));
+    await user.click(screen.getByRole("button", { name: "Bids & assessments" }));
+    expect(new URLSearchParams(window.location.search).get("workspace")).toBe("bids");
+    expect(screen.getByRole("button", { name: "Bids & assessments" })).toHaveAttribute("aria-current", "page");
+    await user.click(screen.getByRole("button", { name: "Return to projects" }));
+    expect(screen.getByRole("tab", { name: "Activity" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("heading", { name: "Cedar House · Concept study" })).toBeInTheDocument();
+    expect(new URLSearchParams(window.location.search).get("workspace")).toBe("projects");
+  });
+
+  it("uses browser Back and Forward between projects and bids without reloading the project", async () => {
+    const user = await openSample();
+    await user.click(screen.getByRole("tab", { name: "Activity" }));
+    await user.click(screen.getByRole("button", { name: "Bids & assessments" }));
+    const assessmentFrame = screen.getByTitle("Early bid assessment workspace");
+    window.history.back();
+    await waitFor(() => expect(screen.getByRole("tab", { name: "Activity" })).toHaveAttribute("aria-selected", "true"));
+    window.history.forward();
+    await waitFor(() => expect(screen.getByRole("button", { name: "Bids & assessments" })).toHaveAttribute("aria-current", "page"));
+    expect(screen.getByTitle("Early bid assessment workspace")).toBe(assessmentFrame);
+  });
+
+  it("provides mobile workspace navigation for bids, projects and project creation", async () => {
+    const user = await openSample();
+    const nav = within(screen.getByRole("navigation", { name: "Workspace navigation" }));
+    await user.click(nav.getByRole("button", { name: "Bid workspace" }));
+    await screen.findByTitle("Early bid assessment workspace");
+    await user.click(nav.getByRole("button", { name: "Project dashboard" }));
+    expect(screen.getByRole("heading", { name: "Cedar House · Concept study" })).toBeInTheDocument();
+    await user.click(nav.getByRole("button", { name: "Create project" }));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 
   it("renames the project without changing its design revision", async () => {

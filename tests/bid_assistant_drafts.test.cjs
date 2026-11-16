@@ -9,7 +9,9 @@ const parcel = Screen.buildParcel([{geometry}], {parcel_key:'test-parcel',rp_acc
 const state = { pack: {id:'wa-kitsap'}, parcel, draftId:'first', facts:{parcel:{situs:'SYNTHETIC BID'}},
   screening:{screened_at:'2026-11-13T00:00:00Z', layers:{wetland:{status:'unknown',error:'Timeout',features:[]}},tables:{permits:{rows:[{PERMIT_NO:'sample',PROJECT_NAME:'PRIVATE',APPLICANT:'PRIVATE',OWNER_AGENT_NM:'PRIVATE'}]}}}, overrides:{'pro-geotech-report':{low:3000,high:4000,note:'Test allowance',excluded:false}} };
 const project = {type:'adu',water:'well_existing',wastewater:'septic_existing',new_sqft:750};
-const draft = Drafts.snapshot(state,project,'Test draft','Client handles survey');
+const draft = Drafts.snapshot(state,project,'Test draft','Client handles survey','Coates Design');
+assert.equal(draft.agency_name,'Coates Design');
+assert.equal(Drafts.snapshot(state,project,'Legacy').agency_name,'');
 assert.equal(draft.stage,'early_bid'); assert.equal(draft.approved_revision,null);
 assert(!JSON.stringify(draft).includes('PRIVATE'), 'personal record fields are never saved');
 Drafts.save(storage,draft);

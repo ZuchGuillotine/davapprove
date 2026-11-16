@@ -144,7 +144,9 @@
   }
 
   function parcelById(rpAcctId) {
+    if(!/^\d{1,7}$/.test(String(rpAcctId)))return Promise.reject(new Error('Invalid assessor account ID'));
     return Arc.query(PARCELS, { where: 'RP_ACCT_ID = ' + Number(rpAcctId), outFields: PARCEL_FIELDS }).then(function (r) {
+      if(r.exceeded)throw new Error('Parcel boundary is incomplete; confirm the parcel with the assessor.');
       return parcelFromFeatures(r.features);
     });
   }
@@ -158,32 +160,43 @@
     });
   }
 
-  /** Free-text search: tax account number (12-3456-789-0123 style), assessor account ID, or situs address. */
+  var searchCache = new Map();
+  /** Bounded identity-only search. Complete tax IDs also find parcels without situs addresses. */
   function search(text) {
-    var t = String(text || '').trim().toUpperCase().replace(/\s+/g, ' ');
-    if (!t) return Promise.resolve([]);
-    var ADDR = fs('Parcel_Address');
-    var where;
-    if (/^\d{6,7}$/.test(t)) where = 'RP_ACCT_ID = ' + Number(t);
-    else if (/^[\d-]{10,}$/.test(t)) where = "ACCT_NO = '" + Arc.sqlString(t) + "'";
-    else {
-      // strip city/state/zip the user may have typed after a comma
-      var street = t.split(',')[0].replace(/[^A-Z0-9 #/-]/g, '');
-      where = "SITUS_ADDR LIKE '" + Arc.sqlString(street) + "%'";
+    var raw=String(text||'').trim(), t=Arc.normalizeAddress(raw), digits=raw.replace(/[\s-]/g,'');
+    if(t.length<3)return Promise.resolve([]);
+    var cached=searchCache.get(t);
+    if(cached && Date.now()-cached.at<60000)return cached.promise;
+    var byId=/^(\d{6,7}|\d{14})$/.test(digits), layer, fields, where;
+    if(byId){
+      layer=fs('Parcel_Address');
+      fields='RP_ACCT_ID,ACCT_NO,SITUS_ADDR,SITUS_CITY';
+      var tax=digits.slice(0,6)+'-'+digits.slice(6,7)+'-'+digits.slice(7,10)+'-'+digits.slice(10);
+      var platted=digits.slice(0,4)+'-'+digits.slice(4,7)+'-'+digits.slice(7,10)+'-'+digits.slice(10);
+      where=digits.length<14?'RP_ACCT_ID = '+Number(digits):"ACCT_NO IN ('"+tax+"','"+platted+"','"+digits+"')";
+    } else {
+      layer=fs('Parcel_Address'); fields='RP_ACCT_ID,ACCT_NO,SITUS_ADDR,SITUS_CITY';
+      var house=/^(\d+)\s/.exec(t), prefix=house?house[1]+' ':t;
+      var terms=house?t.split(' ').slice(1).filter(function(w){return !/^(N|S|E|W|NE|NW|SE|SW|AVE|ST|RD|DR|CT|PL|BLVD|LN|HWY|PKWY|CIR|TER)$/.test(w);}):[];
+      where="SITUS_ADDR LIKE '"+Arc.sqlString(prefix)+(terms.length?'%'+terms.join('%'):'')+"%'";
     }
-    return Arc.query(ADDR, {
-      where: where, outFields: 'RP_ACCT_ID,ACCT_NO,SITUS_ADDR,SITUS_CITY', returnGeometry: false,
-      resultRecordCount: 12, orderByFields: 'SITUS_ADDR'
-    }).then(function (r) {
-      return r.features.map(function (f) {
-        var a = f.attributes;
-        return {
-          parcel_key: String(a.RP_ACCT_ID),
-          label: (a.SITUS_ADDR || 'No situs address') + (a.SITUS_CITY ? ', ' + a.SITUS_CITY : ''),
-          sublabel: 'Tax account ' + a.ACCT_NO
-        };
-      });
-    });
+    function query(w){return Arc.query(layer,{where:w,outFields:fields,returnGeometry:false,resultRecordCount:100,
+      orderByFields:byId?'ACCT_NO':'SITUS_ADDR'}, {timeoutMs:5000,noRetry:true});}
+    var promise=query(where).then(function(r){
+      if(!byId && house && terms.length && !r.features.length && !r.exceeded)return query("SITUS_ADDR LIKE '"+house[1]+" %'");
+      return r;
+    }).then(function(r){
+      var seen={}, hits=r.features.map(function(f){var a=f.attributes;return {
+        parcel_key:String(a.RP_ACCT_ID),label:(a.SITUS_ADDR||'No situs address')+(a.SITUS_CITY?', '+a.SITUS_CITY:''),
+        sublabel:'Tax account '+a.ACCT_NO,score:byId?1:Arc.addressScore(t,a.SITUS_ADDR)
+      };}).filter(function(h){if(!/^\d+$/.test(h.parcel_key)||seen[h.parcel_key]||h.score<.65)return false;seen[h.parcel_key]=true;return true;})
+        .sort(function(a,b){return b.score-a.score;});
+      var limited=r.exceeded||hits.length>12;
+      hits=hits.slice(0,12);hits.truncated=limited;
+      return hits;
+    }).catch(function(e){searchCache.delete(t);throw e;});
+    if(searchCache.size>30)searchCache.delete(searchCache.keys().next().value);
+    searchCache.set(t,{at:Date.now(),promise:promise});return promise;
   }
 
   var CITY_NAMES = { BI: 'Bainbridge Island', BR: 'Bremerton', PB: 'Poulsbo', PO: 'Port Orchard' };

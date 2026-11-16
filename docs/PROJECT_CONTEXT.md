@@ -1,5 +1,7 @@
 # Davapprove project handoff
 
+November 16 design-partner revision: [UX review and release notes](DESIGN_PARTNER_UX_REVIEW.md) describe account-recovery improvements, full-workspace/mobile navigation, address/parcel search, sourced assumption guidance and agency-branded parcel-scale exports. Implementation is on `codex/design-partner-ux`; these notes do not assert a production deployment or verified inbox delivery for the reported recipient.
+
 November 8 implementation: [Jev/Sol cascade release](CASCADE_RELEASE.md) records the operational processing pipeline, validation, benchmark and deployment limits. The broader architecture below remains the roadmap where the release explicitly lists remaining work.
 
 November 7 automation direction: [Automated pre-check pipeline](AUTOMATED_PRECHECK_PIPELINE.md) defines the next architecture: machine-validated evidence, scoped revision reconciliation, automated geometry and exception-based human review. It supersedes blanket manual-acceptance design requirements below; existing runtime behavior remains unchanged until implemented.

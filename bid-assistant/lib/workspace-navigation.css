@@ -1,0 +1,6 @@
+.workspace-navigation { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 9px 22px; background: #edf3ef; border-bottom: 1px solid #d9e2db; flex: 0 0 auto; font-size: 13px; }
+.workspace-navigation a { color: #254a35; font-weight: 650; text-underline-offset: 3px; }
+.workspace-navigation span { color: #59645e; }
+.workspace-navigation[hidden] { display: none; }
+@media (max-width: 600px) { .workspace-navigation { padding: 9px 12px; gap: 8px 16px; } }
+@media print { .workspace-navigation { display: none; } }

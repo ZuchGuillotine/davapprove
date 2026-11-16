@@ -719,12 +719,20 @@
       out.push({
         level: 'required', basis: 'documented',
         title: 'Stormwater site plan with the building permit (Minimum Requirements 1 to 5)',
-        why: 'The project adds or replaces at least ' + a.MR1_5_hard_surface_sqft.toLocaleString() + ' sq ft of hard surface or disturbs at least ' + a.MR1_5_land_disturbance_sqft.toLocaleString() + ' sq ft, so Minimum Requirements 1 to 5 apply: a stormwater site plan, erosion control and on-site stormwater management. It stays below the thresholds for a separate Site Development Activity Permit as described (' +
+        why: 'The project adds or replaces at least ' + a.MR1_5_hard_surface_sqft.toLocaleString() + ' sq ft of hard surface or disturbs at least ' + a.MR1_5_land_disturbance_sqft.toLocaleString() + ' sq ft, so Minimum Requirements 1 to 5 apply: a stormwater site plan, erosion control and on-site stormwater management. These quantities alone do not establish whether a separate Site Development Activity Permit is needed (' +
           p.grading_cy + ' cu yd of grading, ' + p.hard_surface_sqft.toLocaleString() + ' sq ft of hard surface).',
         confirm: 'Grading of ' + t10.grading_volume_trigger_cubic_yards + ' cu yd or more, or any clearing inside a critical area setback, moves this to a Site Development Activity Permit.',
         citations: ['kcc-12.20.010-A', 'kcc-12.10.030'],
         costs: [{ fee: 'dcd-simplified-drainage', bucket: 'contingent', note: 'if the drainage design has to be engineered' }, { fee: 'pro-civil-sdap', bucket: 'contingent', note: 'if soils or slopes rule out the simple drainage worksheets' }]
       });
+    }
+    var gradingGuide = d.citations['kitsap-guidance-grading'];
+    if (!engineered && p.grading_cy > 0 && gradingGuide && p.disturbance_sqft >= gradingGuide.key_values.engineered_grading_disturbance_sqft) {
+      out.push({ level: 'required', basis: 'documented',
+        title: 'Engineered grading plan',
+        why: 'The reported grading project disturbs at least ' + gradingGuide.key_values.engineered_grading_disturbance_sqft.toLocaleString() + ' sq ft. KCC 12.16.030 requires an engineered grading plan for this scope.',
+        confirm: 'Confirm the grading footprint and SDAP scope with development engineering. A stormwater site plan is not an SDAP or construction authorization; grading exemptions have separate limits.',
+        citations: ['kitsap-guidance-grading', 'kcc-12.10.030'], costs: ['pro-civil-sdap'] });
     }
     return out;
   });

@@ -13,7 +13,7 @@ async function boot(saved, hash='') {
  const map={setView(){return this;},fitBounds(){},on(){},invalidateSize(){},attributionControl:{setPrefix(){}}};
  w.L={map:()=>map,canvas:()=>({}),tileLayer:layer,layerGroup:layer,polygon:layer,polyline:layer,rectangle:layer,marker:layer,divIcon:x=>x,control:{layers:layer,scale:layer}};
  w.fetch=async url=>{ if(String(url).startsWith('data/bundles/')) return {ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,url),'utf8'))}; return {ok:false}; };
- for(const file of ['lib/geo.js','lib/arcgis.js','lib/screen.js','lib/engine.js','lib/report.js','lib/drafts.js','data/data.js','data/regions.js','lib/regions.js','packs/wa-kitsap.js','packs/wa-regional.js','rules/federal.js','rules/wa-state.js','rules/wa-kitsap.js','rules/wa-regional.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
+ for(const file of ['lib/geo.js','lib/arcgis.js','lib/screen.js','lib/engine.js','lib/report.js','lib/drafts.js','lib/exports.js','data/data.js','data/regions.js','lib/regions.js','packs/wa-kitsap.js','packs/wa-regional.js','rules/federal.js','rules/wa-state.js','rules/wa-kitsap.js','rules/wa-regional.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
  const pack=w.BidPacks['wa-kitsap']; let screens=0;
  const parcel=w.BidScreen.buildParcel([{geometry:{rings:[[[-122.65,47.6],[-122.649,47.6],[-122.649,47.601],[-122.65,47.601],[-122.65,47.6]]]}}],{parcel_key:'123456',rp_acct_id:123456});
  pack.search=async()=>[{label:'SYNTHETIC SITE',parcel_key:'123456'}];
@@ -36,7 +36,7 @@ async function boot(saved, hash='') {
  return {dom,w,$,change,screens:()=>screens,copied:()=>copied};
 }
 (async()=>{
- let b=await boot(); b.$('#q').value='TEST'; b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true})); await pause();
+ let b=await boot(); b.$('#q').value='123456'; b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true})); await pause();
  assert.equal(b.screens(),1); assert(!b.$('#results').hidden); assert.match(b.$('#map-coverage').textContent,/Coverage incomplete/);
  assert.match(b.$('#bid-constraints').textContent,/Coverage incomplete/);
  assert(!b.$('#bid-constraints').textContent.includes('No mapped constraint reaches this lot'));
@@ -61,6 +61,7 @@ async function boot(saved, hash='') {
  assert.match(b.$('#status').textContent,/high must be at least low/);
  assert.equal(b.w.BidApp.state.report.costs.totals.base.low,before,'invalid range cannot change totals');
  b.change('tr[data-fee="pro-civil-sdap"] .hi','9000');
+ b.change('#bid-agency','Davin Designs LLC');
  b.change('#bid-title','Synthetic saved bid'); b.change('#bid-notes','Survey handled separately.');
  const saved=b.w.localStorage.getItem('davapprove.bid-drafts.v1'), hash=b.w.location.hash;
  b.dom.window.close(); b=await boot(saved,hash);
@@ -73,8 +74,20 @@ async function boot(saved, hash='') {
  assert(b.$('#a-in_water').checked);
  assert.equal(b.$('tr[data-fee="pro-civil-sdap"] .lo').value,'7000');
  assert.equal(b.$('#bid-title').value,'Synthetic saved bid');
+ assert.equal(b.$('#bid-agency').value,'Davin Designs LLC');
+ const originalTitle = b.w.document.title;
+ b.w.dispatchEvent(new b.w.Event('beforeprint'));
+ assert.match(b.w.document.title,/Davin Designs LLC/);
+ assert.equal(b.$('#print-agency').textContent,'Davin Designs LLC');
+ assert.match(b.$('#print-parcel-map').innerHTML,/Unresolved area/);
+ assert.match(b.$('#print-parcel-map').textContent,/Davin Designs LLC/);
+ assert.match(b.$('#print-parcel-map').textContent,/Approx\./);
+ b.w.dispatchEvent(new b.w.Event('afterprint'));
+ assert.equal(b.w.document.title, originalTitle);
  assert.equal(b.$('#bid-notes').value,'Survey handled separately.');
  b.$('#btn-copy').click(); await pause();
+ assert(b.copied().startsWith('# Davin Designs LLC'));
+ assert(b.copied().includes('Prepared with Davapprove.'));
  assert(b.copied().includes('Supplied construction valuation: $600,000'));
  assert(b.copied().includes('Preliminary tribal contact') && b.copied().includes('https://www.epa.gov/'));
  assert(b.copied().includes('wetlands?: Not proposed') && b.copied().includes('no trigger in supplied inputs; not a clearance'));
@@ -102,16 +115,23 @@ async function boot(saved, hash='') {
   b.change('#a-construction_value','');
   assert.equal(b.$('tr[data-fee="'+prefix+'-building"] .lo').value,'');
  }
- b.$('#btn-new').click(); assert(b.$('#results').hidden); assert(b.$('#btn-copy').disabled);
+ b.$('#btn-new').click(); assert.equal(b.$('#print-parcel-map').innerHTML,'','new assessment cannot print a stale parcel'); assert(b.$('#results').hidden); assert(b.$('#btn-copy').disabled);
  b.w.BidPacks['wa-kitsap'].parcelById=async()=>{throw Error('Synthetic failed lookup');};
  b.$('#q').value='missing'; b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true})); await pause();
+ assert(!b.$('#suggestions').hidden, 'address candidates require confirmation');
+ b.$('#suggestions button').click(); await pause();
  assert.match(b.$('#status').textContent,/Synthetic failed lookup/); assert(b.$('#btn-copy').disabled);
+ let resolveSearch;
+ b.w.BidPacks['wa-kitsap'].search=()=>new Promise(resolve=>{resolveSearch=resolve;});
+ b.$('#q').value='old address'; b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true}));
+ b.$('#btn-new').click(); resolveSearch([{label:'STALE PARCEL',parcel_key:'123456'}]); await pause();
+ assert(b.$('#suggestions').hidden,'new assessment invalidates an in-flight address search');
  b.dom.window.close();
  b=await boot();
  b.change('#jurisdiction','wa-king'); await pause(); await pause();
  assert.equal(b.w.BidApp.state.pack.id,'wa-king');
  let active=b.w.BidApp.state.pack; active.search=async()=>[{label:'KING SYNTHETIC',parcel_key:'123456'}];active.parcelById=b.w.BidPacks['wa-kitsap'].parcelById;
- b.$('#q').value='KING';b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true}));await pause();await pause();
+ b.$('#q').value='1234567890';b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true}));await pause();await pause();
  assert.equal(b.w.BidApp.state.facts.jurisdiction.city,'Seattle');assert.match(b.$('#map-coverage').textContent,/Coverage incomplete/);
  assert.match(b.$('#bid-summary').textContent,/Siting statusUnconfirmed/);
  assert(!b.$('#bid-constraints').textContent.includes('Buffers are the standard code widths'));

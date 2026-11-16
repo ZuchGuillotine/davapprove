@@ -66,6 +66,10 @@ jobs:
           node ../tests/bid_assistant_regions.test.cjs
           node ../tests/bid_assistant_drafts.test.cjs
           node ../tests/bid_assistant_ui.test.cjs
+          node ../tests/bid_assistant_search.test.cjs
+          node ../tests/bid_assistant_guidance.test.cjs
+          node ../tests/bid_assistant_exports.test.cjs
+          node ../tests/bid_workspace_navigation.test.cjs
       - run: npm run build
       - run: npx wrangler deploy --dry-run
   ai-proxy:

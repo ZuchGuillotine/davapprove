@@ -176,5 +176,23 @@
     return String(s).replace(/'/g, "''");
   }
 
-  return { setProxy: setProxy, getJson: getJson, query: query, pool: pool, probeCoverage: probeCoverage, sqlString: sqlString, hostOf: hostOf };
+  // Normalize common postal aliases before ranking. Search is a candidate suggestion,
+  // never an automatic statement that two different parcels are the same property.
+  var addressTerms = {NORTH:'N',SOUTH:'S',EAST:'E',WEST:'W',NORTHEAST:'NE',NORTHWEST:'NW',SOUTHEAST:'SE',SOUTHWEST:'SW',AVENUE:'AVE',STREET:'ST',ROAD:'RD',DRIVE:'DR',COURT:'CT',PLACE:'PL',BOULEVARD:'BLVD',LANE:'LN',HIGHWAY:'HWY',PARKWAY:'PKWY',CIRCLE:'CIR',TERRACE:'TER'};
+  function normalizeAddress(value) {
+    return String(value || '').toUpperCase().split(',')[0].replace(/[^A-Z0-9 ]/g,' ').trim().split(/\s+/).map(function(w){return addressTerms[w]||w;}).join(' ');
+  }
+  function addressScore(query, address) {
+    var a=normalizeAddress(query), b=normalizeAddress(address);
+    if (b.indexOf(a)===0) return 1;
+    // Do not suggest another house number as a spelling correction.
+    var house=/^\d+/.exec(a), other=/^\d+/.exec(b);
+    if(house && (!other || house[0]!==other[0]))return 0;
+    b=b.slice(0,a.length);
+    var prev=Array.from({length:b.length+1},function(_,i){return i;});
+    for(var i=1;i<=a.length;i++) {var row=[i];for(var j=1;j<=b.length;j++)row[j]=Math.min(row[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=row;}
+    return 1-prev[b.length]/Math.max(a.length,b.length,1);
+  }
+
+  return { normalizeAddress: normalizeAddress, addressScore: addressScore, setProxy: setProxy, getJson: getJson, query: query, pool: pool, probeCoverage: probeCoverage, sqlString: sqlString, hostOf: hostOf };
 });

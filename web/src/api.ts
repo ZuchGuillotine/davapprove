@@ -44,6 +44,7 @@ export async function request<T = any>(
   path: string,
   method = "GET",
   body?: any,
+  signal?: AbortSignal,
 ): Promise<T> {
   const generation = requestGeneration;
   if (sample) return demoRequest(path, method, body);
@@ -57,6 +58,7 @@ export async function request<T = any>(
   const r = await fetch(apiBase + path, {
     method,
     headers,
+    signal,
     body:
       body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
   });

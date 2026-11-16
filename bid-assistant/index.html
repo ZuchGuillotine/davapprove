@@ -6,8 +6,14 @@
 <title>Davapprove Bid Assistant</title>
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="lib/workspace-navigation.css">
 </head>
 <body>
+<nav id="workspace-navigation" class="workspace-navigation" aria-label="Workspace navigation">
+  <a href="/?workspace=projects" target="_top">← Projects &amp; dashboard</a>
+  <span aria-current="page">Bids &amp; assessments</span>
+</nav>
+<script src="lib/workspace-navigation.js"></script>
 <header class="topbar">
   <div class="brand">
     <span class="logo" aria-hidden="true"></span>
@@ -20,9 +26,12 @@
     <label class="sr-only" for="jurisdiction">Jurisdiction</label>
     <select id="jurisdiction" title="Jurisdiction pack"></select>
     <button id="btn-print" class="ghost" type="button" disabled>Print / PDF</button>
+    <button id="btn-map-export" class="ghost" type="button" disabled>Download parcel map</button>
     <button id="btn-copy" class="ghost" type="button" disabled>Copy bid memo</button>
   </div>
 </header>
+
+<header class="print-brand" aria-label="Assessment publisher"><h1 id="print-agency"></h1><h2 id="print-title"></h2><p>Prepared with <span class="logo" aria-hidden="true"></span> Davapprove · Early bid · unconfirmed</p><p id="print-notes"></p></header>
 
 <div class="bidbar">
   <span class="stage">Early bid · unconfirmed</span>
@@ -52,7 +61,9 @@
       <select id="ptype"></select>
 
       <details id="assumptions">
-        <summary>Project assumptions <span class="hint">(editable planning scenario)</span></summary>
+        <summary>Project assumptions <span class="hint">(editable planning scenario)</span><span id="assumption-trigger-summary" class="assumption-trigger-summary"></span></summary>
+        <p class="hint">Project-type defaults are examples, not site measurements. Use ? for explanations and replace estimates as the design develops.</p>
+        <p id="assumption-threshold-note" class="hint"></p>
         <div class="grid2">
           <label>New building area (sq ft)<input type="number" min="0" step="50" id="a-new_sqft"></label>
           <label>Estimated permit valuation ($)<input type="number" min="0" step="any" id="a-construction_value" placeholder="Enter bid valuation"></label>
@@ -102,6 +113,9 @@
 
     <div id="status" class="status" role="status" aria-live="polite" hidden></div>
     <section id="bid-details" class="card" hidden>
+      <label for="bid-agency">Bid owner / agency</label>
+      <input id="bid-agency" maxlength="160" autocomplete="organization" placeholder="e.g. Davin Designs LLC" aria-describedby="bid-agency-help">
+      <p id="bid-agency-help" class="hint">Your business creating this assessment, not the property owner. Shown first on PDFs and exports; saved with this bid.</p>
       <label for="bid-title">Assessment title</label>
       <input id="bid-title" maxlength="160" placeholder="Site address or bid reference">
       <label for="bid-notes">Bid assumptions &amp; exclusions</label>
@@ -128,6 +142,7 @@
 
   <section class="mapwrap">
     <div class="map-heading"><span class="eyebrow">Preliminary site envelope</span><strong>Early bid · buffers &amp; layout unconfirmed</strong><p id="map-coverage">Choose a parcel to see mapped constraints and potential siting areas.</p></div>
+    <div id="print-parcel-map" class="print-parcel-map"></div>
     <div id="map" role="application" aria-label="Parcel map"></div>
     <div id="legend" class="legend" hidden></div>
   </section>
@@ -142,6 +157,7 @@
 <script src="lib/engine.js"></script>
 <script src="lib/report.js"></script>
 <script src="lib/drafts.js"></script>
+<script src="lib/exports.js"></script>
 <script src="data/data.js"></script>
 <script src="data/regions.js"></script>
 <script src="lib/regions.js"></script>
@@ -151,6 +167,7 @@
 <script src="rules/wa-state.js"></script>
 <script src="rules/wa-kitsap.js"></script>
 <script src="rules/wa-regional.js"></script>
+<script src="lib/guidance.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

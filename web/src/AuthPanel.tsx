@@ -1,8 +1,8 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight } from "lucide-react";
 import { getAuth } from "./api";
 
-type Mode = "signin" | "signup" | "reset";
+type Mode = "signin" | "signup" | "reset" | "confirm";
 
 function message(error: unknown) {
   const code = (error as { code?: string })?.code;
@@ -20,6 +20,15 @@ function message(error: unknown) {
     code === "email_provider_disabled"
   )
     return "Email delivery is not ready for this address. Contact the project owner for beta access.";
+  if (
+    [
+      "hook_timeout",
+      "hook_timeout_after_retry",
+      "hook_payload_invalid_content_type",
+      "hook_payload_over_size_limit",
+    ].includes(code || "")
+  )
+    return "We could not complete email delivery. Please try again later. If this continues, contact the project owner with the approximate request time; never share a reset link or password.";
   return error instanceof Error
     ? error.message
     : "Unable to complete this request. Please try again.";
@@ -36,6 +45,15 @@ export default function AuthPanel({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [retryAt, setRetryAt] = useState(0);
+  const [now, setNow] = useState(Date.now());
+  const retrySeconds = Math.max(0, Math.ceil((retryAt - now) / 1000));
+  useEffect(() => {
+    if (retryAt <= now) return;
+    const timer = window.setTimeout(() => setNow(Date.now()), 1000);
+    return () => window.clearTimeout(timer);
+  }, [retryAt, now]);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
@@ -48,7 +66,12 @@ export default function AuthPanel({
   }
   async function submit(event: FormEvent) {
     event.preventDefault();
-    if (busy || !available || (mode !== "signin" && !emailEnabled)) return;
+    if (
+      busy ||
+      !available ||
+      (mode !== "signin" && (!emailEnabled || retrySeconds > 0))
+    )
+      return;
     const auth = getAuth();
     if (!auth) return;
     setError("");
@@ -69,7 +92,12 @@ export default function AuthPanel({
         const { data, error } = await auth.auth.signUp({
           email: email.trim(),
           password,
-          options: { emailRedirectTo: window.location.origin + "/" },
+          options: {
+            emailRedirectTo: window.location.origin + "/",
+            ...(businessName.trim()
+              ? { data: { business_name: businessName.trim() } }
+              : {}),
+          },
         });
         if (error) throw error;
         // Supabase can deliberately return an obfuscated user for an existing account.
@@ -77,6 +105,16 @@ export default function AuthPanel({
           setNotice(
             "Check your email to confirm your account before signing in. If you already have an account, sign in or reset your password.",
           );
+      } else if (mode === "confirm") {
+        const { error } = await auth.auth.resend({
+          type: "signup",
+          email: email.trim(),
+          options: { emailRedirectTo: window.location.origin + "/" },
+        });
+        if (error) throw error;
+        setNotice(
+          "If this email has an unconfirmed account, a confirmation link will arrive shortly. Open the latest link, then sign in.",
+        );
       } else {
         const { error } = await auth.auth.resetPasswordForEmail(email.trim(), {
           redirectTo: window.location.origin + "/?auth=recovery",
@@ -85,6 +123,10 @@ export default function AuthPanel({
         setNotice(
           "If this email has an account, a password-reset link will arrive shortly. Open it to choose a new password.",
         );
+      }
+      if (mode !== "signin") {
+        setNow(Date.now());
+        setRetryAt(Date.now() + 60_000);
       }
       setPassword("");
       setConfirmation("");
@@ -119,11 +161,13 @@ export default function AuthPanel({
       <form
         onSubmit={submit}
         aria-label={
-          mode === "reset"
-            ? "Reset password"
-            : mode === "signup"
-              ? "Create account"
-              : "Sign in"
+          mode === "confirm"
+            ? "Resend confirmation"
+            : mode === "reset"
+              ? "Reset password"
+              : mode === "signup"
+                ? "Create account"
+                : "Sign in"
         }
       >
         <label>
@@ -139,7 +183,7 @@ export default function AuthPanel({
             placeholder="you@yourstudio.com"
           />
         </label>
-        {mode !== "reset" && (
+        {(mode === "signin" || mode === "signup") && (
           <label>
             Password
             <input
@@ -158,6 +202,18 @@ export default function AuthPanel({
         )}
         {mode === "signup" && (
           <>
+            <label>
+              Business / agency name (optional)
+              <input
+                name="business-name"
+                autoComplete="organization"
+                maxLength={160}
+                disabled={busy}
+                value={businessName}
+                onChange={(e) => setBusinessName(e.target.value)}
+                placeholder="Your design studio or agency"
+              />
+            </label>
             <label>
               Confirm password
               <input
@@ -182,9 +238,19 @@ export default function AuthPanel({
             We’ll send a link so you can choose a new password.
           </p>
         )}
+        {mode === "confirm" && (
+          <p className="small muted">
+            Request another account confirmation email. You do not need to
+            create a second account.
+          </p>
+        )}
         <button
           className="primary full"
-          disabled={busy || !available || (mode !== "signin" && !emailEnabled)}
+          disabled={
+            busy ||
+            !available ||
+            (mode !== "signin" && (!emailEnabled || retrySeconds > 0))
+          }
         >
           {busy
             ? "Please wait…"
@@ -192,10 +258,17 @@ export default function AuthPanel({
               ? "Sign in to workspace"
               : mode === "signup"
                 ? "Create beta account"
-                : "Send reset link"}
+                : mode === "confirm"
+                  ? "Resend confirmation link"
+                  : "Send reset link"}
           <ArrowRight size={17} />
         </button>
       </form>
+      {mode !== "signin" && retrySeconds > 0 && (
+        <p className="small muted">
+          You can request another email in {retrySeconds} seconds.
+        </p>
+      )}
       {notice && (
         <p role="status" className="notice">
           {notice}
@@ -206,12 +279,36 @@ export default function AuthPanel({
           {error}
         </p>
       )}
+      {emailEnabled && mode !== "signin" && (
+        <details className="small muted">
+          <summary>Email hasn’t arrived?</summary>
+          <p>
+            Check Spam and All Mail for “Davapprove” from davapprove@haidaa.com.
+            Verify the email address above and wait a few minutes. Only the
+            newest link will work. A password-reset email requires an existing
+            account; choose Create account if you have not registered.
+          </p>
+          <p>
+            If delivery still fails, contact the project owner with the address
+            and approximate request time. Never share your password or email
+            link.
+          </p>
+        </details>
+      )}
       {!emailEnabled && mode !== "signin" && (
         <p className="small muted">
           Email confirmation and recovery are being set up. Contact the project
           owner for beta access; existing accounts can sign in with a password.
         </p>
       )}
+      <button
+        type="button"
+        className="text-button auth-reset"
+        disabled={busy}
+        onClick={() => changeMode(mode === "confirm" ? "signin" : "confirm")}
+      >
+        {mode === "confirm" ? "Back to sign in" : "Resend confirmation email"}
+      </button>
       <button
         type="button"
         className="text-button auth-reset"

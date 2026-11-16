@@ -21,17 +21,27 @@
   }
   function parcelAtPoint(lon,lat){return Arc.query(pc.url,{geometry:{x:lon,y:lat},outFields:pc.key,returnGeometry:false}).then(function(r){if(r.features.length!==1)throw new Error('Select an unambiguous point inside the parcel');return parcelById(r.features[0].attributes[pc.key]);});}
   function search(input){
-   var s=String(input||'').trim().toUpperCase().split(',')[0].replace(/\s+/g,' ');
-   if(!s)return Promise.resolve([]);
-   var terms={NORTH:'N',SOUTH:'S',EAST:'E',WEST:'W',NORTHEAST:'NE',NORTHWEST:'NW',SOUTHEAST:'SE',SOUTHWEST:'SW',AVENUE:'AVE',STREET:'ST',ROAD:'RD',DRIVE:'DR',COURT:'CT',PLACE:'PL',BOULEVARD:'BLVD',LANE:'LN',HIGHWAY:'HWY',PARKWAY:'PKWY'};
-   var expand={};Object.keys(terms).forEach(function(k){expand[terms[k]]=k;});
-   var aliases=pc.address.length===1?terms:expand;
-   s=s.replace(/\b[A-Z]+\b\.?/g,function(word){var clean=word.replace(/\.$/,'');return aliases[clean]||clean;});
-   var where;
-   if(/^(P\d+|\d[\d-]{5,})$/.test(s))where=pc.key+" = '"+Arc.sqlString(s.replace(/-/g,''))+"'";
-   else if(pc.address.length===1)where="UPPER("+pc.address[0]+") LIKE '"+Arc.sqlString(s)+"%'";
-   else {var parts=s.split(' '),n=parts.shift();where=pc.address[0]+" = '"+Arc.sqlString(n)+"' AND UPPER("+pc.address[1]+") LIKE '"+Arc.sqlString(parts.join(' '))+"%'";}
-   return Arc.query(pc.url,{where:where,outFields:fields,returnGeometry:false,resultRecordCount:12}).then(function(r){return r.features.map(function(f){return {parcel_key:String(f.attributes[pc.key]),label:pc.address.map(function(k){return f.attributes[k];}).filter(Boolean).join(' ')||'Parcel '+f.attributes[pc.key],sublabel:config.county+' parcel '+f.attributes[pc.key]};});});
+   var raw=String(input||'').trim().toUpperCase(), s=Arc.normalizeAddress(raw);
+   if(s.length<3)return Promise.resolve([]);
+   var isId=/^(P\d+|\d[\d-]{5,})$/.test(raw), where;
+   if(isId)where=pc.key+" = '"+Arc.sqlString(raw.replace(/-/g,''))+"'";
+   else {
+    var house=/^(\d+)\s/.exec(s);
+    var words=house?s.split(' ').slice(1).filter(function(w){return !/^(N|S|E|W|NE|NW|SE|SW|AVE|ST|RD|DR|CT|PL|BLVD|LN|HWY|PKWY|CIR|TER)$/.test(w);}):[];
+    var street=words.length?"%"+words.join('%'):"";
+    if(pc.address.length===1)where="UPPER("+pc.address[0]+") LIKE '"+Arc.sqlString(house?house[1]+' ':s)+street+"%'";
+    else if(house)where=pc.address[0]+" = '"+house[1]+"'"+(words.length?" AND UPPER("+pc.address[1]+") LIKE '"+street+"%'":"");
+    else where="UPPER("+pc.address[1]+") LIKE '"+Arc.sqlString(s)+"%'";
+   }
+   function query(w){return Arc.query(pc.url,{where:w,outFields:fields,returnGeometry:false,resultRecordCount:100},{timeoutMs:5000,noRetry:true});}
+   return query(where).then(function(r){
+    if(!isId && house && words.length && !r.features.length && !r.exceeded)return query(pc.address.length===1?"UPPER("+pc.address[0]+") LIKE '"+house[1]+" %'":pc.address[0]+" = '"+house[1]+"'");
+    return r;
+   }).then(function(r){
+    var seen={},hits=r.features.map(function(f){var label=pc.address.map(function(k){return f.attributes[k];}).filter(Boolean).join(' ');return {parcel_key:String(f.attributes[pc.key]),label:label||'Parcel '+f.attributes[pc.key],sublabel:config.county+' parcel '+f.attributes[pc.key],score:isId?1:Arc.addressScore(s,label)};})
+     .filter(function(h){if(seen[h.parcel_key]||h.score<.65)return false;seen[h.parcel_key]=true;return true;}).sort(function(a,b){return b.score-a.score;});
+    var limited=r.exceeded||hits.length>12;hits=hits.slice(0,12);hits.truncated=limited;return hits;
+   });
   }
   function deriveFacts(s){
    // Reuse the established neutral fact shape for shared state/federal layers. Replace all

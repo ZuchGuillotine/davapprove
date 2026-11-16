@@ -87,6 +87,18 @@ r = run(facts(), { type: 'clearing', disturbance_sqft: 43560 });
 assert(has(r, /Construction Stormwater General Permit/), 'one acre of disturbance');
 assert.equal(has(run(facts(), { type: 'clearing', disturbance_sqft: 43000 }), /Construction Stormwater General Permit/), undefined);
 
+// Input guidance and findings agree: disturbance planning is not itself an SDAP.
+r = run(facts(), { type: 'new_sfr', disturbance_sqft: 7000, hard_surface_sqft: 0, grading_cy: 0 });
+assert(has(r, /Stormwater site plan/) && !has(r, /^Site Development Activity Permit/));
+assert(/do not establish whether/.test(has(r, /Stormwater site plan/).why));
+for (const disturbance of [43559, 43560, 43561]) {
+  const assessment = run(facts(), { type: 'new_sfr', disturbance_sqft: disturbance, hard_surface_sqft: 0, grading_cy: 20 });
+  assert.equal(!!has(assessment, /^Engineered grading plan/), disturbance >= 43560);
+  if (disturbance >= 43560) assert.equal(cost(assessment, 'pro-civil-sdap').bucket, 'base');
+}
+assert(!has(run(facts(), {type:'new_sfr',disturbance_sqft:43560,hard_surface_sqft:0,grading_cy:0}), /^Engineered grading plan/), 'do not infer a grading project from land disturbance alone');
+assert(!has(run(facts({jurisdiction:{city:'Bremerton'}}), {type:'new_sfr',disturbance_sqft:43560,grading_cy:20}), /^Engineered grading plan/), 'county grading rule does not apply city requirements');
+
 // ---- geologic hazard ----------------------------------------------------------------------------
 r = run(facts({ geohazard: { status: 'on_parcel', classes: ['High', 'Moderate'], high: true, moderate: true } }), { type: 'new_sfr' }, grid(30, 0, [{ id: 'geo_high', pct: 30 }, { id: 'geo_moderate', pct: 50 }]));
 assert.equal(has(r, /Geotechnical report/).level, 'required');

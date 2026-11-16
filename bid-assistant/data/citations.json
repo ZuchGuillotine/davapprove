@@ -3329,5 +3329,66 @@
   "verified": true,
   "excerpt": "The land-use hourly rate is $551. The general MUP category begins with ten review hours; additional review hours are billed separately. Other categories and ancillary charges differ.",
   "excerpt_kind": "paraphrase"
+ },
+ {
+  "id": "kitsap-guidance-stormwater",
+  "jurisdiction": "Unincorporated Kitsap County",
+  "citation": "KCC 12.20.010",
+  "title": "Stormwater planning thresholds: new development and redevelopment",
+  "url": "https://ecode360.com/49506187",
+  "summary": "New development and redevelopment reach Minimum Requirements 1–5 at 2,000 square feet of new plus replaced hard surface or 7,000 square feet of disturbance. These thresholds alone do not establish a separate SDAP. Full requirements depend on grading, vegetation conversion, urban location and new versus replaced surfaces.",
+  "key_values": {
+   "hard_surface_sqft": 2000,
+   "disturbance_sqft": 7000
+  },
+  "fetched": "2026-11-16",
+  "verified": false,
+  "notes": "Official published text reviewed for explanatory input guidance on November 16, 2026; paraphrase, not a verified quotation. Threshold notices do not establish site-specific applicability, exemptions, vesting or permission. Reconfirm adopted requirements before application.",
+  "source_currency": "official published text checked 2026-11-16; county 2027 update process remains separate"
+ },
+ {
+  "id": "kitsap-guidance-sdap",
+  "jurisdiction": "Unincorporated Kitsap County",
+  "citation": "KCC 12.10.030; 12.16.070",
+  "title": "Separate SDAP and grading exemption screening",
+  "url": "https://ecode360.com/49506095",
+  "summary": "Earth movement of at least 150 cubic yards triggers SDAP review, subject to applicable grading exemptions. Other triggers include full stormwater minimum requirements, storm-system connections, slopes, impoundments, drainage diversions and sensitive-area setbacks.",
+  "key_values": {
+   "grading_cy": 150
+  },
+  "related_url": "https://ecode360.com/49506178",
+  "fetched": "2026-11-16",
+  "verified": false,
+  "notes": "Official published text reviewed for explanatory input guidance on November 16, 2026; paraphrase, not a verified quotation. Threshold notices do not establish site-specific applicability, exemptions, vesting or permission. Reconfirm adopted requirements before application.",
+  "source_currency": "official published text checked 2026-11-16; county 2027 update process remains separate"
+ },
+ {
+  "id": "kitsap-guidance-grading",
+  "jurisdiction": "Unincorporated Kitsap County",
+  "citation": "KCC 12.16.030–.070",
+  "title": "Engineered grading plans and exemption limitations",
+  "url": "https://ecode360.com/49506178",
+  "summary": "Grading projects disturbing at least one acre require an engineered grading plan. Small grading projects triggering only Minimum Requirements 1–5 may use an abbreviated plan unless engineering is otherwise required. Grading permit exemptions are limited to less than one acre of disturbance.",
+  "key_values": {
+   "engineered_grading_disturbance_acres": 1,
+   "engineered_grading_disturbance_sqft": 43560,
+   "square_feet_per_acre": 43560
+  },
+  "fetched": "2026-11-16",
+  "verified": false,
+  "notes": "Official published text reviewed for explanatory input guidance on November 16, 2026; paraphrase, not a verified quotation. Threshold notices do not establish site-specific applicability, exemptions, vesting or permission. Reconfirm adopted requirements before application.",
+  "source_currency": "official published text checked 2026-11-16; county 2027 update process remains separate"
+ },
+ {
+  "id": "kitsap-stormwater-update-2027",
+  "jurisdiction": "Kitsap County",
+  "citation": "Kitsap County Stormwater Design Manual update page",
+  "title": "2027 stormwater manual and related code update process",
+  "url": "https://www.kitsap.gov/dcd/Pages/Stormwater_Design_Update.aspx",
+  "summary": "The county describes a 2027 code/manual update in progress, including an October 2026 technical advisory meeting, and links the final 2021 ordinance/manual separately. Proposed updates are not treated as adopted thresholds.",
+  "fetched": "2026-11-16",
+  "verified": false,
+  "notes": "Official published text reviewed for explanatory input guidance on November 16, 2026; paraphrase, not a verified quotation. Threshold notices do not establish site-specific applicability, exemptions, vesting or permission. Reconfirm adopted requirements before application.",
+  "source_currency": "official published text checked 2026-11-16; county 2027 update process remains separate"
  }
 ]

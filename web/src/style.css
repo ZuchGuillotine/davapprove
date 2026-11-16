@@ -2206,3 +2206,14 @@ input[type="checkbox"] {
 .bid-workspace-heading a { color: #315b47; font-size: 12px; white-space: nowrap; }
 .bid-workspace iframe { display: block; width: 100%; height: calc(100vh - 235px); min-height: 650px; border: 1px solid #dce3d9; border-radius: 12px; background: #f5f6f1; }
 @media (max-width: 900px) { .bid-content { padding: 12px; } .bid-workspace-heading { align-items: flex-start; flex-direction: column; gap: 10px; } .bid-workspace iframe { height: 85vh; min-height: 600px; } }
+
+/* Workspace routes stay reachable when the desktop sidebar is hidden. */
+.workspace-breadcrumb { border: 0; background: transparent; padding: 4px 0; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.mobile-workspace-nav { display: none; }
+@media (max-width: 950px) {
+  .mobile-workspace-nav { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 18px; background: white; border-bottom: 1px solid var(--line); }
+  .mobile-workspace-nav button { display: inline-flex; align-items: center; gap: 5px; padding: 8px 10px; background: white; border: 1px solid var(--line); border-radius: 6px; font: inherit; font-size: 12px; cursor: pointer; }
+  .mobile-project-picker { display: flex; align-items: center; gap: 8px; width: 100%; font-size: 12px; }
+  .mobile-project-picker select { flex: 1; min-width: 0; padding: 7px; font: inherit; }
+  .mobile-workspace-nav button[aria-current="page"] { background: #edf3ef; border-color: #748c7e; font-weight: 600; }
+}

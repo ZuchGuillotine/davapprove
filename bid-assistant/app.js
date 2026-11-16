@@ -145,7 +145,7 @@
   function setBusy(busy) {
     state.busy = busy;
     document.querySelectorAll('#search-form input, #search-form select, #search-form button, #bid-details input, #bid-details textarea, #btn-new, #saved-bids').forEach(function (el) { el.disabled = busy; });
-    ['btn-print', 'btn-copy', 'btn-save', 'btn-refresh'].forEach(function (id) { $(id).disabled = busy || !state.report; });
+    ['btn-print', 'btn-copy', 'btn-map-export', 'btn-save', 'btn-refresh'].forEach(function (id) { $(id).disabled = busy || !state.report; });
   }
 
   // ---------------------------------------------------------------- search and run
@@ -159,32 +159,38 @@
     clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, 3500);
   }
 
-  function onSearch(ev) {
+  var searchVersion=0, searchTimer;
+  function onSearch(ev, suggestOnly) {
     if (ev) ev.preventDefault();
+    clearTimeout(searchTimer);
     if (state.busy) return;
-    var q = $('q').value.trim();
-    if (!q) return;
-    setBusy(true);
+    var q=$('q').value.trim(), pack=state.pack, version=++searchVersion;
+    if (q.length<3) { $('suggestions').hidden=true; return; }
+    $('suggestions').hidden=true;
     setStatus('Searching county parcel records&hellip;', 'busy');
-    state.pack.search(q).then(function (hits) {
-      setBusy(false);
-      var ul = $('suggestions');
-      if (!hits.length) { ul.hidden = true; setStatus('No parcel matched &ldquo;' + esc(q) + '&rdquo;. Try the house number and street name only, a tax account number, or click the parcel on the map.', 'warn'); return; }
-      if (hits.length === 1) { ul.hidden = true; pick(hits[0]); return; }
-      setStatus('');
-      ul.innerHTML = hits.map(function (h, i) { return '<li><button type="button" data-i="' + i + '"><b>' + esc(h.label) + '</b><span>' + esc(h.sublabel) + '</span></button></li>'; }).join('');
-      ul.hidden = false;
-      ul.onclick = function (e) { var b = e.target.closest('button'); if (b) { ul.hidden = true; pick(hits[Number(b.dataset.i)]); } };
-    }).catch(function (err) { setBusy(false); setStatus('Parcel search failed: ' + esc(err.message), 'error'); });
+    pack.search(q).then(function(hits){
+      if(version!==searchVersion || q!==$('q').value.trim() || pack!==state.pack || state.busy)return;
+      var ul=$('suggestions');
+      if(!hits.length){ul.hidden=true;setStatus('No parcel matched &ldquo;'+esc(q)+'&rdquo;.'+(hits.truncated?' The county result was limited; refine the street name.':'')+' Try the house number and street name, a complete tax account number, or click the parcel on the map.','warn');return;}
+      // Exact ID submission may open directly. Address suggestions always require selection.
+      if(!suggestOnly && hits.length===1 && !hits.truncated && /^(?:[\d\s-]{6,}|P\d+)$/i.test(q)){ul.hidden=true;pick(hits[0]);return;}
+      setStatus(hits.truncated?'Showing closest matches from a limited county result. Refine your search if the parcel is missing.':'Select the intended parcel below.','');
+      ul.innerHTML=hits.map(function(h,i){return '<li><button type="button" data-i="'+i+'"><b>'+esc(h.label)+'</b><span>'+esc(h.sublabel)+'</span></button></li>';}).join('');
+      ul.hidden=false;
+      ul.onclick=function(e){var b=e.target.closest('button');if(b && version===searchVersion){ul.hidden=true;pick(hits[Number(b.dataset.i)]);}};
+    }).catch(function(err){if(version!==searchVersion || q!==$('q').value.trim() || pack!==state.pack)return;setStatus('Parcel search unavailable: '+esc(err.message)+'. Retry the search or use the parcel map.','error');});
   }
   function pick(hit) {
+    ++searchVersion; clearTimeout(searchTimer);
     $('q').value = hit.label;
     loadParcel(function () { return state.pack.parcelById(hit.parcel_key); }, hit.label);
   }
 
   function loadParcel(getParcel, what, refreshing) {
     if (state.busy) return;
+    ++searchVersion; clearTimeout(searchTimer); $('suggestions').hidden=true;
     state.report = null; state.facts = null; state.constraintLand = null;
+    $('print-parcel-map').innerHTML = '';
     setBusy(true);
     if (!refreshing) { state.overrides = {}; state.draftId = null; $('bid-title').value = ''; $('bid-notes').value = ''; }
     $('results').hidden = true; $('intro').hidden = true; $('legend').hidden = true;
@@ -221,6 +227,10 @@
     });
   }
 
+  function updateGuidance() {
+    if (window.BidGuidance) window.BidGuidance.update(document, readProject(), DATA, { packId: state.pack.id, facts: state.facts });
+  }
+
   function readProject() {
     var p = { type: $('ptype').value };
     ['new_sqft', 'construction_value', 'hard_surface_sqft', 'disturbance_sqft', 'grading_cy', 'bedrooms', 'lots'].forEach(function (k) { p[k] = $('a-' + k).value; });
@@ -240,6 +250,7 @@
     ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(function (k) { $('a-' + k).checked = p[k]; });
     $('a-flood_rise_ft').value = p.flood_rise_ft == null ? '' : p.flood_rise_ft;
     $('agency-assumptions').open = p.in_water;
+    updateGuidance();
   }
 
   function rules() {
@@ -249,6 +260,7 @@
   }
 
   function evaluate() {
+    updateGuidance();
     if (!state.facts) return;
     var land = readProject().land_status;
     if (state.constraintLand !== land) {
@@ -288,13 +300,14 @@
     html.push(renderLimits());
     $('results').innerHTML = html.join('');
     $('results').hidden = false;
-    $('btn-print').disabled = false; $('btn-copy').disabled = false;
+    $('btn-print').disabled = false; $('btn-copy').disabled = false; $('btn-map-export').disabled = false;
     $('btn-save').disabled = false; $('btn-refresh').disabled = false;
     $('bid-details').hidden = false;
     if (!$('bid-title').value) $('bid-title').value = f.parcel.situs || 'Parcel ' + f.parcel.key;
     $('snapshot-status').textContent = 'Map snapshot: ' + new Date(state.screening.screened_at).toLocaleString() + '. Refresh maps to check for changes. No design revision has been approved.';
     $('map-coverage').textContent = incompleteMap() ? 'Coverage incomplete: some layers or local buffers are unresolved. Gray cells are not cleared for building.' : 'Potential siting cells exclude the mapped constraints shown. Zoning, agriculture, septic reserves and easements remain to be confirmed.';
     document.querySelector('.map-heading').classList.toggle('incomplete', incompleteMap());
+    renderExport();
   }
 
   function renderParcelCard(f) {
@@ -507,7 +520,7 @@
     if (!state.report || state.busy) return;
     try {
       state.draftId = state.draftId || crypto.randomUUID();
-      window.BidDrafts.save(localStorage, window.BidDrafts.snapshot(state, readProject(), $('bid-title').value, $('bid-notes').value));
+      window.BidDrafts.save(localStorage, window.BidDrafts.snapshot(state, readProject(), $('bid-title').value, $('bid-notes').value, readAgency()));
       draftOptions();
       $('save-status').textContent = 'Saved in this browser · ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       history.replaceState(null, '', '#draft=' + encodeURIComponent(state.draftId));
@@ -530,12 +543,15 @@
       $('ptype').value = d.project.type; fillAssumptions(d.project.type, d.project);
       $('q').value = state.facts.parcel.situs || state.parcel.parcel_key;
       $('bid-title').value = d.title; $('bid-notes').value = d.notes;
+      // A saved assessment's publisher wins over the current account default, including an explicit blank.
+      $('bid-agency').value = typeof d.agency_name === 'string' ? d.agency_name : '';
       $('intro').hidden = true;
       setStatus('Saved map snapshot reopened; refresh maps for current coverage. Prices use the loaded source library.' + (d.screening.reference_revision && d.screening.reference_revision !== state.referenceRevision ? ' The reference revision has changed since this snapshot; review recalculated allowances and retained custom quotes.' : ''), 'warn');
       evaluate(); drawParcel(state.parcel); drawAnalysis();
     } catch (err) { setStatus('Could not reopen this bid: ' + esc(err.message), 'error'); }
   }
   function newBid() {
+    ++searchVersion; clearTimeout(searchTimer);
     if (state.busy) return;
     state.parcel = state.screening = state.facts = state.grid = state.report = state.draftId = null;
     state.overrides = {}; $('q').value = ''; $('bid-title').value = ''; $('bid-notes').value = '';
@@ -546,11 +562,33 @@
     $('map-coverage').textContent = 'Choose a parcel to see mapped constraints and potential siting areas.';
     document.querySelector('.map-heading').classList.remove('incomplete');
     $('save-status').textContent = 'Drafts stay in this browser';
-    setStatus(''); setBusy(false); history.replaceState(null, '', location.pathname); $('q').focus();
+    renderExport();
+    setStatus(''); setBusy(false); history.replaceState(null, '', location.pathname + location.search + (readAgency() ? '#agency=' + encodeURIComponent(readAgency()) : '')); $('q').focus();
+  }
+
+  function readAgency() { return window.BidExports.agencyName($('bid-agency').value); }
+  function renderExport() {
+    $('print-agency').textContent = readAgency() || 'Prepared by: agency not specified';
+    $('print-title').textContent = $('bid-title').value || 'Permitting scope for bid';
+    $('print-notes').textContent = $('bid-notes').value;
+    $('print-parcel-map').innerHTML = state.report ? window.BidExports.mapSvg(state.parcel, state.grid, state.screening, {
+      agency: readAgency(), title: $('bid-title').value, incomplete: incompleteMap()
+    }) : '';
+  }
+  function downloadMap() {
+    if (!state.report || state.busy) return;
+    renderExport();
+    var svg = $('print-parcel-map').innerHTML;
+    if (!svg) { toast('Parcel geometry is unavailable for export.'); return; }
+    var url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+    var link = document.createElement('a');
+    link.href = url; link.download = 'parcel-' + String(state.parcel.parcel_key || 'map').replace(/[^a-z0-9_-]/gi, '-') + '.svg';
+    document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
   }
 
   function copyMemo() {
-    var text = Report.memo(state.report, state.facts, state.grid, state.screening, DATA, { title: $('bid-title').value, notes: $('bid-notes').value });
+    var text = Report.memo(state.report, state.facts, state.grid, state.screening, DATA, { title: $('bid-title').value, notes: $('bid-notes').value, agency: readAgency() });
     var done = function () { toast('Bid memo copied to the clipboard.'); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
     else fallback();
@@ -562,6 +600,7 @@
   }
 
   async function selectCounty(id, reset) {
+    ++searchVersion; clearTimeout(searchTimer); $('suggestions').hidden=true;
     if (state.busy) throw new Error('Wait for the current screening to finish.');
     var previous = state.pack.id;
     if (id === previous && (id === 'wa-kitsap' || DATA.region)) return;
@@ -573,6 +612,7 @@
       if (id !== 'wa-kitsap') PACKS[id] = window.BidRegionalPack.create(d.region);
       DATA = d; state.pack = PACKS[id];
       $('a-prior_planning_review').closest('label').hidden = !!d.region;
+      updateGuidance();
       $('jurisdiction').value = id;
       $('examples').innerHTML = state.pack.examples.map(function(x,i){return '<a href="#" data-example="'+i+'">'+esc(x.label)+'</a>';}).join(' · ');
       map.setView(state.pack.center, state.pack.zoom);
@@ -587,6 +627,7 @@
       var field = Engine.SCOPE_FIELDS[key];
       return '<label>' + esc(field.label) + '<select id="a-' + key + '">' + Object.keys(field.choices).map(function (value) { return '<option value="' + value + '">' + esc(field.choices[value]) + '</option>'; }).join('') + '</select></label>';
     }).join('');
+    if (window.BidGuidance) window.BidGuidance.mount(document);
     var sel = $('ptype');
     Object.keys(Engine.PROJECT_TYPES).forEach(function (k) {
       var o = document.createElement('option'); o.value = k; o.textContent = Engine.PROJECT_TYPES[k].label; sel.appendChild(o);
@@ -597,6 +638,7 @@
     });
     var params = {};
     location.hash.replace(/^#/, '').split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) params[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); });
+    $('bid-agency').value = window.BidExports.agencyName(params.agency);
     if (params.type && Engine.PROJECT_TYPES[params.type]) sel.value = params.type;
     fillAssumptions(sel.value);
     initMap();
@@ -608,25 +650,36 @@
 
     js.addEventListener('change', function(){ selectCounty(js.value, true).catch(function(e){setStatus('County sources could not be loaded: '+esc(e.message), 'error');}); });
     $('search-form').addEventListener('submit', onSearch);
+    $('q').addEventListener('input', function(){
+      ++searchVersion; clearTimeout(searchTimer); $('suggestions').hidden=true;
+      if(state.busy)return;
+      setStatus('');
+      if(this.value.trim().length>=3)searchTimer=setTimeout(function(){onSearch(null,true);},400);
+    });
     sel.addEventListener('change', function () { fillAssumptions(sel.value); evaluate(); });
+    $('assumptions').addEventListener('input', updateGuidance);
+    $('agency-assumptions').addEventListener('input', updateGuidance);
     $('assumptions').addEventListener('change', evaluate);
     $('agency-assumptions').addEventListener('change', evaluate);
     $('results').addEventListener('change', onCostEdit);
-    $('btn-print').addEventListener('click', function () { window.print(); });
+    $('btn-print').addEventListener('click', function () { renderExport(); window.print(); });
+    $('btn-map-export').addEventListener('click', downloadMap);
     // Closed <details> do not print, so open them for the print run and restore afterwards.
-    var reopened = [];
+    var reopened = [], priorPrintTitle = null;
     window.addEventListener('beforeprint', function () {
+      if (priorPrintTitle === null) priorPrintTitle = document.title;
+      document.title = [readAgency(), $('bid-title').value || 'Bid assessment'].filter(Boolean).join(' — ');
       reopened = Array.prototype.filter.call(document.querySelectorAll('#results details:not([open])'), function (d) { return !d.classList.contains('cite'); });
       reopened.forEach(function (d) { d.open = true; });
-      map.invalidateSize();
+      renderExport();
     });
-    window.addEventListener('afterprint', function () { reopened.forEach(function (d) { d.open = false; }); reopened = []; map.invalidateSize(); });
+    window.addEventListener('afterprint', function () { reopened.forEach(function (d) { d.open = false; }); reopened = []; if (priorPrintTitle !== null) document.title = priorPrintTitle; priorPrintTitle = null; map.invalidateSize(); });
     $('btn-copy').addEventListener('click', copyMemo);
     $('btn-save').addEventListener('click', saveBid);
     $('btn-new').addEventListener('click', newBid);
     $('btn-refresh').addEventListener('click', function () { var key = state.parcel.parcel_key; loadParcel(function () { return state.pack.parcelById(key); }, 'parcel ' + key, true); });
     $('saved-bids').addEventListener('change', function () { if (this.value) openDraft(this.value); });
-    $('bid-title').addEventListener('change', saveBid); $('bid-notes').addEventListener('change', saveBid);
+    ['bid-title', 'bid-notes', 'bid-agency'].forEach(function (id) { $(id).addEventListener('change', function () { if (state.report) renderExport(); saveBid(); }); });
     document.querySelector('.section-nav').addEventListener('click', function (e) { var a = e.target.closest('a'); if (a) { e.preventDefault(); var el = $(a.hash.slice(1)); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
     $('results').addEventListener('click', function (e) { if (e.target.classList.contains('reset-cost')) { delete state.overrides[e.target.closest('tr').dataset.fee]; evaluate(); } });
     try { draftOptions(); } catch (err) { $('save-status').textContent = err.message; }
