@@ -631,8 +631,8 @@ export default function App() {
             or explore first
             <span />
           </div>
-          <a className="primary full bid-entry" href="/bid-assistant/index.html">Start a bid assessment <ArrowUpRight size={17} /></a>
-          <p className="small muted">Public parcel screening. Saved drafts stay in this browser.</p>
+          <a className="primary full bid-entry" href="/bid-assistant/index.html?public=1">Start a bid assessment <ArrowUpRight size={17} /></a>
+          <p className="small muted">Public parcel screening. Sign in to save bids and share them with collaborators.</p>
           <button className="secondary full" onClick={enterDemo}>
             Explore the sample project
             <ArrowUpRight size={17} />
