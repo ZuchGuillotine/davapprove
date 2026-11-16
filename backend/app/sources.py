@@ -56,6 +56,19 @@ def _formatted_tax_id(number: str) -> str:
     return f"{number[:6]}-{number[6]}-{number[7:10]}-{number[10:]}"
 
 
+def _tax_id_where(number: str) -> str:
+    # Both surveyed (6-1-3-4) and platted (4-3-3-4) tax accounts are published.
+    variants = (_formatted_tax_id(number), f"{number[:4]}-{number[4:7]}-{number[7:10]}-{number[10:]}", number)
+    return "ACCT_NO IN (" + ",".join("'" + value + "'" for value in variants) + ")"
+
+
+def _published_tax_id(parcel: dict) -> str:
+    value = str(parcel.get("tax_account_number") or "")
+    if re.fullmatch(r"[0-9-]+", value) and normalize_parcel(value) == parcel["parcel_number"]:
+        return value
+    return _formatted_tax_id(parcel["parcel_number"])
+
+
 async def _validate_url(url: str) -> None:
     parsed = urlparse(url)
     if parsed.scheme != "https" or parsed.hostname not in ALLOWED_HOSTS or parsed.port not in (None, 443) or parsed.username:
@@ -192,13 +205,68 @@ def _classify_jurisdiction(parcel_geometry, city_features, zone_features, addres
     return "kitsap_county", "Outside published incorporated boundaries; screening does not establish land tenure."
 
 
+# Search returns identity candidates only: no owner names or geometry until selection.
+ADDRESS_LAYER = "https://services6.arcgis.com/qt3UCV9x5kB4CwRA/arcgis/rest/services/Parcel_Address/FeatureServer/0"
+PARCEL_GEOMETRY_LAYER = "https://services6.arcgis.com/qt3UCV9x5kB4CwRA/arcgis/rest/services/Tax_Parcel_lot_polygons/FeatureServer/0"
+ADDRESS_ALIASES = dict(zip(
+    "NORTH SOUTH EAST WEST NORTHEAST NORTHWEST SOUTHEAST SOUTHWEST AVENUE STREET ROAD DRIVE COURT PLACE BOULEVARD LANE HIGHWAY PARKWAY CIRCLE TERRACE".split(),
+    "N S E W NE NW SE SW AVE ST RD DR CT PL BLVD LN HWY PKWY CIR TER".split()))
+
+def normalize_address(value):
+    words = re.sub(r"[^A-Z0-9 ]", " ", value.upper().split(",")[0]).split()
+    return " ".join(ADDRESS_ALIASES.get(word, word) for word in words)
+
+async def search_parcels(query: str) -> dict:
+    from difflib import SequenceMatcher
+    query = query.strip()
+    digits = re.sub(r"[\s-]", "", query)
+    async with httpx.AsyncClient(timeout=8, headers=HEADERS) as client:
+        if re.fullmatch(r"\d{7}|\d{14}", digits):
+            where = f"RP_ACCT_ID = {int(digits)}" if len(digits) == 7 else _tax_id_where(digits)
+            result = await _query(client, ADDRESS_LAYER, where=where,
+                                  outFields="ACCT_NO,RP_ACCT_ID,SITUS_ADDR", resultRecordCount=50)
+            rows = [f["attributes"] for f in result.get("features", [])]
+        else:
+            normalized = normalize_address(query)
+            if len(normalized) < 3:
+                raise ValueError("Enter at least three characters of an address or a complete parcel number.")
+            # Restrict by house number first; rank street abbreviations and modest typos locally.
+            # This bounded attribute-only request avoids slow geometry and wildcard county scans.
+            house = re.match(r"^(\d+)\s", normalized)
+            prefix = house.group(1) + " " if house else normalized
+            # First constrain by street words; this makes refinement effective even when
+            # a common house number has more than 100 matches across the county.
+            tokens = [w for w in normalized.split()[1:] if w not in ADDRESS_ALIASES.values()] if house else []
+            where = "SITUS_ADDR LIKE '" + prefix.replace("'", "''") + "%" + "%".join(tokens) + ("%" if tokens else "") + "'"
+            params = dict(outFields="RP_ACCT_ID,ACCT_NO,SITUS_ADDR,SITUS_CITY", resultRecordCount=100, orderByFields="SITUS_ADDR")
+            result = await _query(client, ADDRESS_LAYER, where=where, **params)
+            if not result.get("features") and tokens and not result.get("exceededTransferLimit"):
+                result = await _query(client, ADDRESS_LAYER, where="SITUS_ADDR LIKE '" + prefix + "%'", **params)
+            rows = [f["attributes"] for f in result.get("features", [])]
+            def score(row):
+                address = normalize_address(row.get("SITUS_ADDR") or "")
+                if address.startswith(normalized): return 1.0
+                # Compare the entered prefix so omitted street suffix/city remains useful.
+                return SequenceMatcher(None, normalized, address[:len(normalized)]).ratio()
+            rows = sorted((r for r in rows if score(r) >= .65), key=score, reverse=True)
+        hits, seen = [], set()
+        for row in rows:
+            number = re.sub(r"[\s-]", "", str(row.get("ACCT_NO") or ""))
+            if not re.fullmatch(r"\d{14}", number) or number in seen: continue
+            seen.add(number)
+            hits.append({"parcel_number": number, "account_id": row.get("RP_ACCT_ID"),
+                         "label": row.get("SITUS_ADDR") or "No situs address", "city": row.get("SITUS_CITY") or ""})
+        return {"results": hits[:12], "truncated": bool(result.get("exceededTransferLimit")) or len(hits) > 12,
+                "source_url": ADDRESS_LAYER}
+
+
 async def lookup_parcel(parcel_number: str) -> dict:
     """Return real parcel identity and geometry, or an explicit recoverable error."""
     number = normalize_parcel(parcel_number)
-    where = f"RP_ACCT_ID = {int(number)}" if len(number) == 7 else f"ACCT_NO = '{_formatted_tax_id(number)}'"
+    where = f"RP_ACCT_ID = {int(number)}" if len(number) == 7 else _tax_id_where(number)
     async with httpx.AsyncClient(timeout=20, headers=HEADERS) as client:
-        records = await _query(client, PARCEL_SERVICE + "/4", where=where,
-                               outFields="ACCT_NO,RP_ACCT_ID,JURISDICTION,STREET_ADDR,PRIMARY_FLAG")
+        records = await _query(client, ADDRESS_LAYER, where=where,
+                               outFields="ACCT_NO,RP_ACCT_ID,SITUS_ADDR")
         rows = [f["attributes"] for f in records.get("features", [])]
         ids = {r.get("RP_ACCT_ID") for r in rows}
         if not rows:
@@ -207,9 +275,9 @@ async def lookup_parcel(parcel_number: str) -> dict:
             raise SourceError("Parcel identity is ambiguous or the account result is incomplete. Confirm with the assessor.")
         account_id = int(next(iter(ids)))
         tax_id = normalize_parcel(rows[0]["ACCT_NO"])
-        geometry_result = await _query(client, PARCEL_SERVICE + "/0",
-            where=f"GISPUB.GIS.PARCEL_PARCELS_RP_POLY.RP_ACCT_ID = {account_id}",
-            outFields="GISPUB.GIS.PARCEL_PARCELS_RP_POLY.RP_ACCT_ID", returnGeometry="true", outSR=4326)
+        geometry_result = await _query(client, PARCEL_GEOMETRY_LAYER,
+            where=f"RP_ACCT_ID = {account_id}",
+            outFields="RP_ACCT_ID", returnGeometry="true", outSR=4326)
         if geometry_result.get("exceededTransferLimit") or not geometry_result.get("features"):
             raise SourceError("Parcel outline is missing or incomplete; no envelope can be generated.")
         geometry = unary_union([_feature_geometry(f) for f in geometry_result["features"]])
@@ -227,12 +295,12 @@ async def lookup_parcel(parcel_number: str) -> dict:
                                                          {r["JURISDICTION"] for r in rows if r.get("JURISDICTION")})
         except SourceError as exc:
             source_warnings.append(str(exc))
-        addresses = list(dict.fromkeys(r["STREET_ADDR"] for r in rows if r.get("STREET_ADDR")))
-        return {"id": tax_id, "parcel_number": tax_id, "account_id": account_id,
+        addresses = list(dict.fromkeys(r["SITUS_ADDR"] for r in rows if r.get("SITUS_ADDR")))
+        return {"id": tax_id, "parcel_number": tax_id, "account_id": account_id, "tax_account_number": rows[0]["ACCT_NO"],
                 "address": addresses[0] if addresses else "Address unavailable", "address_aliases": addresses,
                 "jurisdiction": jurisdiction, "jurisdiction_reason": reason,
                 "geometry": mapping(geometry), "geometry_accuracy": "assessor GIS; not a boundary survey",
-                "source_url": PARCEL_SERVICE, "retrieved_at": _now(), "source_warnings": source_warnings,
+                "source_url": PARCEL_GEOMETRY_LAYER, "retrieved_at": _now(), "source_warnings": source_warnings,
                 "source_mode": "live", "tenure_status": "unconfirmed"}
 
 
@@ -311,7 +379,7 @@ async def _discover_kphd(parcel):
 async def _discover_prep(parcel):
     async with httpx.AsyncClient(timeout=20, headers=HEADERS) as client:
         fields = "ACCT_NO,PREPClassification,PREPNotes,ZONE_CODE,StreamsRed,SurfaceWaterRed,WetlandHydricSoilRed,GeohazardRed,FloodZoneRed,TimberMoratoriumRed,ShorelineRed,StreamsYellow,SurfaceWaterYellow,WetlandHydricYellow,GeohazardYellow,SeismicHazardYellow"
-        data = await _query(client, PREP_LAYER, where=f"ACCT_NO = '{_formatted_tax_id(parcel['parcel_number'])}'", outFields=fields)
+        data = await _query(client, PREP_LAYER, where=_tax_id_where(parcel["parcel_number"]), outFields=fields)
         attrs = [f["attributes"] for f in data.get("features", [])]
         return {"records": attrs, "source_url": PREP_LAYER, "retrieved_at": _now(),
                 "kind": "screening", "not_a_delineation": True}, _coverage("County PREP", "complete-for-query",
@@ -343,7 +411,7 @@ async def _discover_zoning(parcel):
 async def _discover_county(parcel):
     from .county_records import BASE, SOURCE, parcel_ids, attachments
     number = normalize_parcel(parcel['parcel_number'])
-    url = BASE + '/Parcels/ParcelSearch?' + urlencode({'query': _formatted_tax_id(number), '_conv': 1})
+    url = BASE + '/Parcels/ParcelSearch?' + urlencode({'query': _published_tax_id(parcel), '_conv': 1})
     found=[]
     async with httpx.AsyncClient(timeout=30, headers=HEADERS) as client:
         content,_ = await _request(client, 'GET', url)
@@ -355,7 +423,7 @@ async def _discover_county(parcel):
             detail=BASE+'/Parcels/ParcelDetail/Index/'+ident
             content,_=await _request(client,'GET',detail)
             html=content.decode('utf-8',errors='replace')
-            if _formatted_tax_id(number) not in html:
+            if _published_tax_id(parcel) not in html:
                 raise SourceError('County parcel detail did not confirm the requested tax ID.')
             found.extend(attachments(html,number,detail))
     unique={}
@@ -398,7 +466,7 @@ async def discover_records(parcel: dict) -> dict:
             coverage.append(_coverage('Kitsap county permit attachments','unavailable',str(exc),'https://co-kitsap-wa.smartgovcommunity.com/Public/Home'))
     number = parcel["parcel_number"]
     permit_url = ("https://ci-poulsbo-wa.smartgovcommunity.com/Public/Home" if parcel.get("jurisdiction") == "poulsbo"
-                  else "https://co-kitsap-wa.smartgovcommunity.com/Parcels/ParcelHome/?" + urlencode({"parcelSearch": _formatted_tax_id(number)}))
+                  else "https://co-kitsap-wa.smartgovcommunity.com/Parcels/ParcelHome/?" + urlencode({"parcelSearch": _published_tax_id(parcel)}))
     coverage.extend([
         _coverage("Permit history", "manual-access", "Review portal decisions and any records absent from attachment discovery. Search the formatted tax ID; missing public attachments do not establish absence.", permit_url),
         _coverage("Recorded surveys and easements", "manual-access", "Search tax parcel and legal description. An empty index is not a title clearance; upload selected records.", "https://kcwaimg.kitsap.gov/recorder/web/"),

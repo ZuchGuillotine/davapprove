@@ -14,14 +14,14 @@
     }
     return items;
   }
-  function snapshot(state, project, title, notes) {
+  function snapshot(state, project, title, notes, agency) {
     var p = state.parcel;
     var parcel = { geometry: p.geometry };
     ['parcel_key', 'rp_acct_id', 'account_no', 'situs'].forEach(function (key) { if (p[key] != null) parcel[key] = p[key]; });
     var screening = { pack_id: state.pack.id, layers: state.screening.layers, tables: state.screening.tables, screened_at: state.screening.screened_at, reference_revision: state.referenceRevision || state.screening.reference_revision || null };
     // Metadata contains function-valued queries; the active pack supplies those when refreshed.
     return JSON.parse(JSON.stringify({ version: 1, id: state.draftId, title: title || state.facts.parcel.situs || 'Parcel ' + p.parcel_key,
-      notes: notes || '', saved_at: new Date().toISOString(), stage: 'early_bid', approved_revision: null,
+      notes: notes || '', agency_name: typeof agency === 'string' ? agency.trim().slice(0, 160) : '', saved_at: new Date().toISOString(), stage: 'early_bid', approved_revision: null,
       parcel: parcel, screening: screening, project: project, overrides: state.overrides }, function (key, value) {
         return /^(OWNER|APPLICANT|PROJECT_NAME)/i.test(key) ? undefined : value;
       }));

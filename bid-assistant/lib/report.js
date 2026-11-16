@@ -73,7 +73,8 @@
     var L = [], p = facts.parcel, j = facts.jurisdiction, t = report.costs.totals;
     var byId = {}; report.findings.forEach(function (f) { byId[f.id] = f; });
     var where = j.status === 'unknown' ? j.county + ' County — local jurisdiction unresolved' : j.city ? 'City of ' + j.city : 'unincorporated ' + j.county + ' County' + (j.uga ? ' (' + j.uga + ')' : '');
-    L.push('# Permitting scope for bid: ' + (draft.title || p.situs || 'parcel ' + p.key));
+    if (draft.agency) { L.push('# ' + String(draft.agency).replace(/[\r\n]+/g, ' ').trim().slice(0, 160)); L.push(''); }
+    L.push((draft.agency ? '## ' : '# ') + 'Permitting scope for bid: ' + (draft.title || p.situs || 'parcel ' + p.key));
     L.push('');
     L.push('EARLY BID · UNCONFIRMED. No approved design revision or construction authorization.');
     L.push('');
@@ -181,6 +182,8 @@
       if (table.status === 'unknown' || table.truncated) L.push('- Record coverage incomplete: ' + (table.table && table.table.label || id) + ' — ' + (table.error || 'partial result'));
     });
     L.push('---');
+    L.push('Prepared with Davapprove.');
+    L.push('');
     L.push('Screening only. Based on public map layers and published code and fee schedules; maps are approximate at lot scale. Not a survey, delineation, agency determination or legal advice. Agency fees change; consultant figures are market ranges, not quotes.');
     return L.join('\n');
   }

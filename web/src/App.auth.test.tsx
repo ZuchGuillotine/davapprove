@@ -162,3 +162,23 @@ it("discards a previous user's in-flight project response after sign-out", async
     expect.stringContaining("old-project"),
   );
 });
+
+it("does not turn an expired recovery link into workspace access through an existing session", async () => {
+  window.history.replaceState(
+    null,
+    "",
+    "/?auth=recovery#error=access_denied&error_code=otp_expired",
+  );
+  mocks.getSession.mockResolvedValue({ data: { session }, error: null });
+  render(<App />);
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "invalid or expired",
+  );
+  expect(
+    screen.queryByRole("form", { name: "Set password" }),
+  ).not.toBeInTheDocument();
+  expect(mocks.request).not.toHaveBeenCalled();
+  expect(
+    await screen.findByRole("button", { name: "Sign in to workspace" }),
+  ).toBeInTheDocument();
+});

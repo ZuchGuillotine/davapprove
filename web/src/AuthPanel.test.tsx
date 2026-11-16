@@ -8,6 +8,7 @@ const auth = vi.hoisted(() => ({
   signUp: vi.fn(),
   resetPasswordForEmail: vi.fn(),
   updateUser: vi.fn(),
+  resend: vi.fn(),
 }));
 vi.mock("./api", () => ({ getAuth: () => ({ auth }) }));
 beforeEach(() => {
@@ -136,4 +137,77 @@ it("only completes a password update after Supabase accepts it", async () => {
   expect(auth.updateUser).toHaveBeenLastCalledWith({
     password: "a-new-passphrase",
   });
+});
+
+it("resends confirmation without a password and throttles repeat email requests", async () => {
+  const user = userEvent.setup();
+  render(<AuthPanel available emailEnabled />);
+  await user.click(
+    screen.getByRole("button", { name: "Resend confirmation email" }),
+  );
+  await user.type(screen.getByLabelText("Email address"), "beta@example.com");
+  expect(
+    screen.queryByLabelText("Password", { exact: true }),
+  ).not.toBeInTheDocument();
+  await user.click(
+    screen.getByRole("button", { name: "Resend confirmation link" }),
+  );
+  expect(auth.resend).toHaveBeenCalledWith({
+    type: "signup",
+    email: "beta@example.com",
+    options: { emailRedirectTo: window.location.origin + "/" },
+  });
+  expect(await screen.findByRole("status")).toHaveTextContent(
+    "If this email has an unconfirmed account",
+  );
+  expect(
+    screen.getByRole("button", { name: "Resend confirmation link" }),
+  ).toBeDisabled();
+  await user.click(screen.getByRole("button", { name: "Forgot password?" }));
+  expect(
+    screen.getByRole("button", { name: "Send reset link" }),
+  ).toBeDisabled();
+  expect(auth.resetPasswordForEmail).not.toHaveBeenCalled();
+  await user.click(screen.getByRole("button", { name: "Back to sign in" }));
+  expect(
+    screen.getByRole("button", { name: "Sign in to workspace" }),
+  ).toBeEnabled();
+});
+it("keeps recovery retry available after a rejected email hook without claiming delivery", async () => {
+  auth.resetPasswordForEmail.mockResolvedValue({
+    error: { code: "hook_timeout" },
+  });
+  const user = userEvent.setup();
+  render(<AuthPanel available emailEnabled />);
+  await user.click(screen.getByRole("button", { name: "Forgot password?" }));
+  await user.type(screen.getByLabelText("Email address"), "beta@example.com");
+  await user.click(screen.getByRole("button", { name: "Send reset link" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "could not complete email delivery",
+  );
+  expect(screen.queryByRole("status")).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Send reset link" })).toBeEnabled();
+});
+it("stores optional business branding as signup metadata without changing credentials", async () => {
+  const user = userEvent.setup();
+  render(<AuthPanel available emailEnabled />);
+  await user.click(screen.getByRole("button", { name: "Create account" }));
+  await credentials(user);
+  await user.type(
+    screen.getByLabelText("Confirm password"),
+    "a-test-passphrase",
+  );
+  await user.type(
+    screen.getByLabelText("Business / agency name (optional)"),
+    "Davin Designs LLC",
+  );
+  await user.click(screen.getByRole("button", { name: "Create beta account" }));
+  expect(auth.signUp).toHaveBeenCalledWith(
+    expect.objectContaining({
+      options: {
+        emailRedirectTo: window.location.origin + "/",
+        data: { business_name: "Davin Designs LLC" },
+      },
+    }),
+  );
 });

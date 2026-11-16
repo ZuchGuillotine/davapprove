@@ -1,0 +1,26 @@
+const assert=require('node:assert/strict');
+const Arc=require('../bid-assistant/lib/arcgis.js');
+const Kitsap=require('../bid-assistant/packs/wa-kitsap.js');
+(async()=>{
+ assert.equal(Arc.normalizeAddress('602 Alder Avenue Northeast, Bainbridge Island, WA'), '602 ALDER AVE NE');
+ assert.equal(Arc.addressScore('602 Alder Avenue NE','602 ALDER AVE NE'),1);
+ assert(Arc.addressScore('602 Aldre Ave','602 ALDER AVE NE')>.65);
+ assert.equal(Arc.addressScore('602 Alder','603 ALDER AVE NE'),0);
+ let queries=[];
+ Arc.query=async(url,p,opts)=>{queries.push({url,p,opts});return {features:[{attributes:{RP_ACCT_ID:1517051,ACCT_NO:'012201-1-005-2001',SITUS_ADDR:'602 ALDER AVE NE'}}],exceeded:true};};
+ const hits=await Kitsap.search('602 Alder Avenue Northeast');
+ assert.equal(hits[0].parcel_key,'1517051');assert(hits.truncated);
+ assert.equal(queries[0].p.where,"SITUS_ADDR LIKE '602 %ALDER%'");assert.equal(queries[0].opts.timeoutMs,5000);
+ await Kitsap.search('602 Alder Avenue Northeast');assert.equal(queries.length,1,'repeat suggestions reuse short-lived cache');
+ await Kitsap.search('01220110052001');
+ assert(queries[1].p.where.includes("'012201-1-005-2001'"));assert(queries[1].url.includes('/Parcel_Address/'));
+ await Kitsap.search('41120000070109');assert(queries[2].p.where.includes("'4112-000-007-0109'"));
+ Arc.query=async()=>{throw Error('outage');};
+ await assert.rejects(Kitsap.search('999 Other Road'),/outage/);
+ Arc.query=async()=>({features:[],exceeded:false});
+ assert.equal((await Kitsap.search('999 Other Road')).length,0,'failed requests are not cached');
+ await assert.rejects(Kitsap.parcelById("1 OR 1=1"),/Invalid assessor/);
+ Arc.query=async()=>({features:[],exceeded:true});
+ await assert.rejects(Kitsap.parcelById('1517051'),/boundary is incomplete/);
+ console.log('Parcel search regression checks passed');
+})().catch(e=>{console.error(e);process.exit(1);});

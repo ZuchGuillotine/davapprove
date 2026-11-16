@@ -76,11 +76,12 @@ function report(d,city,p={},opts={}){const s=sample(d,city,opts);return Engine.e
  try {
   Arc.query=async(url,params)=>{queries.push(params);return {features:[],exceeded:false};};
   await Factory.create(kd.region).search('600 4th Avenue, Seattle');
-  assert.match(queries.pop().where,/600 4TH AVE%/);
+  assert.match(queries.pop().where,/600 %/);
   await Factory.create(sd.region).search('833 S Spruce St, Burlington');
-  assert.match(queries.pop().where,/SOUTH SPRUCE STREET%/);
+  assert.match(queries.pop().where,/ = '833'/);
+  assert.equal(Arc.addressScore('833 S Spruce St', '833 SOUTH SPRUCE STREET'),1);
   await Factory.create(sd.region).search("100 O'Brien Rd");
-  const query=queries.pop();assert.match(query.where,/O''BRIEN ROAD/);assert(!/owner|applicant|\*/i.test(query.outFields));
+  const query=queries.pop();assert.match(query.where,/ = '100'/);assert(!query.where.includes("O'Brien"));assert(!/owner|applicant|\*/i.test(query.outFields));
  } finally {Arc.query=originalQuery;}
  const fees=(d,id,p)=>Regional.price(d.fees[id],Engine.normaliseProject(p));
  assert.equal(fees(kd,'wa-king-county-building',{new_sqft:2400}).low,14032);

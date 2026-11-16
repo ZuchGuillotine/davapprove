@@ -55,3 +55,42 @@ Official references reviewed November 14, 2026:
 - [Cloudflare Workers email API](https://developers.cloudflare.com/email-service/api/send-emails/workers-api/)
 - [Cloudflare sending-domain configuration](https://developers.cloudflare.com/email-service/configuration/domains/)
 - [Cloudflare Email Sending pricing](https://developers.cloudflare.com/email-service/platform/pricing/)
+
+## Design-partner recovery investigation — November 16, 2026
+
+Read-only production checks for the reported missing reset email found:
+
+- The affected account exists and is email-confirmed. Its last sign-in predates the
+  November 14 email-hook verification. Its `recovery_sent_at` is null, so there is
+  no recorded successful recovery send for that account. This does not identify
+  the original failure or prove that the user did not attempt a request.
+- The exact recipient has no active Cloudflare Email Sending suppression.
+- Worker observations from November 14 00:00 UTC through the investigation showed
+  one `auth_email_accepted` recovery event, matching the existing November 14
+  verification above, and no `auth_email_failed` events. These privacy-preserving
+  logs do not identify the recipient, and provider acceptance is not delivery.
+- Supabase Auth logs available for November 14 showed no email delivery errors;
+  the latest 24-hour query showed a refresh-token-not-found error, not a delivery
+  error. A November 13 query and the affected-account audit-entry query returned
+  no rows. Empty historical results are not proof of absence.
+- Supabase health advisors returned no notices. No email was sent and no account,
+  password, suppression, or service configuration was changed during this review.
+
+**Status:** the original missing-email cause and the affected recipient's current
+inbox delivery remain unverified. Do not report this as a proven inbox fix. The
+frontend now offers confirmation resends, a visible 60-second repeat-request wait,
+missing-email guidance, and regression coverage for rejected email hooks and
+expired recovery callbacks with an existing browser session.
+
+For a follow-up delivery check, have the recipient request recovery from the app
+and record the UTC time. Correlate the Auth request, signed hook invocation, and
+provider message ID; inspect the provider's delivery/bounce status. Check Spam and
+All Mail for Davapprove from `davapprove@haidaa.com`. Only recipient confirmation
+and completing the password-reset/sign-in round trip verify the complete flow.
+Never store the reset URL, token, or password in an issue or log. Use an authorized
+test account for signup/confirmation/reset end-to-end checks.
+
+Frontend resend implementation follows [Supabase auth.resend](https://supabase.com/docs/reference/javascript/auth-resend)
+and recovery follows [Password-based Auth](https://supabase.com/docs/guides/auth/passwords),
+reviewed November 16, 2026. Business/agency signup metadata is presentation-only;
+it must never be used for authorization.

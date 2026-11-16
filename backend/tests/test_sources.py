@@ -166,9 +166,9 @@ def test_overall_request_deadline_becomes_retryable_source_error(monkeypatch):
 
 def test_failed_jurisdiction_lookup_does_not_fall_back_to_county(monkeypatch):
     async def fake_query(client, layer, **kwargs):
-        if layer.endswith("/4"):
-            return {"features":[{"attributes":{"ACCT_NO":"012201-1-005-2001","RP_ACCT_ID":1010156,"JURISDICTION":"CO","STREET_ADDR":"Synthetic"}}]}
-        if layer == sources.PARCEL_SERVICE + "/0":
+        if layer == sources.ADDRESS_LAYER:
+            return {"features":[{"attributes":{"ACCT_NO":"012201-1-005-2001","RP_ACCT_ID":1010156,"JURISDICTION":"CO","SITUS_ADDR":"Synthetic"}}]}
+        if layer == sources.PARCEL_GEOMETRY_LAYER:
             return {"features":[{"geometry":{"rings":[[(0,0),(1,0),(1,1),(0,1),(0,0)]]}}]}
         raise sources.SourceError("offline")
 
@@ -202,3 +202,62 @@ def test_selected_export_fetches_only_selected_id(monkeypatch):
     export = next(kwargs for url,kwargs in calls if "GeneratePDF" in url)
     assert export["params"]["key"] == "17"
     assert len([url for url,kwargs in calls if "/PDF10/" in url]) == 1
+
+
+def test_address_search_ranks_aliases_and_typos_without_owner_fields(monkeypatch):
+    calls = []
+    async def query(client, layer, **params):
+        calls.append(params)
+        return {"features": [{"attributes": {"ACCT_NO": "012201-1-005-2001", "RP_ACCT_ID": 1010156,
+                "SITUS_ADDR": "602 ALDER AVE NE", "SITUS_CITY": "BAINBRIDGE ISLAND"}},
+                {"attributes": {"ACCT_NO": "012201-1-005-2002", "RP_ACCT_ID": 1010157,
+                "SITUS_ADDR": "602 VERY DIFFERENT RD"}}], "exceededTransferLimit": True}
+    monkeypatch.setattr(sources, "_query", query)
+    result = run(sources.search_parcels("602 Aldre Avenue Northeast, Bainbridge Island, WA"))
+    assert [r['parcel_number'] for r in result['results']] == ['01220110052001']
+    assert result['truncated']
+    assert calls[0]['where'] == "SITUS_ADDR LIKE '602 %ALDRE%'"
+    assert calls[0]['outFields'] == 'RP_ACCT_ID,ACCT_NO,SITUS_ADDR,SITUS_CITY'
+
+
+def test_search_exact_tax_id_uses_account_index_for_vacant_parcel(monkeypatch):
+    async def query(client, layer, **params):
+        assert layer == sources.ADDRESS_LAYER
+        assert "'012201-1-005-2001'" in params['where']
+        assert "'0122-011-005-2001'" in params['where']
+        return {"features": [{"attributes": {"ACCT_NO": "012201-1-005-2001", "RP_ACCT_ID": 1010156, "SITUS_ADDR": None}}]}
+    monkeypatch.setattr(sources, "_query", query)
+    assert run(sources.search_parcels('01220110052001'))['results'][0]['label'] == 'No situs address'
+
+
+def test_search_outage_is_not_empty_result(monkeypatch):
+    async def query(*args, **kwargs): raise sources.SourceError('outage')
+    monkeypatch.setattr(sources, "_query", query)
+    with pytest.raises(sources.SourceError): run(sources.search_parcels('602 Alder'))
+
+
+def test_tax_id_query_and_discovery_preserve_platted_account_format():
+    assert "'4112-000-007-0109'" in sources._tax_id_where('41120000070109')
+    assert sources._published_tax_id({'parcel_number':'41120000070109','tax_account_number':'4112-000-007-0109'}) == '4112-000-007-0109'
+
+
+def test_lookup_hosted_platted_identity_geometry_and_canonical_account(monkeypatch):
+    seen=[]
+    async def query(client, layer, **params):
+        seen.append((layer, params))
+        if layer == sources.ADDRESS_LAYER:
+            assert "'4112-000-007-0109'" in params['where']
+            assert params['outFields'] == 'ACCT_NO,RP_ACCT_ID,SITUS_ADDR'
+            return {'features':[{'attributes':{'ACCT_NO':'4112-000-007-0109','RP_ACCT_ID':1517051,'SITUS_ADDR':'602 ALDER AVE NE'}}]}
+        if layer == sources.PARCEL_GEOMETRY_LAYER:
+            assert params['where'] == 'RP_ACCT_ID = 1517051'
+            assert params['outSR'] == 4326
+            return {'features':[{'geometry':{'rings':[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}}]}
+        return {'features':[]}
+    monkeypatch.setattr(sources, '_query', query)
+    parcel=run(sources.lookup_parcel('41120000070109'))
+    assert parcel['parcel_number']=='41120000070109'
+    assert parcel['tax_account_number']=='4112-000-007-0109'
+    assert parcel['geometry']['type']=='Polygon'
+    assert parcel['address']=='602 ALDER AVE NE'
+    assert parcel['tenure_status']=='unconfirmed'

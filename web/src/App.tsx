@@ -1,3 +1,4 @@
+import ParcelSearch from "./ParcelSearch";
 import { useEffect, useState, useRef, lazy, Suspense, type FormEvent } from "react";
 import {
   ArrowRight,
@@ -104,11 +105,30 @@ function Empty({
 export default function App() {
   const [accountOpen, setAccountOpen] = useState(false);
   const [accountEmail, setAccountEmail] = useState("");
+  const [accountAgencyName, setAccountAgencyName] = useState("");
   const [passwordRecovery, setPasswordRecovery] = useState(false);
   const authLinkError = useRef(new URLSearchParams(window.location.hash.slice(1)).has("error"));
   const recoveryGate = useRef(new URLSearchParams(window.location.hash.slice(1)).get("type") === "recovery" || new URLSearchParams(window.location.search).get("auth") === "recovery");
   const workspaceGeneration = useRef(0);
-  const [bidsOpen, setBidsOpen] = useState(false);
+  const [bidsOpen, setBidsOpen] = useState(() => new URLSearchParams(window.location.search).get("workspace") === "bids");
+  const [bidWorkspaceVisited, setBidWorkspaceVisited] = useState(false);
+  function navigateWorkspace(destination: "projects" | "bids") {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("workspace") !== destination) {
+      url.searchParams.set("workspace", destination);
+      window.history.pushState(null, "", url.pathname + url.search + url.hash);
+    }
+    if (destination === "bids") setBidWorkspaceVisited(true);
+    setBidsOpen(destination === "bids");
+  }
+  useEffect(() => {
+    if (bidsOpen) setBidWorkspaceVisited(true);
+  }, [bidsOpen]);
+  useEffect(() => {
+    const restoreWorkspace = () => setBidsOpen(new URLSearchParams(window.location.search).get("workspace") === "bids");
+    window.addEventListener("popstate", restoreWorkspace);
+    return () => window.removeEventListener("popstate", restoreWorkspace);
+  }, []);
   const [config, setConfig] = useState<Json | null>(null),
     [entered, setEntered] = useState(false),
     [sample, setSample] = useState(false),
@@ -145,9 +165,9 @@ export default function App() {
     setEntered(false); setSample(false); setSampleMode(false);
     setProjects([]); setProject(null); setCandidates([]); setCoverage([]);
     setDocuments([]); setFacts([]); setAssessment(null); setComments([]); setJobs([]);
-    setSelected(new Set()); setComment(""); setBidsOpen(false); setProjectLoading(false);
+    setSelected(new Set()); setComment(""); setBidsOpen(false); setBidWorkspaceVisited(false); setProjectLoading(false);
     setNewOpen(false); setEditIntent(false); setViewDoc(null); setGeometryOpen(false); setEditingFact(null);
-    setAccountOpen(false); setAccountEmail(""); setNotice(""); setError(""); setBusy("");
+    setAccountOpen(false); setAccountEmail(""); setAccountAgencyName(""); setNotice(""); setError(""); setBusy("");
   }
   function finishRecovery() {
     recoveryGate.current = false;
@@ -174,8 +194,8 @@ export default function App() {
       const auth = getAuth();
       if (auth) {
         let openedUser: string | null = null;
-        const openSession = (session: { user: { id: string; email?: string } } | null) => {
-          if (!active || !session) return;
+        const openSession = (session: { user: { id: string; email?: string; user_metadata?: Record<string, unknown> } } | null) => {
+          if (!active || !session || authLinkError.current) return;
           if (recoveryGate.current) {
             openedUser = session.user.id;
             setAccountEmail(session.user.email || "");
@@ -186,6 +206,10 @@ export default function App() {
           openedUser = session.user.id;
           clearWorkspace();
           setAccountEmail(session.user.email || "");
+          const metadata = session.user.user_metadata || {};
+          const agency = [metadata.business_name, metadata.company_name, metadata.organization_name, metadata.agency_name].find(value => typeof value === "string" && value.trim());
+          setAccountAgencyName(typeof agency === "string" ? agency.trim().slice(0, 160) : "");
+          setBidsOpen(new URLSearchParams(window.location.search).get("workspace") === "bids");
           setEntered(true);
           setProjectLoading(true);
           const generation = workspaceGeneration.current;
@@ -213,6 +237,7 @@ export default function App() {
           authLinkError.current = false;
           finishRecovery();
           setError("This sign-in or recovery link is invalid or expired. Sign in with your password or request a new link.");
+          return;
         }
         openSession(session.data.session);
       }
@@ -640,14 +665,14 @@ export default function App() {
           <ChevronDown size={14} />
         </div>
         <div className="sidebar-label">WORKSPACE</div>
-        <button className={`nav-item ${!bidsOpen ? "active" : ""}`} onClick={() => { setBidsOpen(false); setTab("Overview"); }}>
+        <button className={`nav-item ${!bidsOpen ? "active" : ""}`} aria-current={!bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("projects")}>
           <FolderOpen size={18} />
           Projects<span>{projects.length}</span>
         </button>
-        <button className={`nav-item ${bidsOpen ? "active" : ""}`} onClick={() => setBidsOpen(true)}>
+        <button className={`nav-item ${bidsOpen ? "active" : ""}`} aria-current={bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("bids")}>
           <Compass size={18} /> Bids &amp; assessments
         </button>
-        <button className="nav-item" onClick={() => { setBidsOpen(false); setNewOpen(true); }}>
+        <button className="nav-item" onClick={() => { navigateWorkspace("projects"); setNewOpen(true); }}>
           <Plus size={18} />
           New project
         </button>
@@ -655,9 +680,10 @@ export default function App() {
         {projects.map((p) => (
           <button
             key={p.id}
-            className={`project-nav ${project?.id === p.id ? "selected" : ""}`}
+            className={`project-nav ${!bidsOpen && project?.id === p.id ? "selected" : ""}`}
+            aria-current={!bidsOpen && project?.id === p.id ? "page" : undefined}
             disabled={!!busy}
-            onClick={() => { setBidsOpen(false); run("Loading project", () => loadProject(p)); }}
+            onClick={() => { navigateWorkspace("projects"); setTab("Overview"); run("Loading project", () => loadProject(p)); }}
           >
             <span className="project-dot" />
             <span>
@@ -689,7 +715,7 @@ export default function App() {
       <div className="main">
         <header className="topbar">
           <div>
-            <span className="muted">Workspace</span>
+            <button className="workspace-breadcrumb" aria-label="Return to projects" onClick={() => navigateWorkspace("projects")}>Projects</button>
             <ChevronRight size={14} />
             <span>{bidsOpen ? "Bids & assessments" : project?.name || "Projects"}</span>
           </div>
@@ -704,6 +730,22 @@ export default function App() {
             <span className="user-avatar">{sample ? "DS" : "You"}</span>
           </div>
         </header>
+        <nav className="mobile-workspace-nav" aria-label="Workspace navigation">
+          <button aria-current={!bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("projects")}><FolderOpen size={16} />Project dashboard</button>
+          <button aria-current={bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("bids")}><Compass size={16} />Bid workspace</button>
+          <button onClick={() => { navigateWorkspace("projects"); setNewOpen(true); }}><Plus size={16} />Create project</button>
+          {!sample && config?.authAvailable && <button onClick={() => setAccountOpen(true)}><ShieldCheck size={16} />Account</button>}
+          <button disabled={!!busy} onClick={() => run("Signing out", leaveWorkspace)}><LogOut size={16} />{sample ? "Leave sample" : "Sign out"}</button>
+          {projects.length > 1 && <label className="mobile-project-picker">Project
+            <select aria-label="Switch project" value={project?.id || ""} disabled={!!busy} onChange={event => {
+              const nextProject = projects.find(item => item.id === event.target.value);
+              if (nextProject) { navigateWorkspace("projects"); setTab("Overview"); run("Loading project", () => loadProject(nextProject)); }
+            }}>
+              {!project && <option value="">Choose a project</option>}
+              {projects.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+            </select>
+          </label>}
+        </nav>
         {sample && !bidsOpen && (
           <div className="sample-strip">
             You’re exploring an illustrative project. Records, geometry and
@@ -732,7 +774,8 @@ export default function App() {
               </button>
             </div>
           )}
-          {bidsOpen ? <BidWorkspace /> : projectLoading ? (
+          {(bidsOpen || bidWorkspaceVisited) && <div hidden={!bidsOpen}><BidWorkspace agencyName={accountAgencyName} /></div>}
+          {bidsOpen ? null : projectLoading ? (
             <section
               className="project-loading panel"
               role="status"
@@ -1789,28 +1832,12 @@ function NewProject({
   onCreated: (p: Project) => Promise<void>;
   sample: boolean;
 }) {
-  const [number, setNumber] = useState(""),
-    [name, setName] = useState(""),
+  const [name, setName] = useState(""),
     [type, setType] = useState("new_house"),
     [bedrooms, setBedrooms] = useState("3"),
     [parcel, setParcel] = useState<Json | null>(null),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
-  async function lookup(e: FormEvent) {
-    e.preventDefault();
-    setBusy(true);
-    setError("");
-    try {
-      setParcel(
-        await request("/parcels/lookup", "POST", { parcel_number: number }),
-      );
-      if (!name) setName("New residential project");
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  }
   async function create() {
     setBusy(true);
     setError("");
@@ -1818,7 +1845,7 @@ function NewProject({
       await onCreated(
         await request("/projects", "POST", {
           name,
-          parcel_number: number,
+          parcel_number: parcel?.parcel_number,
           parcel,
           intent: { project_type: type, bedrooms: Number(bedrooms), units: 1 },
         }),
@@ -1847,7 +1874,7 @@ function NewProject({
         <span className="eyebrow">A NEW STARTING POINT</span>
         <h2 id="new-title">Let’s find your property.</h2>
         <p>
-          Start with a parcel number. We’ll confirm the site before creating
+          Start with an address or parcel number. We’ll confirm the site before creating
           your workspace.
         </p>
         {sample && (
@@ -1855,29 +1882,10 @@ function NewProject({
             Sample mode: lookup returns illustrative geometry only.
           </div>
         )}
-        <form onSubmit={lookup}>
-          <label>
-            Parcel number
-            <input
-              autoFocus
-              value={number}
-              required
-              placeholder="Enter your tax parcel number"
-              onChange={(e) => {
-                setNumber(e.target.value);
-                setParcel(null);
-              }}
-            />
-          </label>
-          <button className="secondary full" disabled={busy}>
-            {busy ? (
-              <LoaderCircle className="spin" size={16} />
-            ) : (
-              <Search size={16} />
-            )}
-            Look up parcel
-          </button>
-        </form>
+        <ParcelSearch sample={sample} onChange={() => setParcel(null)} onSelected={value => {
+          setParcel(value);
+          if (!name) setName("New residential project");
+        }} />
         {error && (
           <p role="alert" className="error">
             {error}
@@ -1889,7 +1897,7 @@ function NewProject({
               <MapPin size={21} />
               <div>
                 <strong>
-                  {parcel.address || parcel.site_address || number}
+                  {parcel.address || parcel.site_address || parcel.parcel_number}
                 </strong>
                 <small>
                   {labelJurisdiction(parcel.jurisdiction || "unknown")}

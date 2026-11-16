@@ -21,6 +21,7 @@ class ProjectInput(BaseModel):
 class ProjectNameInput(BaseModel):
     name:str=Field(min_length=1,max_length=160)
 class LookupInput(BaseModel):parcel_number:str
+class ParcelSearchInput(BaseModel):query:str=Field(min_length=3,max_length=160)
 class ImportInput(BaseModel):
     candidate_ids:list[str]=Field(max_length=100)
     idempotency_key:str=Field(min_length=1,max_length=128)
@@ -93,20 +94,28 @@ def create_app(settings=None,store=None):
         return db.save('job',j)
     async def lookup(number):
         number=re.sub(r'[\s-]','',number)
-        if not re.fullmatch(r'\d{14}',number):raise HTTPException(422,'Enter a 14-digit Kitsap parcel number (dashes allowed).')
+        if not re.fullmatch(r'\d{14}|\d{7}',number):raise HTTPException(422,'Enter a 14-digit Kitsap parcel number (dashes allowed) or 7-digit assessor account ID.')
         from .sources import lookup_parcel
         try:return await lookup_parcel(number)
         except Exception as exc:
             raise HTTPException(502,'Parcel source unavailable or no matching parcel found. Check the number and retry.') from exc
     @app.post('/api/v1/parcels/lookup')
     async def lookup_route(body:LookupInput,ctx=Depends(session)):return await lookup(body.parcel_number)
+    @app.post('/api/v1/parcels/search')
+    async def search_route(body:ParcelSearchInput,ctx=Depends(session)):
+        from .sources import search_parcels
+        try:
+            async with asyncio.timeout(10):
+                return await search_parcels(body.query)
+        except ValueError as exc:raise HTTPException(422,str(exc)) from exc
+        except Exception as exc:raise HTTPException(502,'County parcel search is unavailable. Retry or enter a complete parcel number.') from exc
     @app.get('/api/v1/projects')
     def projects(ctx=Depends(session)):return {'projects':ctx[1].projects(ctx[0])}
     @app.post('/api/v1/projects',status_code=201)
     async def create_project(body:ProjectInput,ctx=Depends(session)):
         # Resolve from authoritative connector; never trust browser-supplied jurisdiction/geometry.
         parcel=await lookup(body.parcel_number)
-        p={'id':ident(),'owner_id':ctx[0],'name':body.name,'parcel_number':re.sub(r'[\s-]','',body.parcel_number),'parcel':parcel,'jurisdiction':parcel.get('jurisdiction','unknown'),'intent':body.intent,'current_revision':1,'accepted_facts':{},'created_at':now()}
+        p={'id':ident(),'owner_id':ctx[0],'name':body.name,'parcel_number':parcel['parcel_number'],'parcel':parcel,'jurisdiction':parcel.get('jurisdiction','unknown'),'intent':body.intent,'current_revision':1,'accepted_facts':{},'created_at':now()}
         saved=ctx[1].create_project(p,ctx[0])
         if settings.mode=='supabase':new_job(ctx[1],p['id'],'discover')
         return saved
