@@ -31,6 +31,7 @@ jobs:
             psql -v ON_ERROR_STOP=1 -f "$migration"
           done
       - run: psql -v ON_ERROR_STOP=1 -f tests/rls_assertions.sql
+      - run: psql -v ON_ERROR_STOP=1 -f tests/bid_rls_assertions.sql
   backend:
     runs-on: ubuntu-latest
     steps:

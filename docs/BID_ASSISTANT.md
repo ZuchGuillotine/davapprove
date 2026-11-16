@@ -1,5 +1,16 @@
 # Bid Assistant
 
+## Account-backed bids — November 15, 2026
+
+Saved bids now persist in Supabase with creator and explicit collaborator access, rather than browser-local storage. This supersedes the browser-local behavior described in the historical release notes below. Signed-out/sample screening cannot read or save account bids. The authenticated application shell handles storage; the assessment iframe never receives session tokens. Full-workspace links open that same shell.
+
+Creators can grant editor or read-only access to an existing confirmed account by email, or revoke it, using **Collaborators**. No invitation email is sent; the recipient signs in to see shared work. Projects have the equivalent **Project collaborators** control. Existing project ownership and memberships are preserved. Sharing and grants are enforced in Postgres, not by hiding UI controls.
+
+Old browser drafts are not assigned automatically. **Import previous browser bids** asks the signed-in user to confirm ownership, then imports the stored snapshots. Browser copies are removed only after every import succeeds; partial failures preserve them for retry. Bids remain distinct from approval projects and never become permit approvals. Concurrent saves use version checks; reopen a conflicting bid before saving again. Account changes unmount the frame and discard pending results. Reopening saved snapshots does not write them, including for read-only collaborators.
+
+Validation covers creator/collaborator/outsider/anonymous access, owner-only sharing, revocation, stale-write rejection, frame origins, account changes, explicit legacy import and existing screening/export behavior. SQL tests run in CI with the other RLS assertions.
+
+
 Built November 12, 2026 on branch `claude/vibrant-archimedes-25i4ue`. Code and fee research date: November 12, 2026.
 
 ## November 14, 2026: independent agency coverage

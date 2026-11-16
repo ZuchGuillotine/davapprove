@@ -1,7 +1,7 @@
 -- Run only after bootstrap + migration in a disposable test database.
 \set ON_ERROR_STOP on
 begin;
-insert into auth.users values ('00000000-0000-4000-8000-000000000001'),('00000000-0000-4000-8000-000000000002'),('00000000-0000-4000-8000-000000000003');
+insert into auth.users(id) values ('00000000-0000-4000-8000-000000000001'),('00000000-0000-4000-8000-000000000002'),('00000000-0000-4000-8000-000000000003');
 set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select public.create_project('{"id":"10000000-0000-4000-8000-000000000001","owner_id":"00000000-0000-4000-8000-000000000001","current_revision":1,"name":"A","jurisdiction":"kitsap_county"}');

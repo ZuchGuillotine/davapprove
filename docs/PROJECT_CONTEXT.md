@@ -1,5 +1,10 @@
 # Davapprove project handoff
 
+## Account storage update — November 15, 2026
+
+Bids now use Supabase account-backed storage and explicit creator-controlled editor/read-only sharing. Browser drafts require a deliberate import; they no longer populate every login. Project storage retains its existing owner/membership boundary, with a collaborator management control added. See [Bid Assistant](BID_ASSISTANT.md#account-backed-bids--november-15-2026). This supersedes earlier browser-local persistence statements.
+
+
 November 16 design-partner revision: [UX review and release notes](DESIGN_PARTNER_UX_REVIEW.md) describe account-recovery improvements, full-workspace/mobile navigation, address/parcel search, sourced assumption guidance and agency-branded parcel-scale exports. Implementation is on `codex/design-partner-ux`; these notes do not assert a production deployment or verified inbox delivery for the reported recipient.
 
 November 8 implementation: [Jev/Sol cascade release](CASCADE_RELEASE.md) records the operational processing pipeline, validation, benchmark and deployment limits. The broader architecture below remains the roadmap where the release explicitly lists remaining work.

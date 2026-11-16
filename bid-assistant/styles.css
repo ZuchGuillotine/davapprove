@@ -276,3 +276,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
 .assumption-trigger-summary.reached { color: #895000; }
 @media (max-width: 430px) { #assumptions .grid2, #agency-assumptions .grid2 { grid-template-columns: 1fr; } }
 @media print { .assumption-help-toggle { display: none; } }
+
+#bid-sharing { margin: 1rem; padding: 1rem; background: white; border: 1px solid #d8ded9; border-radius: 12px; }
+#share-bid-form { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
+#share-bid-form p { flex-basis: 100%; }
+#share-bid-form label { display: grid; gap: .3rem; }

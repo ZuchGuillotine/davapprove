@@ -30,17 +30,23 @@ async function boot(saved, hash='') {
   tables.address={...tables.address,status:'found',rows:[{SITUS_ADDR:'SYNTHETIC SITE',ACCT_NO:'TEST-123'}]};
   return {pack_id:active.id,parcel,layers,tables,screened_at:'2026-11-13T00:00:00Z'};
  };
- if(saved)w.localStorage.setItem('davapprove.bid-drafts.v1',saved);
+ let accountDrafts = saved ? JSON.parse(saved) : [];
+ w.BidAccount={request:async(op,payload)=>{
+  if(op==='list')return structuredClone(accountDrafts);
+  if(op==='get')return structuredClone(accountDrafts.find(d=>d.id===payload.id));
+  if(op==='save'){accountDrafts=accountDrafts.filter(d=>d.id!==payload.draft.id);accountDrafts.unshift(structuredClone(payload.draft));return payload.draft;}
+  throw Error('Unsupported test action');
+ }};
  w.eval(fs.readFileSync(path.join(root,'app.js'),'utf8')); await pause();
  const $=s=>w.document.querySelector(s), change=(selector,value)=>{const el=$(selector);el.value=value;el.dispatchEvent(new w.Event('change',{bubbles:true}));};
- return {dom,w,$,change,screens:()=>screens,copied:()=>copied};
+ return {dom,w,$,change,screens:()=>screens,copied:()=>copied,saved:()=>JSON.stringify(accountDrafts)};
 }
 (async()=>{
  let b=await boot(); b.$('#q').value='123456'; b.$('#search-form').dispatchEvent(new b.w.Event('submit',{bubbles:true,cancelable:true})); await pause();
  assert.equal(b.screens(),1); assert(!b.$('#results').hidden); assert.match(b.$('#map-coverage').textContent,/Coverage incomplete/);
  assert.match(b.$('#bid-constraints').textContent,/Coverage incomplete/);
  assert(!b.$('#bid-constraints').textContent.includes('No mapped constraint reaches this lot'));
- assert.match(b.$('#save-status').textContent,/Saved in this browser/);
+ assert.match(b.$('#save-status').textContent,/Saved to your account/);
  assert.match(b.$('#bid-independent').textContent,/checks beyond county records/);
  b.$('#a-in_water').checked=true;
  b.$('#a-in_water').dispatchEvent(new b.w.Event('change',{bubbles:true}));
@@ -63,7 +69,7 @@ async function boot(saved, hash='') {
  b.change('tr[data-fee="pro-civil-sdap"] .hi','9000');
  b.change('#bid-agency','Davin Designs LLC');
  b.change('#bid-title','Synthetic saved bid'); b.change('#bid-notes','Survey handled separately.');
- const saved=b.w.localStorage.getItem('davapprove.bid-drafts.v1'), hash=b.w.location.hash;
+ await pause(); const saved=b.saved(), hash=b.w.location.hash;
  b.dom.window.close(); b=await boot(saved,hash);
  assert.equal(b.screens(),0,'opening a draft does not fetch maps or documents');
  assert.equal(b.$('#a-hard_surface_sqft').value,'10000');
@@ -143,12 +149,24 @@ async function boot(saved, hash='') {
  b.w.BidApp.state.facts.jurisdiction.city=null;b.change('#a-construction_value','600000');
  assert.match(b.$('.card.parcel').textContent,/Unincorporated King County/);assert(!b.$('.card.parcel').textContent.includes('Kitsap'));
  b.w.BidApp.state.facts.jurisdiction.city='Seattle';b.change('#a-construction_value','550000');
- b.$('#btn-save').click();await pause();const regionalSaved=b.w.localStorage.getItem('davapprove.bid-drafts.v1');const rd=JSON.parse(regionalSaved)[0];assert(rd.screening.reference_revision);
+ b.$('#btn-save').click();await pause();const regionalSaved=b.saved();const rd=JSON.parse(regionalSaved)[0];assert(rd.screening.reference_revision);
  b.dom.window.close();b=await boot(regionalSaved,'#draft='+rd.id);await pause();await pause();
  assert.equal(b.w.BidApp.state.pack.id,'wa-king');assert.equal(b.$('#jurisdiction').value,'wa-king');
  b.change('#jurisdiction','wa-skagit');await pause();await pause();assert.equal(b.w.BidApp.state.pack.id,'wa-skagit');assert.equal(b.w.BidApp.state.report,null);
  b.change('#jurisdiction','wa-kitsap');await pause();await pause();assert.equal(b.w.BidApp.state.pack.id,'wa-kitsap');
  assert(!b.$('#a-prior_planning_review').closest('label').hidden);
+ b.dom.window.close();
+ // Legacy browser drafts are never listed or claimed until explicit import.
+ b=await boot();
+ b.w.localStorage.setItem('davapprove.bid-drafts.v1',saved);
+ assert.equal(b.$('#saved-bids').options.length,1);
+ b.w.confirm=()=>false;
+ b.$('#btn-import-legacy').click(); await pause();
+ assert.equal(JSON.parse(b.saved()).length,0);
+ b.w.confirm=()=>true;
+ b.$('#btn-import-legacy').click(); await pause(); await pause();
+ assert.equal(JSON.parse(b.saved()).length,JSON.parse(saved).length);
+ assert.equal(b.w.localStorage.getItem('davapprove.bid-drafts.v1'),null);
  b.dom.window.close();
  console.log('PASS: bid UI (screening, failed maps, quote editing, validation, saving, reopening, reset and failed lookup).');
 })().catch(e=>{console.error(e);process.exitCode=1;});

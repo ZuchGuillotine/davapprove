@@ -19,8 +19,8 @@ describe("opening the full bid workspace", () => {
     const { frame, link } = setup(`#draft=${draft}&access_token=do-not-copy&agency=Account`);
     fireEvent.click(link);
     const url = destination(link);
-    expect(url.pathname).toBe("/bid-assistant/index.html");
-    expect(url.search).toBe("");
+    expect(url.pathname).toBe("/");
+    expect(url.search).toBe("?workspace=bids");
     expect(url.hash).toBe(`#draft=${draft}`);
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener");

@@ -13,6 +13,7 @@
     busy: false, draftId: null
   };
 
+  var openVersion = 0;
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -509,29 +510,34 @@
     setStatus(''); evaluate();
   }
 
-  function draftOptions() {
-    var drafts = window.BidDrafts.list(localStorage);
+  async function draftOptions() {
+    var drafts = await window.BidAccount.request("list");
     $('saved-bids').innerHTML = '<option value="">Open a saved bid…</option>' + drafts.map(function (d) {
       return '<option value="' + esc(d.id) + '">' + esc(d.title) + '</option>';
     }).join('');
     $('saved-bids').value = state.draftId || '';
   }
-  function saveBid() {
-    if (!state.report || state.busy) return;
+  async function saveBid() {
+    if (!state.report || state.busy || state.restoring) return;
     try {
       state.draftId = state.draftId || crypto.randomUUID();
-      window.BidDrafts.save(localStorage, window.BidDrafts.snapshot(state, readProject(), $('bid-title').value, $('bid-notes').value, readAgency()));
-      draftOptions();
-      $('save-status').textContent = 'Saved in this browser · ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      var savingId = state.draftId;
+      await window.BidAccount.request('save', {draft: window.BidDrafts.snapshot(state, readProject(), $('bid-title').value, $('bid-notes').value, readAgency())});
+      if (state.draftId !== savingId) return;
+      await draftOptions();
+      $('save-status').textContent = 'Saved to your account · ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       history.replaceState(null, '', '#draft=' + encodeURIComponent(state.draftId));
     } catch (err) { $('save-status').textContent = 'Not saved: ' + err.message + ' Use Copy bid memo to keep a copy.'; }
   }
   async function openDraft(id) {
     if (state.busy) return;
+    var opening = ++openVersion;
     try {
-      var d = window.BidDrafts.list(localStorage).find(function (x) { return x.id === id; });
+      var d = await window.BidAccount.request('get', {id:id});
+      if (opening !== openVersion) return;
       if (!d) throw new Error('This saved bid is unavailable.');
       await selectCounty(d.screening.pack_id, false);
+      if (opening !== openVersion) return;
       state.pack = PACKS[d.screening.pack_id]; state.draftId = d.id;
       state.referenceRevision = DATA.meta.reference_revision || DATA.meta.research_date;
       state.parcel = Screen.buildParcel([{ geometry: d.parcel.geometry }], d.parcel);
@@ -547,10 +553,15 @@
       $('bid-agency').value = typeof d.agency_name === 'string' ? d.agency_name : '';
       $('intro').hidden = true;
       setStatus('Saved map snapshot reopened; refresh maps for current coverage. Prices use the loaded source library.' + (d.screening.reference_revision && d.screening.reference_revision !== state.referenceRevision ? ' The reference revision has changed since this snapshot; review recalculated allowances and retained custom quotes.' : ''), 'warn');
-      evaluate(); drawParcel(state.parcel); drawAnalysis();
+      history.replaceState(null, "", "#draft=" + encodeURIComponent(d.id));
+      $("saved-bids").value = d.id;
+      $("save-status").textContent = "Opened saved account bid";
+      state.restoring = true;
+      try { evaluate(); drawParcel(state.parcel); drawAnalysis(); } finally { state.restoring = false; }
     } catch (err) { setStatus('Could not reopen this bid: ' + esc(err.message), 'error'); }
   }
   function newBid() {
+    ++openVersion;
     ++searchVersion; clearTimeout(searchTimer);
     if (state.busy) return;
     state.parcel = state.screening = state.facts = state.grid = state.report = state.draftId = null;
@@ -561,7 +572,7 @@
     parcelLayer.clearLayers(); overlayGroup.clearLayers(); gridGroup.clearLayers(); quadGroup.clearLayers();
     $('map-coverage').textContent = 'Choose a parcel to see mapped constraints and potential siting areas.';
     document.querySelector('.map-heading').classList.remove('incomplete');
-    $('save-status').textContent = 'Drafts stay in this browser';
+    $('save-status').textContent = 'Saved bids are private to your account and collaborators';
     renderExport();
     setStatus(''); setBusy(false); history.replaceState(null, '', location.pathname + location.search + (readAgency() ? '#agency=' + encodeURIComponent(readAgency()) : '')); $('q').focus();
   }
@@ -677,12 +688,38 @@
     $('btn-copy').addEventListener('click', copyMemo);
     $('btn-save').addEventListener('click', saveBid);
     $('btn-new').addEventListener('click', newBid);
+    $('btn-share').addEventListener('click', function () { $('bid-sharing').hidden = !$('bid-sharing').hidden; });
+    $('share-bid-form').addEventListener('submit', async function (event) {
+      event.preventDefault();
+      try {
+        if (!state.draftId) throw new Error('Save a bid before sharing it.');
+        await window.BidAccount.request('share', {id:state.draftId,email:$('share-email').value.trim(),role:$('share-role').value});
+        $('share-status').textContent = $('share-role').value === 'remove' ? 'Access removed.' : 'Access granted. The collaborator can sign in to open the bid. No email was sent.';
+      } catch (err) { $('share-status').textContent = err.message; }
+    });
+    try { $('btn-import-legacy').hidden = !window.BidDrafts.list(localStorage).length; } catch (_) { /* Preserve unreadable legacy storage. */ }
+    $('btn-import-legacy').addEventListener('click', async function () {
+      if (!window.confirm('Import the old bids stored in this browser into your signed-in account? Only continue if these are your bids.')) return;
+      this.disabled = true;
+      try {
+        var existing = await window.BidAccount.request('list');
+        var drafts = window.BidDrafts.list(localStorage);
+        for (var d of drafts) {
+          if (!existing.some(function(x) { return x.id === d.id; })) await window.BidAccount.request('save', {draft:d});
+        }
+        localStorage.removeItem('davapprove.bid-drafts.v1');
+        this.hidden = true;
+        await draftOptions();
+        $('save-status').textContent = 'Previous browser bids imported to your account.';
+      } catch (err) { $('save-status').textContent = 'Import incomplete; browser copies preserved. ' + err.message; }
+      finally { this.disabled = false; }
+    });
     $('btn-refresh').addEventListener('click', function () { var key = state.parcel.parcel_key; loadParcel(function () { return state.pack.parcelById(key); }, 'parcel ' + key, true); });
     $('saved-bids').addEventListener('change', function () { if (this.value) openDraft(this.value); });
     ['bid-title', 'bid-notes', 'bid-agency'].forEach(function (id) { $(id).addEventListener('change', function () { if (state.report) renderExport(); saveBid(); }); });
     document.querySelector('.section-nav').addEventListener('click', function (e) { var a = e.target.closest('a'); if (a) { e.preventDefault(); var el = $(a.hash.slice(1)); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
     $('results').addEventListener('click', function (e) { if (e.target.classList.contains('reset-cost')) { delete state.overrides[e.target.closest('tr').dataset.fee]; evaluate(); } });
-    try { draftOptions(); } catch (err) { $('save-status').textContent = err.message; }
+    draftOptions().catch(function(err) { $('save-status').textContent = err.message; });
 
     $('examples').innerHTML = state.pack.examples.map(function (x, i) { return '<a href="#" data-example="' + i + '">' + esc(x.label) + '</a>'; }).join(' · ');
     document.addEventListener('click', function (e) {

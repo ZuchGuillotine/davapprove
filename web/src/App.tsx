@@ -43,6 +43,7 @@ import WorkflowEvidence, { statusTone } from "./WorkflowEvidence";
 import DocumentCoverage from "./DocumentCoverage";
 import FactEvidence from "./FactEvidence";
 import BidWorkspace from "./BidWorkspace";
+import WorkspaceSharing from "./WorkspaceSharing";
 import AuthPanel, { PasswordForm } from "./AuthPanel";
 import type {
   Assessment,
@@ -774,7 +775,7 @@ export default function App() {
               </button>
             </div>
           )}
-          {(bidsOpen || bidWorkspaceVisited) && <div hidden={!bidsOpen}><BidWorkspace agencyName={accountAgencyName} /></div>}
+          {(bidsOpen || bidWorkspaceVisited) && <div hidden={!bidsOpen}><BidWorkspace agencyName={accountAgencyName} accountKey={accountEmail} enabled={!sample && !!accountEmail} /></div>}
           {bidsOpen ? null : projectLoading ? (
             <section
               className="project-loading panel"
@@ -799,6 +800,7 @@ export default function App() {
             </section>
           ) : project ? (
             <>
+              {!sample && <WorkspaceSharing key={project.id} id={project.id} />}
               <div className="project-heading">
                 <div>
                   <div className="eyebrow">
