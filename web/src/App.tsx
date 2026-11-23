@@ -52,6 +52,7 @@ import { PricingDialog } from "./estimate/Dialogs";
 import { FREE_REPORTS, type Audience } from "./pricing";
 import { ownedReportCount, reportHash, takePendingReport } from "./reportAccess";
 import type { ReportRequest } from "./bidEngine";
+import { parseEstimateLink, stripEstimateLink } from "./estimate/deepLink";
 import type {
   Assessment,
   Candidate,
@@ -122,6 +123,9 @@ export default function App() {
   const [bidWorkspaceVisited, setBidWorkspaceVisited] = useState(false);
   // Project management is hidden for the bid-assessment beta (docs/PRODUCT_STRATEGY.md).
   const [projectsOn] = useState(projectsEnabled);
+  // A shared estimate link (from the MCP server) opens the estimate pre-filled, signed in or not.
+  const [estimateLink] = useState(() => parseEstimateLink(window.location.search));
+  useEffect(stripEstimateLink, []);
   const [report, setReport] = useState<{ hash: string; nonce: number } | null>(null);
   const [pricing, setPricing] = useState<{ mode: "limit" | "info"; audience: Audience; request?: ReportRequest; agency?: string } | null>(null);
   function showReport(request: ReportRequest, agency: string) {
@@ -606,7 +610,7 @@ export default function App() {
     (f) => f.review_status !== "accepted" && f.review_status !== "rejected" && (!f.classification || f.classification.bucket === "review_now"),
   );
   if (!entered && !passwordRecovery && !projectsOn)
-    return <Landing audience="pro" config={config} error={error} notice={notice} />;
+    return <Landing audience="pro" config={config} error={error} notice={notice} initial={estimateLink} />;
   if (!entered || passwordRecovery)
     return (
       <div className="welcome">
@@ -838,7 +842,7 @@ export default function App() {
             <section className="estimate-workspace" aria-label="New estimate">
               <div className="estimate-workspace-heading"><span className="eyebrow">BEFORE YOU BID</span><h1>New estimate</h1>
                 <p>Address and project in, permitting range out. Open the full report to get every agency, study and fee with its source.</p></div>
-              <EstimateFlow audience="pro" onFullReport={request => void openReport(request)} onPricing={() => setPricing({ mode: "info", audience: "pro" })} />
+              <EstimateFlow audience="pro" initial={estimateLink} onFullReport={request => void openReport(request)} onPricing={() => setPricing({ mode: "info", audience: "pro" })} />
             </section>
           ) : projectLoading ? (
             <section

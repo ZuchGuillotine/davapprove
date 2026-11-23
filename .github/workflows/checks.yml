@@ -45,6 +45,22 @@ jobs:
         with:
           node-version: '22'
       - run: node tests/report_logic.test.cjs
+  engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: engine/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: docker build -f deploy/engine.Dockerfile -t davapprove-engine:ci .
+        working-directory: .
   frontend:
     runs-on: ubuntu-latest
     defaults:

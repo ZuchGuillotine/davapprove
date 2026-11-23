@@ -5,7 +5,7 @@ import { reportHash, savePendingReport, takePendingReport } from "../reportAcces
 import { createEstimator } from "../bidEngine";
 import type { ReportRequest } from "../bidEngine";
 
-vi.mock("../api", () => ({ configure: async () => ({ authAvailable: false }), getAuth: () => null }));
+vi.mock("../api", () => ({ configure: async () => ({ authAvailable: false }), getAuth: () => null, apiBase: "/api/v1" }));
 
 beforeEach(() => { cleanup(); window.localStorage.clear(); window.history.replaceState(null, "", "/"); });
 afterEach(() => vi.unstubAllEnvs());
@@ -90,4 +90,38 @@ it("serves the homeowner page unindexed with plain-language copy", async () => {
   await waitFor(() => expect(document.querySelector('meta[name="robots"][content="noindex"]')).not.toBeNull());
   unmount();
   expect(document.querySelector('meta[name="robots"]')).toBeNull();
+});
+
+it("parses MCP estimate links, including non-ASCII labels, and rejects tampered ones", async () => {
+  const { parseEstimateLink, stripEstimateLink } = await import("./deepLink");
+  const encode = (value: unknown) => btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(value)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  const link = { county: "wa-king", parcel: "0123456789", label: "1 CAFÉ WAY", project: { type: "adu", scope_items: ["solar"] } };
+  expect(parseEstimateLink("?estimate=" + encode(link))).toEqual(link);
+  expect(parseEstimateLink("?estimate=" + encode({ ...link, project: { new_sqft: 1 } }))).toBeNull();
+  expect(parseEstimateLink("?estimate=" + encode({ ...link, parcel: "x".repeat(41) }))).toBeNull();
+  expect(parseEstimateLink("?estimate=not-base64!")).toBeNull();
+  window.history.replaceState(null, "", "/?estimate=abc&listing=1");
+  stripEstimateLink();
+  expect(window.location.search).toBe("?listing=1");
+});
+
+it("talks to the engine service with the same estimator interface", async () => {
+  const { createRemoteEstimator } = await import("../bidEngine");
+  const calls: [string, RequestInit | undefined][] = [];
+  const respond = (status: number, body: unknown) => ({ ok: status < 400, status, json: async () => body }) as Response;
+  const fetcher = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+    calls.push([String(url), init]);
+    if (String(url).endsWith("/engine/coverage")) return respond(200, { counties: [{ id: "wa-kitsap", name: "Kitsap County, WA" }, { id: "wa-king", name: "King County, Washington" }], scope_items: { solar: "Solar panels" }, project_type_defaults: { adu: { label: "ADU", new_sqft: 800 } } });
+    if (String(url).includes("/engine/search")) return respond(200, { hits: [{ label: "1 A ST", sublabel: null, parcel_key: "7", county: "wa-kitsap", county_name: "Kitsap County, WA" }], failed_counties: ["wa-king"], truncated: false });
+    if (String(url).endsWith("/estimate")) return respond(422, { detail: "Unsupported county", code: "unsupported_county" });
+    return respond(404, {});
+  });
+  const estimator = await createRemoteEstimator("/api/v1", fetcher as typeof fetch);
+  expect(estimator.scopeItems.solar.label).toBe("Solar panels");
+  expect(estimator.projectTypes.adu.new_sqft).toBe(800);
+  const result = await estimator.search("1 a st");
+  expect(calls[1][0]).toBe("/api/v1/engine/search?q=1%20a%20st");
+  expect(result).toEqual({ hits: [{ label: "1 A ST", sublabel: undefined, parcel_key: "7", county: "wa-kitsap", countyName: "Kitsap County, WA" }], failed: ["King County, Washington"], truncated: false });
+  await expect(estimator.estimate(result.hits[0], { type: "adu" }, undefined, "homeowner")).rejects.toThrow("Unsupported county");
+  expect(JSON.parse(String(calls[2][1]!.body))).toEqual({ county: "wa-kitsap", parcel: "7", project: { type: "adu" }, audience: "homeowner" });
 });

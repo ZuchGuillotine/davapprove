@@ -1,0 +1,17 @@
+{
+  "name": "davapprove-engine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Server-side bid screening engine: estimate, search, full report and MCP endpoints. Loads ../bid-assistant unchanged.",
+  "type": "commonjs",
+  "main": "src/server.js",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7"
+  }
+}

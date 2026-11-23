@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { configure } from "./api";
 import Landing from "./estimate/Landing";
+import { parseEstimateLink, stripEstimateLink } from "./estimate/deepLink";
 
 /*
  * Homeowner view at /homeowner: separate page, plain-language output, its own pricing.
@@ -9,6 +10,8 @@ import Landing from "./estimate/Landing";
  */
 export default function HomeownerPage() {
   const [config, setConfig] = useState<Awaited<ReturnType<typeof configure>> | null>(null);
+  const [link] = useState(() => parseEstimateLink(window.location.search));
+  useEffect(stripEstimateLink, []);
   useEffect(() => {
     let active = true;
     const robots = document.createElement("meta");
@@ -20,5 +23,5 @@ export default function HomeownerPage() {
     configure().then(value => { if (active) setConfig(value); });
     return () => { active = false; robots.remove(); document.title = title; };
   }, []);
-  return <Landing audience="homeowner" config={config} />;
+  return <Landing audience="homeowner" config={config} initial={link} />;
 }

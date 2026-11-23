@@ -83,3 +83,22 @@ it("gives homeowners plain language, who is involved and the directory teaser", 
   await user.click(screen.getByRole("button", { name: /Get the full report · \$29/ }));
   await waitFor(() => expect(onFullReport).toHaveBeenCalledWith(expect.objectContaining({ audience: "homeowner" })));
 });
+
+it("opens a shared estimate link pre-filled and runs it once", async () => {
+  const estimator = fakeEstimator();
+  const initial = { county: "wa-kitsap", parcel: "123", label: "1 SYNTHETIC RD", project: { type: "addition", new_sqft: 0, wastewater: "sewer", hard_surface_sqft: 900, scope_items: ["heat_pump", "unknown"] } };
+  render(<EstimateFlow audience="pro" loader={async () => estimator} initial={initial} onFullReport={vi.fn()} onPricing={vi.fn()} />);
+  expect(await screen.findByText("$12,345 – $23,457")).toBeInTheDocument();
+  expect(estimator.estimate).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole("combobox")).toHaveValue("1 SYNTHETIC RD");
+  const [hit, project] = estimator.estimate.mock.calls[0];
+  expect(hit).toMatchObject({ county: "wa-kitsap", parcel_key: "123", countyName: "Kitsap County, Washington" });
+  expect(project).toMatchObject({ type: "addition", new_sqft: 0, wastewater: "sewer", hard_surface_sqft: 900, scope_items: ["heat_pump"] });
+});
+
+it("ignores a shared link for a county or project type it does not support", async () => {
+  const estimator = fakeEstimator();
+  render(<EstimateFlow audience="pro" loader={async () => estimator} initial={{ county: "wa-pierce", parcel: "1", label: "", project: { type: "adu" } }} onFullReport={vi.fn()} onPricing={vi.fn()} />);
+  expect(await screen.findByRole("combobox")).toBeInTheDocument();
+  expect(estimator.estimate).not.toHaveBeenCalled();
+});

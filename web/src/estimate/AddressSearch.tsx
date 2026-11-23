@@ -6,15 +6,18 @@ import type { Estimator, ParcelHit } from "../bidEngine";
  * Address or parcel autocomplete over every supported county, using each county pack's own
  * fuzzy search (the same one the full report uses). Suggestions always require a choice.
  */
-export default function AddressSearch({ estimator, onSelect, label = "Property address or parcel number", placeholder = "Start typing an address, e.g. 1234 Main St", autoFocus = false }: {
+export default function AddressSearch({ estimator, onSelect, label = "Property address or parcel number", placeholder = "Start typing an address, e.g. 1234 Main St", autoFocus = false, value = "" }: {
   estimator: Estimator | null;
   onSelect: (hit: ParcelHit) => void;
   label?: string;
   placeholder?: string;
   autoFocus?: boolean;
+  /** Text to show when a parcel was chosen elsewhere, for example from a shared link. */
+  value?: string;
 }) {
   const id = useId();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(value);
+  useEffect(() => { if (value) setQuery(value); }, [value]);
   const [hits, setHits] = useState<ParcelHit[]>([]);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);

@@ -4,6 +4,7 @@
  * full report. Nothing here computes a number itself.
  */
 import type { Audience } from "./pricing";
+import { apiBase } from "./api";
 
 const SCRIPTS = [
   "lib/geo.js", "lib/arcgis.js", "lib/screen.js", "lib/engine.js", "lib/quick.js",
@@ -36,7 +37,7 @@ export type Estimator = {
   scopeItems: Record<string, { label: string; group: string }>;
   projectTypes: Record<string, { label: string; new_sqft: number; hard_surface_sqft: number; disturbance_sqft: number; grading_cy: number; bedrooms: number; lots?: number }>;
   search(query: string): Promise<SearchResult>;
-  estimate(hit: ParcelHit, project: ProjectBrief, onProgress?: (done: number, total: number) => void): Promise<EstimateSummary>;
+  estimate(hit: ParcelHit, project: ProjectBrief, onProgress?: (done: number, total: number) => void, audience?: Audience): Promise<EstimateSummary>;
 };
 
 type BidWindow = Window & Record<string, any>;
@@ -58,7 +59,16 @@ function loadScript(src: string) {
   });
 }
 
+/**
+ * With VITE_ENGINE_API=true the estimate pages call the engine service (engine/), so county
+ * map servers are read server-side and no engine code is needed in the browser for estimates.
+ * Otherwise the bid assistant scripts run in the browser, as before.
+ */
 export function loadEstimator(): Promise<Estimator> {
+  if (import.meta.env.VITE_ENGINE_API === "true") {
+    if (!loading) loading = createRemoteEstimator(apiBase).catch(error => { loading = null; throw error; });
+    return loading;
+  }
   if (!loading) loading = (async () => {
     for (const src of SCRIPTS) await loadScript(src);
     return createEstimator(window as BidWindow);
@@ -108,6 +118,49 @@ export function createEstimator(w: BidWindow): Estimator {
         onProgress: (done: number, total: number) => onProgress?.(done, total),
       });
       return Quick.summarize(result, project, data);
+    },
+  };
+}
+
+async function engineRequest<T>(fetcher: typeof fetch, url: string, init?: RequestInit): Promise<T> {
+  let response: Response;
+  try {
+    response = await fetcher(url, init);
+  } catch {
+    throw new Error("The estimate service is unreachable. Check your connection and retry.");
+  }
+  if (!response.ok) {
+    let detail = "";
+    try { detail = (await response.json()).detail; } catch { /* proxy error page */ }
+    throw new Error(typeof detail === "string" && detail ? detail : `The estimate service returned an error (${response.status}). Retry shortly.`);
+  }
+  return response.json();
+}
+
+/** Estimator backed by the engine service. Same interface as the in-browser estimator. */
+export async function createRemoteEstimator(base: string, fetcher: typeof fetch = (...args) => fetch(...args)): Promise<Estimator> {
+  const coverage = await engineRequest<any>(fetcher, `${base}/engine/coverage`);
+  const counties: { id: string; name: string }[] = coverage.counties.map((c: any) => ({ id: c.id, name: c.name }));
+  const names = Object.fromEntries(counties.map(c => [c.id, c.name]));
+  const scopeItems = Object.fromEntries(Object.entries(coverage.scope_items as Record<string, string>).map(([id, label]) => [id, { label, group: "" }]));
+  return {
+    counties,
+    scopeItems,
+    projectTypes: coverage.project_type_defaults,
+    async search(query) {
+      const result = await engineRequest<any>(fetcher, `${base}/engine/search?q=${encodeURIComponent(query)}`);
+      return {
+        hits: result.hits.map((h: any) => ({ label: h.label, sublabel: h.sublabel || undefined, parcel_key: h.parcel_key, county: h.county, countyName: h.county_name })),
+        failed: result.failed_counties.map((id: string) => names[id] || id),
+        truncated: !!result.truncated,
+      };
+    },
+    async estimate(hit, project, _onProgress, audience = "pro") {
+      return engineRequest<EstimateSummary>(fetcher, `${base}/estimate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ county: hit.county, parcel: hit.parcel_key, project, audience }),
+      });
     },
   };
 }

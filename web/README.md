@@ -11,3 +11,5 @@ Real mode supports API project lookup, candidate discovery, selected imports, jo
 Use `npm run deploy:dry-run` to check the static Workers package. Wrangler targets the separate `davapprove-preview` Worker, with no custom domain routes. `npm run deploy` is for an explicitly authorized release. Free static hosting is not a substitute for the API/worker server.
 
 Known pilot limits: reviewer geometry entry currently uses GeoJSON, not drawing/CAD tools. Invite administration and account provisioning are operator tasks. PDF evidence review supports accepting, rejecting and correcting extracted values. Full code rules must remain inactive until independently validated. Hosting/source connectivity and restore checks are tracked in the repository implementation handoff.
+
+Set `VITE_ENGINE_API=true` at build time to run estimates and parcel search through the engine service (`engine/`, routed under the API origin) instead of in the browser. `VITE_FEATURE_PROJECTS=true` re-enables the hidden project workspace.

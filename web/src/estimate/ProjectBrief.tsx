@@ -6,7 +6,7 @@ import {
 import type { Estimator, ProjectBrief as Brief } from "../bidEngine";
 
 export type Variant = "pro" | "plain";
-type SiteWork = "light" | "typical" | "heavy";
+type SiteWork = "light" | "typical" | "heavy" | "custom";
 
 /** Everything the describer collects. toProject() turns it into the engine's project input. */
 export type BriefState = {
@@ -48,7 +48,7 @@ const SCOPE_ICONS: Record<string, ReactNode> = {
   windows: <AppWindow />, deck: <LayoutGrid />, retaining_wall: <BrickWall />, fence: <Fence />,
 };
 
-const SITE_FACTOR: Record<SiteWork, number> = { light: 0.5, typical: 1, heavy: 2 };
+const SITE_FACTOR: Record<Exclude<SiteWork, "custom">, number> = { light: 0.5, typical: 1, heavy: 2 };
 
 export function defaultBrief(estimator: Estimator, type = "new_sfr", keep?: Partial<BriefState>): BriefState {
   const d = estimator.projectTypes[type] as any;
@@ -73,6 +73,27 @@ export function defaultBrief(estimator: Estimator, type = "new_sfr", keep?: Part
     construction_value: keep?.construction_value || "",
     scope_items: keep?.scope_items || [],
   };
+}
+
+const NUMBER_FIELDS = ["new_sqft", "bedrooms", "lots", "hard_surface_sqft", "disturbance_sqft", "grading_cy"] as const;
+const FLAG_FIELDS = ["demo", "tree_clearing", "in_water", "state_highway_access", "federal_nexus", "common_plan", "floodplain_modification"] as const;
+const CHOICES = { water: ["public", "well_existing", "well_new", "unknown"], wastewater: ["sewer", "septic_existing", "septic_new", "unknown"] } as const;
+
+/** Rebuilds the describer from a project brief (for example an MCP report link). Unknown fields are ignored. */
+export function briefFromProject(estimator: Estimator, project: Brief): BriefState | null {
+  if (!project || typeof project.type !== "string" || !estimator.projectTypes[project.type]) return null;
+  const brief = defaultBrief(estimator, project.type);
+  for (const key of NUMBER_FIELDS) {
+    const value = Number(project[key]);
+    if (project[key] !== undefined && Number.isFinite(value) && value >= 0) brief[key] = value;
+  }
+  for (const key of FLAG_FIELDS) if (typeof project[key] === "boolean") brief[key] = project[key] as boolean;
+  for (const key of ["water", "wastewater"] as const) if ((CHOICES[key] as readonly string[]).includes(String(project[key]))) brief[key] = String(project[key]);
+  if (Number(project.construction_value) > 0) brief.construction_value = String(project.construction_value);
+  if (Array.isArray(project.scope_items)) brief.scope_items = project.scope_items.filter(id => typeof id === "string" && id in estimator.scopeItems);
+  const d = estimator.projectTypes[project.type];
+  if (brief.hard_surface_sqft !== d.hard_surface_sqft || brief.disturbance_sqft !== d.disturbance_sqft || brief.grading_cy !== d.grading_cy) brief.site = "custom";
+  return brief;
 }
 
 export function toProject(state: BriefState): Brief {
@@ -135,6 +156,7 @@ export default function ProjectBrief({ estimator, variant, value, onChange }: { 
   const defaults = estimator.projectTypes[value.type];
   const set = (patch: Partial<BriefState>) => onChange({ ...value, ...patch });
   function setSite(site: SiteWork) {
+    if (site === "custom") return;
     const f = SITE_FACTOR[site];
     set({ site, hard_surface_sqft: Math.round(defaults.hard_surface_sqft * f), disturbance_sqft: Math.round(defaults.disturbance_sqft * f), grading_cy: Math.round(defaults.grading_cy * f) });
   }

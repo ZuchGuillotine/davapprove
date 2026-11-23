@@ -4,7 +4,8 @@ import { loadEstimator, range, money, type EstimateSummary, type Estimator, type
 import type { Audience } from "../pricing";
 import { PLANS } from "../pricing";
 import AddressSearch from "./AddressSearch";
-import ProjectBrief, { defaultBrief, toProject, type BriefState } from "./ProjectBrief";
+import ProjectBrief, { briefFromProject, defaultBrief, toProject, type BriefState } from "./ProjectBrief";
+import type { EstimateLink } from "./deepLink";
 import "./estimate.css";
 
 const PLAIN_LEVEL: Record<string, string> = { required: "Will be involved", likely: "Probably involved", possible: "May be involved", unknown: "Couldn't check" };
@@ -14,8 +15,10 @@ const PLAIN_LEVEL: Record<string, string> = { required: "Will be involved", like
  * The parent decides what "full report" means for the current visitor (email capture,
  * pricing prompt or straight to the report).
  */
-export default function EstimateFlow({ audience, onFullReport, onPricing, loader = loadEstimator }: {
+export default function EstimateFlow({ audience, onFullReport, onPricing, loader = loadEstimator, initial = null }: {
   audience: Audience;
+  /** A shared estimate link (for example from the MCP server): opens pre-filled and runs once. */
+  initial?: EstimateLink | null;
   onFullReport: (request: ReportRequest) => void;
   onPricing: () => void;
   loader?: () => Promise<Estimator>;
@@ -29,16 +32,33 @@ export default function EstimateFlow({ audience, onFullReport, onPricing, loader
   const [ranFor, setRanFor] = useState("");
   const [error, setError] = useState("");
   const [editing, setEditing] = useState(true);
+  const [autoRun, setAutoRun] = useState(false);
   const runVersion = useRef(0);
   const resultRef = useRef<HTMLDivElement>(null);
   const plain = audience === "homeowner";
 
   useEffect(() => {
     let active = true;
-    loader().then(value => { if (active) { setEstimator(value); setBrief(defaultBrief(value)); } })
+    loader().then(value => {
+      if (!active) return;
+      setEstimator(value);
+      const linked = initial && value.counties.some(c => c.id === initial.county) ? briefFromProject(value, initial.project) : null;
+      if (initial && linked) {
+        const county = value.counties.find(c => c.id === initial.county)!;
+        setHit({ label: initial.label || `Parcel ${initial.parcel}`, parcel_key: initial.parcel, county: county.id, countyName: county.name });
+        setBrief(linked);
+        setAutoRun(true);
+      } else setBrief(defaultBrief(value));
+    })
       .catch(err => { if (active) setLoadError(err instanceof Error ? err.message : String(err)); });
     return () => { active = false; };
-  }, [loader]);
+  }, [loader, initial]);
+
+  const autoRan = useRef(false);
+  useEffect(() => {
+    if (autoRun && !autoRan.current && estimator && hit && brief) { autoRan.current = true; setAutoRun(false); void run(); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoRun, estimator, hit, brief]);
 
   const briefKey = brief ? JSON.stringify(toProject(brief)) : "";
   const stale = !!summary && ranFor !== `${hit?.county}:${hit?.parcel_key}:${briefKey}`;
@@ -49,7 +69,7 @@ export default function EstimateFlow({ audience, onFullReport, onPricing, loader
     const project = toProject(brief);
     setError(""); setRunning({ done: 0, total: 1 });
     try {
-      const result = await estimator.estimate(hit, project, (done, total) => { if (version === runVersion.current) setRunning({ done, total }); });
+      const result = await estimator.estimate(hit, project, (done, total) => { if (version === runVersion.current) setRunning({ done, total }); }, audience);
       if (version !== runVersion.current) return;
       setSummary(result);
       setRanFor(`${hit.county}:${hit.parcel_key}:${JSON.stringify(project)}`);
@@ -71,7 +91,7 @@ export default function EstimateFlow({ audience, onFullReport, onPricing, loader
 
   return <div className={`estimate-flow ${plain ? "plain" : "pro"}`}>
     <div className="estimate-card search-card">
-      <AddressSearch estimator={estimator} autoFocus onSelect={value => { setHit(value); setSummary(null); setEditing(true); setError(""); }}
+      <AddressSearch estimator={estimator} autoFocus={!initial} value={initial && hit?.parcel_key === initial.parcel ? hit.label : ""} onSelect={value => { setHit(value); setSummary(null); setEditing(true); setError(""); }}
         label={plain ? "Where is the property?" : "Property address or parcel number"} />
       <p className="estimate-coverage"><MapPin size={14} /> Kitsap, King and Skagit counties, Washington. More counties are on the way.</p>
     </div>

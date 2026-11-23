@@ -4,5 +4,25 @@
         X-Content-Type-Options nosniff
         Referrer-Policy strict-origin-when-cross-origin
     }
-    reverse_proxy api:8000
+    # Screening engine (Node): estimates, search, full reports and MCP. Everything else is the API.
+    @engine path /api/v1/estimate /api/v1/reports /api/v1/engine/* /mcp
+    handle @engine {
+        reverse_proxy engine:8080
+    }
+    handle {
+        reverse_proxy api:8000
+    }
+}
+
+# Dedicated MCP address, so agent configs never need to change if the API moves.
+{$MCP_DOMAIN} {
+    encode zstd gzip
+    header X-Content-Type-Options nosniff
+    @mcp path /mcp /health
+    handle @mcp {
+        reverse_proxy engine:8080
+    }
+    handle {
+        respond "Davapprove MCP server: POST /mcp" 404
+    }
 }

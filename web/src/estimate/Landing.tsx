@@ -5,6 +5,7 @@ import type { ReportRequest } from "../bidEngine";
 import type { Audience } from "../pricing";
 import EstimateFlow from "./EstimateFlow";
 import { EmailCapture, Modal, PricingDialog } from "./Dialogs";
+import type { EstimateLink } from "./deepLink";
 
 export function BrandMark({ suffix }: { suffix?: string }) {
   return <a className="brand landing-brand" href="/">
@@ -20,7 +21,7 @@ type LandingConfig = { authAvailable?: boolean; email_delivery_enabled?: boolean
  * Signed-out landing: the address box is the product. The basic estimate is open; the full
  * report asks for an email. Used for professionals at "/" and homeowners at "/homeowner".
  */
-export default function Landing({ audience, config, error, notice }: { audience: Audience; config: LandingConfig; error?: string; notice?: string }) {
+export default function Landing({ audience, config, error, notice, initial = null }: { audience: Audience; config: LandingConfig; error?: string; notice?: string; initial?: EstimateLink | null }) {
   const [capture, setCapture] = useState<{ request: ReportRequest | null } | null>(() =>
     audience === "pro" && new URLSearchParams(window.location.search).has("listing") ? { request: null } : null);
   const [signInOpen, setSignInOpen] = useState(false);
@@ -49,7 +50,7 @@ export default function Landing({ audience, config, error, notice }: { audience:
       </section>
       {error && <p role="alert" className="error landing-alert">{error}</p>}
       {notice && <p className="notice landing-alert">{notice}</p>}
-      <EstimateFlow audience={audience} onFullReport={request => setCapture({ request })} onPricing={() => setPricingOpen(true)} />
+      <EstimateFlow audience={audience} initial={initial} onFullReport={request => setCapture({ request })} onPricing={() => setPricingOpen(true)} />
       <footer className="landing-footer">
         <ShieldCheck size={16} />
         <span>Screening estimates from public maps and published fee schedules. Not an approval or a quote. We never ask for or show property owner names.</span>

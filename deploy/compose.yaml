@@ -60,12 +60,44 @@ services:
     security_opt:
       - no-new-privileges:true
     cap_drop: [ALL]
+  engine:
+    build:
+      context: ..
+      dockerfile: deploy/engine.Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: "8080"
+      TRUST_PROXY: "true"
+      CORS_ORIGINS: ${CORS_ORIGINS:?Set the frontend HTTPS origin}
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL:-https://davapprove.com}
+      SUPABASE_URL: ${SUPABASE_URL:?Set SUPABASE_URL}
+      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:?Set SUPABASE_PUBLISHABLE_KEY}
+      FREE_REPORTS: ${FREE_REPORTS:-1}
+      REPORTS_REQUIRE_PAYMENT: ${REPORTS_REQUIRE_PAYMENT:-false}
+      ESTIMATES_PER_HOUR: ${ESTIMATES_PER_HOUR:-30}
+      MCP_REQUESTS_PER_MINUTE: ${MCP_REQUESTS_PER_MINUTE:-60}
+    expose:
+      - "8080"
+    mem_limit: 512m
+    cpus: 1
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
   proxy:
     image: caddy:2.10.2-alpine
     profiles: [domain]
     restart: unless-stopped
     environment:
       API_DOMAIN: ${API_DOMAIN:-localhost}
+      MCP_DOMAIN: ${MCP_DOMAIN:-mcp.localhost}
     ports:
       - "80:80"
       - "443:443"
@@ -75,6 +107,8 @@ services:
       - caddy_config:/config
     depends_on:
       api:
+        condition: service_healthy
+      engine:
         condition: service_healthy
     mem_limit: 128m
   tunnel:
