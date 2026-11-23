@@ -1,7 +1,7 @@
 import { Webhook } from 'standardwebhooks';
 
 const MAX_BODY_BYTES = 65_536;
-type Settings = Pick<Env, 'APP_URL' | 'SUPABASE_URL' | 'FROM_EMAIL'>;
+type Settings = Pick<Env, 'APP_URL' | 'PREVIEW_URL' | 'SUPABASE_URL' | 'FROM_EMAIL'>;
 type Message = { to: string; subject: string; text: string; html: string };
 
 function record(value: unknown): Record<string, unknown> {
@@ -34,16 +34,28 @@ function message(to: string, title: string, body: string, link?: string, label?:
   };
 }
 
-function verificationLink(hash: unknown, action: string, settings: Settings): string {
+function verificationLink(hash: unknown, action: string, settings: Settings, requested: unknown): string {
   const tokenHash = field(hash);
   if (!/^[A-Za-z0-9_-]+$/.test(tokenHash)) throw new Error('Invalid token hash');
+  const allowedOrigins = [new URL(settings.APP_URL).origin, new URL(settings.PREVIEW_URL).origin];
   const redirect = new URL('/', settings.APP_URL);
+  if (typeof requested === 'string') {
+    try {
+      const candidate = new URL(requested);
+      if (allowedOrigins.includes(candidate.origin) && !candidate.username && !candidate.password) {
+        redirect.host = candidate.host;
+        if (action === 'magiclink' && candidate.pathname === '/' && candidate.search === '?report=pending')
+          redirect.search = '?report=pending';
+      }
+    } catch {
+      // Use the configured production root for malformed redirects.
+    }
+  }
   if (action === 'recovery') redirect.searchParams.set('auth', 'recovery');
   const link = new URL('/auth/v1/verify', settings.SUPABASE_URL);
   link.searchParams.set('token', tokenHash);
   link.searchParams.set('type', action);
-  // Redirects and the verification host come only from our deployment configuration.
-  // Never use user_metadata, site_url or redirect_to from the hook as a URL.
+  // The verification host and accepted redirect origins come from deployment configuration.
   link.searchParams.set('redirect_to', redirect.href);
   return link.href;
 }
@@ -74,15 +86,15 @@ export function buildMessages(payload: unknown, settings: Settings): { action: s
   const action = field(data.email_action_type);
   if (Object.hasOwn(ACTIONS, action)) {
     const [title, body, label] = ACTIONS[action];
-    return { action, messages: [message(to, title, body, verificationLink(data.token_hash, action, settings), label)] };
+    return { action, messages: [message(to, title, body, verificationLink(data.token_hash, action, settings, data.redirect_to), label)] };
   }
   if (action === 'email_change') {
     const newEmail = address(user.new_email);
     const body = `Confirm the request to change your Davapprove email address to ${newEmail}.`;
     // Supabase's legacy naming is reversed: token_hash_new belongs to the CURRENT email.
     // https://supabase.com/docs/guides/auth/auth-hooks/send-email-hook
-    const messages = [message(newEmail, 'Confirm email change', body, verificationLink(data.token_hash, action, settings), 'Confirm email change')];
-    if (data.token_hash_new) messages.unshift(message(to, 'Confirm email change', body, verificationLink(data.token_hash_new, action, settings), 'Confirm email change'));
+    const messages = [message(newEmail, 'Confirm email change', body, verificationLink(data.token_hash, action, settings, data.redirect_to), 'Confirm email change')];
+    if (data.token_hash_new) messages.unshift(message(to, 'Confirm email change', body, verificationLink(data.token_hash_new, action, settings, data.redirect_to), 'Confirm email change'));
     return { action, messages };
   }
   if (action === 'reauthentication') {

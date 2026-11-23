@@ -1,5 +1,11 @@
 # Bid Assistant
 
+
+## November 23, 2026: hosted private beta
+
+The hosted estimate, detailed report and homeowner view require a beta invitation. The Cloudflare Worker runs the rule engine and holds the county source packs. The browser renders parcel-specific results and applies custom bid allowances to the returned cost lines. Saved snapshots can be reopened and recalculated server-side. The standalone Node tool remains available for local development. See [private beta operations](operations.md#private-beta) for invitations, deployment, the MCP tool and anonymous county-level metrics.
+
+
 ## Estimate pages and report gate — November 23, 2026
 
 The beta front door is a basic estimate (see [UX design brief](UX_DESIGN_BRIEF.md)). `lib/quick.js` runs the same screening, constraint and rule steps as the workspace (`analyze`) and reduces the result to the ungated summary (`summarize`): base and possible ranges from `Engine.evaluate`, counts of agencies and quote-needed items, unread map layers and captured scope. It carries no line items, code excerpts or citations. The workspace now uses its coverage rule (`incomplete`) as well, so the two cannot disagree about a clean result.

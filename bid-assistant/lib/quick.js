@@ -82,17 +82,22 @@
    * Same steps, in the same order, as the full workspace.
    */
   function analyze(deps, parcel, project, options) {
-    var pack = deps.pack, data = deps.data, rulesets = deps.rulesets;
-    return deps.Screen.screenParcel(pack, parcel, options || {}).then(function (screening) {
-      screening.reference_revision = data.meta.reference_revision || data.meta.research_date;
-      var facts = pack.deriveFacts(screening);
-      var constraints = rulesets[pack.constraint_ruleset || pack.id].constraints(screening, facts, data, project);
-      var grid = deps.Geo.gridAnalyze(parcel.shape, constraints, { targetSamples: 3000 });
-      var rules = [];
-      pack.rule_sets.forEach(function (id) { rules = rules.concat(rulesets[id].rules); });
-      var report = deps.Engine.evaluate({ facts: facts, project: project, grid: grid, rules: rules, data: data });
-      return { parcel: parcel, screening: screening, facts: facts, constraints: constraints, grid: grid, report: report };
+    return deps.Screen.screenParcel(deps.pack, parcel, options || {}).then(function (screening) {
+      return evaluate(deps, parcel, project, screening);
     });
+  }
+
+  /** Re-evaluate a saved map snapshot without fetching current maps. */
+  function evaluate(deps, parcel, project, screening) {
+    var pack = deps.pack, data = deps.data, rulesets = deps.rulesets;
+    screening.reference_revision = screening.reference_revision || data.meta.reference_revision || data.meta.research_date;
+    var facts = pack.deriveFacts(screening);
+    var constraints = rulesets[pack.constraint_ruleset || pack.id].constraints(screening, facts, data, project);
+    var grid = deps.Geo.gridAnalyze(parcel.shape, constraints, { targetSamples: 3000 });
+    var rules = [];
+    pack.rule_sets.forEach(function (id) { rules = rules.concat(rulesets[id].rules); });
+    var report = deps.Engine.evaluate({ facts: facts, project: project, grid: grid, rules: rules, data: data });
+    return { parcel: parcel, screening: screening, facts: facts, constraints: constraints, grid: grid, report: report };
   }
 
   /** The basic estimate. Safe to show without an account. */
@@ -139,6 +144,7 @@
     unreadLayers: unreadLayers,
     jurisdictionLabel: jurisdictionLabel,
     analyze: analyze,
+    evaluate: evaluate,
     summarize: summarize
   };
 });

@@ -12,10 +12,12 @@ const mocks = vi.hoisted(() => ({
   signInWithOtp: vi.fn(),
   request: vi.fn(),
   ownedCount: 0,
+  privateBeta: false,
+  betaApi: vi.fn(),
   estimator: null as any,
 }));
 vi.mock("./api", () => ({
-  configure: async () => ({ mode: "supabase", authAvailable: true, email_delivery_enabled: true }),
+  configure: async () => ({ mode: "supabase", authAvailable: true, email_delivery_enabled: true, private_beta: mocks.privateBeta }),
   getAuth: () => ({
     auth: {
       getSession: mocks.getSession,
@@ -35,6 +37,7 @@ vi.mock("./api", () => ({
   safeUrl: (value: string) => value,
   documentUrl: vi.fn(),
 }));
+vi.mock("./betaApi", () => ({ betaApi: mocks.betaApi }));
 vi.mock("./bidEngine", async original => ({ ...(await original<typeof import("./bidEngine")>()), loadEstimator: async () => mocks.estimator }));
 
 const user1 = { id: "beta-user", email: "beta@example.com", user_metadata: { business_name: "Synthetic Builders" } };
@@ -48,6 +51,7 @@ beforeEach(() => {
   window.history.replaceState(null, "", "/");
   mocks.onChange = null;
   mocks.ownedCount = 0;
+  mocks.privateBeta = false;
   mocks.estimator = fakeEstimator();
   mocks.getSession.mockResolvedValue({ data: { session: null }, error: null });
   mocks.signInWithOtp.mockResolvedValue({ error: null });
@@ -72,6 +76,21 @@ async function estimate(user: ReturnType<typeof userEvent.setup>) {
   await screen.findByText("$12,345 – $23,457");
 }
 
+it("requires an invitation before opening the private estimate or homeowner page", async () => {
+  mocks.privateBeta = true;
+  window.history.replaceState(null, "", "/homeowner?features=projects");
+  mocks.betaApi.mockRejectedValueOnce(new Error("This account needs a beta invitation."));
+  await renderApp();
+  expect(await screen.findByRole("button", { name: "Email sign-in link" })).toBeInTheDocument();
+  expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
+  await signIn({ user: user1, access_token: "uninvited-session" });
+  expect(await screen.findByRole("alert")).toHaveTextContent("needs a beta invitation");
+  expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
+  mocks.betaApi.mockResolvedValueOnce({ allowed: true });
+  await signIn({ user: user1, access_token: "invited-session" });
+  expect(await screen.findByRole("combobox", { name: "Where is the property?" })).toBeInTheDocument();
+});
+
 it("opens on the address box, with no project workspace or sample project", async () => {
   await renderApp();
   expect(await screen.findByRole("heading", { name: "Know the permits before you price the job." })).toBeInTheDocument();
@@ -94,7 +113,7 @@ it("captures an email for the full report and remembers which report to open", a
   expect(await screen.findByRole("dialog", { name: "Check your email" })).toBeInTheDocument();
   expect(mocks.signInWithOtp).toHaveBeenCalledWith({
     email: "pro@example.com",
-    options: { shouldCreateUser: true, emailRedirectTo: window.location.origin + "/?report=pending", data: { signup_source: "estimate", audience: "pro", business_name: "Synthetic Builders", founding_listing_interest: true } },
+    options: { shouldCreateUser: false, emailRedirectTo: window.location.origin + "/?report=pending", data: { signup_source: "estimate", audience: "pro", business_name: "Synthetic Builders", founding_listing_interest: true } },
   });
   const saved = JSON.parse(window.localStorage.getItem("davapprove.pending-report")!);
   expect(saved).toMatchObject({ county: "wa-kitsap", parcel: "123", project: { type: "new_sfr" }, audience: "pro" });

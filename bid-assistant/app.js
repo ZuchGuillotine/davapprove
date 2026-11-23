@@ -2,12 +2,14 @@
 (function () {
   'use strict';
 
-  var Geo = window.BidGeo, Screen = window.BidScreen, Engine = window.BidEngine, Report = window.BidReport;
+  var hosted = window.BidHosted;
+  var Geo = window.BidGeo, Screen = window.BidScreen, Engine = hosted ? window.BidPresentation : window.BidEngine, Report = window.BidReport;
+  var scopeItems = window.BidQuick && window.BidQuick.SCOPE_ITEMS;
   var DATA = window.BID_DATA, PACKS = window.BidPacks, RULESETS = window.BidRuleSets;
   var regionLoader = window.BidRegions && window.BidRegions.create(DATA, window.BID_REGIONS, window.fetch.bind(window));
 
   var state = {
-    pack: PACKS['wa-kitsap'],
+    pack: PACKS && PACKS['wa-kitsap'],
     parcel: null, screening: null, facts: null, grid: null, constraints: null, report: null,
     overrides: {},      // fee id -> { low, high, excluded }
     busy: false, draftId: null,
@@ -139,6 +141,7 @@
   }
 
   function incompleteMap() {
+    if (hosted) return state.coverage !== 'complete';
     return window.BidQuick.incomplete(state.facts, state.screening, readProject());
   }
 
@@ -186,10 +189,10 @@
     loadParcel(function () { return state.pack.parcelById(hit.parcel_key); }, hit.label);
   }
 
-  function loadParcel(getParcel, what, refreshing) {
+  function loadParcel(getParcel, what, refreshing, fromEstimate) {
     if (state.busy) return;
     ++searchVersion; clearTimeout(searchTimer); $('suggestions').hidden=true;
-    state.report = null; state.facts = null; state.constraintLand = null;
+    state.report = null; state.rawReport = null; state.facts = null; state.constraintLand = null;
     $('print-parcel-map').innerHTML = '';
     setBusy(true);
     if (!refreshing) { state.overrides = {}; state.draftId = null; $('bid-title').value = ''; $('bid-notes').value = ''; }
@@ -200,6 +203,7 @@
     setStatus('Finding the parcel for ' + esc(what) + '&hellip;', 'busy');
     getParcel().then(function (parcel) {
       if (!parcel) { setBusy(false); setStatus('No tax parcel found at ' + esc(what) + '. It may be right-of-way, water or an untaxed tract.', 'warn'); return null; }
+      if (hosted) return runHosted(Object.assign(parcel, { track: !fromEstimate }));
       state.parcel = parcel;
       drawParcel(parcel);
       location.hash = 'county=' + state.pack.id + '&parcel=' + encodeURIComponent(parcel.parcel_key) + '&type=' + $('ptype').value;
@@ -228,7 +232,7 @@
   }
 
   function updateGuidance() {
-    if (window.BidGuidance) window.BidGuidance.update(document, readProject(), DATA, { packId: state.pack.id, facts: state.facts });
+    if (window.BidGuidance) window.BidGuidance.update(document, readProject(), hosted ? { citations: DATA.guidance } : DATA, { packId: state.pack.id, facts: state.facts });
   }
 
   function readProject() {
@@ -251,7 +255,9 @@
     ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(function (k) { $('a-' + k).checked = p[k]; });
     $('a-flood_rise_ft').value = p.flood_rise_ft == null ? '' : p.flood_rise_ft;
     $('agency-assumptions').open = p.in_water;
-    state.scopeItems = window.BidQuick.scopeItems(saved && saved.scope_items);
+    state.scopeItems = (Array.isArray(saved?.scope_items) ? saved.scope_items : []).filter(function (id, index, list) {
+      return Object.hasOwn(scopeItems, id) && list.indexOf(id) === index;
+    });
     updateGuidance();
   }
 
@@ -259,6 +265,53 @@
     var out = [];
     state.pack.rule_sets.forEach(function (id) { out = out.concat(RULESETS[id].rules); });
     return out;
+  }
+
+  async function runHosted(payload, restoring) {
+    setBusy(true);
+    try {
+      var result = await hosted.report(Object.assign({ county: state.pack.id, project: readProject() }, payload));
+      DATA = result.data;
+      state.parcel = result.parcel;
+      var env = state.parcel.envelope;
+      state.parcel.proj = Geo.makeProjector((env.xmin + env.xmax) / 2, (env.ymin + env.ymax) / 2);
+      state.screening = result.screening;
+      state.facts = result.facts;
+      updateGuidance();
+      state.constraints = result.constraints;
+      state.grid = result.grid;
+      state.coverage = result.coverage;
+      state.rawReport = result.report;
+      state.referenceRevision = DATA.meta.reference_revision || DATA.meta.research_date;
+      state.draftId = state.draftId || crypto.randomUUID();
+      setBusy(false);
+      applyOverrides();
+      setStatus(restoring ? 'Saved map snapshot reopened. Refresh maps to check for changes.' : '', restoring ? 'warn' : '');
+      drawParcel(state.parcel);
+      drawAnalysis();
+      render();
+      if (!restoring) saveBid();
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function refreshAssumptions() {
+    if (!hosted) { evaluate(); return; }
+    if (!state.facts || state.busy) return;
+    var snapshot = window.BidDrafts.snapshot(state, readProject(), '', '', '');
+    var bounds = map.getBounds();
+    runHosted({ snapshot: { parcel: snapshot.parcel, screening: snapshot.screening } })
+      .then(function () { map.fitBounds(bounds); })
+      .catch(function (err) { setStatus(esc(err.message), 'error'); });
+  }
+
+  function updateAllowances() {
+    if (!hosted) { evaluate(); return; }
+    if (!state.rawReport || state.busy) return;
+    applyOverrides();
+    render();
+    saveBid();
   }
 
   function evaluate() {
@@ -278,7 +331,7 @@
   }
 
   function applyOverrides() {
-    state.report = Engine.applyOverrides(state.report, state.overrides);
+    state.report = Engine.applyOverrides(hosted ? state.rawReport : state.report, state.overrides);
   }
 
   // ---------------------------------------------------------------- render
@@ -350,7 +403,7 @@
   function renderUnpricedScope() {
     if (!state.scopeItems.length) return '';
     return '<div class="card flags unpriced-scope"><h2>Also in this project · not separately estimated</h2><ul>' +
-      state.scopeItems.map(function (id) { return '<li class="possible">' + esc(window.BidQuick.SCOPE_ITEMS[id].label) + '</li>'; }).join('') +
+      state.scopeItems.map(function (id) { return '<li class="possible">' + esc(scopeItems[id].label) + '</li>'; }).join('') +
       '</ul><p class="hint">These items were captured with the project description but have no checked permit rules or fees in this tool yet. They are not included in the totals. Confirm permit needs and fees with the permitting office and trade contractors.</p></div>';
   }
 
@@ -449,7 +502,7 @@
     function labelOf(id) { var k = state.constraints.filter(function (c) { return c.id === id; })[0]; return k ? k.short || k.label : id; }
     var rows = g.constraints.filter(function (c) { return c.pct > 0; }).sort(function (a, b) { return b.pct - a.pct; }).map(function (c) {
       var k = state.constraints.filter(function (x) { return x.id === c.id; })[0];
-      return '<tr><td><i class="sw" style="background:' + TIER_STYLE[c.tier].color + '"></i>' + esc(c.label) + (k.basis ? '<small>' + esc(k.basis) + '</small>' : '') + '</td><td class="num">' + pct(c.pct) + '</td><td class="num">' + acres(c.sqft) + '</td></tr>';
+      return '<tr><td><i class="sw" style="background:' + TIER_STYLE[c.tier].color + '"></i>' + esc(c.label) + (k && k.basis ? '<small>' + esc(k.basis) + '</small>' : '') + '</td><td class="num">' + pct(c.pct) + '</td><td class="num">' + acres(c.sqft) + '</td></tr>';
     }).join('');
     var constrained = g.totals.core.pct + g.totals.buffer.pct;
     return '<div class="card constraints" id="bid-constraints"><h2>Preliminary site envelope</h2><p class="hint">Early bid · buffers and layout unconfirmed</p>' +
@@ -516,7 +569,7 @@
       o.low = Number(lo); o.high = Number(hi);
     }
     state.overrides[id] = o;
-    setStatus(''); evaluate();
+    setStatus(''); updateAllowances();
   }
 
   async function draftOptions() {
@@ -548,6 +601,21 @@
       await selectCounty(d.screening.pack_id, false);
       if (opening !== openVersion) return;
       state.pack = PACKS[d.screening.pack_id]; state.draftId = d.id;
+      if (hosted) {
+        $('ptype').value = d.project.type;
+        fillAssumptions(d.project.type, d.project);
+        $('q').value = d.parcel.situs || d.parcel.parcel_key;
+        $('bid-title').value = d.title;
+        $('bid-notes').value = d.notes;
+        $('bid-agency').value = typeof d.agency_name === 'string' ? d.agency_name : '';
+        $('intro').hidden = true;
+        state.overrides = d.overrides || {};
+        await runHosted({ snapshot: { parcel: d.parcel, screening: d.screening } }, true);
+        history.replaceState(null, '', '#draft=' + encodeURIComponent(d.id));
+        $('saved-bids').value = d.id;
+        $('save-status').textContent = 'Opened saved account bid';
+        return;
+      }
       state.referenceRevision = DATA.meta.reference_revision || DATA.meta.research_date;
       state.parcel = Screen.buildParcel([{ geometry: d.parcel.geometry }], d.parcel);
       state.screening = d.screening; state.screening.parcel = state.parcel; state.constraintLand = null;
@@ -573,7 +641,7 @@
     ++openVersion;
     ++searchVersion; clearTimeout(searchTimer);
     if (state.busy) return;
-    state.parcel = state.screening = state.facts = state.grid = state.report = state.draftId = null;
+    state.parcel = state.screening = state.facts = state.grid = state.report = state.rawReport = state.draftId = null;
     state.overrides = {}; $('q').value = ''; $('bid-title').value = ''; $('bid-notes').value = '';
     $('results').hidden = $('bid-details').hidden = $('legend').hidden = true;
     $('intro').hidden = false; $('suggestions').hidden = true;
@@ -628,9 +696,10 @@
     if (reset) newBid();
     setBusy(true); setStatus('Loading county sources…', 'busy');
     try {
-      var d = regionLoader ? await regionLoader.load(id) : window.BID_DATA;
-      if (id !== 'wa-kitsap' && (!d.region || d.region.id !== id)) throw new Error('County sources unavailable.');
-      if (id !== 'wa-kitsap') PACKS[id] = window.BidRegionalPack.create(d.region);
+      if (hosted && !Object.hasOwn(PACKS, id)) throw new Error('County sources unavailable.');
+      var d = hosted ? PACKS[id].data : regionLoader ? await regionLoader.load(id) : window.BID_DATA;
+      if (!hosted && id !== 'wa-kitsap' && (!d.region || d.region.id !== id)) throw new Error('County sources unavailable.');
+      if (!hosted && id !== 'wa-kitsap') PACKS[id] = window.BidRegionalPack.create(d.region);
       DATA = d; state.pack = PACKS[id];
       $('a-prior_planning_review').closest('label').hidden = !!d.region;
       updateGuidance();
@@ -671,7 +740,7 @@
     initMap();
     // If the page is served by bid-assistant/server.js, use its relay as a fallback for map
     // servers that refuse cross-origin browser requests.
-    if (/^https?:$/.test(location.protocol)) {
+    if (!hosted && /^https?:$/.test(location.protocol)) {
       fetch('proxy/ping').then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { if (t === 'ok') window.BidArcgis.setProxy('proxy?url='); }).catch(function () {});
     }
 
@@ -683,11 +752,11 @@
       setStatus('');
       if(this.value.trim().length>=3)searchTimer=setTimeout(function(){onSearch(null,true);},400);
     });
-    sel.addEventListener('change', function () { var items = state.scopeItems; fillAssumptions(sel.value, { type: sel.value, scope_items: items }); evaluate(); });
+    sel.addEventListener('change', function () { var items = state.scopeItems; fillAssumptions(sel.value, { type: sel.value, scope_items: items }); refreshAssumptions(); });
     $('assumptions').addEventListener('input', updateGuidance);
     $('agency-assumptions').addEventListener('input', updateGuidance);
-    $('assumptions').addEventListener('change', evaluate);
-    $('agency-assumptions').addEventListener('change', evaluate);
+    $('assumptions').addEventListener('change', refreshAssumptions);
+    $('agency-assumptions').addEventListener('change', refreshAssumptions);
     $('results').addEventListener('change', onCostEdit);
     $('btn-print').addEventListener('click', function () { renderExport(); window.print(); });
     $('btn-map-export').addEventListener('click', downloadMap);
@@ -734,7 +803,7 @@
     $('saved-bids').addEventListener('change', function () { if (this.value) openDraft(this.value); });
     ['bid-title', 'bid-notes', 'bid-agency'].forEach(function (id) { $(id).addEventListener('change', function () { if (state.report) renderExport(); saveBid(); }); });
     document.querySelector('.section-nav').addEventListener('click', function (e) { var a = e.target.closest('a'); if (a) { e.preventDefault(); var el = $(a.hash.slice(1)); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
-    $('results').addEventListener('click', function (e) { if (e.target.classList.contains('reset-cost')) { delete state.overrides[e.target.closest('tr').dataset.fee]; evaluate(); } });
+    $('results').addEventListener('click', function (e) { if (e.target.classList.contains('reset-cost')) { delete state.overrides[e.target.closest('tr').dataset.fee]; updateAllowances(); } });
     draftOptions().catch(function(err) { $('save-status').textContent = err.message; });
 
     $('examples').innerHTML = state.pack.examples.map(function (x, i) { return '<a href="#" data-example="' + i + '">' + esc(x.label) + '</a>'; }).join(' · ');
@@ -748,9 +817,25 @@
       loadParcel(function () { return state.pack.parcelById(x.parcel_key); }, x.label);
     });
     if (params.draft) openDraft(params.draft);
-    else if (params.parcel) selectCounty(params.county || 'wa-kitsap', false).then(function(){loadParcel(function () { return state.pack.parcelById(params.parcel); }, 'parcel ' + params.parcel);}).catch(function(e){setStatus(esc(e.message),'error');});
+    else if (params.parcel) selectCounty(params.county || 'wa-kitsap', false).then(function(){loadParcel(function () { return state.pack.parcelById(params.parcel); }, 'parcel ' + params.parcel, false, params.estimate === '1');}).catch(function(e){setStatus(esc(e.message),'error');});
     window.BidApp = { state: state };
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  async function boot() {
+    if (hosted) {
+      try {
+        var settings = await hosted.start();
+        PACKS = settings.packs;
+        scopeItems = settings.scopeItems;
+        state.pack = PACKS['wa-kitsap'];
+        DATA = state.pack.data;
+      } catch (err) {
+        setStatus(esc(err.message), 'error');
+        setBusy(true);
+        return;
+      }
+    }
+    init();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

@@ -13,7 +13,7 @@ async function boot(saved, hash='') {
  const map={setView(){return this;},fitBounds(){},on(){},invalidateSize(){},attributionControl:{setPrefix(){}}};
  w.L={map:()=>map,canvas:()=>({}),tileLayer:layer,layerGroup:layer,polygon:layer,polyline:layer,rectangle:layer,marker:layer,divIcon:x=>x,control:{layers:layer,scale:layer}};
  w.fetch=async url=>{ if(String(url).startsWith('data/bundles/')) return {ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,url),'utf8'))}; return {ok:false}; };
- for(const file of ['lib/geo.js','lib/arcgis.js','lib/screen.js','lib/engine.js','lib/quick.js','lib/report.js','lib/drafts.js','lib/exports.js','data/data.js','data/regions.js','lib/regions.js','packs/wa-kitsap.js','packs/wa-regional.js','rules/federal.js','rules/wa-state.js','rules/wa-kitsap.js','rules/wa-regional.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
+ for(const file of ['lib/geo.js','lib/arcgis.js','lib/screen.js','lib/presentation.js','lib/engine.js','lib/quick.js','lib/report.js','lib/drafts.js','lib/exports.js','data/data.js','data/regions.js','lib/regions.js','packs/wa-kitsap.js','packs/wa-regional.js','rules/federal.js','rules/wa-state.js','rules/wa-kitsap.js','rules/wa-regional.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
  const pack=w.BidPacks['wa-kitsap']; let screens=0;
  const parcel=w.BidScreen.buildParcel([{geometry:{rings:[[[-122.65,47.6],[-122.649,47.6],[-122.649,47.601],[-122.65,47.601],[-122.65,47.6]]]}}],{parcel_key:'123456',rp_acct_id:123456});
  pack.search=async()=>[{label:'SYNTHETIC SITE',parcel_key:'123456'}];

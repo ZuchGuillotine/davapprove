@@ -1,10 +1,3 @@
-/*
- * Report access for the beta: basic estimate (open) -> email capture -> full report -> pricing
- * prompt from the second report on. During the beta the prompt always offers "Continue free".
- *
- * This is a product gate, not a security boundary: the screening engine runs in the browser.
- * A paid tier needs the detailed report served from the backend. See docs/PRODUCT_STRATEGY.md.
- */
 import { getAuth } from "./api";
 import type { ReportRequest } from "./bidEngine";
 import type { Audience } from "./pricing";
@@ -45,7 +38,7 @@ export function hasPendingReport() {
 /** Fragment for the full report workspace. Only these keys cross into the assessment frame. */
 export function reportHash(request: ReportRequest, agency = "") {
   // The workspace decodes each value with decodeURIComponent, so encode the same way ("+" stays literal).
-  const pairs: [string, string][] = [["county", request.county], ["parcel", request.parcel], ["type", request.project.type], ["project", JSON.stringify(request.project)]];
+  const pairs: [string, string][] = [["county", request.county], ["parcel", request.parcel], ["type", request.project.type], ["project", JSON.stringify(request.project)], ["estimate", "1"]];
   if (agency.trim()) pairs.push(["agency", agency.trim().slice(0, 160)]);
   return "#" + pairs.map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join("&");
 }
@@ -64,7 +57,7 @@ export async function ownedReportCount(): Promise<number> {
 
 export type CaptureDetails = { email: string; businessName?: string; listingInterest?: boolean; audience: Audience };
 
-/** Email capture: a one-time sign-in link that creates the account if needed and returns here. */
+/** Send a one-time sign-in link for an existing invited account. */
 export async function sendReportLink(details: CaptureDetails) {
   const client = getAuth();
   if (!client) throw new Error("Sign-in is not available on this deployment yet.");
@@ -73,7 +66,7 @@ export async function sendReportLink(details: CaptureDetails) {
   if (details.listingInterest) metadata.founding_listing_interest = true;
   const { error } = await client.auth.signInWithOtp({
     email: details.email.trim(),
-    options: { shouldCreateUser: true, emailRedirectTo: window.location.origin + "/?report=pending", data: metadata },
+    options: { shouldCreateUser: false, emailRedirectTo: window.location.origin + "/?report=pending", data: metadata },
   });
   if (error) throw error;
 }

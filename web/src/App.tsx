@@ -47,7 +47,10 @@ import WorkspaceSharing from "./WorkspaceSharing";
 import AuthPanel, { PasswordForm } from "./AuthPanel";
 import { projectsEnabled } from "./features";
 import EstimateFlow from "./estimate/EstimateFlow";
-import Landing from "./estimate/Landing";
+import Landing, { BrandMark } from "./estimate/Landing";
+import HomeownerPage from "./HomeownerPage";
+import { betaApi } from "./betaApi";
+import type { Session } from "@supabase/supabase-js";
 import { PricingDialog } from "./estimate/Dialogs";
 import { FREE_REPORTS, type Audience } from "./pricing";
 import { ownedReportCount, reportHash, takePendingReport } from "./reportAccess";
@@ -187,10 +190,12 @@ export default function App() {
     ),
     [geometryOpen, setGeometryOpen] = useState(false),
     [editingFact, setEditingFact] = useState<Fact | null>(null);
+  const privateBeta = import.meta.env.PROD || config?.private_beta === true;
   function clearWorkspace() {
     workspaceGeneration.current++;
     invalidateRequests();
     setEntered(false); setSample(false); setSampleMode(false);
+    setReport(null); setPricing(null);
     setProjects([]); setProject(null); setCandidates([]); setCoverage([]);
     setDocuments([]); setFacts([]); setAssessment(null); setComments([]); setJobs([]);
     setSelected(new Set()); setComment(""); setBidsOpen(false); setBidWorkspaceVisited(false); setProjectLoading(false);
@@ -210,6 +215,7 @@ export default function App() {
       const { error } = await auth.auth.signOut({ scope: "local" });
       if (error) throw error;
     }
+    if (privateBeta) await betaApi("sign-out", {});
     finishRecovery();
     clearWorkspace();
   }
@@ -222,7 +228,7 @@ export default function App() {
       const auth = getAuth();
       if (auth) {
         let openedUser: string | null = null;
-        const openSession = (session: { user: { id: string; email?: string; user_metadata?: Record<string, unknown> } } | null) => {
+        const openSession = (session: Session | null) => {
           if (!active || !session || authLinkError.current) return;
           if (recoveryGate.current) {
             openedUser = session.user.id;
@@ -255,11 +261,36 @@ export default function App() {
             if (active && generation === workspaceGeneration.current) void run("Opening workspace", loadProjects);
           }, 0);
         };
+        const useInvitations = import.meta.env.PROD || c.private_beta === true;
+        let sessionQueue = Promise.resolve();
+        let currentToken: string | null = null;
+        function activate(session: Session | null) {
+          if (!useInvitations) { openSession(session); return; }
+          const token = session?.access_token || null;
+          if (currentToken === token) return;
+          currentToken = token;
+          sessionQueue = sessionQueue.then(async () => {
+            if (!active || currentToken !== token) return;
+            if (!token) {
+              await betaApi("sign-out", {}, "");
+              return;
+            }
+            await betaApi("session", {}, token);
+            if (active && currentToken === token) openSession(session);
+          }).catch(error => {
+            if (!active || currentToken !== token) return;
+            currentToken = null;
+            openedUser = null;
+            clearWorkspace();
+            setError(error instanceof Error ? error.message : "Beta access is unavailable.");
+          });
+        }
         const { data } = auth.auth.onAuthStateChange((event, session) => {
           if (event === "SIGNED_OUT") {
             openedUser = null;
             finishRecovery();
             clearWorkspace();
+            activate(null);
             return;
           }
           if (event === "PASSWORD_RECOVERY") {
@@ -267,7 +298,7 @@ export default function App() {
             recoveryGate.current = true;
             clearWorkspace();
           }
-          openSession(session);
+          activate(session);
         });
         cleanup = () => data.subscription.unsubscribe();
         const session = await auth.auth.getSession();
@@ -277,7 +308,7 @@ export default function App() {
           setError("This sign-in or recovery link is invalid or expired. Sign in with your password or request a new link.");
           return;
         }
-        openSession(session.data.session);
+        activate(session.data.session);
       }
     });
     return () => {
@@ -605,6 +636,23 @@ export default function App() {
   const unreviewed = facts.filter(
     (f) => f.review_status !== "accepted" && f.review_status !== "rejected" && (!f.classification || f.classification.bucket === "review_now"),
   );
+  if (!entered && !passwordRecovery && privateBeta) return (
+    <div className="landing">
+      <header className="landing-header"><BrandMark /></header>
+      <main className="landing-main">
+        <section className="landing-hero">
+          <span className="eyebrow">PRIVATE BETA</span>
+          <h1>Know the permits before you price the job.</h1>
+          <p>Davapprove helps builders and architects estimate permitting costs and flag site constraints early. Use your invitation or sign in with your beta account.</p>
+        </section>
+        <div className="estimate-card" style={{ maxWidth: "28rem" }}>
+          <AuthPanel inviteOnly available={!!config?.authAvailable} emailEnabled={!!config?.email_delivery_enabled} />
+          {notice && <p className="notice">{notice}</p>}
+          {error && <p className="error" role="alert">{error}</p>}
+        </div>
+      </main>
+    </div>
+  );
   if (!entered && !passwordRecovery && !projectsOn)
     return <Landing audience="pro" config={config} error={error} notice={notice} />;
   if (!entered || passwordRecovery)
@@ -834,7 +882,9 @@ export default function App() {
             </div>
           )}
           {(bidsOpen || bidWorkspaceVisited) && <div hidden={!bidsOpen}><BidWorkspace agencyName={accountAgencyName} accountKey={accountEmail} enabled={!sample && !!accountEmail} report={report} /></div>}
-          {bidsOpen ? null : !projectsOn ? (
+          {bidsOpen ? null : /^\/homeowner\/?$/.test(window.location.pathname) ? (
+            <HomeownerPage onFullReport={request => void openReport(request)} onPricing={() => setPricing({ mode: "info", audience: "homeowner" })} />
+          ) : !projectsOn ? (
             <section className="estimate-workspace" aria-label="New estimate">
               <div className="estimate-workspace-heading"><span className="eyebrow">BEFORE YOU BID</span><h1>New estimate</h1>
                 <p>Address and project in, permitting range out. Open the full report to get every agency, study and fee with its source.</p></div>

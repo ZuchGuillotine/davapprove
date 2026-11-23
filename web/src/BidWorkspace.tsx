@@ -50,7 +50,12 @@ export default function BidWorkspace({ agencyName = "", accountKey = "", enabled
   const initial = new URLSearchParams(window.location.hash.slice(1));
   const selected = initial.get("draft");
   const publisher = initial.has("agency") ? (initial.get("agency") || "") : agencyName;
-  const agency = report ? report.hash : selected && /^[0-9a-f-]{36}$/i.test(selected) ? `#draft=${selected}` : publisher ? `#agency=${encodeURIComponent(publisher.trim().slice(0, 160))}` : "";
+  const parcel = initial.get("parcel");
+  const directReport = parcel && /^[a-z0-9 .-]{3,50}$/i.test(parcel) && /^wa-(?:kitsap|king|skagit)$/.test(initial.get("county") || "")
+    ? "#" + [...initial.entries()].filter(([name]) => ["parcel", "county", "project", "type"].includes(name))
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join("&")
+    : "";
+  const agency = report ? report.hash : selected && /^[0-9a-f-]{36}$/i.test(selected) ? `#draft=${selected}` : directReport || (publisher ? `#agency=${encodeURIComponent(publisher.trim().slice(0, 160))}` : "");
   return <section className="bid-workspace" aria-label="Bids and assessments">
     <div className="bid-workspace-heading">
       <div><span className="eyebrow">BEFORE THE PROJECT BEGINS</span><h1>Bids &amp; assessments</h1>

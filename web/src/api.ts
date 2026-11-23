@@ -2,7 +2,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { demoRequest } from "./demo";
 import type { Json } from "./types";
 export const apiBase =
-  (import.meta.env.VITE_API_URL || "").replace(/\/$/, "") + "/api/v1";
+  (import.meta.env.PROD ? "" : (import.meta.env.VITE_API_URL || "").replace(/\/$/, "")) + "/api/v1";
 let sample = false;
 let client: SupabaseClient | null = null;
 let requestGeneration = 0;
@@ -32,6 +32,7 @@ export async function configure() {
   client = url && key ? createClient(url, key) : null;
   return {
     ...config,
+    private_beta: config.private_beta === true,
     connected: !!config.mode,
     authAvailable: !!client,
     email_delivery_enabled:

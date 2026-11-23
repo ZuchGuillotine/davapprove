@@ -4,6 +4,7 @@ import { loadEstimator, range, money, type EstimateSummary, type Estimator, type
 import type { Audience } from "../pricing";
 import { PLANS } from "../pricing";
 import AddressSearch from "./AddressSearch";
+import CoverageRequest from "./CoverageRequest";
 import ProjectBrief, { defaultBrief, toProject, type BriefState } from "./ProjectBrief";
 import "./estimate.css";
 
@@ -74,6 +75,7 @@ export default function EstimateFlow({ audience, onFullReport, onPricing, loader
       <AddressSearch estimator={estimator} autoFocus onSelect={value => { setHit(value); setSummary(null); setEditing(true); setError(""); }}
         label={plain ? "Where is the property?" : "Property address or parcel number"} />
       <p className="estimate-coverage"><MapPin size={14} /> Kitsap, King and Skagit counties, Washington. More counties are on the way.</p>
+      <CoverageRequest />
     </div>
 
     {hit && estimator && brief && <>

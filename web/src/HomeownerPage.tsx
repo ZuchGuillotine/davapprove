@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
-import { configure } from "./api";
-import Landing from "./estimate/Landing";
+import type { ReportRequest } from "./bidEngine";
+import EstimateFlow from "./estimate/EstimateFlow";
 
-/*
- * Homeowner view at /homeowner: separate page, plain-language output, its own pricing.
- * Unlisted and not indexed until the professional directory side exists
- * (docs/PRODUCT_STRATEGY.md, decision 4).
- */
-export default function HomeownerPage() {
-  const [config, setConfig] = useState<Awaited<ReturnType<typeof configure>> | null>(null);
-  useEffect(() => {
-    let active = true;
-    const robots = document.createElement("meta");
-    robots.name = "robots";
-    robots.content = "noindex";
-    document.head.appendChild(robots);
-    const title = document.title;
-    document.title = "Davapprove · What will my project's permits cost?";
-    configure().then(value => { if (active) setConfig(value); });
-    return () => { active = false; robots.remove(); document.title = title; };
-  }, []);
-  return <Landing audience="homeowner" config={config} />;
+export default function HomeownerPage({ onFullReport, onPricing }: {
+  onFullReport: (request: ReportRequest) => void;
+  onPricing: () => void;
+}) {
+  return <section className="estimate-workspace plain" aria-label="Homeowner estimate">
+    <div className="estimate-workspace-heading">
+      <h1>What permits might your project need?</h1>
+      <p>Enter the property address and describe your project for an early estimate.</p>
+    </div>
+    <EstimateFlow audience="homeowner" onFullReport={onFullReport} onPricing={onPricing} />
+  </section>;
 }
