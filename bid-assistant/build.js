@@ -25,8 +25,14 @@ function validateMethod(f) {
       if (!b.step || b.over > previous || (b.up_to === null ? i !== m.brackets.length-1 : !number(b.up_to) || b.up_to <= previous)) throw new Error('Invalid valuation bands '+f.id);
       previous = b.up_to;
     });
-    for (const k of ['permit_factor','new_dwelling_factor','automation_min','automation_ratio']) if (m[k] != null) requireNumbers(m,[k]);
-  } else if (m.type === 'area') requireNumbers(m,['base','per_sqft']);
+    for (const k of ['permit_factor','new_dwelling_factor','automation_min','automation_ratio','plan_min']) if (m[k] != null) requireNumbers(m,[k]);
+  } else if (m.type === 'area') { requireNumbers(m,['base','per_sqft']); if(m.cap!=null) requireNumbers(m,['cap']); }
+  else if(m.type === 'area_table') {
+    requireNumbers(m,['technology_ratio']);
+    if(!Array.isArray(m.rows)||m.rows.length<2)throw new Error('Missing area examples '+f.id);
+    let last=0;
+    for(const row of m.rows){requireNumbers(row,['sqft','fee']);if(row.sqft<=last)throw new Error('Invalid area examples '+f.id);last=row.sqft;}
+  }
   else if (m.type === 'hourly_allowance') {
     requireNumbers(m,['rate','hours_low','hours_high']);
     if (m.hours_high < m.hours_low) throw new Error('Invalid hourly range '+f.id);
@@ -38,6 +44,7 @@ function validateMethod(f) {
 }
 
 function load(region) {
+  const inRegion = record => !record.region || (Array.isArray(record.region) ? record.region.includes(region) : record.region === region);
   const meta = read('meta.json');
   const citations = {}, fees = {}, agencies = {};
   const seen = {citations:new Set(),fees:new Set(),agencies:new Set()};
@@ -47,7 +54,7 @@ function load(region) {
     for (const k of ['id', 'jurisdiction', 'citation', 'url', 'fetched']) if (!c[k]) throw new Error('Citation ' + c.id + ' is missing ' + k);
     if (!/^https:\/\//.test(c.url)) throw new Error('Citation ' + c.id + ' needs an https URL');
     if (c.verified && !c.excerpt) throw new Error('Citation ' + c.id + ' is marked verified but has no excerpt');
-    if (!c.region || c.region === region) citations[c.id] = c;
+    if (inRegion(c)) citations[c.id] = c;
   }
   for (const f of read('fees.json')) {
     if (seen.fees.has(f.id)) throw new Error('Duplicate fee id ' + f.id);
@@ -58,13 +65,13 @@ function load(region) {
     if (!['published', 'market'].includes(f.basis)) throw new Error('Fee ' + f.id + ' has unknown basis ' + f.basis);
     if (f.basis === 'published' && !(f.source && /^https:\/\//.test(f.source.url || ''))) throw new Error('Published fee ' + f.id + ' needs a source URL');
     if (f.region) validateMethod(f);
-    if (!f.region || f.region === region) fees[f.id] = f;
+    if (inRegion(f)) fees[f.id] = f;
   }
   for (const a of read('agencies.json')) {
     if (seen.agencies.has(a.id)) throw new Error('Duplicate agency id ' + a.id);
     seen.agencies.add(a.id);
     if (!['local', 'tribal', 'state', 'federal', 'utility', 'professional'].includes(a.tier)) throw new Error('Agency ' + a.id + ' has unknown tier');
-    if (!a.region || a.region === region) agencies[a.id] = a;
+    if (inRegion(a)) agencies[a.id] = a;
   }
   const routing = read('agency-routing.json');
   for (const contact of routing.tribal_contacts) {
@@ -94,7 +101,7 @@ function regionOutputs() {
       for (const id of p.citations) if (!full.citations[id]) throw new Error('Missing citation '+id);
       for (const row of p.fees) {
         if (!full.fees[row.fee]) throw new Error('Missing fee '+row.fee);
-        if (!['structure','home','adu','addition','other_structure','new_structure','development','critical','flood','shoreline'].includes(row.trigger.replace(/^conditional_/,''))) throw new Error('Unknown fee trigger '+row.trigger);
+        if (!['structure','home','new_home','sewer_home','adu','addition','other_structure','new_structure','development','critical','wetland','geohazard','flood','shoreline'].includes(row.trigger.replace(/^conditional_/,''))) throw new Error('Unknown fee trigger '+row.trigger);
       }
     }
     if (!full.fees[region.fallback_fee] || !full.agencies[region.health_agency]) throw new Error('Missing county fallback or health agency '+region.id);

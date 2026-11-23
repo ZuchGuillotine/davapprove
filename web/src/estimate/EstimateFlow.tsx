@@ -74,7 +74,7 @@ export default function EstimateFlow({ audience, onFullReport, onPricing, loader
     <div className="estimate-card search-card">
       <AddressSearch estimator={estimator} autoFocus onSelect={value => { setHit(value); setSummary(null); setEditing(true); setError(""); }}
         label={plain ? "Where is the property?" : "Property address or parcel number"} />
-      <p className="estimate-coverage"><MapPin size={14} /> Kitsap, King and Skagit counties, Washington. More counties are on the way.</p>
+      <p className="estimate-coverage"><MapPin size={14} /> Kitsap, King, Skagit and Pierce counties, Washington. More counties are on the way.</p>
       <CoverageRequest />
     </div>
 

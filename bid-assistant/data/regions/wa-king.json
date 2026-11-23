@@ -7,7 +7,7 @@
   ],
   "zoom": 10,
   "schema_version": 1,
-  "checked": "2026-11-15",
+  "checked": "2026-11-22",
   "valid_through": "2026-12-31",
   "profiles": {
     "County": {
@@ -216,7 +216,9 @@
       "name": "Kirkland",
       "agency": "wa-king-kirkland",
       "citations": [
-        "wa-king-kirkland-source"
+        "wa-king-kirkland-source",
+        "wa-king-kirkland-planning-source",
+        "wa-king-kirkland-impact-source"
       ],
       "fees": [
         {
@@ -224,14 +226,55 @@
           "trigger": "structure"
         },
         {
+          "fee": "wa-king-kirkland-energy",
+          "trigger": "conditional_structure"
+        },
+        {
+          "fee": "wa-king-kirkland-trades",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-king-kirkland-trade-review",
+          "trigger": "conditional_home"
+        },
+        {
           "fee": "wa-king-kirkland-planning",
-          "trigger": "development"
+          "trigger": "conditional_home"
+        },
+        {
+          "fee": "wa-king-kirkland-critical",
+          "trigger": "conditional_critical"
+        },
+        {
+          "fee": "wa-king-kirkland-shoreline",
+          "trigger": "conditional_shoreline"
+        },
+        {
+          "fee": "wa-king-kirkland-impact-park",
+          "trigger": "conditional_new_home"
+        },
+        {
+          "fee": "wa-king-kirkland-impact-fire",
+          "trigger": "conditional_new_home"
+        },
+        {
+          "fee": "wa-king-kirkland-impact-transport",
+          "trigger": "conditional_new_home"
+        },
+        {
+          "fee": "wa-king-kirkland-impact-school",
+          "trigger": "conditional_new_home"
+        },
+        {
+          "fee": "wa-king-kirkland-goat-hill",
+          "trigger": "conditional_structure"
         }
       ],
       "coverage": "published components; additional charges require confirmation",
-      "reviewed_on": "2026-11-15",
+      "reviewed_on": "2026-11-22",
       "review_due": "2027-01-01",
-      "reference_url": "https://www.kirklandwa.gov/Government/Departments/Development-Services-Center/Tools-and-Resources/All-Forms-Publications-Fees"
+      "reference_url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Building-Services/Building-Services-Fees",
+      "electrical_priced_for_home": true
     },
     "Federal Way": {
       "id": "wa-king-federal-way",

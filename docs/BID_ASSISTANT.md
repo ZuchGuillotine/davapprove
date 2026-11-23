@@ -5,6 +5,11 @@
 
 The hosted estimate, detailed report and homeowner view require a beta invitation. The Cloudflare Worker runs the rule engine and holds the county source packs. The browser renders parcel-specific results and applies custom bid allowances to the returned cost lines. Saved snapshots can be reopened and recalculated server-side. The standalone Node tool remains available for local development. See [private beta operations](operations.md#private-beta) for invitations, deployment, the MCP tool and anonymous county-level metrics.
 
+## Pierce and Kirkland update — November 23, 2026
+
+Pierce is available in both the address-first estimate and full bid report. County and city fee profiles cover Tacoma, Lakewood, Puyallup, University Place, Bonney Lake, Gig Harbor, Fife, Sumner and shared Auburn coverage. Independent tribal, electrical-territory, military, health and volcanic-hazard checks supplement existing federal/state screening. Kirkland's published building/planning schedules and impact-fee PDF now replace its quote-only placeholders. See [source review, limits and verification](PIERCE_KIRKLAND_SOURCES.md).
+
+Regional maps remain provisional footprint screens with unresolved setbacks/buffers. Approximate county examples and conditional city charges are labeled as allowances; unsupported scopes stay quote-needed. User price overrides and original source links are preserved. No permit documents or personal parcel fields are fetched.
 
 ## Estimate pages and report gate — November 23, 2026
 

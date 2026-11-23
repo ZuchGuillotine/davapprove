@@ -15,7 +15,7 @@ import supplements from './packs.generated.mjs';
 import census from './counties.json' with { type: 'json' };
 
 const rulesets = { federal: federalRules, 'wa-state': stateRules, 'wa-kitsap': kitsapRules, 'wa-regional': regionalRules };
-const countyCodes = { 'wa-kitsap': '53035', 'wa-king': '53033', 'wa-skagit': '53057' };
+const countyCodes = { 'wa-kitsap': '53035', 'wa-king': '53033', 'wa-skagit': '53057', 'wa-pierce': '53053' };
 const byCode = new Map(Object.entries(countyCodes).map(([id, code]) => [code, id]));
 const available = base.meta.jurisdictions.filter(county => county.available);
 const packsByPath = new Map(supplements.map(pack => [manifest.regions[pack.region.id].url, pack]));

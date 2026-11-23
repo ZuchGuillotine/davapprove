@@ -1,0 +1,539 @@
+{
+  "id": "wa-pierce",
+  "county": "Pierce",
+  "center": [
+    47.17,
+    -122.37
+  ],
+  "zoom": 10,
+  "schema_version": 1,
+  "checked": "2026-11-22",
+  "valid_through": "2026-12-31",
+  "profiles": {
+    "County": {
+      "id": "wa-pierce-profile",
+      "name": "Pierce County",
+      "agency": "wa-pierce",
+      "citations": [
+        "wa-pierce-county-source",
+        "wa-pierce-critical-code"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-county-building",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-pierce-county-building-adu",
+          "trigger": "adu"
+        },
+        {
+          "fee": "wa-pierce-county-building-addition",
+          "trigger": "addition"
+        },
+        {
+          "fee": "wa-pierce-county-building-other_structure",
+          "trigger": "other_structure"
+        },
+        {
+          "fee": "wa-pierce-county-planning",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-pierce-county-base",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-county-site",
+          "trigger": "conditional_home"
+        },
+        {
+          "fee": "wa-pierce-county-driveway",
+          "trigger": "conditional_home"
+        },
+        {
+          "fee": "wa-pierce-county-traffic",
+          "trigger": "conditional_new_home"
+        },
+        {
+          "fee": "wa-pierce-county-park",
+          "trigger": "conditional_new_home"
+        },
+        {
+          "fee": "wa-pierce-county-school",
+          "trigger": "conditional_new_home"
+        },
+        {
+          "fee": "wa-pierce-county-sewer",
+          "trigger": "conditional_sewer_home"
+        },
+        {
+          "fee": "wa-pierce-county-wetland-review",
+          "trigger": "conditional_wetland"
+        },
+        {
+          "fee": "wa-pierce-county-geo-review",
+          "trigger": "conditional_geohazard"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees"
+    },
+    "Tacoma": {
+      "id": "wa-pierce-tacoma-profile",
+      "name": "Tacoma",
+      "agency": "wa-pierce-tacoma",
+      "citations": [
+        "wa-pierce-tacoma-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-tacoma-building",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-pierce-tacoma-surcharges",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-pierce-tacoma-building-adu",
+          "trigger": "adu"
+        },
+        {
+          "fee": "wa-pierce-tacoma-building-addition",
+          "trigger": "addition"
+        },
+        {
+          "fee": "wa-pierce-tacoma-building-other_structure",
+          "trigger": "other_structure"
+        },
+        {
+          "fee": "wa-pierce-tacoma-adu-landuse",
+          "trigger": "adu"
+        },
+        {
+          "fee": "wa-pierce-tacoma-critical",
+          "trigger": "conditional_critical"
+        },
+        {
+          "fee": "wa-pierce-tacoma-shoreline",
+          "trigger": "conditional_shoreline"
+        },
+        {
+          "fee": "wa-pierce-tacoma-traffic",
+          "trigger": "conditional_new_home"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf"
+    },
+    "Lakewood": {
+      "id": "wa-pierce-lakewood-profile",
+      "name": "Lakewood",
+      "agency": "wa-pierce-lakewood",
+      "citations": [
+        "wa-pierce-lakewood-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-lakewood-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-lakewood-admin",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-lakewood-tech",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-lakewood-critical",
+          "trigger": "conditional_critical"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://cityoflakewood.us/wp-content/uploads/2025/11/Resolution-No.-2025-14-Adopt-2026-Fee-Resolution.pdf"
+    },
+    "Puyallup": {
+      "id": "wa-pierce-puyallup-profile",
+      "name": "Puyallup",
+      "agency": "wa-pierce-puyallup",
+      "citations": [
+        "wa-pierce-puyallup-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-puyallup-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-puyallup-preapp",
+          "trigger": "conditional_home"
+        },
+        {
+          "fee": "wa-pierce-puyallup-critical",
+          "trigger": "conditional_critical"
+        },
+        {
+          "fee": "wa-pierce-puyallup-civil",
+          "trigger": "conditional_development"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.puyallupwa.gov/DocumentCenter/View/24954/2026-Fee-schedule"
+    },
+    "University Place": {
+      "id": "wa-pierce-university-place-profile",
+      "name": "University Place",
+      "agency": "wa-pierce-university-place",
+      "citations": [
+        "wa-pierce-university-place-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-university-place-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-university-place-site",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-pierce-university-place-site-adu",
+          "trigger": "adu"
+        },
+        {
+          "fee": "wa-pierce-university-place-site-addition",
+          "trigger": "addition"
+        },
+        {
+          "fee": "wa-pierce-university-place-site-other_structure",
+          "trigger": "other_structure"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.cityofup.com/DocumentCenter/View/3420/Building-Code-Fees-PDF"
+    },
+    "Bonney Lake": {
+      "id": "wa-pierce-bonney-lake-profile",
+      "name": "Bonney Lake",
+      "agency": "wa-pierce-bonney-lake",
+      "citations": [
+        "wa-pierce-bonney-lake-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-bonney-lake-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-bonney-lake-storm",
+          "trigger": "conditional_development"
+        },
+        {
+          "fee": "wa-pierce-bonney-lake-trades",
+          "trigger": "home"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.bonneylake.gov/DocumentCenter/View/376/Fee-Schedule-PDF"
+    },
+    "Gig Harbor": {
+      "id": "wa-pierce-gig-harbor-profile",
+      "name": "Gig Harbor",
+      "agency": "wa-pierce-gig-harbor",
+      "citations": [
+        "wa-pierce-gig-harbor-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-gig-harbor-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-gig-harbor-design",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-pierce-gig-harbor-engineering",
+          "trigger": "home"
+        },
+        {
+          "fee": "wa-pierce-gig-harbor-site",
+          "trigger": "conditional_development"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.gigharborwa.gov/DocumentCenter/View/2348/Fee-Schedule"
+    },
+    "Fife": {
+      "id": "wa-pierce-fife-profile",
+      "name": "Fife",
+      "agency": "wa-pierce-fife",
+      "citations": [
+        "wa-pierce-fife-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-fife-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-fife-preapp",
+          "trigger": "conditional_home"
+        },
+        {
+          "fee": "wa-pierce-fife-adu",
+          "trigger": "adu"
+        },
+        {
+          "fee": "wa-pierce-fife-critical",
+          "trigger": "conditional_critical"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.fifewa.gov/DocumentCenter/View/180/Community-Development-Building-and-Planning-Fees-PDF"
+    },
+    "Sumner": {
+      "id": "wa-pierce-sumner-profile",
+      "name": "Sumner",
+      "agency": "wa-pierce-sumner",
+      "citations": [
+        "wa-pierce-sumner-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-pierce-sumner-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-pierce-sumner-critical",
+          "trigger": "conditional_critical"
+        },
+        {
+          "fee": "wa-pierce-sumner-fire",
+          "trigger": "conditional_structure"
+        },
+        {
+          "fee": "wa-pierce-sumner-traffic",
+          "trigger": "conditional_new_home"
+        }
+      ],
+      "coverage": "Published components and conditional allowances; remaining charges need confirmation",
+      "reviewed_on": "2026-11-22",
+      "review_due": "2027-01-01",
+      "reference_url": "https://sumnerwa.gov/wp-content/uploads/2026/02/Permit-Fee-Schedule-Jan-2026.pdf"
+    },
+    "Auburn": {
+      "id": "wa-king-auburn",
+      "name": "Auburn",
+      "agency": "wa-king-auburn",
+      "citations": [
+        "wa-king-auburn-source"
+      ],
+      "fees": [
+        {
+          "fee": "wa-king-auburn-building",
+          "trigger": "structure"
+        },
+        {
+          "fee": "wa-king-auburn-planning",
+          "trigger": "development"
+        }
+      ],
+      "coverage": "Shared Auburn city schedule across King and Pierce; city fees do not depend on county.",
+      "reviewed_on": "2026-11-15",
+      "review_due": "2027-01-01",
+      "reference_url": "https://www.auburnwa.gov/city_hall/documents"
+    }
+  },
+  "electrical_cities": [],
+  "health_agency": "wa-pierce-health",
+  "fallback_fee": "wa-pierce-unpriced-local",
+  "coverage_note": "Early bid screening: inventory footprints are displayed, but setbacks, wetland ratings, shoreline jurisdiction, agricultural restrictions and protective buffers are not confirmed. Gray map areas are unresolved, not a verified buildable envelope. No permit history is loaded. Utility, school and fire districts, credits and additional reviews require confirmation.",
+  "critical_area_note": "PCC Title 18E regulates wetlands, habitat, flood, volcanic, landslide and other critical areas. The County says actual site conditions determine requirements even when maps show none. The 2025 critical-area update and subsequent Category IV wetland clarification must be checked against current applicable rules. No fixed buffer is inferred from an unrated inventory.",
+  "search_distance_note": "Map query distances are screening extents, not regulatory buffer widths.",
+  "examples": [
+    {
+      "parcel_key": "2008070030",
+      "label": "Tacoma civic site",
+      "type": "new_sfr"
+    },
+    {
+      "parcel_key": "0418166026",
+      "label": "Unincorporated Graham civic site",
+      "type": "new_sfr"
+    }
+  ],
+  "parcel": {
+    "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Tax_Parcels/FeatureServer/0",
+    "key": "TaxParcelNumber",
+    "address": [
+      "Site_Address"
+    ],
+    "fields": [
+      "TaxParcelNumber",
+      "Site_Address"
+    ]
+  },
+  "city": {
+    "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Cities_in_Pierce_County/FeatureServer/0",
+    "fields": [
+      "NAME"
+    ]
+  },
+  "layers": [
+    {
+      "id": "zoning",
+      "label": "County zoning designations",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Zoning/FeatureServer/0",
+      "fields": [
+        "ZONING",
+        "ZON_CUR_NA",
+        "JURISDICT"
+      ],
+      "kind": "attributes",
+      "group": "jurisdiction",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer."
+    },
+    {
+      "id": "military",
+      "label": "Military installation boundaries",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Military_Bases/FeatureServer/0",
+      "fields": [
+        "NAME",
+        "JURISDICTI"
+      ],
+      "kind": "attributes",
+      "group": "jurisdiction",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer."
+    },
+    {
+      "id": "electric",
+      "label": "Electrical utility service areas",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Electric_Service_Providers/FeatureServer/0",
+      "fields": [
+        "PURVEYOR"
+      ],
+      "kind": "attributes",
+      "group": "jurisdiction",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer."
+    },
+    {
+      "id": "wetland",
+      "label": "Possible wetlands inventory",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Possible_Wetlands/FeatureServer/0",
+      "fields": [
+        "HYDRIC",
+        "CWI",
+        "NWI"
+      ],
+      "kind": "features",
+      "group": "critical",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer.",
+      "search_ft": 400
+    },
+    {
+      "id": "stream",
+      "label": "Mapped streams and rivers",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/StreamsAndRivers/FeatureServer/0",
+      "fields": [
+        "StreamType"
+      ],
+      "kind": "features",
+      "group": "critical",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer.",
+      "search_ft": 400
+    },
+    {
+      "id": "geohazard",
+      "label": "Landslide hazard inventory",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Landslide_Hazard_Areas/FeatureServer/1",
+      "fields": [
+        "POT_SLIDE",
+        "SLOPE_HAZ"
+      ],
+      "kind": "features",
+      "group": "hazard",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer."
+    },
+    {
+      "id": "volcanic",
+      "label": "Volcanic and lahar hazard inventory",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Volcanic_Hazards/FeatureServer/0",
+      "fields": [
+        "CASE_1",
+        "CASE_2",
+        "CASE_3",
+        "TIME_ZONE"
+      ],
+      "kind": "features",
+      "group": "hazard",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer."
+    },
+    {
+      "id": "smp",
+      "label": "County shoreline designations",
+      "url": "https://services2.arcgis.com/1UvBaQ5y1ubjUPmd/ArcGIS/rest/services/Shoreline_Environment_Designations/FeatureServer/0",
+      "fields": [
+        "ENV_DES"
+      ],
+      "kind": "features",
+      "group": "shoreline",
+      "publisher": "Pierce County GIS",
+      "caveat": "Inventory only; coverage and site conditions require confirmation. Query extent is not a legal buffer."
+    }
+  ],
+  "septic_adu_fee": "wa-pierce-septic-adu",
+  "routing": {
+    "checked": "2026-11-22",
+    "jurisdiction": "Pierce independent tribal/state/federal screening",
+    "tribal_contacts": [
+      {
+        "agency": "puyallup",
+        "citation": "wa-pierce-puyallup-source",
+        "reason": "Regional starting contact; lead agency and Tribes must identify project-specific jurisdiction and affected treaty resources."
+      },
+      {
+        "agency": "nisqually",
+        "citation": "wa-pierce-nisqually-source",
+        "reason": "Regional starting contact; lead agency and Tribes must identify project-specific jurisdiction and affected treaty resources."
+      }
+    ],
+    "tribal_name_matches": [
+      {
+        "agency": "puyallup",
+        "pattern": "puyallup"
+      },
+      {
+        "agency": "nisqually",
+        "pattern": "nisqually"
+      }
+    ],
+    "tribal_contact_limit": "Puyallup and Nisqually are starting contacts, not an exhaustive affected-Tribe list or a claim that every Tribe must approve. Ask the lead agency and Tribes about off-reservation treaty interests, including other affected governments."
+  }
+}

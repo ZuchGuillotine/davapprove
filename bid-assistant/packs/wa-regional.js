@@ -13,13 +13,18 @@
   function from(features){
    if(!features.length)return null;
    var a=features[0].attributes;
-   return Screen.buildParcel(features,{parcel_key:String(a[pc.key]),county:config.county,state:'WA',situs:pc.address.map(function(k){return a[k];}).filter(Boolean).join(' ')});
+   // Some condominium tax IDs repeat the same ground polygon for stacked records.
+   // Duplicate rings cancel under even/odd containment and would erase district probes.
+   var seen={};features=features.filter(function(f){var key=JSON.stringify(f.geometry);if(seen[key])return false;seen[key]=true;return true;});
+   var parcel=Screen.buildParcel(features,{parcel_key:String(a[pc.key]),county:config.county,state:'WA',situs:pc.address.map(function(k){return a[k];}).filter(Boolean).join(' ')});
+   if(!parcel.interior_points.length)throw new Error('Parcel geometry could not establish an interior location. Select another parcel or confirm the county geometry before estimating jurisdiction fees.');
+   return parcel;
   }
   function parcelById(id){
    if(!/^[A-Za-z0-9-]+$/.test(String(id)))return Promise.reject(new Error('Invalid parcel identifier'));
    return Arc.query(pc.url,{where:pc.key+" = '"+Arc.sqlString(String(id).toUpperCase())+"'",outFields:fields}).then(function(r){if(r.exceeded)throw new Error('Parcel geometry was truncated');return from(r.features);});
   }
-  function parcelAtPoint(lon,lat){return Arc.query(pc.url,{geometry:{x:lon,y:lat},outFields:pc.key,returnGeometry:false}).then(function(r){if(r.features.length!==1)throw new Error('Select an unambiguous point inside the parcel');return parcelById(r.features[0].attributes[pc.key]);});}
+  function parcelAtPoint(lon,lat){return Arc.query(pc.url,{geometry:{x:lon,y:lat},outFields:pc.key,returnGeometry:false}).then(function(r){if(r.exceeded||r.features.length!==1)throw new Error('Select an unambiguous point inside the parcel');return parcelById(r.features[0].attributes[pc.key]);});}
   function search(input){
    var raw=String(input||'').trim().toUpperCase(), s=Arc.normalizeAddress(raw);
    if(s.length<3)return Promise.resolve([]);
@@ -28,7 +33,7 @@
    else {
     var house=/^(\d+)\s/.exec(s);
     var words=house?s.split(' ').slice(1).filter(function(w){return !/^(N|S|E|W|NE|NW|SE|SW|AVE|ST|RD|DR|CT|PL|BLVD|LN|HWY|PKWY|CIR|TER)$/.test(w);}):[];
-    var street=words.length?"%"+words.join('%'):"";
+    var street=words.length?"%"+Arc.sqlString(words.join('%')):"";
     if(pc.address.length===1)where="UPPER("+pc.address[0]+") LIKE '"+Arc.sqlString(house?house[1]+' ':s)+street+"%'";
     else if(house)where=pc.address[0]+" = '"+house[1]+"'"+(words.length?" AND UPPER("+pc.address[1]+") LIKE '"+street+"%'":"");
     else where="UPPER("+pc.address[1]+") LIKE '"+Arc.sqlString(s)+"%'";
@@ -55,10 +60,13 @@
    f.jurisdiction.reservation=null;f.jurisdiction.tribal_zoning=false;f.jurisdiction.uga=null;
    f.jurisdiction.military=false;f.jurisdiction.fire_district=null;f.jurisdiction.water_district=null;
    var z=(s.layers.zoning&&s.layers.zoning.features||[]).map(function(x){return x.attrs;});
-   f.parcel.zone_code=z.map(function(a){return a.CURRZONE||a.ZONING_CODE||a.LUD_ZONING;}).filter(Boolean).join(' / ')||null;
+   f.parcel.zone_code=z.map(function(a){return a.CURRZONE||a.ZONING_CODE||a.LUD_ZONING||a.ZONING;}).filter(Boolean).join(' / ')||null;
    f.parcel.zone_name=z.map(function(a){return a.ZONING_LABEL;}).filter(Boolean).join(' / ')||null;
    f.parcel.situs=s.parcel.situs||null;f.parcel.vacant=null;f.parcel.dwellings=null;f.parcel.improvements=null;
-   f.jurisdiction.military=z.some(function(a){return /military/i.test(String(a.ZONING_LABEL||''));});
+   var military=s.layers.military;
+   f.jurisdiction.military=!!(military&&military.features.some(function(x){return x.on_parcel;}))||z.some(function(a){return /military/i.test(String(a.ZONING_LABEL||''));});
+   // A failed military boundary check cannot establish an ordinary local fee route.
+   if(config.layers.some(function(l){return l.id==='military';})&&(!military||military.status==='unknown'||military.truncated))f.jurisdiction.status='unknown';
    f.stream.streams=(s.layers.stream&&s.layers.stream.features||[]).map(function(x){return {type:x.attrs.StreamType||'unknown',on_parcel:x.on_parcel,distance_ft:x.distance_ft,bearing:x.bearing};});
    f.stream.nearest=f.stream.streams[0]||null;f.stream.types=f.stream.streams.map(function(x){return x.type;});
    // No mapped waterbody/SMP/landslide source is not a negative result.
@@ -66,6 +74,19 @@
    var g=s.layers.geohazard;f.geohazard.status=g?g.status:'unknown';f.geohazard.high=!!(g&&g.features.some(function(x){return x.on_parcel;}));f.geohazard.classes=f.geohazard.high?['Potential landslide']:[];
    f.permits={status:'unknown',items:[],error:'Permit history is outside this lightweight regional screening.'};
    f.regional={id:config.id,unconfirmed_buffers:true,districts:['dike','drainage'].reduce(function(out,k){var l=s.layers[k];if(l&&l.features.length)out.push(k);return out;},[])};
+   if(config.id==='wa-pierce'){
+    var volcanic=s.layers.volcanic,electric=s.layers.electric,smp=s.layers.smp;
+    f.regional.volcanic=!!(volcanic&&volcanic.features.some(function(x){return x.on_parcel;}));
+    f.regional.volcanic_status=volcanic&&!volcanic.truncated?volcanic.status:'unknown';
+    f.regional.military_status=military&&!military.truncated?military.status:'unknown';
+    var providers=electric?(electric.features||[]).map(function(x){return x.attrs.PURVEYOR;}).filter(Boolean):[];
+    f.regional.electrical_provider=electric&&electric.status!=='unknown'&&!electric.truncated&&providers.length===1?providers[0]:null;
+    f.shoreline.designations=(smp&&smp.features||[]).filter(function(x){return x.on_parcel;}).map(function(x){return x.attrs.ENV_DES;}).filter(Boolean);
+    f.shoreline.in_jurisdiction=f.shoreline.designations.length>0;
+    f.shoreline.upland_designations=f.shoreline.designations.filter(function(x){return x!=='Aquatic';});
+    // County SMP inventory does not settle a city's shoreline jurisdiction.
+    f.shoreline.status=!f.jurisdiction.city&&smp&&!smp.truncated?smp.status:'unknown';
+   }
    return f;
   }
   return {id:config.id,name:config.county+' County, Washington',county:config.county,state:'WA',center:config.center,zoom:config.zoom,rule_sets:['federal','wa-state','wa-regional'],constraint_ruleset:'wa-regional',layers:layers,tables:[],search:search,parcelById:parcelById,parcelAtPoint:parcelAtPoint,deriveFacts:deriveFacts,examples:config.examples||[]};

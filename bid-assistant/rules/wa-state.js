@@ -165,7 +165,14 @@
     if (!(p.new_sqft > 0)) return null;
     var region=ctx.data.region, j=ctx.facts.jurisdiction;
     if (region && (ctx.helpers.landContext(ctx.facts,p).mode==='unknown' || j.status==='unknown' || (j.tribal_names||[]).length || ['tribal','exclusive_federal'].indexOf(p.land_status)>=0)) return {agency:region.id,level:'unknown',basis:'confirm',title:'Electrical inspection authority unresolved',why:'Confirm municipal, tribal or state inspection authority before pricing the electrical permit.',citations:['lni-city-jurisdictions'],costs:[{fee:region.id+'-electrical',unpriced:true}]};
-    if (region && region.electrical_cities.indexOf(j.city)>=0) return {agency:(region.profiles[j.city]||{}).agency||region.id,level:'required',basis:'documented',title:j.city+' electrical permit and inspection',why:'L&I lists this city as issuing electrical permits and performing inspections. A separate municipal electrical estimate is needed.',citations:['lni-city-jurisdictions'],costs:[{fee:region.id+'-electrical',unpriced:true}]};
+    if(region&&region.id==='wa-pierce'){
+      var provider=(ctx.facts.regional||{}).electrical_provider;
+      if(!provider||/tacoma/i.test(provider))return {agency:'tacoma-power',level:provider?'likely':'unknown',basis:'confirm',title:provider?'Tacoma Power electrical permit and inspection':'Electrical service territory needs confirmation',why:provider?'The service-area inventory identifies Tacoma Power, which performs electrical permitting and inspections across city boundaries. Verify the work address and obtain its project fee.':'The service-area map did not resolve one provider. Confirm Tacoma Power versus L&I jurisdiction before pricing electrical permits.',citations:['lni-city-jurisdictions','wa-pierce-electrical-source'],costs:[{fee:region.id+'-electrical',unpriced:true}]};
+    }
+    if (region && region.electrical_cities.indexOf(j.city)>=0) {
+      var electricalIncluded=(region.profiles[j.city]||{}).electrical_priced_for_home && ['new_sfr','rebuild'].indexOf(p.type)>=0;
+      return {agency:(region.profiles[j.city]||{}).agency||region.id,level:'required',basis:'documented',title:j.city+' electrical permit and inspection',why:'L&I lists this city as issuing electrical permits and performing inspections. '+(electricalIncluded?'The local fee section includes the published new-home electrical permit formula; separate review or temporary power may add charges.':'A separate municipal electrical estimate is needed.'),citations:['lni-city-jurisdictions'],costs:electricalIncluded?[]:[{fee:region.id+'-electrical',unpriced:true}]};
+    }
     var m = ctx.data.fees['lni-electrical'].method;
     var fee = m.first_1300 + Math.max(0, Math.ceil((p.new_sqft - 1300) / 500)) * m.per_additional_500;
     return {

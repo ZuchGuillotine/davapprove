@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import worker from '../web/worker/index.mjs';
+import { assess } from '../web/worker/assessment.mjs';
+import supplements from '../web/worker/packs.generated.mjs';
+import Regional from '../bid-assistant/packs/wa-regional.js';
 
 const base = 'https://davapprove.com';
 
@@ -38,7 +41,7 @@ test('invitation gates and metrics are enforced at the Worker', async () => {
       assert.equal((await request(path)).status, 401);
       assert.equal((await request(path, 'uninvited')).status, 403);
     }
-    for (const path of ['/bid-assistant/lib/engine.js', '/bid-assistant/data/data.js', '/bid-assistant/rules/wa-kitsap.js']) {
+    for (const path of ['/bid-assistant/lib/engine.js', '/bid-assistant/data/data.js', '/bid-assistant/data/regions.js', '/bid-assistant/data/bundles/wa-pierce.6c11c53d761f88a4.json', '/bid-assistant/rules/wa-kitsap.js']) {
       assert.equal((await request(path, 'invited')).status, 404);
     }
     const session = await request('/beta-api/session', 'invited', {});
@@ -49,7 +52,11 @@ test('invitation gates and metrics are enforced at the Worker', async () => {
     })).status, 200);
 
     const meta = await (await request('/beta-api/meta', 'invited')).json();
-    assert.equal(meta.counties.length, 3);
+    assert.deepEqual(meta.counties.map(({ id, code }) => [id, code]).sort(), [
+      ['wa-king', '53033'], ['wa-kitsap', '53035'], ['wa-pierce', '53053'], ['wa-skagit', '53057'],
+    ]);
+    const pierce = await request('/beta-api/coverage', 'invited', { county_code: '53053' });
+    assert.deepEqual(await pierce.json(), { state: 'WA', county: 'Pierce County', supported: true });
     assert.ok(meta.counties.every(county => !county.data.citations && !county.data.fees));
 
     const expectation = { state: 'AK', county: 'Kusilvak Census Area', supported: false };
@@ -70,5 +77,34 @@ test('invitation gates and metrics are enforced at the Worker', async () => {
     assert.deepEqual(events, [expectation, expectation]);
   } finally {
     globalThis.fetch = originalFetch;
+  }
+});
+
+test('server reports retain Pierce and Kirkland prices and cited evidence', async () => {
+  for (const [county, city, fee, expected] of [
+    ['wa-pierce', null, 'wa-pierce-county-building', 4733.47],
+    ['wa-king', 'Kirkland', 'wa-king-kirkland-building', 9083.52],
+  ]) {
+    const { region } = supplements.find(pack => pack.region.id === county);
+    const pack = Regional.create(region);
+    const layers = Object.fromEntries(pack.layers.map(layer => [layer.id, {
+      id: layer.id, status: 'none', features: [], classes: {}, near_classes: [],
+    }]));
+    if (city) layers.city = { ...layers.city, status: 'on_parcel', features: [{ attrs: { NAME: city, UNINC: 0 } }] };
+    const snapshot = {
+      parcel: { parcel_key: 'TEST', situs: 'Synthetic test site', geometry: { rings: [
+        [[-122.4, 47.1], [-122.399, 47.1], [-122.399, 47.101], [-122.4, 47.101], [-122.4, 47.1]],
+      ] } },
+      screening: { pack_id: county, layers, tables: {}, screened_at: '2026-11-23T00:00:00Z' },
+    };
+    const report = await assess({ county, snapshot, project: {
+      type: 'new_sfr', new_sqft: 2400, construction_value: 550000,
+    } }, { source: 'web', detailed: true, record: () => assert.fail('Reopening must not duplicate metrics') });
+    const cost = report.report.costs.items.find(item => item.fee === fee);
+    assert.ok(cost, `${county} report must include ${fee}`);
+    assert.equal(cost.low, expected);
+    assert.ok(Object.values(report.data.citations).some(citation => citation.url?.startsWith('https://')));
+    assert.equal(report.data.fees, undefined, 'report carries applicable evidence, not the fee library');
+    assert.ok(report.grid, 'provisional site visual survives server serialization');
   }
 });

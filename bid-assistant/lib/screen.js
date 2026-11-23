@@ -128,6 +128,7 @@
   }
 
   function runAttributeLayer(layer, parcel) {
+    if(!parcel.interior_points || !parcel.interior_points.length)return Promise.reject(new Error('Parcel interior is unresolved; jurisdiction cannot be established.'));
     var geom = { points: parcel.interior_points, spatialReference: { wkid: 4326 } };
     return Arc.query(layer.url, {
       geometry: geom, geometryType: 'esriGeometryMultipoint',
