@@ -16,6 +16,7 @@ Run the integrated application with `cd web && npm run dev` (install its depende
 
 ## Start here
 
+- **[Product strategy and beta plan](docs/PRODUCT_STRATEGY.md)**: beachhead, deferred features, MCP and public-view plans, beta metrics and national expansion approach.
 - **[Bid Assistant](docs/BID_ASSISTANT.md)**: put in a Kitsap, King or Skagit parcel and a project type, get the agencies involved, a sourced permitting cost range and a constraint map. Run `node bid-assistant/server.js` and open http://localhost:8080.
 
 - [Automation-first permitting pre-check direction](docs/AUTOMATED_PRECHECK_PIPELINE.md)

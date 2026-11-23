@@ -4,6 +4,10 @@ This repository belongs to the Davapprove property-development feasibility and p
 
 Start with `docs/PROJECT_CONTEXT.md` and the research index in `README.md` before changing the approval model. These checked-in files are the durable handoff between web research and local Codex work.
 
+## Product direction
+
+Read `docs/PRODUCT_STRATEGY.md` before product, UX or scope work. In short: the bid assessment tool is the beta beachhead; project-management features stay in the code but hidden behind a feature flag; an MCP server wraps the bid engine for distribution; a separate public homeowner view and professional directory come later. Do not expand deferred features without a recorded decision.
+
 ## Research and modeling
 
 - Preserve the distinction between documented requirements, proposed workflow rules, and questions requiring agency confirmation.
@@ -24,4 +28,5 @@ Start with `docs/PROJECT_CONTEXT.md` and the research index in `README.md` befor
 - Never report a failed map request as a clean result. Keep the required, likely, possible and unknown levels and the documented, workflow and confirm bases distinct.
 - Do not work around a site's bot protection to fetch code text. Use another official publication and record the source used.
 - After changing data run `node bid-assistant/build.js`; after changing rules or data run `node tests/bid_assistant_engine.test.cjs` and `node tests/bid_assistant_geo.test.cjs`.
-- Do not request or display parcel owner or permit applicant names.
+- Do not request, store or display names of parcel owners or individual permit applicants, or other personal details that could identify a private person from parcel or permit records. The tool must not become a doxxing or OSINT aid.
+- Licensed contractor and design-firm business names from official public registries (for example, Washington L&I contractor registration) may be shown. Professional directory listings are opt-in: professionals claim their own service areas and specialties.
