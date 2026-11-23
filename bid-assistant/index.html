@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <script>
-if (!new URLSearchParams(location.search).has('embedded') && !new URLSearchParams(location.search).has('public') && location.hostname.endsWith('.workers.dev')) {
+if (!new URLSearchParams(location.search).has('embedded') && location.hostname.endsWith('.workers.dev')) {
   var params = new URLSearchParams(location.hash.slice(1));
   var safe = new URLSearchParams();
-  ['draft','agency','parcel','county'].forEach(function(key) { if(params.has(key)) safe.set(key,params.get(key)); });
+  ['draft','agency','parcel','county','type','project'].forEach(function(key) { if(params.has(key)) safe.set(key,params.get(key)); });
   location.replace('/?workspace=bids#' + safe.toString());
 }
 </script>
@@ -167,6 +167,7 @@ if (!new URLSearchParams(location.search).has('embedded') && !new URLSearchParam
 <script src="lib/arcgis.js"></script>
 <script src="lib/screen.js"></script>
 <script src="lib/engine.js"></script>
+<script src="lib/quick.js"></script>
 <script src="lib/report.js"></script>
 <script src="lib/drafts.js"></script>
 <script src="lib/account-storage.js"></script>

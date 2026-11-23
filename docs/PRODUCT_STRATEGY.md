@@ -10,6 +10,14 @@ Davapprove makes permitting and approval requirements easier for builders to und
 
 The direction is **one buyer, several surfaces**. The paying customer is the residential building professional. The homeowner view, the website lead link and the MCP server are ways to reach or serve that professional, not separate businesses.
 
+## Implementation status — November 23, 2026
+
+- **Done (decision 2):** project management is behind a feature flag, off by default. Turn it on per build with `VITE_FEATURE_PROJECTS=true`, or per browser with `/?features=projects` (`/?features=none` turns it off). The signed-out home page is the professional estimate landing; the signed-in workspace shows **New estimate**, **Saved reports** and **Pricing**.
+- **Done (decision 1):** address-first estimate with a button-driven project description and a basic range; full report behind email capture (one-time sign-in link); pricing prompt from the second report with "Continue free (beta)" and pricing feedback. See [UX design brief](UX_DESIGN_BRIEF.md).
+- **Done (decision 4, unlisted):** homeowner page at `/homeowner`, `noindex`, with a directory teaser.
+- **Not started (decision 3):** the MCP server. `bid-assistant/lib/quick.js` (`analyze`, `summarize`) is the intended engine entry point.
+- **Known limit:** the report gate is a product gate, not a security boundary. The screening engine and source library ship to the browser. A real paid tier needs the detailed report computed or served by the backend.
+
 ## Decisions
 
 ### 1. The bid assessment tool is the beta beachhead

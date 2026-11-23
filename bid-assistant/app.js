@@ -10,7 +10,8 @@
     pack: PACKS['wa-kitsap'],
     parcel: null, screening: null, facts: null, grid: null, constraints: null, report: null,
     overrides: {},      // fee id -> { low, high, excluded }
-    busy: false, draftId: null
+    busy: false, draftId: null,
+    scopeItems: []      // captured scope the engine does not price yet (BidQuick.SCOPE_ITEMS)
   };
 
   var openVersion = 0;
@@ -138,9 +139,7 @@
   }
 
   function incompleteMap() {
-    return !!state.facts.regional || state.facts.jurisdiction.status === 'unknown' || !!state.facts.jurisdiction.city || !!state.facts.jurisdiction.reservation || !!state.facts.jurisdiction.off_reservation_trust ||
-      (state.facts.jurisdiction.tribal_names || []).length > 0 || ['tribal', 'exclusive_federal'].indexOf(readProject().land_status) >= 0 ||
-      Object.keys(state.screening.layers).some(function (id) { var r = state.screening.layers[id]; return r.status === 'unknown' || r.truncated; });
+    return window.BidQuick.incomplete(state.facts, state.screening, readProject());
   }
 
   function setBusy(busy) {
@@ -240,6 +239,7 @@
     Object.keys(Engine.SCOPE_FIELDS).forEach(function (k) { p[k] = $('a-' + k).value; });
     ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(function (k) { p[k] = $('a-' + k).checked; });
     p.flood_rise_ft = $('a-flood_rise_ft').value;
+    if (state.scopeItems.length) p.scope_items = state.scopeItems.slice();
     return p;
   }
   function fillAssumptions(type, saved) {
@@ -251,6 +251,7 @@
     ['federal_nexus', 'federal_operator', 'common_plan', 'floodplain_modification'].forEach(function (k) { $('a-' + k).checked = p[k]; });
     $('a-flood_rise_ft').value = p.flood_rise_ft == null ? '' : p.flood_rise_ft;
     $('agency-assumptions').open = p.in_water;
+    state.scopeItems = window.BidQuick.scopeItems(saved && saved.scope_items);
     updateGuidance();
   }
 
@@ -291,6 +292,7 @@
     var html = [];
     html.push(renderParcelCard(f));
     html.push(renderHeadline(r, g));
+    html.push(renderUnpricedScope());
     html.push(renderIndependent(r));
     html.push(renderFlags(r, f, g));
     html.push(renderCosts(r));
@@ -344,6 +346,13 @@
       .map(function (k) { return names[k] + ' ' + money((t.by_kind[k].base.low + t.by_kind[k].base.high) / 2); }).join(', ');
   }
   function tile(label, value, sub) { return '<div class="tile"><span>' + label + '</span><b>' + value + '</b><small>' + sub + '</small></div>'; }
+
+  function renderUnpricedScope() {
+    if (!state.scopeItems.length) return '';
+    return '<div class="card flags unpriced-scope"><h2>Also in this project · not separately estimated</h2><ul>' +
+      state.scopeItems.map(function (id) { return '<li class="possible">' + esc(window.BidQuick.SCOPE_ITEMS[id].label) + '</li>'; }).join('') +
+      '</ul><p class="hint">These items were captured with the project description but have no checked permit rules or fees in this tool yet. They are not included in the totals. Confirm permit needs and fees with the permitting office and trade contractors.</p></div>';
+  }
 
   function renderFlags(r, f, g) {
     var flags = Report.flags(r, f, g, state.screening);
@@ -569,6 +578,7 @@
     $('results').hidden = $('bid-details').hidden = $('legend').hidden = true;
     $('intro').hidden = false; $('suggestions').hidden = true;
     $('saved-bids').value = ''; $('ptype').value = 'new_sfr'; fillAssumptions('new_sfr');
+    state.scopeItems = [];
     parcelLayer.clearLayers(); overlayGroup.clearLayers(); gridGroup.clearLayers(); quadGroup.clearLayers();
     $('map-coverage').textContent = 'Choose a parcel to see mapped constraints and potential siting areas.';
     document.querySelector('.map-heading').classList.remove('incomplete');
@@ -651,7 +661,13 @@
     location.hash.replace(/^#/, '').split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) params[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); });
     $('bid-agency').value = window.BidExports.agencyName(params.agency);
     if (params.type && Engine.PROJECT_TYPES[params.type]) sel.value = params.type;
-    fillAssumptions(sel.value);
+    var brief = null;
+    if (params.project) {
+      // A project brief from the estimate pages. Only known fields survive normaliseProject.
+      try { brief = JSON.parse(params.project); } catch (_) { brief = null; }
+      if (brief && typeof brief === 'object' && Engine.PROJECT_TYPES[brief.type]) sel.value = brief.type; else brief = null;
+    }
+    fillAssumptions(sel.value, brief);
     initMap();
     // If the page is served by bid-assistant/server.js, use its relay as a fallback for map
     // servers that refuse cross-origin browser requests.
@@ -667,7 +683,7 @@
       setStatus('');
       if(this.value.trim().length>=3)searchTimer=setTimeout(function(){onSearch(null,true);},400);
     });
-    sel.addEventListener('change', function () { fillAssumptions(sel.value); evaluate(); });
+    sel.addEventListener('change', function () { var items = state.scopeItems; fillAssumptions(sel.value, { type: sel.value, scope_items: items }); evaluate(); });
     $('assumptions').addEventListener('input', updateGuidance);
     $('agency-assumptions').addEventListener('input', updateGuidance);
     $('assumptions').addEventListener('change', evaluate);

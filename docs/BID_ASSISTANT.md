@@ -1,5 +1,13 @@
 # Bid Assistant
 
+## Estimate pages and report gate — November 23, 2026
+
+The beta front door is a basic estimate (see [UX design brief](UX_DESIGN_BRIEF.md)). `lib/quick.js` runs the same screening, constraint and rule steps as the workspace (`analyze`) and reduces the result to the ungated summary (`summarize`): base and possible ranges from `Engine.evaluate`, counts of agencies and quote-needed items, unread map layers and captured scope. It carries no line items, code excerpts or citations. The workspace now uses its coverage rule (`incomplete`) as well, so the two cannot disagree about a clean result.
+
+The workspace accepts a project brief in the fragment (`#county=…&parcel=…&type=…&project=<JSON>`); only fields known to `normaliseProject` take effect. Systems and upgrades without checked rules (`BidQuick.SCOPE_ITEMS`: solar, heat pump, EV charger and others) are saved with the bid as `scope_items` and shown as "not separately estimated", excluded from totals. Researching and sourcing those permits is open work.
+
+The hosted static page no longer honors `?public=1`: the detailed report opens inside the signed-in workspace. This is a product gate, not a security boundary, because the engine and source library are public static files.
+
 ## Account-backed bids — November 15, 2026
 
 Saved bids now persist in Supabase with creator and explicit collaborator access, rather than browser-local storage. This supersedes the browser-local behavior described in the historical release notes below. Signed-out/sample screening cannot read or save account bids. The authenticated application shell handles storage; the assessment iframe never receives session tokens. Full-workspace links open that same shell.

@@ -2,7 +2,8 @@ import { useRef, useEffect, type MouseEvent } from "react";
 
 import { bidRequest } from "./bidStorage";
 
-export default function BidWorkspace({ agencyName = "", accountKey = "", enabled = true }: { agencyName?: string; accountKey?: string; enabled?: boolean }) {
+/** `report` opens a specific parcel and project brief (from the estimate pages) in a fresh frame. */
+export default function BidWorkspace({ agencyName = "", accountKey = "", enabled = true, report = null }: { agencyName?: string; accountKey?: string; enabled?: boolean; report?: { hash: string; nonce: number } | null }) {
   const frame = useRef<HTMLIFrameElement>(null);
   useEffect(() => {
     let active = true;
@@ -49,13 +50,13 @@ export default function BidWorkspace({ agencyName = "", accountKey = "", enabled
   const initial = new URLSearchParams(window.location.hash.slice(1));
   const selected = initial.get("draft");
   const publisher = initial.has("agency") ? (initial.get("agency") || "") : agencyName;
-  const agency = selected && /^[0-9a-f-]{36}$/i.test(selected) ? `#draft=${selected}` : publisher ? `#agency=${encodeURIComponent(publisher.trim().slice(0, 160))}` : "";
+  const agency = report ? report.hash : selected && /^[0-9a-f-]{36}$/i.test(selected) ? `#draft=${selected}` : publisher ? `#agency=${encodeURIComponent(publisher.trim().slice(0, 160))}` : "";
   return <section className="bid-workspace" aria-label="Bids and assessments">
     <div className="bid-workspace-heading">
       <div><span className="eyebrow">BEFORE THE PROJECT BEGINS</span><h1>Bids &amp; assessments</h1>
         <p>Scope the agencies, studies and permitting allowance before committing to a design.</p></div>
-      <a href={`/?workspace=bids${agency}`} target="_blank" rel="noopener" onClick={prepareFullWorkspace} onAuxClick={prepareFullWorkspace} onContextMenu={prepareFullWorkspace}>Open full workspace ↗</a>
+      <a href={`/?workspace=bids${report ? "" : agency}`} target="_blank" rel="noopener" onClick={prepareFullWorkspace} onAuxClick={prepareFullWorkspace} onContextMenu={prepareFullWorkspace}>Open full workspace ↗</a>
     </div>
-    <iframe key={accountKey + String(enabled)} ref={frame} title="Early bid assessment workspace" src={`/bid-assistant/index.html?embedded=1${agency}`} allow="clipboard-write" />
+    <iframe key={accountKey + String(enabled) + (report ? report.nonce : "")} ref={frame} title="Early bid assessment workspace" src={`/bid-assistant/index.html?embedded=1${agency}`} allow="clipboard-write" />
   </section>;
 }

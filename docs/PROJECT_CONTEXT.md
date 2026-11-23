@@ -2,7 +2,7 @@
 
 ## Product strategy — November 23, 2026
 
-[Product strategy and beta plan](PRODUCT_STRATEGY.md) sets the beta direction: bid assessments are the beachhead; project-management features are hidden behind a feature flag pending tester demand; an MCP server wraps the bid engine; a separate public homeowner view and opt-in professional directory launch after the listing side exists. Expansion beyond Kitsap, King and Skagit uses baseline and deep coverage tiers, ordered by demand. This supersedes the November 13 product-priority note where they differ; no runtime behavior has changed yet.
+[Product strategy and beta plan](PRODUCT_STRATEGY.md) sets the beta direction: bid assessments are the beachhead; project-management features are hidden behind a feature flag pending tester demand; an MCP server wraps the bid engine; a separate public homeowner view and opt-in professional directory launch after the listing side exists. Expansion beyond Kitsap, King and Skagit uses baseline and deep coverage tiers, ordered by demand. This supersedes the November 13 product-priority note where they differ. Implementation status (feature flag, estimate landing, report gate, homeowner page) is recorded in that document; the UX direction is in [UX design brief](UX_DESIGN_BRIEF.md).
 
 ## Account storage update — November 15, 2026
 

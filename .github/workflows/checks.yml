@@ -67,6 +67,7 @@ jobs:
           node ../tests/bid_assistant_regions.test.cjs
           node ../tests/bid_assistant_drafts.test.cjs
           node ../tests/bid_assistant_ui.test.cjs
+          node ../tests/bid_assistant_quick.test.cjs
           node ../tests/bid_assistant_search.test.cjs
           node ../tests/bid_assistant_guidance.test.cjs
           node ../tests/bid_assistant_exports.test.cjs

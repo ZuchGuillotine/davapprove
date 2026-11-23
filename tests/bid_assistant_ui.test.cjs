@@ -13,7 +13,7 @@ async function boot(saved, hash='') {
  const map={setView(){return this;},fitBounds(){},on(){},invalidateSize(){},attributionControl:{setPrefix(){}}};
  w.L={map:()=>map,canvas:()=>({}),tileLayer:layer,layerGroup:layer,polygon:layer,polyline:layer,rectangle:layer,marker:layer,divIcon:x=>x,control:{layers:layer,scale:layer}};
  w.fetch=async url=>{ if(String(url).startsWith('data/bundles/')) return {ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,url),'utf8'))}; return {ok:false}; };
- for(const file of ['lib/geo.js','lib/arcgis.js','lib/screen.js','lib/engine.js','lib/report.js','lib/drafts.js','lib/exports.js','data/data.js','data/regions.js','lib/regions.js','packs/wa-kitsap.js','packs/wa-regional.js','rules/federal.js','rules/wa-state.js','rules/wa-kitsap.js','rules/wa-regional.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
+ for(const file of ['lib/geo.js','lib/arcgis.js','lib/screen.js','lib/engine.js','lib/quick.js','lib/report.js','lib/drafts.js','lib/exports.js','data/data.js','data/regions.js','lib/regions.js','packs/wa-kitsap.js','packs/wa-regional.js','rules/federal.js','rules/wa-state.js','rules/wa-kitsap.js','rules/wa-regional.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
  const pack=w.BidPacks['wa-kitsap']; let screens=0;
  const parcel=w.BidScreen.buildParcel([{geometry:{rings:[[[-122.65,47.6],[-122.649,47.6],[-122.649,47.601],[-122.65,47.601],[-122.65,47.6]]]}}],{parcel_key:'123456',rp_acct_id:123456});
  pack.search=async()=>[{label:'SYNTHETIC SITE',parcel_key:'123456'}];
@@ -167,6 +167,14 @@ async function boot(saved, hash='') {
  b.$('#btn-import-legacy').click(); await pause(); await pause();
  assert.equal(JSON.parse(b.saved()).length,JSON.parse(saved).length);
  assert.equal(b.w.localStorage.getItem('davapprove.bid-drafts.v1'),null);
+ b.dom.window.close();
+ // A project brief from the estimate pages fills the assumptions and keeps unpriced scope visible.
+ const brief=encodeURIComponent(JSON.stringify({type:'addition',new_sqft:350,wastewater:'sewer',scope_items:['solar','heat_pump','not_a_scope_item']}));
+ b=await boot(null,'#county=wa-kitsap&parcel=123456&project='+brief); await pause(); await pause();
+ assert.equal(b.$('#ptype').value,'addition'); assert.equal(b.$('#a-new_sqft').value,'350'); assert.equal(b.$('#a-wastewater').value,'sewer');
+ assert.deepEqual([...b.w.BidApp.state.scopeItems],['solar','heat_pump']);
+ assert.match(b.$('#results').textContent,/not separately estimated/); assert.match(b.$('#results').textContent,/Solar panels/);
+ assert.deepEqual(JSON.parse(b.saved())[0].project.scope_items,['solar','heat_pump'],'captured scope persists with the saved bid');
  b.dom.window.close();
  console.log('PASS: bid UI (screening, failed maps, quote editing, validation, saving, reopening, reset and failed lookup).');
 })().catch(e=>{console.error(e);process.exitCode=1;});
