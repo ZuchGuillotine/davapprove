@@ -1,5 +1,24 @@
 # Bid Assistant
 
+
+## November 23, 2026: hosted private beta
+
+The hosted estimate, detailed report and homeowner view require a beta invitation. The Cloudflare Worker runs the rule engine and holds the county source packs. The browser renders parcel-specific results and applies custom bid allowances to the returned cost lines. Saved snapshots can be reopened and recalculated server-side. The standalone Node tool remains available for local development. See [private beta operations](operations.md#private-beta) for invitations, deployment, the MCP tool and anonymous county-level metrics.
+
+## Pierce and Kirkland update — November 23, 2026
+
+Pierce is available in both the address-first estimate and full bid report. County and city fee profiles cover Tacoma, Lakewood, Puyallup, University Place, Bonney Lake, Gig Harbor, Fife, Sumner and shared Auburn coverage. Independent tribal, electrical-territory, military, health and volcanic-hazard checks supplement existing federal/state screening. Kirkland's published building/planning schedules and impact-fee PDF now replace its quote-only placeholders. See [source review, limits and verification](PIERCE_KIRKLAND_SOURCES.md).
+
+Regional maps remain provisional footprint screens with unresolved setbacks/buffers. Approximate county examples and conditional city charges are labeled as allowances; unsupported scopes stay quote-needed. User price overrides and original source links are preserved. No permit documents or personal parcel fields are fetched.
+
+## Estimate pages and report gate — November 23, 2026
+
+The beta front door is a basic estimate (see [UX design brief](UX_DESIGN_BRIEF.md)). `lib/quick.js` runs the same screening, constraint and rule steps as the workspace (`analyze`) and reduces the result to the ungated summary (`summarize`): base and possible ranges from `Engine.evaluate`, counts of agencies and quote-needed items, unread map layers and captured scope. It carries no line items, code excerpts or citations. The workspace now uses its coverage rule (`incomplete`) as well, so the two cannot disagree about a clean result.
+
+The workspace accepts a project brief in the fragment (`#county=…&parcel=…&type=…&project=<JSON>`); only fields known to `normaliseProject` take effect. Systems and upgrades without checked rules (`BidQuick.SCOPE_ITEMS`: solar, heat pump, EV charger and others) are saved with the bid as `scope_items` and shown as "not separately estimated", excluded from totals. Researching and sourcing those permits is open work.
+
+The hosted static page no longer honors `?public=1`: the detailed report opens inside the signed-in workspace. This is a product gate, not a security boundary, because the engine and source library are public static files.
+
 ## Account-backed bids — November 15, 2026
 
 Saved bids now persist in Supabase with creator and explicit collaborator access, rather than browser-local storage. This supersedes the browser-local behavior described in the historical release notes below. Signed-out/sample screening cannot read or save account bids. The authenticated application shell handles storage; the assessment iframe never receives session tokens. Full-workspace links open that same shell.

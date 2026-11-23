@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight } from "lucide-react";
 import { getAuth } from "./api";
 
-type Mode = "signin" | "signup" | "reset" | "confirm";
+type Mode = "signin" | "signup" | "reset" | "confirm" | "magic";
 
 function message(error: unknown) {
   const code = (error as { code?: string })?.code;
@@ -37,9 +37,11 @@ function message(error: unknown) {
 export default function AuthPanel({
   available,
   emailEnabled,
+  inviteOnly = false,
 }: {
   available: boolean;
   emailEnabled: boolean;
+  inviteOnly?: boolean;
 }) {
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
@@ -88,6 +90,13 @@ export default function AuthPanel({
           password,
         });
         if (error) throw error;
+      } else if (mode === "magic") {
+        const { error } = await auth.auth.signInWithOtp({
+          email: email.trim(),
+          options: { shouldCreateUser: false, emailRedirectTo: window.location.origin + "/" },
+        });
+        if (error && error.code !== "otp_disabled" && error.code !== "signup_disabled") throw error;
+        setNotice("If this email has a beta account, you’ll receive a one-time sign-in link.");
       } else if (mode === "signup") {
         const { data, error } = await auth.auth.signUp({
           email: email.trim(),
@@ -148,6 +157,11 @@ export default function AuthPanel({
         >
           Sign in
         </button>
+        {inviteOnly ? (
+          <button type="button" className={mode === "magic" ? "active" : ""}
+            aria-pressed={mode === "magic"} disabled={busy || !emailEnabled}
+            onClick={() => changeMode("magic")}>Email sign-in link</button>
+        ) : (
         <button
           type="button"
           className={mode === "signup" ? "active" : ""}
@@ -157,13 +171,14 @@ export default function AuthPanel({
         >
           Create account
         </button>
+        )}
       </div>
       <form
         onSubmit={submit}
         aria-label={
           mode === "confirm"
             ? "Resend confirmation"
-            : mode === "reset"
+            : mode === "magic" ? "Email sign-in link" : mode === "reset"
               ? "Reset password"
               : mode === "signup"
                 ? "Create account"
@@ -260,7 +275,7 @@ export default function AuthPanel({
                 ? "Create beta account"
                 : mode === "confirm"
                   ? "Resend confirmation link"
-                  : "Send reset link"}
+                  : mode === "magic" ? "Send one-time link" : "Send reset link"}
           <ArrowRight size={17} />
         </button>
       </form>
@@ -283,10 +298,11 @@ export default function AuthPanel({
         <details className="small muted">
           <summary>Email hasn’t arrived?</summary>
           <p>
-            Check Spam and All Mail for “Davapprove” from davapprove@haidaa.com.
+            Check Spam and All Mail for “Davapprove” from davapprove@davapprove.com.
             Verify the email address above and wait a few minutes. Only the
-            newest link will work. A password-reset email requires an existing
-            account; choose Create account if you have not registered.
+            newest link will work. {inviteOnly
+              ? "Use the email address on your beta invitation."
+              : "A password reset requires an existing account. Choose Create account if you have not registered."}
           </p>
           <p>
             If delivery still fails, contact the project owner with the address
@@ -301,14 +317,14 @@ export default function AuthPanel({
           owner for beta access; existing accounts can sign in with a password.
         </p>
       )}
-      <button
+      {!inviteOnly && <button
         type="button"
         className="text-button auth-reset"
         disabled={busy}
         onClick={() => changeMode(mode === "confirm" ? "signin" : "confirm")}
       >
         {mode === "confirm" ? "Back to sign in" : "Resend confirmation email"}
-      </button>
+      </button>}
       <button
         type="button"
         className="text-button auth-reset"

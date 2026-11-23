@@ -9,13 +9,14 @@
   "preview_urls": false,
   "send_email": [{
     "name": "EMAIL",
-    "allowed_sender_addresses": ["davapprove@haidaa.com"]
+    "allowed_sender_addresses": ["davapprove@davapprove.com"]
   }],
   "secrets": { "required": ["SEND_EMAIL_HOOK_SECRET"] },
   "vars": {
-    "APP_URL": "https://davapprove-preview.delicacybydesign.workers.dev",
+    "APP_URL": "https://davapprove.com",
+    "PREVIEW_URL": "https://davapprove-preview.delicacybydesign.workers.dev",
     "SUPABASE_URL": "https://znoysvmruyzlfllqblpi.supabase.co",
-    "FROM_EMAIL": "davapprove@haidaa.com"
+    "FROM_EMAIL": "davapprove@davapprove.com"
   },
   "observability": {
     "enabled": true,

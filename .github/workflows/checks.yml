@@ -32,6 +32,7 @@ jobs:
           done
       - run: psql -v ON_ERROR_STOP=1 -f tests/rls_assertions.sql
       - run: psql -v ON_ERROR_STOP=1 -f tests/bid_rls_assertions.sql
+      - run: psql -v ON_ERROR_STOP=1 -f tests/beta_events_assertions.sql
   backend:
     runs-on: ubuntu-latest
     steps:
@@ -67,11 +68,13 @@ jobs:
           node ../tests/bid_assistant_regions.test.cjs
           node ../tests/bid_assistant_drafts.test.cjs
           node ../tests/bid_assistant_ui.test.cjs
+          node ../tests/bid_assistant_quick.test.cjs
           node ../tests/bid_assistant_search.test.cjs
           node ../tests/bid_assistant_guidance.test.cjs
           node ../tests/bid_assistant_exports.test.cjs
           node ../tests/bid_workspace_navigation.test.cjs
       - run: npm run build
+      - run: node --test ../tests/private_beta_worker.test.mjs
       - run: npx wrangler deploy --dry-run
   ai-proxy:
     runs-on: ubuntu-latest

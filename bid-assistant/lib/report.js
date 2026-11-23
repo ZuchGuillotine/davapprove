@@ -4,7 +4,7 @@
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(require('./engine.js'));
-  else root.BidReport = factory(root.BidEngine);
+  else root.BidReport = factory(root.BidPresentation || root.BidEngine);
 })(typeof self !== 'undefined' ? self : this, function (Engine) {
   'use strict';
 

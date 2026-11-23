@@ -1,10 +1,10 @@
 # Davapprove pilot operations
 
-Updated November 14, 2026. See [implementation status](IMPLEMENTATION_STATUS.md) for release limits. Secrets are stored in ignored, permission-restricted files and on the dedicated host; never copy them into frontend variables or this document.
+Updated November 23, 2026. See [implementation status](IMPLEMENTATION_STATUS.md) for release limits. Secrets are stored in ignored, permission-restricted files and on the dedicated host; never copy them into frontend variables or this document.
 
 ## Deployed resources
 
-- Frontend: https://davapprove-preview.delicacybydesign.workers.dev — Cloudflare Worker `davapprove-preview`.
+- Private beta: https://davapprove.com and https://davapprove-preview.delicacybydesign.workers.dev — Cloudflare Worker `davapprove-preview`.
 - Supabase: project `znoysvmruyzlfllqblpi`, **Davapprove**, HAIDAA organization, `us-west-1`. Currently Free, not the proposed Pro tier. Migrations have been applied and security/performance advisors returned no notices.
 - Hetzner: server `175016728`, **davapprove-beta**, `178.105.77.156`, CX23 in Falkenstein. Ubuntu 24.04, 2 vCPU, 4 GB RAM, 40 GB disk. Firewall `davapprove-beta` exposes SSH only; API access uses an outbound HTTPS tunnel.
 - Server login: `ssh -i ~/.ssh/hetzner root@178.105.77.156`. Application directory `/opt/davapprove`. This is separate from Orbitfleet; do not deploy to `5.78.196.181`.
@@ -29,26 +29,33 @@ docker compose -p davapprove --env-file deploy/.env -f deploy/compose.yaml logs 
 
 Rebuilding only API/worker preserves the tunnel process. Never run `down -v` during a routine deployment. Before a future release, retain the previous API/worker image IDs and source archive, apply compatible migrations, then rebuild. Rollback retags the retained images and recreates API/worker without rebuilding; it does not roll back database migrations or evidence. A full rollback/restore drill remains a pilot acceptance task.
 
-Frontend: put the current HTTPS API origin in ignored `web/.env.production` as `VITE_API_URL`, then run `npm --prefix web test`, `npm --prefix web run build`, and from `web/`, `npx wrangler deploy`. Public Supabase settings can be obtained from the API; no worker key belongs in `VITE_*` variables.
+## Private beta
 
-## Preview hostname and sign-in
+The Cloudflare Worker runs the bid engine, GIS search, parcel screening and fee evaluation. Static assets include the React interface and report presentation scripts. Browser responses include the requested estimate or report and its applicable citations. The web, homeowner and workspace routes require a confirmed Supabase account with the server-controlled `davapprove_beta` app metadata flag. The existing confirmed project members were granted access during migration. The deployed project API is proxied from a same-origin path for the deferred project workspace.
 
-Cloudflare Quick Tunnels are temporary development endpoints with no uptime guarantee. On a tunnel restart, inspect `docker compose ... logs tunnel` for the new `trycloudflare.com` URL, update `web/.env.production`, and redeploy the frontend. The app URL remains stable, but live API access is interrupted until this update. Replace this with a controlled hostname before a dependable external beta.
+Supabase Auth uses `https://davapprove.com` as its Site URL. Public signup is disabled. The allowed redirects include the production root, recovery and pending-report URLs and `https://davapprove-preview.delicacybydesign.workers.dev/**`. One-time email sign-in uses the existing signed [Send Email hook](../auth-email/README.md), which accepts both app origins. Testers can also sign in with a password and use **Account & password**.
 
-The frontend supports Supabase email/password sign-in, email/password registration, recovery links, and an **Account & password** panel for existing users, including users who originally signed in with an operator link. Password sign-in works independently of email delivery. Sessions restore on reload; sign-out clears private workspace state and discards outstanding project requests. New accounts receive no existing project membership automatically.
-
-**Current email configuration:** the Supabase Send Email hook sends through Cloudflare as **Davapprove <davapprove@haidaa.com>**, using the already verified domain. The hook and `EMAIL_DELIVERY_ENABLED=true` are deployed, with signup and password-reset controls enabled. Email confirmation remains required; new accounts receive no existing project access. No domain purchase, DNS change, Resend account or plan upgrade was needed. An authorized recovery request reached Cloudflare successfully on November 14 at 18:17 UTC. The recipient subsequently confirmed receipt in chat. The full signup/confirmation and password-change round trips remain unverified.
-
-The signed hook is `https://davapprove-auth-email.delicacybydesign.workers.dev/auth/send-email`, with a server-only secret shared between Supabase Auth and Cloudflare. Signup and recovery redirects are explicitly allowed at `/` and `/?auth=recovery`. The hook pins both links to the frontend origin, even for local-development requests. Supabase's beta email limit is 30/hour with the existing 60-second per-recipient resend interval. See [email deployment, testing, limits and rollback](../auth-email/README.md).
-
-Password sign-in works independently of email delivery. If mail delivery fails, turn off the API/frontend delivery flags while diagnosing it. Keep confirmation enabled. Operators can still generate a one-use sign-in link without sending email:
+To provision a tester, load the server-only Supabase URL and service role into the operator environment and generate a link:
 
 ```sh
-# Supply server-only credentials through the environment, not command arguments.
 python3 scripts/create_beta_link.py person@example.com --output .data/private-beta-access.html
 ```
 
-The generated HTML contains a login credential. Open or share it privately with the intended recipient; it expires and is single-use. After opening it, use **Account & password** to set a password for subsequent sign-ins. Never commit it or add it to a public site. To invite collaborators to an existing project, an owner uses the membership API with the recipient's Supabase user ID and `editor` or `reviewer`; a friendly invitation-management UI is not yet implemented.
+This grants beta access and produces a private, one-use HTML link without sending an email. Share it only with its intended recipient. The invitation grants no project or bid membership. Supabase Auth email links expire after one hour. Use a new output path when issuing a replacement link.
+
+### Metrics and MCP
+
+`public.beta_events` records state, county, support status, project type, selected upgrades, map coverage and web or MCP source for supported screenings. Unsupported locations get only state and county, a timestamp and the unsupported flag. The event schema has no fields for address, parcel, account ID, names or free-form feedback. A failed GIS lookup is `unavailable`; an incomplete screen stays `partial`. Failed or empty autocomplete responses do not log unsupported demand. The web county selector uses the [Census Bureau national county codes](https://www2.census.gov/geo/docs/reference/codes2020/national_county2020.txt).
+
+The invited-only Streamable HTTP MCP endpoint is `https://davapprove.com/mcp`. Configure a client that can send an `Authorization: Bearer …` header with the access token from an invited Supabase session. `screen_parcel` accepts a five-digit county FIPS code. In a covered county, supply the county parcel key and project description. An unsupported county needs only the FIPS code. The tool returns structured findings, costs, coverage and citations for a supported result. It uses the same screening service and rate limiter as the web app. Tokens expire with the Supabase session.
+
+### Deploying the beta
+
+Apply the Supabase migration for `beta_events` before deploying a new beta environment. Configure the Worker secrets `SUPABASE_PUBLISHABLE_KEY` and `BETA_EVENTS_SERVICE_KEY` through Wrangler. The latter is a server credential for inserting events. Row-level security and grants prevent browser access to the table.
+
+Run `npm --prefix web test`, `npm --prefix web run build`, and `node --test tests/private_beta_worker.test.mjs`. Then run `npx wrangler deploy --dry-run` and `npx wrangler deploy` from `web/`. The same Worker serves both hostnames. The previous static-only version exposed the bid engine and should stay out of rotation for an invite-only deployment.
+
+If the project tunnel rotates, verify `/health` against the replacement tunnel, update `PROJECT_API_ORIGIN` in `web/wrangler.jsonc`, and deploy. Screening and MCP use the Worker directly. Account and project processing remain separate as described above.
 
 ## Health and recovery
 
@@ -206,3 +213,17 @@ Validation: 42 application tests; bid engine, geometry, saved drafts, regional r
 Migration `20261116071352_account_bids.sql` adds private bid snapshots, version-checked saves and owner-managed sharing with existing confirmed accounts. The frontend uses the signed-in Supabase client through a same-origin frame bridge; no new API/server service, paid plan or email setup is required. Existing projects and memberships are unchanged. Do not remove the migration as a frontend rollback: keep saved account bids and memberships intact. Earlier clients still use their browser drafts; ask testers to refresh before editing and explicitly import those drafts once.
 
 Validation: 66 frontend tests, all bid/research checks, disposable-database migrations and project/bid RLS checks. Hosted transactional checks passed for creation, collaboration, stale saves, revocation and anonymous denial; test data was rolled back. Signed-in Chrome verification showed the private bid selector, prior-project access and explicit legacy-import control. All five GitHub checks passed. No actual collaborator invitations or email were sent. The security advisor adds no new findings; its pre-existing leaked-password-protection warning is unchanged ([Supabase guidance](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection)).
+
+## November 23 private beta release
+
+Production and preview serve Worker version `53be96cc-254c-45f6-a4a8-d1abfb4f3eca`. The Auth Email Worker uses version `3785716b-c6f0-4dcc-ba47-9b8f8dae7276` and sender `davapprove@davapprove.com`. Cloudflare verified the sending domain and published SPF, DKIM, DMARC and bounce MX records.
+
+Live checks exercised one-time links on both hosts, rejected a reused link, enforced the invitation on an authenticated account, served a Kitsap estimate and cited report, reopened its stored map snapshot, and logged county-only demand from both web and MCP. The sample report reported partial map coverage. Synthetic accounts and event rows were removed. No delivery test email was sent to a tester.
+
+## Pierce and Kirkland bid release — November 23, 2026
+
+Production and preview now serve Worker version `d087b1fb-440c-43b3-afb8-c3342653213d`, based on the deployed private-beta source `445824d`. Rollback target: `53be96cc-254c-45f6-a4a8-d1abfb4f3eca`. This release adds Pierce County routing, nine municipal profiles including shared Auburn, independent authority/hazard screens and Kirkland fee formulas. [Source review and limits](PIERCE_KIRKLAND_SOURCES.md) documents each schedule and unresolved scope.
+
+Current regional revisions are bundled into the Worker by the existing build step. Pierce FIPS `53053` is supported in the web coverage selector and MCP. Hosted source packs remain inaccessible, while applicable citations and editable allowances appear in detailed reports. No database migration, account provisioning, email, backend container or authentication-policy change was made by this release.
+
+Validation: all bid data, engine, regional, geometry, drafts, search, guidance, exports, summary and DOM checks; 79 frontend tests; two private-worker integration tests; TypeScript/Vite build and Wrangler dry-run. Nine live civic parcel boundary fixtures passed across Pierce jurisdictions. Full upstream screening was checked for Tacoma and Graham, including explicit unknown status when a tribal-land service timed out. Live production/preview HTML and application script match the local release bytes, anonymous API requests are rejected, and rule/pack URLs return 404. Browser inspection confirmed the sign-in page; no authenticated end-to-end browser report was run in this release. Server report tests cover Pierce/Kirkland amounts, attached citations and provisional geometry without changing account data.

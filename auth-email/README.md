@@ -1,14 +1,14 @@
 # Davapprove beta authentication email
 
-Cloudflare Worker `davapprove-auth-email` handles the Supabase **Send Email hook** for project `znoysvmruyzlfllqblpi`. Sender: **Davapprove <davapprove@haidaa.com>**, using the existing verified `haidaa.com` domain. No separate Davapprove domain or Resend account is needed for this beta.
+Cloudflare Worker `davapprove-auth-email` handles the Supabase **Send Email hook** for project `znoysvmruyzlfllqblpi`. Sender **Davapprove <davapprove@davapprove.com>** uses the verified `davapprove.com` Cloudflare Email Sending domain.
 
-The hook replaces Supabase's built-in mail transport. It does not manage passwords, sessions, project membership or permit records. Email confirmation stays enabled. The frontend remains at https://davapprove-preview.delicacybydesign.workers.dev.
+The hook replaces Supabase's built-in mail transport. It does not manage passwords, sessions, project membership or permit records. Email confirmation stays enabled. The default callback is https://davapprove.com. The existing preview hostname remains an accepted callback.
 
 ## Delivery and security
 
 - Endpoint: `POST https://davapprove-auth-email.delicacybydesign.workers.dev/auth/send-email`.
 - Standard Webhooks verifies the raw request body, signature and timestamp before processing. The hook secret is a Cloudflare secret and a Supabase Auth setting, never a frontend variable or checked-in file.
-- Cloudflare's binding permits only `davapprove@haidaa.com` as sender. The Worker has no Cloudflare management token or Supabase service-role credential.
+- Cloudflare's binding permits only `davapprove@davapprove.com` as sender. The Worker has no Cloudflare management token or Supabase service-role credential.
 - Recipients come from the signed Auth user fields. Link hosts and redirects come from deployment configuration, not user metadata or request URLs.
 - Signup, invite, sign-in, recovery, reauthentication and both secure-email-change confirmations are supported. Security-notification templates are supported without changing which notifications Supabase enables.
 - Payloads are capped at 64 KiB. Provider acceptance is awaited; delivery errors return a failure to Supabase. Success means provider acceptance, not confirmed inbox receipt. Hook retries can result in duplicate messages, including the first message in a partially completed two-address email change.
@@ -32,13 +32,13 @@ Generate a random 32-byte secret and encode it as `v1,whsec_<base64>`. Put it in
 Configure Supabase Auth with:
 
 - `hook_send_email_enabled=true`, the endpoint above as `hook_send_email_uri`, and the same secret as `hook_send_email_secrets`.
-- `mailer_autoconfirm=false`, `external_email_enabled=true`, `disable_signup=false`.
-- Site URL: the frontend origin. Allow both `/` and `/?auth=recovery` at that origin. The hook always uses those production redirects, including requests from local development clients.
+- `mailer_autoconfirm=false`, `external_email_enabled=true`, `disable_signup=true`.
+- Set the Site URL to `https://davapprove.com` and allow its root, recovery and pending-report paths, plus the preview wildcard. The hook accepts the two configured origins and uses the production root as the fallback.
 - Beta `rate_limit_email_sent=30` per hour; the existing 60-second resend interval remains. Account-wide Cloudflare limits are shared with other projects.
 
-Set protected `deploy/.env` `EMAIL_DELIVERY_ENABLED=true`, recreate only the API container with Compose `up -d --no-deps api`, and preserve the worker and tunnel. The Compose mapping is required. Set the frontend's public fallback `VITE_EMAIL_DELIVERY_ENABLED=true` and rebuild/deploy. The API flag takes precedence.
+The hosted web Worker advertises email sign-in in `/api/v1/config`. Local Vite development can use its test configuration.
 
-For a delivery test, obtain permission for the real recipient and trigger the normal signup or recovery flow. Do not silently create fake users in production or reset an existing user's password. Use the provider message ID for troubleshooting; never paste a recovery link into logs or a ticket. Existing confirmed users can still sign in with passwords during a mail outage.
+For a delivery test, obtain permission for the real recipient and trigger the normal one-time sign-in or recovery flow. Do not silently create fake users in production or reset an existing user's password. Use the provider message ID for troubleshooting; never paste a recovery link into logs or a ticket. Existing confirmed users can still sign in with passwords during a mail outage.
 
 To disable email workflows, first turn off the API/frontend delivery flags. Then disable the Supabase hook if needed. Do not disable email confirmation or rely on Supabase's restricted default sender as a replacement. For rollback, preserve user accounts and project memberships; restore only the relevant Auth settings and API configuration from protected backups.
 

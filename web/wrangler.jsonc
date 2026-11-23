@@ -1,9 +1,35 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "davapprove-preview",
-  "compatibility_date": "2026-11-07",
+  "account_id": "0a62cf3c87f54de05ca4ff2f7ba149f7",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-11-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "minify": true,
+  "routes": [{ "pattern": "davapprove.com", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "none",
+    "not_found_handling": "none"
   },
+  "secrets": { "required": ["SUPABASE_PUBLISHABLE_KEY", "BETA_EVENTS_SERVICE_KEY"] },
+  "vars": {
+    "PROJECT_MAX_PDF_BYTES": 52428800,
+    "SUPABASE_URL": "https://znoysvmruyzlfllqblpi.supabase.co",
+    "PROJECT_API_ORIGIN": "https://exclusive-orbit-fruit-appendix.trycloudflare.com"
+  },
+  "ratelimits": [{
+    "name": "BETA_RATE_LIMIT",
+    "namespace_id": "2026112201",
+    "simple": { "limit": 60, "period": 60 }
+  }],
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "invocation_logs": false },
+    "traces": { "enabled": true, "head_sampling_rate": 0.01 }
+  }
 }

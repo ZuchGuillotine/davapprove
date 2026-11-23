@@ -6,3 +6,5 @@ dist/
 .wrangler/
 coverage/
 public/bid-assistant/
+
+worker/packs.generated.mjs

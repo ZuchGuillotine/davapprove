@@ -2,21 +2,18 @@
 
 Property-development feasibility and approval coordination, starting with Kitsap County, Washington.
 
-## Hosted MVP
+## Private beta
 
-Open [Davapprove beta](https://davapprove-preview.delicacybydesign.workers.dev) to explore the labeled sample, create an account, or sign in with email and password. Real projects use private authenticated workspaces. Confirmation and password-reset emails are configured through Cloudflare as **Davapprove <davapprove@haidaa.com>**; the recipient confirmed receipt of the recovery-email test. Existing users can set a password in **Account & password**. See [authentication operations](docs/operations.md#preview-hostname-and-sign-in).
-
-See [implementation status](docs/IMPLEMENTATION_STATUS.md) for delivered features and limits, and [operations](docs/operations.md) for deployment, access and local development. The API currently uses a temporary preview hostname.
+[Davapprove](https://davapprove.com) opens to a sign-in page. Invited testers use a one-time link or their existing account to open the address-first estimate for Kitsap, King and Skagit counties. Detailed reports and saved bids require beta access. The homeowner estimate is also invite-only. See [beta operations](docs/operations.md#private-beta).
 
 ## Bid-first workflow
 
-Use **Bids & assessments** in the application sidebar, or run the standalone tool below. It screens public parcel maps and permit summaries, keeps agency requirements tied to code, builds editable cost allowances, saves browser-local drafts and exports a client memo. The map is explicitly an **early bid** screen with unconfirmed buffers/layout. Records, Site envelope, Workflow and Activity remain the separate project workflow.
-
-Run the integrated application with `cd web && npm run dev` (install its dependencies first if needed). Read the current coverage and verification limits in [Bid Assistant](docs/BID_ASSISTANT.md).
+The hosted workspace screens parcel maps and permit summaries, ties agency requirements to their sources, and saves editable cost allowances to the tester's account. It can export a client memo and a preliminary parcel map. The separate project workflow remains behind its feature flag. The [Bid Assistant documentation](docs/BID_ASSISTANT.md) describes source coverage and verification limits.
 
 ## Start here
 
-- **[Bid Assistant](docs/BID_ASSISTANT.md)**: put in a Kitsap, King or Skagit parcel and a project type, get the agencies involved, a sourced permitting cost range and a constraint map. Run `node bid-assistant/server.js` and open http://localhost:8080.
+- **[Product strategy and beta plan](docs/PRODUCT_STRATEGY.md)**: beachhead, deferred features, MCP and public-view plans, beta metrics and national expansion approach.
+- **[Bid Assistant](docs/BID_ASSISTANT.md)**: put in a Kitsap, King, Skagit or Pierce parcel and a project type, get the agencies involved, a sourced permitting cost range and a provisional constraint map. See [Pierce and Kirkland source review](docs/PIERCE_KIRKLAND_SOURCES.md) for the latest coverage. Run `node bid-assistant/server.js` and open http://localhost:8080.
 
 - [Automation-first permitting pre-check direction](docs/AUTOMATED_PRECHECK_PIPELINE.md)
 - [Test-parcel pipeline results and AI costs](docs/CASCADE_RUN_RESULTS.md)

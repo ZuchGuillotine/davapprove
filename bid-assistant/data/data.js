@@ -23,11 +23,6 @@
     "available": false
    },
    {
-    "id": "wa-pierce",
-    "name": "Pierce County, WA",
-    "available": false
-   },
-   {
     "id": "wa-king",
     "name": "King County, WA",
     "available": true
@@ -36,11 +31,16 @@
     "id": "wa-skagit",
     "name": "Skagit County, WA",
     "available": true
+   },
+   {
+    "id": "wa-pierce",
+    "name": "Pierce County, WA",
+    "available": true
    }
   ],
   "agency_routing_checked": "2026-11-14",
   "municipal_fees_checked": "2026-11-14",
-  "shared_revision": "93f99ea0e3335e9d"
+  "shared_revision": "03e0c58eb7814652"
  },
  "citations": {
   "kcc-19.100.110": {

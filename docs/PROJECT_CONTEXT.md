@@ -1,5 +1,11 @@
 # Davapprove project handoff
 
+November 23 county expansion: [Pierce and Kirkland source review](PIERCE_KIRKLAND_SOURCES.md) records the fourth bid-screening county, shared cross-county city records, independent authority checks and Kirkland's sourced fee formulas. This release preserves the deployed address-first beta and keeps project management behind its existing feature flag.
+
+## Product strategy — November 23, 2026
+
+[Product strategy and beta plan](PRODUCT_STRATEGY.md) sets the beta direction: bid assessments are the beachhead; project-management features are hidden behind a feature flag pending tester demand; an MCP server wraps the bid engine; a separate public homeowner view and opt-in professional directory launch after the listing side exists. Expansion beyond Kitsap, King and Skagit uses baseline and deep coverage tiers, ordered by demand. This supersedes the November 13 product-priority note where they differ. Implementation status (feature flag, estimate landing, report gate, homeowner page) is recorded in that document; the UX direction is in [UX design brief](UX_DESIGN_BRIEF.md).
+
 ## Account storage update — November 15, 2026
 
 Bids now use Supabase account-backed storage and explicit creator-controlled editor/read-only sharing. Browser drafts require a deliberate import; they no longer populate every login. Project storage retains its existing owner/membership boundary, with a collaborator management control added. See [Bid Assistant](BID_ASSISTANT.md#account-backed-bids--november-15-2026). This supersedes earlier browser-local persistence statements.

@@ -1,5 +1,5 @@
 import ParcelSearch from "./ParcelSearch";
-import { useEffect, useState, useRef, lazy, Suspense, type FormEvent } from "react";
+import { useCallback, useEffect, useState, useRef, lazy, Suspense, type FormEvent } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -45,6 +45,16 @@ import FactEvidence from "./FactEvidence";
 import BidWorkspace from "./BidWorkspace";
 import WorkspaceSharing from "./WorkspaceSharing";
 import AuthPanel, { PasswordForm } from "./AuthPanel";
+import { projectsEnabled } from "./features";
+import EstimateFlow from "./estimate/EstimateFlow";
+import Landing, { BrandMark } from "./estimate/Landing";
+import HomeownerPage from "./HomeownerPage";
+import { betaApi } from "./betaApi";
+import type { Session } from "@supabase/supabase-js";
+import { PricingDialog } from "./estimate/Dialogs";
+import { FREE_REPORTS, type Audience } from "./pricing";
+import { ownedReportCount, reportHash, takePendingReport } from "./reportAccess";
+import type { ReportRequest } from "./bidEngine";
 import type {
   Assessment,
   Candidate,
@@ -113,6 +123,26 @@ export default function App() {
   const workspaceGeneration = useRef(0);
   const [bidsOpen, setBidsOpen] = useState(() => new URLSearchParams(window.location.search).get("workspace") === "bids");
   const [bidWorkspaceVisited, setBidWorkspaceVisited] = useState(false);
+  // Project management is hidden for the bid-assessment beta (docs/PRODUCT_STRATEGY.md).
+  const [projectsOn] = useState(projectsEnabled);
+  const [report, setReport] = useState<{ hash: string; nonce: number } | null>(null);
+  const [pricing, setPricing] = useState<{ mode: "limit" | "info"; audience: Audience; request?: ReportRequest; agency?: string } | null>(null);
+  function showReport(request: ReportRequest, agency: string) {
+    setReport({ hash: reportHash(request, agency), nonce: Date.now() });
+    navigateWorkspace("bids");
+  }
+  /** Full report: first one free; from the second, the beta pricing prompt (always "continue free"). */
+  const closePricing = useCallback(() => setPricing(null), []);
+  async function openReport(request: ReportRequest, agency = accountAgencyName) {
+    let used = 0;
+    try {
+      used = await ownedReportCount();
+    } catch {
+      used = 0; // Reports are free during the beta; a failed count never blocks one.
+    }
+    if (used >= FREE_REPORTS) setPricing({ mode: "limit", audience: request.audience, request, agency });
+    else showReport(request, agency);
+  }
   function navigateWorkspace(destination: "projects" | "bids") {
     const url = new URL(window.location.href);
     if (url.searchParams.get("workspace") !== destination) {
@@ -160,10 +190,12 @@ export default function App() {
     ),
     [geometryOpen, setGeometryOpen] = useState(false),
     [editingFact, setEditingFact] = useState<Fact | null>(null);
+  const privateBeta = import.meta.env.PROD || config?.private_beta === true;
   function clearWorkspace() {
     workspaceGeneration.current++;
     invalidateRequests();
     setEntered(false); setSample(false); setSampleMode(false);
+    setReport(null); setPricing(null);
     setProjects([]); setProject(null); setCandidates([]); setCoverage([]);
     setDocuments([]); setFacts([]); setAssessment(null); setComments([]); setJobs([]);
     setSelected(new Set()); setComment(""); setBidsOpen(false); setBidWorkspaceVisited(false); setProjectLoading(false);
@@ -183,6 +215,7 @@ export default function App() {
       const { error } = await auth.auth.signOut({ scope: "local" });
       if (error) throw error;
     }
+    if (privateBeta) await betaApi("sign-out", {});
     finishRecovery();
     clearWorkspace();
   }
@@ -195,7 +228,7 @@ export default function App() {
       const auth = getAuth();
       if (auth) {
         let openedUser: string | null = null;
-        const openSession = (session: { user: { id: string; email?: string; user_metadata?: Record<string, unknown> } } | null) => {
+        const openSession = (session: Session | null) => {
           if (!active || !session || authLinkError.current) return;
           if (recoveryGate.current) {
             openedUser = session.user.id;
@@ -209,20 +242,55 @@ export default function App() {
           setAccountEmail(session.user.email || "");
           const metadata = session.user.user_metadata || {};
           const agency = [metadata.business_name, metadata.company_name, metadata.organization_name, metadata.agency_name].find(value => typeof value === "string" && value.trim());
-          setAccountAgencyName(typeof agency === "string" ? agency.trim().slice(0, 160) : "");
+          const agencyName = typeof agency === "string" ? agency.trim().slice(0, 160) : "";
+          setAccountAgencyName(agencyName);
           setBidsOpen(new URLSearchParams(window.location.search).get("workspace") === "bids");
           setEntered(true);
+          // A report requested before sign-in (email link) opens once the account is ready.
+          const pending = takePendingReport();
+          if (new URLSearchParams(window.location.search).has("report")) {
+            const url = new URL(window.location.href);
+            url.searchParams.delete("report");
+            window.history.replaceState(null, "", url.pathname + url.search);
+          }
+          if (pending) void openReport(pending, agencyName);
+          if (!projectsOn) return;
           setProjectLoading(true);
           const generation = workspaceGeneration.current;
           setTimeout(() => {
             if (active && generation === workspaceGeneration.current) void run("Opening workspace", loadProjects);
           }, 0);
         };
+        const useInvitations = import.meta.env.PROD || c.private_beta === true;
+        let sessionQueue = Promise.resolve();
+        let currentToken: string | null = null;
+        function activate(session: Session | null) {
+          if (!useInvitations) { openSession(session); return; }
+          const token = session?.access_token || null;
+          if (currentToken === token) return;
+          currentToken = token;
+          sessionQueue = sessionQueue.then(async () => {
+            if (!active || currentToken !== token) return;
+            if (!token) {
+              await betaApi("sign-out", {}, "");
+              return;
+            }
+            await betaApi("session", {}, token);
+            if (active && currentToken === token) openSession(session);
+          }).catch(error => {
+            if (!active || currentToken !== token) return;
+            currentToken = null;
+            openedUser = null;
+            clearWorkspace();
+            setError(error instanceof Error ? error.message : "Beta access is unavailable.");
+          });
+        }
         const { data } = auth.auth.onAuthStateChange((event, session) => {
           if (event === "SIGNED_OUT") {
             openedUser = null;
             finishRecovery();
             clearWorkspace();
+            activate(null);
             return;
           }
           if (event === "PASSWORD_RECOVERY") {
@@ -230,7 +298,7 @@ export default function App() {
             recoveryGate.current = true;
             clearWorkspace();
           }
-          openSession(session);
+          activate(session);
         });
         cleanup = () => data.subscription.unsubscribe();
         const session = await auth.auth.getSession();
@@ -240,7 +308,7 @@ export default function App() {
           setError("This sign-in or recovery link is invalid or expired. Sign in with your password or request a new link.");
           return;
         }
-        openSession(session.data.session);
+        activate(session.data.session);
       }
     });
     return () => {
@@ -568,6 +636,25 @@ export default function App() {
   const unreviewed = facts.filter(
     (f) => f.review_status !== "accepted" && f.review_status !== "rejected" && (!f.classification || f.classification.bucket === "review_now"),
   );
+  if (!entered && !passwordRecovery && privateBeta) return (
+    <div className="landing">
+      <header className="landing-header"><BrandMark /></header>
+      <main className="landing-main">
+        <section className="landing-hero">
+          <span className="eyebrow">PRIVATE BETA</span>
+          <h1>Know the permits before you price the job.</h1>
+          <p>Davapprove helps builders and architects estimate permitting costs and flag site constraints early. Use your invitation or sign in with your beta account.</p>
+        </section>
+        <div className="estimate-card" style={{ maxWidth: "28rem" }}>
+          <AuthPanel inviteOnly available={!!config?.authAvailable} emailEnabled={!!config?.email_delivery_enabled} />
+          {notice && <p className="notice">{notice}</p>}
+          {error && <p className="error" role="alert">{error}</p>}
+        </div>
+      </main>
+    </div>
+  );
+  if (!entered && !passwordRecovery && !projectsOn)
+    return <Landing audience="pro" config={config} error={error} notice={notice} />;
   if (!entered || passwordRecovery)
     return (
       <div className="welcome">
@@ -666,6 +753,17 @@ export default function App() {
           <ChevronDown size={14} />
         </div>
         <div className="sidebar-label">WORKSPACE</div>
+        {!projectsOn ? <>
+          <button className={`nav-item ${!bidsOpen ? "active" : ""}`} aria-current={!bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("projects")}>
+            <Search size={18} /> New estimate
+          </button>
+          <button className={`nav-item ${bidsOpen ? "active" : ""}`} aria-current={bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("bids")}>
+            <FileText size={18} /> Saved reports
+          </button>
+          <button className="nav-item" onClick={() => setPricing({ mode: "info", audience: "pro" })}>
+            <Compass size={18} /> Pricing
+          </button>
+        </> : <>
         <button className={`nav-item ${!bidsOpen ? "active" : ""}`} aria-current={!bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("projects")}>
           <FolderOpen size={18} />
           Projects<span>{projects.length}</span>
@@ -693,6 +791,7 @@ export default function App() {
             </span>
           </button>
         ))}
+        </>}
         <div className="sidebar-footer">
           <div className="pilot-label">
             <Leaf size={16} />
@@ -716,13 +815,15 @@ export default function App() {
       <div className="main">
         <header className="topbar">
           <div>
+            {projectsOn ? <>
             <button className="workspace-breadcrumb" aria-label="Return to projects" onClick={() => navigateWorkspace("projects")}>Projects</button>
             <ChevronRight size={14} />
             <span>{bidsOpen ? "Bids & assessments" : project?.name || "Projects"}</span>
+            </> : <span>{bidsOpen ? "Saved reports" : "New estimate"}</span>}
           </div>
           <div>
             <Badge tone={sample ? "amber" : "green"}>
-              {bidsOpen ? "EARLY BID · PUBLIC MAPS" : sample
+              {bidsOpen || !projectsOn ? "EARLY BID · PUBLIC MAPS" : sample
                 ? "SAMPLE · SYNTHETIC DATA"
                 : config?.mode === "demo"
                   ? "LOCAL DEVELOPMENT"
@@ -732,12 +833,17 @@ export default function App() {
           </div>
         </header>
         <nav className="mobile-workspace-nav" aria-label="Workspace navigation">
+          {projectsOn ? <>
           <button aria-current={!bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("projects")}><FolderOpen size={16} />Project dashboard</button>
           <button aria-current={bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("bids")}><Compass size={16} />Bid workspace</button>
           <button onClick={() => { navigateWorkspace("projects"); setNewOpen(true); }}><Plus size={16} />Create project</button>
+          </> : <>
+          <button aria-current={!bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("projects")}><Search size={16} />New estimate</button>
+          <button aria-current={bidsOpen ? "page" : undefined} onClick={() => navigateWorkspace("bids")}><FileText size={16} />Saved reports</button>
+          </>}
           {!sample && config?.authAvailable && <button onClick={() => setAccountOpen(true)}><ShieldCheck size={16} />Account</button>}
           <button disabled={!!busy} onClick={() => run("Signing out", leaveWorkspace)}><LogOut size={16} />{sample ? "Leave sample" : "Sign out"}</button>
-          {projects.length > 1 && <label className="mobile-project-picker">Project
+          {projectsOn && projects.length > 1 && <label className="mobile-project-picker">Project
             <select aria-label="Switch project" value={project?.id || ""} disabled={!!busy} onChange={event => {
               const nextProject = projects.find(item => item.id === event.target.value);
               if (nextProject) { navigateWorkspace("projects"); setTab("Overview"); run("Loading project", () => loadProject(nextProject)); }
@@ -775,8 +881,16 @@ export default function App() {
               </button>
             </div>
           )}
-          {(bidsOpen || bidWorkspaceVisited) && <div hidden={!bidsOpen}><BidWorkspace agencyName={accountAgencyName} accountKey={accountEmail} enabled={!sample && !!accountEmail} /></div>}
-          {bidsOpen ? null : projectLoading ? (
+          {(bidsOpen || bidWorkspaceVisited) && <div hidden={!bidsOpen}><BidWorkspace agencyName={accountAgencyName} accountKey={accountEmail} enabled={!sample && !!accountEmail} report={report} /></div>}
+          {bidsOpen ? null : /^\/homeowner\/?$/.test(window.location.pathname) ? (
+            <HomeownerPage onFullReport={request => void openReport(request)} onPricing={() => setPricing({ mode: "info", audience: "homeowner" })} />
+          ) : !projectsOn ? (
+            <section className="estimate-workspace" aria-label="New estimate">
+              <div className="estimate-workspace-heading"><span className="eyebrow">BEFORE YOU BID</span><h1>New estimate</h1>
+                <p>Address and project in, permitting range out. Open the full report to get every agency, study and fee with its source.</p></div>
+              <EstimateFlow audience="pro" onFullReport={request => void openReport(request)} onPricing={() => setPricing({ mode: "info", audience: "pro" })} />
+            </section>
+          ) : projectLoading ? (
             <section
               className="project-loading panel"
               role="status"
@@ -1660,6 +1774,8 @@ export default function App() {
           }}
         />
       )}
+      {pricing && <PricingDialog audience={pricing.audience} mode={pricing.mode} signedIn={!sample && !!accountEmail} onClose={closePricing}
+        onContinue={pricing.request ? () => { const { request, agency } = pricing; setPricing(null); showReport(request!, agency ?? accountAgencyName); } : undefined} />}
       {accountOpen && <div className="modal-backdrop">
         <section className="modal" role="dialog" aria-modal="true" aria-labelledby="account-title">
           <button className="close" aria-label="Close account settings" onClick={() => setAccountOpen(false)}><X /></button>

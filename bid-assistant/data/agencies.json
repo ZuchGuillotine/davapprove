@@ -323,7 +323,10 @@
   "name": "Auburn permitting",
   "tier": "local",
   "url": "https://www.auburnwa.gov/city_hall/documents",
-  "region": "wa-king"
+  "region": [
+   "wa-king",
+   "wa-pierce"
+  ]
  },
  {
   "id": "wa-king-shoreline",
@@ -392,10 +395,13 @@
  },
  {
   "id": "puyallup",
-  "region": "wa-king",
+  "region": [
+   "wa-king",
+   "wa-pierce"
+  ],
   "name": "Puyallup Tribe",
   "tier": "tribal",
-  "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
+  "url": "https://www.puyalluptribe-nsn.gov/member-services/general-services/planning-and-land-use/",
   "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
  },
  {
@@ -437,5 +443,96 @@
   "tier": "tribal",
   "url": "https://wsdot.wa.gov/about/contacts/tribal-contacts",
   "role": "Tribal sovereignty, treaty resources and consultation; project-specific jurisdiction requires confirmation"
+ },
+ {
+  "id": "wa-pierce",
+  "region": "wa-pierce",
+  "name": "Pierce County permitting",
+  "tier": "local",
+  "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees"
+ },
+ {
+  "id": "wa-pierce-tacoma",
+  "region": "wa-pierce",
+  "name": "Tacoma permitting",
+  "tier": "local",
+  "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf"
+ },
+ {
+  "id": "wa-pierce-lakewood",
+  "region": "wa-pierce",
+  "name": "Lakewood permitting",
+  "tier": "local",
+  "url": "https://cityoflakewood.us/wp-content/uploads/2025/11/Resolution-No.-2025-14-Adopt-2026-Fee-Resolution.pdf"
+ },
+ {
+  "id": "wa-pierce-puyallup",
+  "region": "wa-pierce",
+  "name": "Puyallup permitting",
+  "tier": "local",
+  "url": "https://www.puyallupwa.gov/DocumentCenter/View/24954/2026-Fee-schedule"
+ },
+ {
+  "id": "wa-pierce-university-place",
+  "region": "wa-pierce",
+  "name": "University Place permitting",
+  "tier": "local",
+  "url": "https://www.cityofup.com/DocumentCenter/View/3420/Building-Code-Fees-PDF"
+ },
+ {
+  "id": "wa-pierce-bonney-lake",
+  "region": "wa-pierce",
+  "name": "Bonney Lake permitting",
+  "tier": "local",
+  "url": "https://www.bonneylake.gov/DocumentCenter/View/376/Fee-Schedule-PDF"
+ },
+ {
+  "id": "wa-pierce-gig-harbor",
+  "region": "wa-pierce",
+  "name": "Gig Harbor permitting",
+  "tier": "local",
+  "url": "https://www.gigharborwa.gov/DocumentCenter/View/2348/Fee-Schedule"
+ },
+ {
+  "id": "wa-pierce-fife",
+  "region": "wa-pierce",
+  "name": "Fife permitting",
+  "tier": "local",
+  "url": "https://www.fifewa.gov/DocumentCenter/View/180/Community-Development-Building-and-Planning-Fees-PDF"
+ },
+ {
+  "id": "wa-pierce-sumner",
+  "region": "wa-pierce",
+  "name": "Sumner permitting",
+  "tier": "local",
+  "url": "https://sumnerwa.gov/wp-content/uploads/2026/02/Permit-Fee-Schedule-Jan-2026.pdf"
+ },
+ {
+  "id": "tacoma-power",
+  "region": "wa-pierce",
+  "name": "Tacoma Power electrical inspections",
+  "tier": "utility",
+  "url": "https://www.mytpu.org/"
+ },
+ {
+  "id": "wa-pierce-military",
+  "region": "wa-pierce",
+  "name": "Joint Base Lewis-McChord",
+  "tier": "federal",
+  "url": "https://home.army.mil/lewis-mcchord/"
+ },
+ {
+  "id": "wa-pierce-health",
+  "region": "wa-pierce",
+  "name": "Tacoma-Pierce County Health Department",
+  "tier": "local",
+  "url": "https://tpchd.org/"
+ },
+ {
+  "id": "nisqually",
+  "region": "wa-pierce",
+  "name": "Nisqually Indian Tribe",
+  "tier": "tribal",
+  "url": "https://www.nisqually-nsn.gov/tribal-services/building/permitting"
  }
 ]

@@ -4,9 +4,10 @@ import worker, { buildMessages } from '../src/index';
 
 const secret = 'v1,whsec_' + btoa('test-only-secret-for-signed-auth-hooks');
 const settings = {
-  APP_URL: 'https://davapprove-preview.delicacybydesign.workers.dev',
+  APP_URL: 'https://davapprove.com',
+  PREVIEW_URL: 'https://davapprove-preview.delicacybydesign.workers.dev',
   SUPABASE_URL: 'https://znoysvmruyzlfllqblpi.supabase.co',
-  FROM_EMAIL: 'davapprove@haidaa.com',
+  FROM_EMAIL: 'davapprove@davapprove.com',
 } as const;
 const payload = (action = 'signup') => ({
   user: { email: 'beta@example.com', user_metadata: { email: 'attacker@example.com' } },
@@ -39,6 +40,14 @@ describe('authentication email messages', () => {
     expect(link.searchParams.get('type')).toBe(action);
     expect(link.searchParams.get('redirect_to')).toBe(settings.APP_URL + (action === 'recovery' ? '/?auth=recovery' : '/'));
     expect(messages[0].html).toContain('&amp;');
+  });
+  it.each([settings.APP_URL, settings.PREVIEW_URL])('returns magic links to the requesting deployment %s', origin => {
+    const input = payload('magiclink');
+    const { messages } = buildMessages({
+      ...input, email_data: { ...input.email_data, redirect_to: origin + '/?report=pending' },
+    }, settings);
+    const link = new URL(messages[0].text.match(/https:\/\/[^\s]+/)![0]);
+    expect(link.searchParams.get('redirect_to')).toBe(origin + '/?report=pending');
   });
   it('sends secure email changes with Supabase’s reversed hash mapping', () => {
     const input = payload('email_change');

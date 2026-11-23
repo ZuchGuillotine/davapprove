@@ -4072,30 +4072,98 @@
   "payee": "Kirkland",
   "low": 0,
   "high": 0,
-  "confidence": "unsourced",
+  "confidence": "published",
   "source": {
-   "url": "https://www.kirklandwa.gov/Government/Departments/Development-Services-Center/Tools-and-Resources/All-Forms-Publications-Fees",
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Building-Services/Building-Services-Fees",
    "title": "Kirkland: building and plan review",
-   "checked": "2026-11-15"
+   "checked": "2026-11-22"
   },
-  "note": "No published source for a complete project price; obtain an agency quote."
+  "note": "2026 Table 3 bands plus 65% plan review and 3.5% technology on both. Published band bases intentionally retained even where discontinuous. State surcharge, energy, trades, overlay and land-use review are separate; use city-assessed valuation.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 2000,
+     "over": 0,
+     "base": 113,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 113,
+     "step": 1000,
+     "rate": 23.62
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 639,
+     "step": 1000,
+     "rate": 17.46
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1048,
+     "step": 1000,
+     "rate": 10.27
+    },
+    {
+     "up_to": 1000000,
+     "over": 100000,
+     "base": 1620,
+     "step": 1000,
+     "rate": 8.22
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 9837,
+     "step": 1000,
+     "rate": 6.16
+    },
+    {
+     "up_to": 50000000,
+     "over": 5000000,
+     "base": 34987,
+     "step": 1000,
+     "rate": 5.14
+    },
+    {
+     "up_to": null,
+     "over": 50000000,
+     "base": 289639,
+     "step": 1000,
+     "rate": 5.14
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0.035,
+   "flat": 0
+  }
  },
  {
   "id": "wa-king-kirkland-planning",
   "region": "wa-king",
-  "label": "Kirkland: planning and civil review",
+  "label": "Kirkland: pre-submittal tier 2–3 allowance",
   "kind": "agency_fee",
   "basis": "published",
   "payee": "Kirkland",
-  "low": 0,
-  "high": 0,
-  "confidence": "unsourced",
+  "low": 1302.03,
+  "high": 2993.22,
+  "confidence": "published",
   "source": {
-   "url": "https://www.kirklandwa.gov/Government/Departments/Development-Services-Center/Tools-and-Resources/All-Forms-Publications-Fees",
-   "title": "Kirkland: planning and civil review",
-   "checked": "2026-11-15"
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Land-Use-Permit-Fee-Schedule-2026",
+   "title": "Kirkland: pre-submittal tier 2–3 allowance",
+   "checked": "2026-11-22"
   },
-  "note": "No published source for a complete project price; obtain an agency quote."
+  "note": "Optional/required-by-scope tier 2 or 3 pre-submittal review; tier 1 qualifying owner single-family remodel/addition/rebuild can be free. Do not treat this allowance as every project’s mandatory land-use permit.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
  },
  {
   "id": "wa-king-federal-way-building",
@@ -4199,7 +4267,10 @@
  },
  {
   "id": "wa-king-auburn-building",
-  "region": "wa-king",
+  "region": [
+   "wa-king",
+   "wa-pierce"
+  ],
   "label": "Auburn: building and plan review",
   "kind": "agency_fee",
   "basis": "published",
@@ -4280,7 +4351,10 @@
  },
  {
   "id": "wa-king-auburn-planning",
-  "region": "wa-king",
+  "region": [
+   "wa-king",
+   "wa-pierce"
+  ],
   "label": "Auburn: planning and civil review",
   "kind": "agency_fee",
   "basis": "published",
@@ -5454,5 +5528,2230 @@
    "checked": "2026-11-15"
   },
   "note": "District-specific charges are not included in county/city building fees. Contact the mapped district for its authorization, connection and engineering scope."
+ },
+ {
+  "id": "wa-pierce-county-building",
+  "region": "wa-pierce",
+  "label": "Pierce County: building, mechanical, plumbing and fire review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 0,
+  "high": 0,
+  "confidence": "medium",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: building, mechanical, plumbing and fire review allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "County 2026 single-family examples include fire review and state surcharge. Linear interpolation only within the published 1,500–3,000 sq ft range, plus 3% technology allowance. This is a bidding approximation, not the statutory calculation. Confirm garage, porches, conditioned area and final design; base application, planning and site work are separate.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "area_table",
+   "rows": [
+    {
+     "sqft": 1500,
+     "fee": 3054
+    },
+    {
+     "sqft": 2000,
+     "fee": 3910
+    },
+    {
+     "sqft": 2500,
+     "fee": 4767
+    },
+    {
+     "sqft": 3000,
+     "fee": 5634
+    }
+   ],
+   "technology_ratio": 0.03
+  }
+ },
+ {
+  "id": "wa-pierce-county-building-adu",
+  "region": "wa-pierce",
+  "label": "Pierce County: adu building review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: adu building review",
+   "checked": "2026-11-22"
+  },
+  "note": "The published single-family examples do not price this scope. Obtain a county estimate; no new-home proxy is applied.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-building-addition",
+  "region": "wa-pierce",
+  "label": "Pierce County: addition building review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: addition building review",
+   "checked": "2026-11-22"
+  },
+  "note": "The published single-family examples do not price this scope. Obtain a county estimate; no new-home proxy is applied.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-building-other_structure",
+  "region": "wa-pierce",
+  "label": "Pierce County: other structure building review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: other structure building review",
+   "checked": "2026-11-22"
+  },
+  "note": "The published single-family examples do not price this scope. Obtain a county estimate; no new-home proxy is applied.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-planning",
+  "region": "wa-pierce",
+  "label": "Pierce County: residential planning review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 566.5,
+  "high": 566.5,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: residential planning review",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 guide planning review $550 plus 3% technology allowance. Separate land-use approvals and environmental review are additional.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-base",
+  "region": "wa-pierce",
+  "label": "Pierce County: application processing",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 150,
+  "high": 150,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: application processing",
+   "checked": "2026-11-22"
+  },
+  "note": "Base fee per set of application submittals in the county customer guide. Separate submissions can incur additional base fees.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-site",
+  "region": "wa-pierce",
+  "label": "Pierce County: site development and drainage allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 917.73,
+  "high": 2603.84,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: site development and drainage allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Published 2026 single-family range plus 3% technology; actual scope depends on impervious area, drainage and site conditions.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-driveway",
+  "region": "wa-pierce",
+  "label": "Pierce County: public-road driveway approach",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 316.21,
+  "high": 316.21,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: public-road driveway approach",
+   "checked": "2026-11-22"
+  },
+  "note": "Only if access is onto a public road; private access differs. Published 2026 guide plus 3% technology allowance.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-traffic",
+  "region": "wa-pierce",
+  "label": "Pierce County: traffic impact allowance",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 2367,
+  "high": 9650,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: traffic impact allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 single-family range across traffic service areas. Confirm applicable TSA, prior payments and credits; no county traffic fee is substituted for city fees.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-park",
+  "region": "wa-pierce",
+  "label": "Pierce County: park impact allowance",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 4130,
+  "high": 4130,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: park impact allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "County customer-guide example including administration. Confirm applicable park service area and credits.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-school",
+  "region": "wa-pierce",
+  "label": "Pierce County: school impact example",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 4695,
+  "high": 4695,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: school impact example",
+   "checked": "2026-11-22"
+  },
+  "note": "County guide example including administration, not a verified parcel school district. Replace with applicable district and credit amount before fixing the bid.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-sewer",
+  "region": "wa-pierce",
+  "label": "Pierce County: sewer connection and construction allowance",
+  "kind": "utility",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 5797.32,
+  "high": 23409.9,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/112370/Single-Family-Residential-Building-Permit-Costs-Fees",
+   "title": "Pierce County: sewer connection and construction allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "County sewer service only. Published connection/capacity range plus review/inspection range and 3% technology on the latter. Verify service provider and credits; excludes private installation.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-wetland-review",
+  "region": "wa-pierce",
+  "label": "Pierce County: wetland report review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 1871.51,
+  "high": 2742.89,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/121391/Fee-Handout-Exhibit-A-2026-and-2027",
+   "title": "Pierce County: wetland report review allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 Table 2.05.040-7: delineation report review $1,817 or analysis report review $2,663, plus 3% technology. Alternatives, not both fees. Field review, additional acreage, mitigation and separate application fees may add cost; consultant preparation excluded.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-county-geo-review",
+  "region": "wa-pierce",
+  "label": "Pierce County: geological assessment review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce County",
+  "low": 316.21,
+  "high": 1367.84,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.piercecountywa.gov/DocumentCenter/View/121391/Fee-Handout-Exhibit-A-2026-and-2027",
+   "title": "Pierce County: geological assessment review",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 letter/evaluation/report review ranges $307–$1,328 plus 3% technology. Private investigation, additional work and application fees are separate.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-lakewood-building",
+  "region": "wa-pierce",
+  "label": "Lakewood: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Lakewood",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://cityoflakewood.us/wp-content/uploads/2025/11/Resolution-No.-2025-14-Adopt-2026-Fee-Resolution.pdf",
+   "title": "Lakewood: building and plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published valuation table plus 65% plan review. Enter the agency-assessed construction valuation; it may differ from the contract bid. One-hour review minimum dollar rate and 4% technology assessment base require confirmation; those adjustments are separate. State surcharge and other permits are additional unless expressly included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 30,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 30,
+     "step": 100,
+     "rate": 4
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 90,
+     "step": 1000,
+     "rate": 17.5
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 492.5,
+     "step": 1000,
+     "rate": 12.5
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 805,
+     "step": 1000,
+     "rate": 9
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1255,
+     "step": 1000,
+     "rate": 7.25
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 4155,
+     "step": 1000,
+     "rate": 6
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 7155,
+     "step": 1000,
+     "rate": 4
+    },
+    {
+     "up_to": null,
+     "over": 5000000,
+     "base": 23155,
+     "step": 1000,
+     "rate": 3
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 0
+  }
+ },
+ {
+  "id": "wa-pierce-puyallup-building",
+  "region": "wa-pierce",
+  "label": "Puyallup: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Puyallup",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.puyallupwa.gov/DocumentCenter/View/24954/2026-Fee-schedule",
+   "title": "Puyallup: building and plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published valuation table plus 65% plan review. Enter the agency-assessed construction valuation; it may differ from the contract bid. 2026 schedule page 28 and currently linked Exhibit A establish these bands and plan review ratio. State surcharge and other permits are additional unless expressly included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 25,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 25,
+     "step": 100,
+     "rate": 3.05
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 69.25,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 391.25,
+     "step": 1000,
+     "rate": 10.1
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 643.75,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 993.75,
+     "step": 1000,
+     "rate": 5.6
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3233.75,
+     "step": 1000,
+     "rate": 4.75
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 5608.75,
+     "step": 1000,
+     "rate": 3.65
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 0
+  }
+ },
+ {
+  "id": "wa-pierce-university-place-building",
+  "region": "wa-pierce",
+  "label": "University Place: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "University Place",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.cityofup.com/DocumentCenter/View/3420/Building-Code-Fees-PDF",
+   "title": "University Place: building and plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published valuation table plus 65% plan review. Enter the agency-assessed construction valuation; it may differ from the contract bid. Includes 12% support fee on building permit and $62.50 minimum plan review. State surcharge and other permits are additional unless expressly included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 26.45,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 26.45,
+     "step": 100,
+     "rate": 4
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 86.45,
+     "step": 1000,
+     "rate": 16
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 454.45,
+     "step": 1000,
+     "rate": 11.9
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 751.95,
+     "step": 1000,
+     "rate": 7.65
+    },
+    {
+     "up_to": 1000000,
+     "over": 100000,
+     "base": 1134.45,
+     "step": 1000,
+     "rate": 6.7
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 7164.45,
+     "step": 1000,
+     "rate": 4
+    },
+    {
+     "up_to": 50000000,
+     "over": 5000000,
+     "base": 23164.45,
+     "step": 1000,
+     "rate": 3.5
+    },
+    {
+     "up_to": null,
+     "over": 50000000,
+     "base": 180664.45,
+     "step": 1000,
+     "rate": 2.95
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 0,
+   "permit_factor": 1.12,
+   "plan_min": 62.5
+  }
+ },
+ {
+  "id": "wa-pierce-bonney-lake-building",
+  "region": "wa-pierce",
+  "label": "Bonney Lake: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Bonney Lake",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.bonneylake.gov/DocumentCenter/View/376/Fee-Schedule-PDF",
+   "title": "Bonney Lake: building and plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published valuation table plus 65% plan review. Enter the agency-assessed construction valuation; it may differ from the contract bid. Includes 3% technology on building permit only. City-linked PDF retains Resolution 3297 heading; confirm latest amendments. State surcharge and other permits are additional unless expressly included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 28.2,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 28.2,
+     "step": 100,
+     "rate": 3.66
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 83.1,
+     "step": 1000,
+     "rate": 16.8
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 469.5,
+     "step": 1000,
+     "rate": 12.12
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 772.5,
+     "step": 1000,
+     "rate": 8.4
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1192.5,
+     "step": 1000,
+     "rate": 6.72
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3880.5,
+     "step": 1000,
+     "rate": 5.7
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 6730.5,
+     "step": 1000,
+     "rate": 3.78
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 0,
+   "permit_factor": 1.03
+  }
+ },
+ {
+  "id": "wa-pierce-gig-harbor-building",
+  "region": "wa-pierce",
+  "label": "Gig Harbor: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Gig Harbor",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.gigharborwa.gov/DocumentCenter/View/2348/Fee-Schedule",
+   "title": "Gig Harbor: building and plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published valuation table plus 65% plan review. Enter the agency-assessed construction valuation; it may differ from the contract bid. Resolution 1344, adopted October 13, 2025, remains the city-linked schedule. State surcharge and other permits are additional unless expressly included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 34,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 34,
+     "step": 100,
+     "rate": 5
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 96,
+     "step": 1000,
+     "rate": 21
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 535,
+     "step": 1000,
+     "rate": 15
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 880,
+     "step": 1000,
+     "rate": 11
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1358,
+     "step": 1000,
+     "rate": 9
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 4420,
+     "step": 1000,
+     "rate": 8
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 7666,
+     "step": 1000,
+     "rate": 5
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 0
+  }
+ },
+ {
+  "id": "wa-pierce-fife-building",
+  "region": "wa-pierce",
+  "label": "Fife: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Fife",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.fifewa.gov/DocumentCenter/View/180/Community-Development-Building-and-Planning-Fees-PDF",
+   "title": "Fife: building and plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published valuation table plus 65% plan review. Enter the agency-assessed construction valuation; it may differ from the contract bid. Includes 2026 $60 automation fee. State surcharge and other permits are additional unless expressly included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 43,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 43,
+     "step": 100,
+     "rate": 6
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 136,
+     "step": 1000,
+     "rate": 25
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 740,
+     "step": 1000,
+     "rate": 18
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1208,
+     "step": 1000,
+     "rate": 13
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1895,
+     "step": 1000,
+     "rate": 11
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 6392,
+     "step": 1000,
+     "rate": 10
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 11389,
+     "step": 1000,
+     "rate": 6
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 60
+  }
+ },
+ {
+  "id": "wa-pierce-sumner-building",
+  "region": "wa-pierce",
+  "label": "Sumner: building and plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sumner",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://sumnerwa.gov/wp-content/uploads/2026/02/Permit-Fee-Schedule-Jan-2026.pdf",
+   "title": "Sumner: building and plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published valuation table plus 65% plan review. Enter the agency-assessed construction valuation; it may differ from the contract bid. January 2026 schedule; additional Fire Department plan review up to 35% is separate. State surcharge and other permits are additional unless expressly included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 23.5,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 23.5,
+     "step": 100,
+     "rate": 3.05
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 69.25,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 391.25,
+     "step": 1000,
+     "rate": 10.1
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 643.75,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 993.75,
+     "step": 1000,
+     "rate": 5.6
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3233.75,
+     "step": 1000,
+     "rate": 4.75
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 5608.75,
+     "step": 1000,
+     "rate": 3.65
+    }
+   ],
+   "plan_ratio": 0.65,
+   "technology_ratio": 0,
+   "flat": 0
+  }
+ },
+ {
+  "id": "wa-pierce-lakewood-admin",
+  "region": "wa-pierce",
+  "label": "Lakewood: application administration",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Lakewood",
+  "low": 90,
+  "high": 90,
+  "confidence": "published",
+  "source": {
+   "url": "https://cityoflakewood.us/wp-content/uploads/2025/11/Resolution-No.-2025-14-Adopt-2026-Fee-Resolution.pdf",
+   "title": "Lakewood: application administration",
+   "checked": "2026-11-22"
+  },
+  "note": "Administrative charge applies to permit applications unless specifically exempt.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-lakewood-tech",
+  "region": "wa-pierce",
+  "label": "Lakewood: technology allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Lakewood",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://cityoflakewood.us/wp-content/uploads/2025/11/Resolution-No.-2025-14-Adopt-2026-Fee-Resolution.pdf",
+   "title": "Lakewood: technology allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Published 4% technology allowance applied to building and plan-review subtotal for bidding. City must confirm whether administrative fees belong in its assessment base; one-hour plan-review minimum dollar rate remains unpriced.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 30,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 30,
+     "step": 100,
+     "rate": 4
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 90,
+     "step": 1000,
+     "rate": 17.5
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 492.5,
+     "step": 1000,
+     "rate": 12.5
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 805,
+     "step": 1000,
+     "rate": 9
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1255,
+     "step": 1000,
+     "rate": 7.25
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 4155,
+     "step": 1000,
+     "rate": 6
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 7155,
+     "step": 1000,
+     "rate": 4
+    },
+    {
+     "up_to": null,
+     "over": 5000000,
+     "base": 23155,
+     "step": 1000,
+     "rate": 3
+    }
+   ],
+   "plan_ratio": 0.026000000000000002,
+   "technology_ratio": 0,
+   "flat": 0,
+   "permit_factor": 0.04
+  }
+ },
+ {
+  "id": "wa-pierce-lakewood-critical",
+  "region": "wa-pierce",
+  "label": "Lakewood: critical-area review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Lakewood",
+  "low": 1565,
+  "high": 1565,
+  "confidence": "published",
+  "source": {
+   "url": "https://cityoflakewood.us/wp-content/uploads/2025/11/Resolution-No.-2025-14-Adopt-2026-Fee-Resolution.pdf",
+   "title": "Lakewood: critical-area review allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 environmental fee; additional administration, technology and consultant review can apply.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-puyallup-preapp",
+  "region": "wa-pierce",
+  "label": "Puyallup: Tier 1 pre-application review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Puyallup",
+  "low": 300,
+  "high": 300,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.puyallupwa.gov/325/Permit-Services",
+   "title": "Puyallup: Tier 1 pre-application review",
+   "checked": "2026-11-22"
+  },
+  "note": "Optional notes-only review by city divisions, not a universal land-use permit.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-puyallup-critical",
+  "region": "wa-pierce",
+  "label": "Puyallup: critical-area review base",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Puyallup",
+  "low": 160,
+  "high": 160,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.puyallupwa.gov/DocumentCenter/View/24954/2026-Fee-schedule",
+   "title": "Puyallup: critical-area review base",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 schedule page 24. Additional hourly and third-party review may apply.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-puyallup-civil",
+  "region": "wa-pierce",
+  "label": "Puyallup: off-site civil review and permit base",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Puyallup",
+  "low": 440,
+  "high": 440,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.puyallupwa.gov/DocumentCenter/View/24954/2026-Fee-schedule",
+   "title": "Puyallup: off-site civil review and permit base",
+   "checked": "2026-11-22"
+  },
+  "note": "Only where off-site utility/road work requires this permit. Base engineering review $360 and permit $80; extra hours, inspections, frontage improvements and utility charges are excluded.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-university-place-site",
+  "region": "wa-pierce",
+  "label": "University Place: new primary structure site-plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "University Place",
+  "low": 150,
+  "high": 150,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.cityofup.com/DocumentCenter/View/3420/Building-Code-Fees-PDF",
+   "title": "University Place: new primary structure site-plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Published site-plan review for new primary structure; other land-use/civil permits remain additional.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-university-place-site-adu",
+  "region": "wa-pierce",
+  "label": "University Place: accessory/addition site-plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "University Place",
+  "low": 75,
+  "high": 75,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.cityofup.com/DocumentCenter/View/3420/Building-Code-Fees-PDF",
+   "title": "University Place: accessory/addition site-plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Accessory structures/additions rate; confirm classification.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-university-place-site-addition",
+  "region": "wa-pierce",
+  "label": "University Place: accessory/addition site-plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "University Place",
+  "low": 75,
+  "high": 75,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.cityofup.com/DocumentCenter/View/3420/Building-Code-Fees-PDF",
+   "title": "University Place: accessory/addition site-plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Accessory structures/additions rate; confirm classification.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-university-place-site-other_structure",
+  "region": "wa-pierce",
+  "label": "University Place: accessory/addition site-plan review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "University Place",
+  "low": 75,
+  "high": 75,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.cityofup.com/DocumentCenter/View/3420/Building-Code-Fees-PDF",
+   "title": "University Place: accessory/addition site-plan review",
+   "checked": "2026-11-22"
+  },
+  "note": "Accessory structures/additions rate; confirm classification.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-bonney-lake-storm",
+  "region": "wa-pierce",
+  "label": "Bonney Lake: residential stormwater permit allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Bonney Lake",
+  "low": 200,
+  "high": 750,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.bonneylake.gov/DocumentCenter/View/376/Fee-Schedule-PDF",
+   "title": "Bonney Lake: residential stormwater permit allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Published residential bands $200 under 2,000 sq ft, $400 at 2,000–4,999, $750 at 5,000 or more new/replaced impervious area. Final reviewed surface area controls.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-bonney-lake-trades",
+  "region": "wa-pierce",
+  "label": "Bonney Lake: mechanical, plumbing and energy review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Bonney Lake",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.bonneylake.gov/DocumentCenter/View/376/Fee-Schedule-PDF",
+   "title": "Bonney Lake: mechanical, plumbing and energy review",
+   "checked": "2026-11-22"
+  },
+  "note": "Mechanical and plumbing each 15% of building permit fee; energy plan review/inspection $60. Confirm scope and avoid duplicating contractor allowances.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 28.2,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 28.2,
+     "step": 100,
+     "rate": 3.66
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 83.1,
+     "step": 1000,
+     "rate": 16.8
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 469.5,
+     "step": 1000,
+     "rate": 12.12
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 772.5,
+     "step": 1000,
+     "rate": 8.4
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 1192.5,
+     "step": 1000,
+     "rate": 6.72
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3880.5,
+     "step": 1000,
+     "rate": 5.7
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 6730.5,
+     "step": 1000,
+     "rate": 3.78
+    }
+   ],
+   "plan_ratio": 0,
+   "technology_ratio": 0,
+   "flat": 60,
+   "permit_factor": 0.3
+  }
+ },
+ {
+  "id": "wa-pierce-gig-harbor-design",
+  "region": "wa-pierce",
+  "label": "Gig Harbor: single-family design review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Gig Harbor",
+  "low": 172,
+  "high": 172,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.gigharborwa.gov/DocumentCenter/View/2348/Fee-Schedule",
+   "title": "Gig Harbor: single-family design review",
+   "checked": "2026-11-22"
+  },
+  "note": "Resolution 1344 section B16 administrative design review; alternative designs and revisions additional.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-gig-harbor-engineering",
+  "region": "wa-pierce",
+  "label": "Gig Harbor: single-family engineering review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Gig Harbor",
+  "low": 280,
+  "high": 280,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.gigharborwa.gov/DocumentCenter/View/2348/Fee-Schedule",
+   "title": "Gig Harbor: single-family engineering review",
+   "checked": "2026-11-22"
+  },
+  "note": "Resolution 1344 engineering building review. Civil permits, infrastructure and consultant review are additional.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-gig-harbor-site",
+  "region": "wa-pierce",
+  "label": "Gig Harbor: minor site-plan review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Gig Harbor",
+  "low": 1481,
+  "high": 1481,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.gigharborwa.gov/DocumentCenter/View/2348/Fee-Schedule",
+   "title": "Gig Harbor: minor site-plan review allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Only if changes to gross floor area/impervious surface require a separate minor site-plan application; includes published planning/building/engineering components. Confirm consolidation reductions before adding.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-fife-preapp",
+  "region": "wa-pierce",
+  "label": "Fife: single-family pre-application review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Fife",
+  "low": 239,
+  "high": 239,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.fifewa.gov/DocumentCenter/View/180/Community-Development-Building-and-Planning-Fees-PDF",
+   "title": "Fife: single-family pre-application review",
+   "checked": "2026-11-22"
+  },
+  "note": "Optional meeting $179 plus $60 automation fee; development review committee consultation is free.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-fife-adu",
+  "region": "wa-pierce",
+  "label": "Fife: ADU land-use review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Fife",
+  "low": 655,
+  "high": 655,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.fifewa.gov/DocumentCenter/View/180/Community-Development-Building-and-Planning-Fees-PDF",
+   "title": "Fife: ADU land-use review",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 ADU line and planning automation fee; verify scope with City.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-fife-critical",
+  "region": "wa-pierce",
+  "label": "Fife: critical-areas review deposit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Fife",
+  "low": 5060,
+  "high": 5060,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.fifewa.gov/DocumentCenter/View/180/Community-Development-Building-and-Planning-Fees-PDF",
+   "title": "Fife: critical-areas review deposit",
+   "checked": "2026-11-22"
+  },
+  "note": "Deposit, not a fixed final fee. Actual review billed at published hourly rate; automation $60. Do not treat deposit as maximum cost.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-sumner-critical",
+  "region": "wa-pierce",
+  "label": "Sumner: resource/wildlife/hazard approval allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sumner",
+  "low": 30,
+  "high": 250,
+  "confidence": "published",
+  "source": {
+   "url": "https://sumnerwa.gov/wp-content/uploads/2026/02/Permit-Fee-Schedule-Jan-2026.pdf",
+   "title": "Sumner: resource/wildlife/hazard approval allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 schedule: applicable single-family categories $30–$100; wetland projects with public notice $250. City determines category; consultant reports excluded.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-sumner-fire",
+  "region": "wa-pierce",
+  "label": "Sumner: additional fire plan-review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Sumner",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://sumnerwa.gov/wp-content/uploads/2026/02/Permit-Fee-Schedule-Jan-2026.pdf",
+   "title": "Sumner: additional fire plan-review allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Published maximum additional Fire Department plan-review fee is 35% of building permit; actual need/amount is at fire marshal discretion.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 500,
+     "over": 0,
+     "base": 23.5,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 2000,
+     "over": 500,
+     "base": 23.5,
+     "step": 100,
+     "rate": 3.05
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 69.25,
+     "step": 1000,
+     "rate": 14
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 391.25,
+     "step": 1000,
+     "rate": 10.1
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 643.75,
+     "step": 1000,
+     "rate": 7
+    },
+    {
+     "up_to": 500000,
+     "over": 100000,
+     "base": 993.75,
+     "step": 1000,
+     "rate": 5.6
+    },
+    {
+     "up_to": 1000000,
+     "over": 500000,
+     "base": 3233.75,
+     "step": 1000,
+     "rate": 4.75
+    },
+    {
+     "up_to": null,
+     "over": 1000000,
+     "base": 5608.75,
+     "step": 1000,
+     "rate": 3.65
+    }
+   ],
+   "plan_ratio": 0,
+   "technology_ratio": 0,
+   "flat": 0,
+   "permit_factor": 0.35
+  }
+ },
+ {
+  "id": "wa-pierce-sumner-traffic",
+  "region": "wa-pierce",
+  "label": "Sumner: single-family traffic impact",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Sumner",
+  "low": 7241,
+  "high": 7241,
+  "confidence": "published",
+  "source": {
+   "url": "https://sumnerwa.gov/wp-content/uploads/2026/02/Permit-Fee-Schedule-Jan-2026.pdf",
+   "title": "Sumner: single-family traffic impact",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 schedule detached single-family dwelling line. Verify credits and prior payment.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-tacoma-building",
+  "region": "wa-pierce",
+  "label": "Tacoma: residential building, trades, site development and reviews",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: residential building, trades, site development and reviews",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 Table 8-4: combination building/mechanical/plumbing 1.31% of ICC valuation; site permit 65% of that fee; building and site reviews each 45%. Uses entered valuation as ICC-value proxy. Table 1 surcharges are listed separately; confirm exact city assessment base.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": null,
+     "over": 0,
+     "base": 0,
+     "step": 1,
+     "rate": 0.0131
+    }
+   ],
+   "plan_ratio": 0.9,
+   "technology_ratio": 0,
+   "flat": 0,
+   "permit_factor": 1.65,
+   "prorated": true
+  }
+ },
+ {
+  "id": "wa-pierce-tacoma-surcharges",
+  "region": "wa-pierce",
+  "label": "Tacoma: technology, reserve, natural-resource and emergency fees",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: technology, reserve, natural-resource and emergency fees",
+   "checked": "2026-11-22"
+  },
+  "note": "Table 1 allowance: technology 5%, reserve 2%, natural resources 5% on permit/review subtotal; emergency preparedness 5% on permit portions only. No percentage-on-percentage compounding. Confirm city allocation for combined trade permit.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": null,
+     "over": 0,
+     "base": 0,
+     "step": 1,
+     "rate": 0.0131
+    }
+   ],
+   "plan_ratio": 0,
+   "technology_ratio": 0,
+   "flat": 0,
+   "permit_factor": 0.3885,
+   "prorated": true
+  }
+ },
+ {
+  "id": "wa-pierce-tacoma-building-adu",
+  "region": "wa-pierce",
+  "label": "Tacoma: adu construction permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: adu construction permit",
+   "checked": "2026-11-22"
+  },
+  "note": "Confirm applicable Table 8-4 category and ICC valuation; no new-home combination fee is substituted automatically.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-tacoma-building-addition",
+  "region": "wa-pierce",
+  "label": "Tacoma: addition construction permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: addition construction permit",
+   "checked": "2026-11-22"
+  },
+  "note": "Confirm applicable Table 8-4 category and ICC valuation; no new-home combination fee is substituted automatically.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-tacoma-building-other_structure",
+  "region": "wa-pierce",
+  "label": "Tacoma: other structure construction permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: other structure construction permit",
+   "checked": "2026-11-22"
+  },
+  "note": "Confirm applicable Table 8-4 category and ICC valuation; no new-home combination fee is substituted automatically.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-tacoma-adu-landuse",
+  "region": "wa-pierce",
+  "label": "Tacoma: ADU land-use review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 1423.1,
+  "high": 1423.1,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: ADU land-use review",
+   "checked": "2026-11-22"
+  },
+  "note": "Table 4 ADU General plus technology/reserve 7%; building, utilities and site review are separate.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-tacoma-critical",
+  "region": "wa-pierce",
+  "label": "Tacoma: critical-areas verification",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 4986.2,
+  "high": 4986.2,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: critical-areas verification",
+   "checked": "2026-11-22"
+  },
+  "note": "Table 4 verification plus technology/reserve 7%; determine appropriate permit route, other natural-resource charges and private report scope.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-tacoma-shoreline",
+  "region": "wa-pierce",
+  "label": "Tacoma: shoreline/FWHCA exemption review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 428.0,
+  "high": 428.0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.tacomapermits.org/wp-content/uploads/2026/02/Fee-Schedule-Effective-January-1-2026.pdf",
+   "title": "Tacoma: shoreline/FWHCA exemption review",
+   "checked": "2026-11-22"
+  },
+  "note": "Exemption route only if approved by the City; substantial development or conditional use can cost more. Technology/reserve 7% included.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-tacoma-traffic",
+  "region": "wa-pierce",
+  "label": "Tacoma: transportation impact allowance",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Tacoma",
+  "low": 763.23,
+  "high": 5357.03,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.tacomapermits.org/tip-sheet-index/transportation-impact-fees",
+   "title": "Tacoma: transportation impact allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Effective June 1, 2026. District base range plus 3% administration; verify land-use trip/unit multiplier, district, credits and exemptions. Not a guaranteed parcel fee.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-septic",
+  "region": "wa-pierce",
+  "label": "Tacoma-Pierce County Health: new residential septic review and installation permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma-Pierce County Health",
+  "low": 1500,
+  "high": 1500,
+  "confidence": "published",
+  "source": {
+   "url": "https://content.govdelivery.com/attachments/WATPCHD/2025/12/15/file_attachments/3496037/2026%20Fee%20Schedule%20-%20Adopted%20%281%29.pdf",
+   "title": "Tacoma-Pierce County Health: new residential septic review and installation permit",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 single-family design review $1,020 plus $480 installation permit. ADU design review is $1,140, so ADU total differs. Soil consultation $360 and seasonal review $1,920 may be additional; private design/construction excluded.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-septic-adu",
+  "region": "wa-pierce",
+  "label": "Tacoma-Pierce County Health: ADU septic design and installation permit",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Tacoma-Pierce County Health",
+  "low": 1620,
+  "high": 1620,
+  "confidence": "published",
+  "source": {
+   "url": "https://content.govdelivery.com/attachments/WATPCHD/2025/12/15/file_attachments/3496037/2026%20Fee%20Schedule%20-%20Adopted%20%281%29.pdf",
+   "title": "Tacoma-Pierce County Health: ADU septic design and installation permit",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 ADU design review $1,140 plus $480 installation permit. Confirm applicability to existing or shared systems; consultant design and construction are separate.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-ecologist",
+  "region": "wa-pierce",
+  "label": "Pierce environmental consultant: preliminary wetland visit",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Pierce environmental consultant",
+  "low": 700,
+  "high": 700,
+  "confidence": "medium",
+  "source": {
+   "url": "https://www.baiservicesinc.com/InspectorServices",
+   "title": "Pierce environmental consultant: preliminary wetland visit",
+   "checked": "2026-11-22"
+  },
+  "note": "Provider-published $700 pre-walk reconnaissance only; not a delineation or permit-ready report. Undated web price checked November 2026. Confirm availability and replace with your consultant quote.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-ecology-full",
+  "region": "wa-pierce",
+  "label": "Pierce environmental consultant: full delineation/report/mitigation",
+  "kind": "professional",
+  "basis": "published",
+  "payee": "Pierce environmental consultant",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.baiservicesinc.com/InspectorServices",
+   "title": "Pierce environmental consultant: full delineation/report/mitigation",
+   "checked": "2026-11-22"
+  },
+  "note": "A reconnaissance price does not cover full delineation, ratings, reporting or mitigation. Scope and price these separately with a qualified specialist.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-geotech",
+  "region": "wa-pierce",
+  "label": "Pierce: residential geotechnical report starting allowance",
+  "kind": "professional",
+  "basis": "market",
+  "payee": "Pierce",
+  "low": 1500,
+  "high": 5000,
+  "confidence": "medium",
+  "source": {
+   "url": "https://www.evercrest.us/adu-pricing",
+   "title": "Pierce: residential geotechnical report starting allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Builder-reported King/Pierce residential benchmark, $1,500–$5,000 per report. Complex slope/landslide, lahar, drilling, lab and foundation investigations may cost substantially more. Replace with a scoped professional proposal.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-unpriced-local",
+  "region": "wa-pierce",
+  "label": "Pierce: Untranscribed local permit scope",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/906/Find-Forms-and-Documents",
+   "title": "Pierce: Untranscribed local permit scope",
+   "checked": "2026-11-22"
+  },
+  "note": "Request a scoped agency/provider estimate for items not already priced. Do not count a zero as a free service; replace with your quote.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-impact",
+  "region": "wa-pierce",
+  "label": "Pierce: Remaining school/park/transport impact charges",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Pierce",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/906/Find-Forms-and-Documents",
+   "title": "Pierce: Remaining school/park/transport impact charges",
+   "checked": "2026-11-22"
+  },
+  "note": "Request a scoped agency/provider estimate for items not already priced. Do not count a zero as a free service; replace with your quote.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-utility",
+  "region": "wa-pierce",
+  "label": "Pierce: Remaining utility capacity and connection charges",
+  "kind": "utility",
+  "basis": "published",
+  "payee": "Pierce",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/906/Find-Forms-and-Documents",
+   "title": "Pierce: Remaining utility capacity and connection charges",
+   "checked": "2026-11-22"
+  },
+  "note": "Request a scoped agency/provider estimate for items not already priced. Do not count a zero as a free service; replace with your quote.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-trades",
+  "region": "wa-pierce",
+  "label": "Pierce: Remaining trade, civil, access and state surcharges",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/906/Find-Forms-and-Documents",
+   "title": "Pierce: Remaining trade, civil, access and state surcharges",
+   "checked": "2026-11-22"
+  },
+  "note": "Request a scoped agency/provider estimate for items not already priced. Do not count a zero as a free service; replace with your quote.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-pierce-electrical",
+  "region": "wa-pierce",
+  "label": "Pierce: Electrical inspection authority fee",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Pierce",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.piercecountywa.gov/906/Find-Forms-and-Documents",
+   "title": "Pierce: Electrical inspection authority fee",
+   "checked": "2026-11-22"
+  },
+  "note": "Request a scoped agency/provider estimate for items not already priced. Do not count a zero as a free service; replace with your quote.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-king-kirkland-energy",
+  "region": "wa-king",
+  "label": "Kirkland: energy review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Building-Services/Building-Services-Fees",
+   "title": "Kirkland: energy review allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Published $101 plus $0.01 per heated/cooled/artificially illuminated sq ft. Entered new area is a proxy; confirm actual energy-review area.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "area",
+   "base": 101,
+   "per_sqft": 0.01
+  }
+ },
+ {
+  "id": "wa-king-kirkland-trades",
+  "region": "wa-king",
+  "label": "Kirkland: new-home electrical, mechanical and plumbing permits",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Building-Services/Building-Services-Fees",
+   "title": "Kirkland: new-home electrical, mechanical and plumbing permits",
+   "checked": "2026-11-22"
+  },
+  "note": "New one/two-family formula: electrical 9.5%, plumbing 8%, mechanical 8% of building permit plus 3.5% technology. Separate electrical/mechanical plan review if required, temporary power and nonstandard service scopes are additional.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 2000,
+     "over": 0,
+     "base": 113,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 113,
+     "step": 1000,
+     "rate": 23.62
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 639,
+     "step": 1000,
+     "rate": 17.46
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1048,
+     "step": 1000,
+     "rate": 10.27
+    },
+    {
+     "up_to": 1000000,
+     "over": 100000,
+     "base": 1620,
+     "step": 1000,
+     "rate": 8.22
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 9837,
+     "step": 1000,
+     "rate": 6.16
+    },
+    {
+     "up_to": 50000000,
+     "over": 5000000,
+     "base": 34987,
+     "step": 1000,
+     "rate": 5.14
+    },
+    {
+     "up_to": null,
+     "over": 50000000,
+     "base": 289639,
+     "step": 1000,
+     "rate": 5.14
+    }
+   ],
+   "plan_ratio": 0,
+   "technology_ratio": 0.035,
+   "flat": 0,
+   "permit_factor": 0.255
+  }
+ },
+ {
+  "id": "wa-king-kirkland-trade-review",
+  "region": "wa-king",
+  "label": "Kirkland: electrical and mechanical plan review allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Building-Services/Building-Services-Fees",
+   "title": "Kirkland: electrical and mechanical plan review allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Only if review plans required: electrical review 33% of electrical permit and mechanical review 25% of mechanical permit, plus technology. Confirm scope.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "valuation",
+   "brackets": [
+    {
+     "up_to": 2000,
+     "over": 0,
+     "base": 113,
+     "step": 1,
+     "rate": 0
+    },
+    {
+     "up_to": 25000,
+     "over": 2000,
+     "base": 113,
+     "step": 1000,
+     "rate": 23.62
+    },
+    {
+     "up_to": 50000,
+     "over": 25000,
+     "base": 639,
+     "step": 1000,
+     "rate": 17.46
+    },
+    {
+     "up_to": 100000,
+     "over": 50000,
+     "base": 1048,
+     "step": 1000,
+     "rate": 10.27
+    },
+    {
+     "up_to": 1000000,
+     "over": 100000,
+     "base": 1620,
+     "step": 1000,
+     "rate": 8.22
+    },
+    {
+     "up_to": 5000000,
+     "over": 1000000,
+     "base": 9837,
+     "step": 1000,
+     "rate": 6.16
+    },
+    {
+     "up_to": 50000000,
+     "over": 5000000,
+     "base": 34987,
+     "step": 1000,
+     "rate": 5.14
+    },
+    {
+     "up_to": null,
+     "over": 50000000,
+     "base": 289639,
+     "step": 1000,
+     "rate": 5.14
+    }
+   ],
+   "plan_ratio": 0,
+   "technology_ratio": 0.035,
+   "flat": 0,
+   "permit_factor": 0.05135000000000001
+  }
+ },
+ {
+  "id": "wa-king-kirkland-critical",
+  "region": "wa-king",
+  "label": "Kirkland: critical-area determination or decision allowance",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 1763.64,
+  "high": 3294.4,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Land-Use-Permit-Fee-Schedule-2026",
+   "title": "Kirkland: critical-area determination or decision allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "Alternative Planning Official determination/decision scopes plus 3.5%; not two automatically cumulative fees. Consultant reports and mitigation excluded.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-king-kirkland-shoreline",
+  "region": "wa-king",
+  "label": "Kirkland: shoreline exemption review",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 3700.12,
+  "high": 3700.12,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Land-Use-Permit-Fee-Schedule-2026",
+   "title": "Kirkland: shoreline exemption review",
+   "checked": "2026-11-22"
+  },
+  "note": "Exemption route only if eligible; substantial development and conditional-use routes differ. Includes 3.5% surcharge.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-king-kirkland-impact-park",
+  "region": "wa-king",
+  "label": "Kirkland: park impact allowance",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/files/sharedassets/public/v/1/development-services/pdfs/pw-dev-pdfs/2026-jul-dec-park-schoolfire-and-transportation-impact-fee-schedule.pdf",
+   "title": "Kirkland: park impact allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "July–December 2026 non-stacked dwelling rate and cap. Entered new square footage is a proxy; confirm applicable floor/conditioned-area definition, net new area, exemptions and credits. No 3.5% technology fee on impact charges.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "area",
+   "base": 0,
+   "per_sqft": 5.18,
+   "cap": 10481.56
+  }
+ },
+ {
+  "id": "wa-king-kirkland-impact-fire",
+  "region": "wa-king",
+  "label": "Kirkland: fire impact allowance",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/files/sharedassets/public/v/1/development-services/pdfs/pw-dev-pdfs/2026-jul-dec-park-schoolfire-and-transportation-impact-fee-schedule.pdf",
+   "title": "Kirkland: fire impact allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "July–December 2026 non-stacked dwelling rate and cap. Entered new square footage is a proxy; confirm applicable floor/conditioned-area definition, net new area, exemptions and credits. No 3.5% technology fee on impact charges.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "area",
+   "base": 0,
+   "per_sqft": 0.75,
+   "cap": 2698.96
+  }
+ },
+ {
+  "id": "wa-king-kirkland-impact-transport",
+  "region": "wa-king",
+  "label": "Kirkland: transport impact allowance",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/files/sharedassets/public/v/1/development-services/pdfs/pw-dev-pdfs/2026-jul-dec-park-schoolfire-and-transportation-impact-fee-schedule.pdf",
+   "title": "Kirkland: transport impact allowance",
+   "checked": "2026-11-22"
+  },
+  "note": "July–December 2026 non-stacked dwelling rate and cap. Entered new square footage is a proxy; confirm applicable floor/conditioned-area definition, net new area, exemptions and credits. No 3.5% technology fee on impact charges.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null,
+  "method": {
+   "type": "area",
+   "base": 0,
+   "per_sqft": 4.51,
+   "cap": 9130.03
+  }
+ },
+ {
+  "id": "wa-king-kirkland-impact-school",
+  "region": "wa-king",
+  "label": "Kirkland: detached single-family school impact",
+  "kind": "impact_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 7419,
+  "high": 7419,
+  "confidence": "published",
+  "source": {
+   "url": "https://www.kirklandwa.gov/files/sharedassets/public/v/1/development-services/pdfs/pw-dev-pdfs/2026-jul-dec-park-schoolfire-and-transportation-impact-fee-schedule.pdf",
+   "title": "Kirkland: detached single-family school impact",
+   "checked": "2026-11-22"
+  },
+  "note": "2026 detached single-family rate $7,277 plus $142 administration. Other dwelling forms, ADUs, exemptions, prior payments and replacement credits require separate classification.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
+ },
+ {
+  "id": "wa-king-kirkland-goat-hill",
+  "region": "wa-king",
+  "label": "Kirkland: Goat Hill overlay surcharge",
+  "kind": "agency_fee",
+  "basis": "published",
+  "payee": "Kirkland",
+  "low": 0,
+  "high": 0,
+  "confidence": "unsourced",
+  "source": {
+   "url": "https://www.kirklandwa.gov/Government/Departments/Planning-and-Building/Building-Services/Building-Services-Fees",
+   "title": "Kirkland: Goat Hill overlay surcharge",
+   "checked": "2026-11-22"
+  },
+  "note": "Goat Hill overlay adds 5%; confirm mapped applicability and assessment base with Kirkland before entering the surcharge.",
+  "work_stage": "early_bid",
+  "approved_design_revision": null
  }
 ]
