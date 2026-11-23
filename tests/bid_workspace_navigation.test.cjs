@@ -17,4 +17,19 @@ for (const embedded of [false, true]) {
   assert.equal(link.target, '_top', 'return never opens the app inside the assessment iframe');
   dom.window.close();
 }
+// The inline guard sends hosted standalone visits into the signed-in workspace on any domain.
+const guard = markup.match(/<script>([\s\S]*?)<\/script>/)[1];
+function visit(href) {
+  const url = new URL(href);
+  let replaced = null;
+  const location = { search: url.search, hash: url.hash, hostname: url.hostname, replace: target => { replaced = target; } };
+  new Function('location', 'URLSearchParams', guard)(location, URLSearchParams);
+  return replaced;
+}
+assert.equal(visit('https://davapprove.com/bid-assistant/index.html#parcel=1&county=wa-king&secret=x'), '/?workspace=bids#parcel=1&county=wa-king');
+assert.equal(visit('https://www.davapprove.com/bid-assistant/index.html'), '/?workspace=bids#');
+assert.equal(visit('https://davapprove-preview.example.workers.dev/bid-assistant/index.html?public=1'), '/?workspace=bids#', 'the old public bypass is gone');
+assert.equal(visit('https://davapprove.com/bid-assistant/index.html?embedded=1'), null, 'the workspace frame itself is not redirected');
+assert.equal(visit('http://localhost:8080/index.html'), null, 'local development keeps the standalone page');
+assert.equal(visit('http://127.0.0.1:8080/index.html'), null);
 console.log('Bid workspace navigation tests passed.');

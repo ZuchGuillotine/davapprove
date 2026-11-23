@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <script>
-if (!new URLSearchParams(location.search).has('embedded') && location.hostname.endsWith('.workers.dev')) {
+// Hosted copies open only inside the signed-in workspace (the full report is behind email capture).
+// Local development servers (bid-assistant/server.js, file previews) keep the standalone page.
+if (!new URLSearchParams(location.search).has('embedded') && !/^(localhost|127\.0\.0\.1|\[::1\]|)$/.test(location.hostname)) {
   var params = new URLSearchParams(location.hash.slice(1));
   var safe = new URLSearchParams();
   ['draft','agency','parcel','county','type','project'].forEach(function(key) { if(params.has(key)) safe.set(key,params.get(key)); });
